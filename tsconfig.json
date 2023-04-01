@@ -19,13 +19,13 @@
     "outDir": "./build",
     "paths": {
       "@assets/*": ["../public/images/*"],
-      "@api": ["data/services/api.ts"],
+      "@api": ["services/api.ts"],
       "@app/*": ["app/*"],
       "@components/*": ["components/*"],
       "@context/*": ["context/*"],
       "@hooks/*": ["hooks/*"],
       "@public/*": ["../public/*"],
-      "@services/*": ["data/services/*"],
+      "@services/*": ["services/*"],
       "@styles/*": ["styles/*"],
       "@theme": ["styles/theme/default.ts"]
     },
