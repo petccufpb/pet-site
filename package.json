@@ -7,8 +7,8 @@
     "export": "next export",
     "start": "next start",
     "prisma:generate": "prisma generate --data-proxy",
-    "prisma:migrate-dev": "dotenv -c -- bash -c 'DATABASE_URL=$MIGRATE_DATABASE_URL prisma migrate dev --create-only' && pnpm prisma:generate",
-    "prisma:migrate-deploy": "dotenv -c -- bash -c 'DATABASE_URL=$MIGRATE_DATABASE_URL prisma migrate deploy'",
+    "prisma:migrate-dev": "prisma migrate dev && pnpm prisma:generate",
+    "prisma:migrate-deploy": "prisma migrate deploy'",
     "prepare": "husky install"
   },
   "lint-staged": {
