@@ -5,7 +5,5 @@ declare module "@prisma/client" {
     include: {
       contactInfo: true;
     };
-  }> & {
-    type: "decano" | "founder" | "tutor";
-  };
+  }>;
 }
