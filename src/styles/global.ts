@@ -16,7 +16,6 @@ export const GlobalStyle = createGlobalStyle`
         }
             ::-webkit-scrollbar-thumb {
                 background: ${({ theme }) => theme.colors["base-red"]};
-
         }
     }
     body{
