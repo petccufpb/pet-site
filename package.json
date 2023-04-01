@@ -6,7 +6,7 @@
     "dev": "next dev",
     "export": "next export",
     "start": "next start",
-    "prepare": "husky install && chmod ug+x .husky/*"
+    "prepare": "husky install"
   },
   "lint-staged": {
     "src/**/*.(ts|tsx)": [
