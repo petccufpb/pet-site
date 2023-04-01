@@ -1,5 +1,5 @@
 "use client";
-import { Lexend } from "next/font/google";
+import { Inter, Lexend } from "next/font/google";
 import { PropsWithChildren } from "react";
 import { ThemeProvider } from "styled-components";
 
@@ -8,6 +8,7 @@ import defaultTheme from "@styles/theme/default";
 
 import { LayoutContainer } from "../styles/layout";
 import "@styles/global";
+import { Header } from "./components/Header";
 
 const lexend = Lexend({ subsets: ["latin"] });
 
@@ -17,10 +18,13 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <GlobalStyle />
       <html lang="pt-br">
         <head>
-          <title>Boilerplate PET</title>
+          <title>PET Computação</title>
         </head>
-        <body>
-          <LayoutContainer className={lexend.className}>{children}</LayoutContainer>
+        <body className={`${lexend.className}`}>
+          <LayoutContainer>
+            <Header />
+            {children}
+          </LayoutContainer>
         </body>
       </html>
     </ThemeProvider>

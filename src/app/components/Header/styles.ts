@@ -1,0 +1,54 @@
+"use client";
+import Link from "next/link";
+import styled from "styled-components";
+
+export const VerticalLine = styled.span`
+  border-left: 1px solid ${({ theme }) => theme.colors["base-white"]};
+  margin: 0 auto 0 auto;
+`;
+
+export const PETHeader = styled.header`
+  font: ${({ theme }) => theme.fonts.head};
+  padding: 2rem 0 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+`;
+
+export const RouteList = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-column-gap: 1rem;
+`;
+
+export const ListItem = styled.li`
+  list-style: none;
+  text-decoration: none;
+`;
+
+export const Route = styled.div`
+  text-align: center;
+  width: 100%;
+  color: ${({ theme }) => theme.colors["base-white"]};
+`;
+
+export const RouteLink = styled(Link)<{ currentTab: string }>`
+  font-weight: ${props => (props.currentTab == props.href ? "800" : "normal")};
+  color: ${({ theme }) => theme.colors["base-white"]};
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  ::after {
+    content: "";
+    display: ${props => (props.currentTab == props.href ? "block" : "none")};
+    position: absolute;
+    width: 15%;
+    bottom: -0.5rem;
+    height: 4px;
+    border-radius: 3rem;
+    background: ${({ theme }) => theme.colors["base-blue"]};
+  }
+`;
