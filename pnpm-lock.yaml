@@ -3,7 +3,7 @@ lockfileVersion: '6.0'
 dependencies:
   '@prisma/client':
     specifier: ^4.12.0
-    version: 4.12.0
+    version: 4.12.0(prisma@4.12.0)
   axios:
     specifier: ^1.3.4
     version: 1.3.4
@@ -16,9 +16,12 @@ dependencies:
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
+  react-icons:
+    specifier: ^4.8.0
+    version: 4.8.0(react@18.2.0)
   styled-components:
     specifier: ^5.3.9
-    version: 5.3.9(react-dom@18.2.0)(react-is@16.13.1)(react@18.2.0)
+    version: 5.3.9(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
   yup:
     specifier: ^1.0.2
     version: 1.0.2
@@ -51,6 +54,9 @@ devDependencies:
   '@typescript-eslint/parser':
     specifier: ^5.57.0
     version: 5.57.0(eslint@8.37.0)(typescript@5.0.3)
+  dotenv-cli:
+    specifier: ^7.1.0
+    version: 7.1.0
   eslint:
     specifier: 8.37.0
     version: 8.37.0
@@ -93,9 +99,9 @@ devDependencies:
   prettier:
     specifier: ^2.8.7
     version: 2.8.7
-  react-icons:
-    specifier: ^4.8.0
-    version: 4.8.0(react@18.2.0)
+  prisma:
+    specifier: ^4.12.0
+    version: 4.12.0
   typescript:
     specifier: 5.0.3
     version: 5.0.3
@@ -1611,7 +1617,7 @@ packages:
       tslib: 2.5.0
     dev: true
 
-  /@prisma/client@4.12.0:
+  /@prisma/client@4.12.0(prisma@4.12.0):
     resolution: {integrity: sha512-j9/ighfWwux97J2dS15nqhl60tYoH8V0IuSsgZDb6bCFcQD3fXbXmxjYC8GHhIgOk3lB7Pq+8CwElz2MiDpsSg==}
     engines: {node: '>=14.17'}
     requiresBuild: true
@@ -1622,11 +1628,17 @@ packages:
         optional: true
     dependencies:
       '@prisma/engines-version': 4.12.0-67.659ef412370fa3b41cd7bf6e94587c1dfb7f67e7
+      prisma: 4.12.0
     dev: false
 
   /@prisma/engines-version@4.12.0-67.659ef412370fa3b41cd7bf6e94587c1dfb7f67e7:
     resolution: {integrity: sha512-JIHNj5jlXb9mcaJwakM0vpgRYJIAurxTUqM0iX0tfEQA5XLZ9ONkIckkhuAKdAzocZ+80GYg7QSsfpjg7OxbOA==}
     dev: false
+
+  /@rushstack/eslint-patch@1.2.0:
+  /@prisma/engines@4.12.0:
+    resolution: {integrity: sha512-0alKtnxhNB5hYU+ymESBlGI4b9XrGGSdv7Ud+8TE/fBNOEhIud0XQsAR+TrvUZgS4na5czubiMsODw0TUrgkIA==}
+    requiresBuild: true
 
   /@rushstack/eslint-patch@1.2.0:
     resolution: {integrity: sha512-sXo/qW2/pAcmT43VoRKOJbDOfV3cYpq3szSVfIThQXNt+E4DfKj361vaAt3c88U5tPUxzEswam7GW48PJqtKAg==}
@@ -2188,7 +2200,7 @@ packages:
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
       picomatch: 2.3.1
-      styled-components: 5.3.9(react-dom@18.2.0)(react-is@16.13.1)(react@18.2.0)
+      styled-components: 5.3.9(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
     dev: false
 
   /babel-plugin-syntax-jsx@6.18.0:
@@ -2344,7 +2356,7 @@ packages:
     dev: true
 
   /concat-map@0.0.1:
-    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
+    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
     dev: true
 
   /convert-source-map@1.9.0:
@@ -2552,6 +2564,27 @@ packages:
       dom-serializer: 2.0.0
       domelementtype: 2.3.0
       domhandler: 5.0.3
+    dev: true
+
+  /eastasianwidth@0.2.0:
+  /dotenv-cli@7.1.0:
+    resolution: {integrity: sha512-motytjZFQB3ZtGTIN4c0vnFgv4kuNZ2WxVnGY6PVFiygCzkm3IFBBguDUzezd9HgNA0OYYd6vNCWlozs0Q1Zxg==}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+      dotenv: 16.0.3
+      dotenv-expand: 10.0.0
+      minimist: 1.2.8
+    dev: true
+
+  /dotenv-expand@10.0.0:
+    resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
+    engines: {node: '>=12'}
+    dev: true
+
+  /dotenv@16.0.3:
+    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
     dev: true
 
   /eastasianwidth@0.2.0:
@@ -4090,6 +4123,15 @@ packages:
     dev: true
 
   /prop-types@15.8.1:
+  /prisma@4.12.0:
+    resolution: {integrity: sha512-xqVper4mbwl32BWzLpdznHAYvYDWQQWK2tBfXjdUD397XaveRyAP7SkBZ6kFlIg8kKayF4hvuaVtYwXd9BodAg==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      '@prisma/engines': 4.12.0
+
+  /prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
     dependencies:
       loose-envify: 1.4.0
@@ -4133,6 +4175,11 @@ packages:
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+
+  /react@18.2.0:
+  /react-is@18.2.0:
+    resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
+    dev: false
 
   /react@18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
@@ -4438,7 +4485,7 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /styled-components@5.3.9(react-dom@18.2.0)(react-is@16.13.1)(react@18.2.0):
+  /styled-components@5.3.9(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-Aj3kb13B75DQBo2oRwRa/APdB5rSmwUfN5exyarpX+x/tlM/rwZA2vVk2vQgVSP6WKaZJHWwiFrzgHt+CLtB4A==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -4456,7 +4503,7 @@ packages:
       hoist-non-react-statics: 3.3.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      react-is: 16.13.1
+      react-is: 18.2.0
       shallowequal: 1.1.0
       supports-color: 5.5.0
     dev: false

@@ -5,6 +5,7 @@
 !/.vscode/launch.json
 robots.txt
 sitemap.xml
+.env
 
 # dependencies
 /node_modules
