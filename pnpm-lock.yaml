@@ -1635,6 +1635,7 @@ packages:
     resolution: {integrity: sha512-JIHNj5jlXb9mcaJwakM0vpgRYJIAurxTUqM0iX0tfEQA5XLZ9ONkIckkhuAKdAzocZ+80GYg7QSsfpjg7OxbOA==}
     dev: false
 
+  /@rushstack/eslint-patch@1.2.0:
   /@prisma/engines@4.12.0:
     resolution: {integrity: sha512-0alKtnxhNB5hYU+ymESBlGI4b9XrGGSdv7Ud+8TE/fBNOEhIud0XQsAR+TrvUZgS4na5czubiMsODw0TUrgkIA==}
     requiresBuild: true
@@ -2565,6 +2566,7 @@ packages:
       domhandler: 5.0.3
     dev: true
 
+  /eastasianwidth@0.2.0:
   /dotenv-cli@7.1.0:
     resolution: {integrity: sha512-motytjZFQB3ZtGTIN4c0vnFgv4kuNZ2WxVnGY6PVFiygCzkm3IFBBguDUzezd9HgNA0OYYd6vNCWlozs0Q1Zxg==}
     hasBin: true
@@ -4120,6 +4122,7 @@ packages:
     hasBin: true
     dev: true
 
+  /prop-types@15.8.1:
   /prisma@4.12.0:
     resolution: {integrity: sha512-xqVper4mbwl32BWzLpdznHAYvYDWQQWK2tBfXjdUD397XaveRyAP7SkBZ6kFlIg8kKayF4hvuaVtYwXd9BodAg==}
     engines: {node: '>=14.17'}
@@ -4168,11 +4171,12 @@ packages:
       react: '*'
     dependencies:
       react: 18.2.0
-    dev: false
+    dev: true
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
+  /react@18.2.0:
   /react-is@18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
     dev: false
