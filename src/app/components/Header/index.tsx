@@ -2,14 +2,16 @@ import { Inter } from "next/font/google";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import Logo from "@assets/logo.png";
-
 import { ListItem, PETHeader, RouteLink, RouteList, VerticalLine } from "./styles";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export function Header() {
-  const [currentTab, setCurrentTab] = useState(document.location.pathname);
+  const [currentTab, setCurrentTab] = useState("");
+
+  useEffect(() => {
+    setCurrentTab(document.location.pathname);
+  }, []);
 
   function switchTab(e: React.MouseEvent<HTMLUListElement>) {
     const target = e.target as Element;
@@ -21,7 +23,7 @@ export function Header() {
 
   return (
     <PETHeader className={inter.className}>
-      <Image src={Logo} alt="Logo PET Computação" width={75} height={0}></Image>
+      <Image src="/images/logo.png" alt="Logo PET Computação" width={75} height={40}></Image>
       <nav>
         <RouteList onClick={switchTab}>
           <ListItem>

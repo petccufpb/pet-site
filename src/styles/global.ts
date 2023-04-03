@@ -11,11 +11,12 @@ export const GlobalStyle = createGlobalStyle`
         ::-webkit-scrollbar {
             width: 0.45rem;
         }
+            // Pode mudar.
             ::-webkit-scrollbar-track {
-                background: ${({ theme }) => theme.colors["base-shape"]}
+                background: ${({ theme }) => theme.colors["base-black"]}
         }
             ::-webkit-scrollbar-thumb {
-                background: ${({ theme }) => theme.colors["base-red"]};
+                background: ${({ theme }) => theme.colors["base-blue"]};
         }
     }
     body{

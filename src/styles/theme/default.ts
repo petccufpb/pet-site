@@ -6,7 +6,7 @@ const defaultTheme = {
     "three-white": "rgba(255, 255, 255, 0.5)",
     "line-white": "rgba(255, 255, 255, 0.2)",
     "base-black": "#182240",
-    "base-red": "#E24141",
+    "second-black": "#1F2B53",
     "base-shape": "#1B1B1B",
     "base-blue": "#38BCDE",
     "white-span": "#B3B0B8",

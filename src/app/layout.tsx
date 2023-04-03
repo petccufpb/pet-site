@@ -8,6 +8,7 @@ import defaultTheme from "@styles/theme/default";
 
 import { LayoutContainer } from "../styles/layout";
 import "@styles/global";
+import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 
 const lexend = Lexend({ subsets: ["latin"] });
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
             <Header />
             {children}
           </LayoutContainer>
+          <Footer />
         </body>
       </html>
     </ThemeProvider>
