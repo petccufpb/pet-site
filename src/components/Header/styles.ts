@@ -8,7 +8,6 @@ export const VerticalLine = styled.span`
 `;
 
 export const PETHeader = styled.header`
-  font: ${({ theme }) => theme.fonts.head};
   padding: 2rem 0 2rem 0;
   display: grid;
   grid-template-columns: 1fr 1fr;

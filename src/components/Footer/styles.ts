@@ -1,6 +1,5 @@
 "use client";
 
-import { FaGithubAlt } from "react-icons/fa";
 import styled from "styled-components";
 
 export const ContentContainer = styled.div`
@@ -38,7 +37,11 @@ export const Flex = styled.div`
 export const InfoGrid = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
-  gap: 1rem;
+  gap: 2rem;
+
+  a {
+    color: ${({ theme }) => theme.colors["base-white"]};
+  }
 `;
 
 export const NameContainer = styled.div`
@@ -72,7 +75,7 @@ export const SocialMediaIconContainer = styled.a<{ white?: boolean }>`
   background-color: ${({ theme }) => theme.colors["base-black"]};
   margin-right: 0.5rem;
 
-  > * {
+  > svg {
     color: ${props => (props.white ? props.theme.colors["base-white"] : props.theme.colors["base-blue"])};
   }
 `;

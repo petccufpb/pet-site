@@ -13,7 +13,7 @@ const defaultTheme = {
   },
   fonts: {
     regular: "'Lexend'",
-    head: "'Inter'",
+    alt: "'Inter'",
   },
   textSizes: {
     "title-title-xl": "3rem",

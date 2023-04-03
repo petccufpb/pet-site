@@ -6,10 +6,10 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "@styles/global";
 import defaultTheme from "@styles/theme/default";
 
-import { LayoutContainer } from "../styles/layout";
 import "@styles/global";
-import { Footer } from "./components/Footer";
-import { Header } from "./components/Header";
+import { Footer } from "../components/Footer";
+import { Header } from "../components/Header";
+import { LayoutContainer } from "../styles/layout";
 
 const lexend = Lexend({ subsets: ["latin"] });
 

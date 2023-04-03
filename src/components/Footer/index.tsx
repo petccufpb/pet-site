@@ -1,3 +1,4 @@
+import { Inter } from "next/font/google";
 import Image from "next/image";
 import { FaLinkedinIn, FaInstagram, FaYoutube, FaGithubAlt, FaChevronUp } from "react-icons/fa";
 
@@ -16,9 +17,11 @@ import {
   NextInfo,
 } from "./styles";
 
+const inter = Inter({ subsets: ["latin"] });
+
 export function Footer() {
   return (
-    <ContentContainer>
+    <ContentContainer className={inter.className}>
       <Content>
         <PETBranding>
           <Flex>
@@ -48,7 +51,9 @@ export function Footer() {
             <br />
             <div>R. dos Escoteiros, s/n - Mangabeira, João Pessoa - PB, 58055-000</div>
             <br />
-            <div>petcc@ci.ufpb.br</div>
+            <div>
+              <a href="mailto:petcc@ci.ufpb.br">petcc@ci.ufpb.br</a>
+            </div>
           </div>
           <div>
             <div>
