@@ -2,13 +2,16 @@ const defaultTheme = {
   /* Alterem as cores aqui de acordo com a prototipagem */
   colors: {
     "base-white": "#DEE1F4",
-    "second-white": "#B3B0B8",
+    "second-white": "#A8A8B3",
     "three-white": "rgba(255, 255, 255, 0.5)",
     "line-white": "rgba(255, 255, 255, 0.2)",
+    "gradient-blue": "linear-gradient(to bottom, #73E5E2, #3D66BC)",
+    "gradient-green": "linear-gradient(to bottom, #04D361, #0F3924)",
     "base-black": "#182240",
     "second-black": "#1F2B53",
     "base-shape": "#1B1B1B",
     "base-blue": "#38BCDE",
+    "base-green": "#04D361",
     "white-span": "#B3B0B8",
   },
   fonts: {

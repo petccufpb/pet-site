@@ -11,7 +11,7 @@ type Tutor = Member & {
 
 declare module "@hyoretsu/react-hooks" {
   interface APIMapping {
-    "/team/members": Member | Member[] | string;
-    "/team/tutors": Tutor[];
+    "/api/team/members": Member | Member[] | string;
+    "/api/team/tutors": Tutor[];
   }
 }
