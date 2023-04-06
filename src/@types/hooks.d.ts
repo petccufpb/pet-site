@@ -5,7 +5,7 @@ type Member = DefaultMember & {
   type?: "decano";
 };
 
-type Tutor = Member & {
+type Tutor = DefaultMember & {
   type: "tutor" | "founder";
 };
 
