@@ -31,8 +31,8 @@ export const Route = styled.div`
   color: ${({ theme }) => theme.colors["base-white"]};
 `;
 
-export const RouteLink = styled(Link)<{ currentTab: string }>`
-  font-weight: ${props => (props.currentTab == props.href ? "800" : "normal")};
+export const RouteLink = styled(Link)<{ tab: string }>`
+  font-weight: ${props => (props.tab == props.href ? "800" : "normal")};
   color: ${({ theme }) => theme.colors["base-white"]};
   text-align: center;
   text-decoration: none;
@@ -42,7 +42,7 @@ export const RouteLink = styled(Link)<{ currentTab: string }>`
 
   ::after {
     content: "";
-    display: ${props => (props.currentTab == props.href ? "block" : "none")};
+    display: ${props => (props.tab == props.href ? "block" : "none")};
     position: absolute;
     width: 15%;
     bottom: -0.5rem;

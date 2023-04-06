@@ -7,17 +7,17 @@ import { ListItem, PETHeader, RouteLink, RouteList, VerticalLine } from "./style
 const inter = Inter({ subsets: ["latin"] });
 
 export function Header() {
-  const [currentTab, setCurrentTab] = useState("");
+  const [tab, setTab] = useState("");
 
   useEffect(() => {
-    setCurrentTab(document.location.pathname);
+    setTab(document.location.pathname);
   }, []);
 
   function switchTab(e: React.MouseEvent<HTMLUListElement>) {
     const target = e.target as Element;
     if (target.tagName === "A") {
       const anchorTarget = e.target as HTMLAnchorElement;
-      setCurrentTab(anchorTarget.pathname);
+      setTab(anchorTarget.pathname);
     }
   }
 
@@ -27,33 +27,33 @@ export function Header() {
       <nav>
         <RouteList onClick={switchTab}>
           <ListItem>
-            <RouteLink href="/" currentTab={currentTab}>
+            <RouteLink href="/" tab={tab}>
               Início
             </RouteLink>
           </ListItem>
           <ListItem>
-            <RouteLink href="/historia" currentTab={currentTab}>
+            <RouteLink href="/historia" tab={tab}>
               História
             </RouteLink>
           </ListItem>
           <ListItem>
-            <RouteLink href="/time" currentTab={currentTab}>
+            <RouteLink href="/time" tab={tab}>
               Time
             </RouteLink>
           </ListItem>
           <ListItem>
-            <RouteLink href="/projetos" currentTab={currentTab}>
+            <RouteLink href="/projetos" tab={tab}>
               Projetos
             </RouteLink>
           </ListItem>
           <ListItem>
-            <RouteLink href="/sdc" currentTab={currentTab}>
+            <RouteLink href="/sdc" tab={tab}>
               SDC
             </RouteLink>
           </ListItem>
           <VerticalLine />
           <ListItem>
-            <RouteLink href="/artigos" currentTab={currentTab}>
+            <RouteLink href="/artigos" tab={tab}>
               Artigos
             </RouteLink>
           </ListItem>

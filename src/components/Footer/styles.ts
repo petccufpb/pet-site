@@ -11,12 +11,18 @@ export const Content = styled.div`
   margin-right: auto;
   margin-left: auto;
   display: grid;
-  grid-template-columns: 2fr 3fr;
+  grid-template-columns: 3fr 2fr 1fr 1fr;
   gap: 1rem;
   padding-top: 4rem;
 
-  @media (max-width: 70rem) {
-    padding: 0 1rem;
+  @media (max-width: 71rem) {
+    padding: 4rem 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(400px, auto));
+    gap: 2.5rem;
+  }
+
+  a {
+    color: ${({ theme }) => theme.colors["base-white"]};
   }
 `;
 
@@ -25,6 +31,8 @@ export const PETBranding = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 export const Flex = styled.div`
@@ -32,16 +40,6 @@ export const Flex = styled.div`
   align-items: center;
   display: flex;
   margin-bottom: 0.4rem;
-`;
-
-export const InfoGrid = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 2rem;
-
-  a {
-    color: ${({ theme }) => theme.colors["base-white"]};
-  }
 `;
 
 export const NameContainer = styled.div`
@@ -52,7 +50,7 @@ export const NameContainer = styled.div`
 
 export const Divider = styled.hr`
   margin-top: 1rem;
-  border: 1px solid ${({ theme }) => theme.colors["base-black"]};
+  border: 1px solid ${({ theme }) => theme.colors["second-blue"]};
 `;
 
 export const SocialMediaInfo = styled.div`
@@ -63,7 +61,7 @@ export const SocialMediaInfo = styled.div`
   padding: 1rem 0;
 
   @media (max-width: 70rem) {
-    padding: 0 1rem;
+    padding: 1rem;
   }
 `;
 
@@ -72,7 +70,7 @@ export const SocialMediaIconContainer = styled.a<{ white?: boolean }>`
   display: grid;
   place-items: center;
   border-radius: 0.4rem;
-  background-color: ${({ theme }) => theme.colors["base-black"]};
+  background-color: ${({ theme }) => theme.colors["second-blue"]};
   margin-right: 0.5rem;
 
   > svg {

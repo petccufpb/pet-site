@@ -1,20 +1,27 @@
 "use client";
 
-import { Lexend } from "next/font/google";
-
-import { MembersContainer } from "./components/MembersContainer";
-import { TutorsContainer } from "./components/TutorsContainer";
-import { SectionTitle } from "./styles";
-
-const lexend = Lexend({ subsets: ["latin"] });
+import FotoTime from "../assets/foto-time.jpg";
+import { MemberList } from "./components/MemberList";
+import { PhotoBubble } from "./components/PhotoBubble";
+import { Content, DescriptionContainer, PETDescription, PhotoContainer, TeamPhoto } from "./styles";
 
 export default function Time() {
   return (
-    <div className={lexend.className}>
-      <SectionTitle>Tutores</SectionTitle>
-      <TutorsContainer />
-      <SectionTitle>Membros Ativos</SectionTitle>
-      <MembersContainer />
-    </div>
+    <Content>
+      <PhotoContainer>
+        <TeamPhoto src={FotoTime} alt="Grupo PET Computação" />
+        <DescriptionContainer>
+          <PETDescription>
+            <h2>Grupo PET Computação</h2>
+            <div>Mais que um grupo, uma família</div>
+          </PETDescription>
+          <PhotoBubble />
+        </DescriptionContainer>
+      </PhotoContainer>
+      <div>
+        <MemberList type="tutors" />
+        <MemberList type="members" />
+      </div>
+    </Content>
   );
 }
