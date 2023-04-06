@@ -14,26 +14,26 @@ export function MemberList({ type }: { type: "members" | "tutors" }) {
   if (error)
     return (
       <>
-        {titles.map(t => {
-          <div>
+        {titles.map((t, i) => (
+          <div key={i}>
             <SectionTitle>{t}</SectionTitle>
             <div>Erro ao carregar.</div>
-          </div>;
-        })}
+          </div>
+        ))}
       </>
     );
 
   if (isLoading)
     return (
       <>
-        {titles.map(t => {
-          <div>
+        {titles.map((t, i) => (
+          <div key={i}>
             <SectionTitle>{t}</SectionTitle>
             <LoadingIconContainer>
               <LoadingIcon size={32} />
             </LoadingIconContainer>
-          </div>;
-        })}
+          </div>
+        ))}
       </>
     );
 
