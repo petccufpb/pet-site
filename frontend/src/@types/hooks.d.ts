@@ -6,7 +6,7 @@ type APIError = {
   message: string;
 };
 
-type Member = Default & {
+type Member = DefaultMember & {
   type?: "decano";
 };
 

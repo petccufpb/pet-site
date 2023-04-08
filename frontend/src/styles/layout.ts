@@ -2,7 +2,7 @@
 import styled from "styled-components";
 
 export const LayoutContainer = styled.main`
-  background: ${({ theme }) => theme.colors["base-black"]};
+  background: ${({ theme }) => theme.colors["second-blue"]};
   width: 100%;
   max-width: 70rem;
   min-height: 100vh;

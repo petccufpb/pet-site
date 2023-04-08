@@ -1,20 +1,21 @@
 import { Inter } from "next/font/google";
 import Image from "next/image";
-import { FaLinkedinIn, FaInstagram, FaYoutube, FaGithubAlt, FaChevronUp } from "react-icons/fa";
+import { FaChevronUp, FaGithubAlt, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
+
+import Petrucio from "@assets/petrucio.svg";
 
 import {
   Content,
   ContentContainer,
-  PETBranding,
+  Divider,
+  ExpandMenuContainer,
   Flex,
   NameContainer,
-  InfoGrid,
-  Divider,
-  SocialMediaInfo,
-  SocialMediaIconContainer,
-  ExpandMenuContainer,
-  NextLogoContainer,
   NextInfo,
+  NextLogoContainer,
+  PETBranding,
+  SocialMediaIconContainer,
+  SocialMediaInfo,
 } from "./styles";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,14 +26,14 @@ export function Footer() {
       <Content>
         <PETBranding>
           <Flex>
-            <Image src="/images/petrucio.svg" alt="Petrúcio" width={140} height={140} />
+            <Petrucio width={140} height={140} />
             <NameContainer>
               <h1>PET</h1>
               <h1>Computação</h1>
             </NameContainer>
           </Flex>
-          <div>PET Computação 2023</div>
-          <div>Todos os direitos reservados.</div>
+          <span>PET Computação 2023</span>
+          <span>Todos os direitos reservados.</span>
 
           <NextInfo>
             <NextLogoContainer>
@@ -43,41 +44,39 @@ export function Footer() {
             <div>Projeto Realizado em Next.js</div>
           </NextInfo>
         </PETBranding>
-        <InfoGrid>
+        <div>
           <div>
-            <div>
-              <b>Contato</b>
-            </div>
-            <br />
-            <div>R. dos Escoteiros, s/n - Mangabeira, João Pessoa - PB, 58055-000</div>
-            <br />
-            <div>
-              <a href="mailto:petcc@ci.ufpb.br">petcc@ci.ufpb.br</a>
-            </div>
+            <b>Contato</b>
           </div>
+          <br />
+          <div>R. dos Escoteiros, s/n - Mangabeira, João Pessoa - PB, 58055-000</div>
+          <br />
           <div>
-            <div>
-              <b>Projetos</b>
-            </div>
-            <br />
-            <div>Pesquisa</div>
-            <br />
-            <div>Ensino</div>
-            <br />
-            <div>Extensão</div>
+            <a href="mailto:petcc@ci.ufpb.br">petcc@ci.ufpb.br</a>
           </div>
+        </div>
+        <div>
           <div>
-            <div>
-              <b>Sobre</b>
-            </div>
-            <br />
-            <div>O PET Computação</div>
-            <br />
-            <div>Equipe</div>
-            <br />
-            <div>Projeto Seletivo</div>
+            <b>Projetos</b>
           </div>
-        </InfoGrid>
+          <br />
+          <div>Pesquisa</div>
+          <br />
+          <div>Ensino</div>
+          <br />
+          <div>Extensão</div>
+        </div>
+        <div>
+          <div>
+            <b>Sobre</b>
+          </div>
+          <br />
+          <div>O PET Computação</div>
+          <br />
+          <div>Equipe</div>
+          <br />
+          <div>Projeto Seletivo</div>
+        </div>
       </Content>
       <Divider />
       <SocialMediaInfo>
