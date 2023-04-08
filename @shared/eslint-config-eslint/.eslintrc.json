@@ -1,0 +1,96 @@
+{
+  "env": {
+    "es6": true,
+    "jest": true
+  },
+  "extends": ["plugin:prettier/recommended", "prettier"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "plugins": ["import", "import-helpers", "prettier"],
+  "rules": {
+    "default-case": "off",
+    "import/no-duplicates": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          "module",
+          "/^@components/",
+          ["/^@context/", "/^@hooks/", "/^@services/", "/^@utils/", "/^@api/"],
+          ["/^@public/", "/^@assets/"],
+          "/^@styles/",
+          "/assets/",
+          ["/^@config/", "/^@database/", "/^@entities/", "/^@modules/", "/^@shared/"],
+          ["parent", "sibling"]
+        ],
+        "alphabetize": {
+          "order": "asc"
+        }
+      }
+    ],
+    "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
+    "no-constant-condition": "off",
+    "no-continue": "off",
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "no-unused-expressions": ["off", { "allowShortCircuit": true }],
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_|next" }],
+    "no-use-before-define": "off",
+    "prefer-const": ["error", { "destructuring": "all" }],
+    "prefer-destructuring": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "env": {
+        "es2022": true
+      },
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "next",
+        "next/core-web-vitals"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "ecmaVersion": "latest"
+      },
+      "plugins": ["@typescript-eslint"],
+      "rules": {
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-use-before-define": ["error"],
+        "import/extensions": [
+          "error",
+          "ignorePackages",
+          {
+            "ts": "never",
+            "tsx": "never"
+          }
+        ]
+      },
+      "settings": {
+        "import/resolver": {
+          "typescript": {
+            "project": ["../tsconfig.json", "backend/tsconfig.json", "frontend/tsconfig.json"]
+          },
+          "node": {
+            "project": ["../tsconfig.json", "../../backend/tsconfig.json", "../../frontend/tsconfig.json"]
+          }
+        },
+        "node": {
+          "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        }
+      }
+    }
+  ]
+}
