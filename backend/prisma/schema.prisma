@@ -16,12 +16,18 @@ model Member {
     type        String?
     isActive    Boolean         @default(true)
     contactInfo MemberContact[]
+    createdAt   DateTime @default(now())
+    // Só tem default pq eu esqueci de botar quando criei a tabela
+    updatedAt   DateTime @updatedAt @default(now())
 }
 
 model MemberContact {
-    id       String @id @default(uuid())
-    name     String
-    snsId    String
-    memberId String
-    member   Member @relation(fields: [memberId], references: [id])
+    id        String @id @default(uuid())
+    name      String
+    snsId     String
+    memberId  String
+    member    Member @relation(fields: [memberId], references: [id])
+    createdAt DateTime @default(now())
+    // Só tem default pq eu esqueci de botar quando criei a tabela
+    updatedAt DateTime @updatedAt @default(now())
 }
