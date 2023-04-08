@@ -8,6 +8,7 @@ import { PrismaMembersRepository } from "./infra/prisma/repositories/PrismaMembe
 import MembersRepository from "./repositories/MembersRepository";
 import { CreateMember } from "./services/CreateMember.service";
 import { ListMembers } from "./services/ListMembers.service";
+import { ListTutors } from "./services/ListTutors.service";
 
 @Module({
   imports: [],
@@ -18,7 +19,7 @@ import { ListMembers } from "./services/ListMembers.service";
       provide: MembersRepository,
       useClass: PrismaMembersRepository,
     },
-    ...[CreateMember, ListMembers],
+    ...[CreateMember, ListMembers, ListTutors],
   ],
 })
 export class MembersModule {}

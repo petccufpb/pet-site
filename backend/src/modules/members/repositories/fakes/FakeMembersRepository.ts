@@ -9,23 +9,16 @@ import MembersRepository, { CompleteMember } from "../MembersRepository";
 export class FakeMembersRepository implements MembersRepository {
   private members: CompleteMember[] = [];
 
-  async create({
-    about = "",
-    contactInfo = [],
-    isActive = true,
-    name,
-    photoUrl = "",
-    type = "",
-  }: CreateMemberDTO): Promise<Member> {
+  async create({ about, contactInfo, isActive, photoUrl, type, ...data }: CreateMemberDTO): Promise<Member> {
     const member = {
-      about,
-      contactInfo,
+      ...data,
+      about: about || "",
+      contactInfo: contactInfo || [],
       createdAt: new Date(),
       id: randomUUID(),
-      isActive,
-      name,
-      photoUrl,
-      type,
+      isActive: isActive || true,
+      photoUrl: photoUrl || "",
+      type: type || "",
       updatedAt: new Date(),
     };
 

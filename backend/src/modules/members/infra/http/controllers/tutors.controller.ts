@@ -1,14 +1,15 @@
 import { Controller, Get } from "@nestjs/common";
 
-import MembersRepository, { CompleteMember } from "@modules/members/repositories/MembersRepository";
+import { CompleteMember } from "@modules/members/repositories/MembersRepository";
+import { ListTutors } from "@modules/members/services/ListTutors.service";
 
 @Controller("team/tutors")
 export class TutorsController {
-  constructor(private membersRepository: MembersRepository) {}
+  constructor(private listTutors: ListTutors) {}
 
   @Get()
   async getTutors(): Promise<CompleteMember[]> {
-    const tutors = await this.membersRepository.findTutors();
+    const tutors = await this.listTutors.execute();
 
     return tutors;
   }

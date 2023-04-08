@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Member } from "@prisma/client";
 
 import { CreateMemberDTO } from "@modules/members/dtos/CreateMember.dto";
 import { CompleteMember } from "@modules/members/repositories/MembersRepository";
@@ -17,7 +18,7 @@ export class MembersController {
   }
 
   @Post()
-  async postMembers(@Body() body: CreateMemberDTO) {
+  async postMembers(@Body() body: CreateMemberDTO): Promise<Member> {
     const user = await this.createMember.execute(body);
 
     return user;
