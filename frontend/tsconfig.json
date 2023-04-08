@@ -1,0 +1,38 @@
+{
+  "extends": "../@shared/tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": "./src",
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "moduleResolution": "node",
+    "noEmit": true,
+    "outDir": "./build",
+    "paths": {
+      "@assets/*": ["../public/images/*"],
+      "@api": ["services/api.ts"],
+      "@app/*": ["app/*"],
+      "@components/*": ["components/*"],
+      "@context/*": ["context/*"],
+      "@hooks/*": ["hooks/*"],
+      "@public/*": ["../public/*"],
+      "@services/*": ["services/*"],
+      "@styles/*": ["styles/*"],
+      "@theme": ["styles/theme/default.ts"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es5",
+    "typeRoots": ["./node_modules/@types", "./src/@types"]
+  },
+  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
