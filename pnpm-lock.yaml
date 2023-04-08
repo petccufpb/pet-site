@@ -76,6 +76,9 @@ importers:
 
   backend:
     dependencies:
+      '@fastify/helmet':
+        specifier: ^10.1.0
+        version: 10.1.0
       '@nestjs/common':
         specifier: ^9.3.12
         version: 9.3.12(cache-manager@5.1.7)(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.8.0)
@@ -2613,6 +2616,13 @@ packages:
     dependencies:
       fast-querystring: 1.1.1
       fastify-plugin: 4.5.0
+    dev: false
+
+  /@fastify/helmet@10.1.0:
+    resolution: {integrity: sha512-v7QJPYf1uVcCwzyHzkDGcHTqDPscXj/61JKxOdvczyDPAKTxSeb9Sc2OBActXaj7zUELiAdgnkKkzNwmCNzBLQ==}
+    dependencies:
+      fastify-plugin: 4.5.0
+      helmet: 6.0.1
     dev: false
 
   /@fastify/middie@8.1.0:
@@ -6021,6 +6031,11 @@ packages:
     engines: {node: '>= 0.4.0'}
     dependencies:
       function-bind: 1.1.1
+
+  /helmet@6.0.1:
+    resolution: {integrity: sha512-8wo+VdQhTMVBMCITYZaGTbE4lvlthelPYSvoyNvk4RECTmrVjMerp9RfUOQXZWLvCcAn1pKj7ZRxK4lI9Alrcw==}
+    engines: {node: '>=14.0.0'}
+    dev: false
 
   /hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}

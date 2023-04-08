@@ -17,6 +17,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.config.ts"
   },
   "dependencies": {
+    "@fastify/helmet": "^10.1.0",
     "@nestjs/common": "^9.3.12",
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.3.12",

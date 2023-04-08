@@ -1,3 +1,4 @@
+import helmet from "@fastify/helmet";
 import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { FastifyAdapter, NestFastifyApplication } from "@nestjs/platform-fastify";
@@ -14,9 +15,14 @@ const bootstrap = async () => {
     }),
   );
 
-  await app.listen(Number(process.env.APP_PORT));
+  await app.register(helmet);
+  app.enableCors();
 
-  console.log(`Server started on port ${process.env.APP_PORT}!`);
+  const port = process.env.APP_PORT || 3333;
+
+  await app.listen(port);
+
+  console.log(`Server started on port ${port}!`);
 };
 
 bootstrap();
