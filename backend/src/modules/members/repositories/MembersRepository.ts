@@ -1,6 +1,6 @@
 import { Member, Prisma } from "@prisma/client";
 
-import { CreateMemberDTO } from "../dtos/CreateMemberDTO";
+import { CreateMemberDTO } from "../dtos/CreateMember.dto";
 
 export type CompleteMember = Prisma.MemberGetPayload<{
   include: {

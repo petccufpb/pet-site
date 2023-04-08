@@ -2,6 +2,7 @@ import helmet from "@fastify/helmet";
 import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { FastifyAdapter, NestFastifyApplication } from "@nestjs/platform-fastify";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 import { AppModule } from "./app.module";
 
@@ -15,8 +16,25 @@ const bootstrap = async () => {
     }),
   );
 
-  await app.register(helmet);
+  await app.register(helmet, {
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: [`'self'`],
+        styleSrc: [`'self'`, `'unsafe-inline'`],
+        imgSrc: [`'self'`, "data:", "validator.swagger.io"],
+        scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
+      },
+    },
+  });
   app.enableCors();
+
+  const config = new DocumentBuilder()
+    .setTitle("API do PET.CC (UFPB)")
+    .setDescription("Dados do PET (Programa de Educação Tutorial) do curso Ciência da Computação, da UFPB.")
+    .setVersion("1.0.0")
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup("docs", app, document);
 
   const port = process.env.APP_PORT || 3333;
 

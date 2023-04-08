@@ -3,7 +3,7 @@ import { Member } from "@prisma/client";
 
 import { PrismaService } from "@database/prisma.service";
 
-import { CreateMemberDTO } from "../../dtos/CreateMemberDTO";
+import { CreateMemberDTO } from "../../dtos/CreateMember.dto";
 import MembersRepository, { CompleteMember } from "../MembersRepository";
 
 @Injectable()

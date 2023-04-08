@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Post } from "@nestjs/common";
 
-import { CreateMemberDTO } from "@modules/members/dtos/CreateMemberDTO";
+import { CreateMemberDTO } from "@modules/members/dtos/CreateMember.dto";
 import MembersRepository, { CompleteMember } from "@modules/members/repositories/MembersRepository";
 
 @Controller("team/members")

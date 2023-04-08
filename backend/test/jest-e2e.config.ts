@@ -6,6 +6,16 @@ const config: Config = {
   rootDir: ".",
   testEnvironment: "node",
   testRegex: ".e2e-spec.ts$",
+  transform: {
+    "^.+\\.(j|t)s$": [
+      "ts-jest",
+      {
+        astTransformers: {
+          before: ["./nestjs-swagger-transformer.js"],
+        },
+      },
+    ],
+  },
 };
 
 export default config;
