@@ -2,10 +2,10 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Member } from "@prisma/client";
 
 import { CreateMemberDTO } from "../dtos/CreateMember.dto";
-import MembersRepository, { CompleteMember } from "../repositories/MembersRepository";
+import MembersRepository from "../repositories/MembersRepository";
 
 @Injectable()
-export class CreateMembers {
+export class CreateMember {
   constructor(private membersRepository: MembersRepository) {}
 
   async execute({ type, ...data }: CreateMemberDTO): Promise<Member> {

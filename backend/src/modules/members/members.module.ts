@@ -6,7 +6,7 @@ import { MembersController } from "./infra/http/controllers/members.controller";
 import { TutorsController } from "./infra/http/controllers/tutors.controller";
 import MembersRepository from "./repositories/MembersRepository";
 import { PrismaMembersRepository } from "./repositories/prisma/PrismaMembersRepository";
-import { CreateMembers } from "./services/CreateMember.service";
+import { CreateMember } from "./services/CreateMember.service";
 import { ListMembers } from "./services/ListMembers.service";
 
 @Module({
@@ -18,7 +18,7 @@ import { ListMembers } from "./services/ListMembers.service";
       provide: MembersRepository,
       useClass: PrismaMembersRepository,
     },
-    ...[CreateMembers, ListMembers],
+    ...[CreateMember, ListMembers],
   ],
 })
 export class MembersModule {}
