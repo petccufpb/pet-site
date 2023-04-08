@@ -30,7 +30,7 @@ module.exports = phase => ({
         protocol: "https",
         hostname: "drive.google.com",
         port: "",
-        pathname: "/file/d/**",
+        pathname: "/**",
       },
       {
         protocol: "https",

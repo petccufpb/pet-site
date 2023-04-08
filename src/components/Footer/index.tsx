@@ -2,6 +2,8 @@ import { Inter } from "next/font/google";
 import Image from "next/image";
 import { FaChevronUp, FaGithubAlt, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 
+import Petrucio from "@assets/petrucio.svg";
+
 import {
   Content,
   ContentContainer,
@@ -24,7 +26,7 @@ export function Footer() {
       <Content>
         <PETBranding>
           <Flex>
-            <Image src="/images/petrucio.svg" alt="Petrúcio" width={140} height={140} />
+            <Petrucio width={140} height={140} />
             <NameContainer>
               <h1>PET</h1>
               <h1>Computação</h1>
