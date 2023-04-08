@@ -2,9 +2,9 @@ import { Injectable } from "@nestjs/common";
 import { Member } from "@prisma/client";
 
 import { PrismaService } from "@database/prisma.service";
+import MembersRepository, { CompleteMember } from "@modules/members/repositories/MembersRepository";
 
-import { CreateMemberDTO } from "../../dtos/CreateMember.dto";
-import MembersRepository, { CompleteMember } from "../MembersRepository";
+import { CreateMemberDTO } from "../../../dtos/CreateMember.dto";
 
 @Injectable()
 export class PrismaMembersRepository implements MembersRepository {
