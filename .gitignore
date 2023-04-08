@@ -9,6 +9,9 @@
 **/.env
 **/.env*.local
 
+# Test files
+**/coverage
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
