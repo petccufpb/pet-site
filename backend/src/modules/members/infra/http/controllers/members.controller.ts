@@ -1,30 +1,24 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
 
 import { CreateMemberDTO } from "@modules/members/dtos/CreateMember.dto";
-import MembersRepository, { CompleteMember } from "@modules/members/repositories/MembersRepository";
+import { CompleteMember } from "@modules/members/repositories/MembersRepository";
+import { CreateMembers } from "@modules/members/services/CreateMember.service";
+import { ListMembers } from "@modules/members/services/ListMembers.service";
 
 @Controller("team/members")
 export class MembersController {
-  constructor(private membersRepository: MembersRepository) {}
+  constructor(private createMembers: CreateMembers, private listMembers: ListMembers) {}
 
   @Get()
   async getMembers(): Promise<CompleteMember[]> {
-    const members = await this.membersRepository.findMembers();
+    const members = await this.listMembers.execute();
 
     return members;
   }
 
   @Post()
-  async postMembers(@Body() { type, ...body }: CreateMemberDTO) {
-    if (type === "decano" || type === "founder") {
-      const existingUser = await this.membersRepository.findByType(type);
-
-      if (existingUser) {
-        throw new HttpException("There is already a decano/founder", HttpStatus.FORBIDDEN);
-      }
-    }
-
-    const user = await this.membersRepository.create({ ...body, type });
+  async postMembers(@Body() body: CreateMemberDTO) {
+    const user = await this.createMembers.execute(body);
 
     return user;
   }
