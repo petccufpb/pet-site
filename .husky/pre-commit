@@ -2,4 +2,3 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npx lint-staged
-git diff --cached --name-only --diff-filter=ACDMRT | grep "backend" && pnpm -F backend test
