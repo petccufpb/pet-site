@@ -1,5 +1,4 @@
 import { Inter } from "next/font/google";
-import Image from "next/image";
 import { FaChevronUp, FaGithubAlt, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 
 import Petrucio from "@assets/petrucio.svg";

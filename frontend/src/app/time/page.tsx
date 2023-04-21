@@ -1,6 +1,6 @@
 "use client";
 
-import FotoTime from "../assets/foto-time.jpg";
+import FotoTime from "../../assets/foto-time.jpg";
 
 import { MemberList } from "./components/MemberList";
 import { PhotoBubble } from "./components/PhotoBubble";

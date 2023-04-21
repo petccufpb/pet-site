@@ -16,7 +16,7 @@ export const PETHeader = styled.header`
 
 export const RouteList = styled.ul`
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-auto-flow: column;
   grid-column-gap: 1rem;
 `;
 
@@ -32,7 +32,7 @@ export const Route = styled.div`
 `;
 
 export const RouteLink = styled(Link)<{ tab: string }>`
-  font-weight: ${props => (props.tab == props.href ? "800" : "normal")};
+  font-weight: ${props => (props.tab == props.href ? "bold" : "normal")};
   color: ${({ theme }) => theme.colors["base-white"]};
   text-align: center;
   text-decoration: none;

@@ -1,12 +1,15 @@
 "use client";
-import { Inter, Lexend } from "next/font/google";
+import { Lexend } from "next/font/google";
 import { PropsWithChildren } from "react";
 import { ThemeProvider } from "styled-components";
+
+import StyledComponentsRegistry from "@components/registry";
 
 import { GlobalStyle } from "@styles/global";
 import defaultTheme from "@styles/theme/default";
 
 import "@styles/global";
+
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { LayoutContainer } from "../styles/layout";
@@ -23,8 +26,10 @@ export default function RootLayout({ children }: PropsWithChildren) {
         </head>
         <body className={`${lexend.className}`}>
           <LayoutContainer>
-            <Header />
-            {children}
+            <StyledComponentsRegistry>
+              <Header />
+              {children}
+            </StyledComponentsRegistry>
           </LayoutContainer>
           <Footer />
         </body>

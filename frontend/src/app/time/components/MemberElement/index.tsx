@@ -38,7 +38,7 @@ export function MemberElement({ member, tutor }: { member: Member; tutor?: boole
     };
   } else {
     colorTheme = {
-      color: defaultTheme.colors["base-red"],
+      color: defaultTheme.colors["second-red"],
       gradient: defaultTheme.colors["gradient-red"],
     };
   }
