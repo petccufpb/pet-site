@@ -19,21 +19,22 @@ export const GlobalStyle = createGlobalStyle`
                 background: ${({ theme }) => theme.colors["base-blue"]};
         }
     }
-    body{
+    body {
         background: ${({ theme }) => theme.colors["second-blue"]};
         color: ${({ theme }) => theme.colors["base-white"]};
         -webkit-font-smoothing: antialiased;
+        position: relative;
     }
-    body, input, textarea, button{
+    body, input, textarea, button {
         font-family: ${({ theme }) => theme.fonts.regular};
         font-weight: 400;
         font-size: 1rem;
         overflow-x: hidden;
     }
-    button{
+    button {
         cursor: pointer;
     }
-    a{
+    a {
         text-decoration: none;
     }
 `;

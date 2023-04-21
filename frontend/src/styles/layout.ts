@@ -1,8 +1,7 @@
 "use client";
 import styled from "styled-components";
 
-export const LayoutContainer = styled.main`
-  background: ${({ theme }) => theme.colors["second-blue"]};
+export const LayoutContainer = styled.div`
   width: 100%;
   max-width: 70rem;
   min-height: 100vh;

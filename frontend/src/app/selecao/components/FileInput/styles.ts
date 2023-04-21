@@ -12,8 +12,8 @@ export const Container = styled.div<{
   background: linear-gradient(to right, ${({ theme }) => theme.colors["fourth-blue"]}, transparent);
   outline: 2px dashed
     ${({ theme, isDragActive }) => (isDragActive ? theme.colors["base-white"] : theme.colors["base-grey"])};
-  padding: 0.9rem;
-  border-radius: 0.3rem;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
   color: ${({ isDragActive, theme }) =>
     isDragActive ? theme.colors["base-white"] : theme.colors["base-grey"]};
   position: relative;
