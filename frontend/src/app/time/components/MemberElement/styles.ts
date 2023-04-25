@@ -39,13 +39,14 @@ export const MemberInfo = styled.div`
   display: grid;
   width: 100%;
   align-items: center;
-  gap: 0.5rem;
   padding: 0.2rem 0 0.2rem 0;
 `;
 
 export const Divider = styled.div<{ colorTheme: MemberColorTheme }>`
   border: none;
   border-top: 1px solid ${({ colorTheme }) => colorTheme.color};
+  margin-bottom: 0.3rem;
+  margin-right: 0.5rem;
 `;
 
 export const SocialMediaIcons = styled.div<{ colorTheme: MemberColorTheme }>`
@@ -63,10 +64,9 @@ export const SocialMediaIcons = styled.div<{ colorTheme: MemberColorTheme }>`
 export const QuestionMark = styled.div`
   margin-left: auto;
   position: relative;
-  cursor: pointer;
 
   svg {
-    color: ${({ theme }) => theme.colors["second-white"]};
+    color: ${({ theme }) => theme.colors["second-grey"]};
   }
 
   small {
@@ -89,4 +89,10 @@ export const QuestionMark = styled.div`
       transform: translateX(-50%) translateY(0);
     }
   }
+`;
+
+export const MemberDescription = styled.div`
+  padding-left: 0.1rem;
+  display: grid;
+  gap: 0.1rem;
 `;

@@ -120,20 +120,19 @@ export const Warning = styled.div`
 `;
 
 export const SendButton = styled.button<{ canSend: boolean }>`
-  display: inline-flex;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
   place-items: center;
-  padding: 0.7rem 3rem;
+  padding: 0.9rem 3rem;
   border-radius: 0.3rem;
+  border: none;
   background: ${({ theme }) => theme.colors["third-black"]};
   color: ${({ theme, canSend }) => (canSend ? theme.colors["base-green"] : theme.colors["base-grey"])};
   font-weight: 600;
   margin: 0 auto;
   cursor: ${({ canSend }) => (canSend ? "pointer" : "default")};
   transition: color 200ms ease-in-out;
-
-  svg {
-    margin-right: 1rem;
-  }
 `;
 
 export const FormSection = styled.div`

@@ -20,7 +20,7 @@ export default function Time() {
         </DescriptionContainer>
       </PhotoContainer>
       <div>
-        <MemberList type="tutors" />
+        <MemberList type="tutor" />
         <MemberList type="members" />
       </div>
     </Content>

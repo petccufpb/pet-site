@@ -5,6 +5,8 @@ import { ThemeProvider } from "styled-components";
 
 import StyledComponentsRegistry from "@components/registry";
 
+import Fishes from "@assets/fish.svg";
+
 import { GlobalStyle } from "@styles/global";
 import defaultTheme from "@styles/theme/default";
 
@@ -12,7 +14,7 @@ import "@styles/global";
 
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
-import { LayoutContainer } from "../styles/layout";
+import { Background, ContainerForBackground, LayoutContainer } from "../styles/layout";
 
 const lexend = Lexend({ subsets: ["latin"] });
 
@@ -26,12 +28,17 @@ export default function RootLayout({ children }: PropsWithChildren) {
           <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         </head>
         <body className={`${lexend.className}`}>
-          <LayoutContainer>
-            <StyledComponentsRegistry>
-              <Header />
-              <main>{children}</main>
-            </StyledComponentsRegistry>
-          </LayoutContainer>
+          <ContainerForBackground>
+            <Background>
+              <Fishes />
+            </Background>
+            <LayoutContainer>
+              <StyledComponentsRegistry>
+                <Header />
+                <main>{children}</main>
+              </StyledComponentsRegistry>
+            </LayoutContainer>
+          </ContainerForBackground>
           <Footer />
         </body>
       </html>

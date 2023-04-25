@@ -23,7 +23,6 @@ export const GlobalStyle = createGlobalStyle`
         background: ${({ theme }) => theme.colors["second-blue"]};
         color: ${({ theme }) => theme.colors["base-white"]};
         -webkit-font-smoothing: antialiased;
-        position: relative;
     }
     body, input, textarea, button {
         font-family: ${({ theme }) => theme.fonts.regular};

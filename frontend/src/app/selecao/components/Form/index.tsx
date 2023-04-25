@@ -20,10 +20,18 @@ import {
 
 const inter = Inter({ subsets: ["latin"] });
 
+// Função que checa se o CPF é válido através
+// dos últimos 2 dígitos de validação.
 const cpfSchema = z.string().refine(val => {
   const cpf = val.replace(/[^\d]+/g, "");
 
   if (cpf.length !== 11) return false;
+
+  // Os CPFs "111.111.111-11", "222.222.222-22"... todos passam o teste dos últimos dígitos.
+  // Todavia, são CPFs que não pertencem à ninguém - inválidos.
+  // Essa linha irá checar se todos os dígitos do CPF são iguais e, caso verdadeiro,
+  // o marcando como inválido.
+  if (cpf.split("").filter(d => d === cpf[0]).length === 11) return false;
 
   let add = 0;
   for (let i = 0; i < 9; i++) {
@@ -44,6 +52,8 @@ const cpfSchema = z.string().refine(val => {
   return true;
 });
 
+// Função para checar se o nome possui mais de uma palavra.
+// (para evitar que seja colocado apenas o 1º nome).
 const nameSchema = z.string().refine(val => {
   const split = val.split(" ");
 
@@ -98,6 +108,9 @@ export function SelecaoForm() {
     }
   }
 
+  // Sempre que algum dos campos tiver uma mudança no valor,
+  // checar se TODOS são válidos e, por fim, se estiverem,
+  // permitir o envio do form.
   useEffect(() => {
     for (const file of Object.values(filesToUpload)) {
       if (!file) {

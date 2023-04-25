@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 export const ContentContainer = styled.div`
   background-color: ${({ theme }) => theme.colors["second-black"]};
+  z-index: 1;
 `;
 
 export const Content = styled.div`

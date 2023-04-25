@@ -6,9 +6,9 @@ import api from "@api";
 import { MemberElement } from "../MemberElement";
 import { LoadingIcon, LoadingIconContainer, Members, SectionTitle } from "./styles";
 
-export function MemberList({ type }: { type: "members" | "tutors" }) {
+export function MemberList({ type }: { type: "members" | "tutor" | "founder" }) {
   const route = type === "members" ? "/team/members" : "/team/tutors";
-  const titles = type === "members" ? ["Membros Ativos", "Membros Inativos"] : ["Tutores"];
+  const titles = type === "members" ? ["Membros Ativos", "Membros Inativos"] : ["Fundador", "Tutor"];
 
   const { data, error, isLoading } = useFetch(route, api);
 
@@ -61,11 +61,20 @@ export function MemberList({ type }: { type: "members" | "tutors" }) {
       </div>
     );
   } else {
+    const founder = members.filter(m => m.type === "founder");
+    const tutor = members.filter(m => m.type === "tutor");
+
     return (
       <div>
         <SectionTitle>{titles[0]}</SectionTitle>
         <Members>
-          {members.map((member: Member) => (
+          {founder.map((member: Member) => (
+            <MemberElement member={member} founder={true} key={member.id} />
+          ))}
+        </Members>
+        <SectionTitle>{titles[1]}</SectionTitle>
+        <Members>
+          {tutor.map((member: Member) => (
             <MemberElement member={member} tutor={true} key={member.id} />
           ))}
         </Members>

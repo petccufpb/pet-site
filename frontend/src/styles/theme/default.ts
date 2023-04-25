@@ -14,6 +14,7 @@ const defaultTheme = {
     "third-blue": "#73E5E2",
     "fourth-blue": "#010027",
     "base-grey": "#737380",
+    "second-grey": "#505057",
     "gradient-blue": "linear-gradient(to bottom, #73E5E2, #3D66BC)",
     "base-green": "#04D361",
     "gradient-green": "linear-gradient(to bottom, #04D361, #0F3924)",
@@ -21,6 +22,7 @@ const defaultTheme = {
     "second-red": "#ED6CA4",
     "third-red": "#FF3333",
     "gradient-red": "linear-gradient(to bottom, #ED6CA4, #A43E6A)",
+    "second-gradient-red": "linear-gradient(to bottom, #CE4A4A, #b43131)",
   },
   fonts: {
     regular: "'Lexend'",
