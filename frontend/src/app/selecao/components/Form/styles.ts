@@ -5,8 +5,8 @@ import styled from "styled-components";
 
 export const Content = styled.div`
   border-radius: 1rem;
-  width: 100%;
-  height: 100%;
+  width: 31rem;
+  max-height: 42rem;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), transparent 70%);
   display: grid;
   padding: 3rem;
@@ -16,6 +16,7 @@ export const Content = styled.div`
   z-index: 1;
   box-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, 0.3);
   border: auto 0;
+  margin: auto;
 
   ::before {
     z-index: -1;

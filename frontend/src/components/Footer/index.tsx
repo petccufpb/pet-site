@@ -1,4 +1,5 @@
 import { Inter } from "next/font/google";
+import { usePathname } from "next/navigation";
 import { FaChevronUp, FaGithubAlt, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 
 import Petrucio from "@assets/petrucio.svg";
@@ -20,8 +21,10 @@ import {
 const inter = Inter({ subsets: ["latin"] });
 
 export function Footer() {
+  const pathname = usePathname();
+
   return (
-    <ContentContainer className={inter.className}>
+    <ContentContainer className={inter.className} pathname={pathname}>
       <Content>
         <PETBranding>
           <Flex>

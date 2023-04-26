@@ -8,14 +8,14 @@ export const LayoutContainer = styled.div`
   margin-right: auto;
   margin-left: auto;
   display: grid;
-  position: relative;
+  grid-template-rows: auto 1fr;
 
   @media (max-width: 70rem) {
     padding: 0 1rem;
   }
 `;
 
-export const Background = styled.div`
+export const Background = styled.div<{ pathname: string }>`
   width: 100vw;
   height: 100%;
   position: absolute;
@@ -24,6 +24,7 @@ export const Background = styled.div`
   bottom: 0;
 
   overflow: hidden;
+  display: ${({ pathname }) => (pathname === "/sdc" ? "none" : "block")};
 
   svg {
     position: absolute;

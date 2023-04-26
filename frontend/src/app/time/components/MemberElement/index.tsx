@@ -70,7 +70,7 @@ export function MemberElement({
         <MemberDescription>
           <h3>{member.name}</h3>
           <MemberTypeContainer>
-            <MemberType tutor={tutor} member={member} />
+            <MemberType member={member} />
             <QuestionMark>
               <FaQuestionCircle />
               <small>{member.about}</small>

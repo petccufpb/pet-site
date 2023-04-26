@@ -2,7 +2,7 @@
 
 import { createGlobalStyle } from "styled-components";
 
-export const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
     * {
         margin: 0;
         padding: 0;
@@ -20,7 +20,8 @@ export const GlobalStyle = createGlobalStyle`
         }
     }
     body {
-        background: ${({ theme }) => theme.colors["second-blue"]};
+        background: ${({ theme, pathname }) =>
+          pathname === "/sdc" ? theme.colors.sdc["background"] : theme.colors["second-blue"]};
         color: ${({ theme }) => theme.colors["base-white"]};
         -webkit-font-smoothing: antialiased;
     }

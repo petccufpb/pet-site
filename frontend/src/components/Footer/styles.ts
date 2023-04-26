@@ -2,9 +2,10 @@
 
 import styled from "styled-components";
 
-export const ContentContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors["second-black"]};
+export const ContentContainer = styled.div<{ pathname: string }>`
   z-index: 1;
+  background-color: ${({ theme, pathname }) =>
+    pathname === "/sdc" ? "transparent" : theme.colors["second-black"]};
 `;
 
 export const Content = styled.div`

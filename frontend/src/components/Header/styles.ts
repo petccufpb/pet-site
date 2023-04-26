@@ -44,7 +44,7 @@ export const RouteLink = styled(Link)<{ tab: string }>`
     content: "";
     display: ${props => (props.tab == props.href ? "block" : "none")};
     position: absolute;
-    width: 15%;
+    width: 1rem;
     bottom: -0.5rem;
     height: 4px;
     border-radius: 3rem;

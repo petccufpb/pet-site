@@ -1,6 +1,6 @@
 "use client";
 import { Lexend } from "next/font/google";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 
 import StyledComponentsRegistry from "@components/registry";
@@ -16,12 +16,16 @@ import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { Background, ContainerForBackground, LayoutContainer } from "../styles/layout";
 
+import { usePathname } from "next/navigation";
+
 const lexend = Lexend({ subsets: ["latin"] });
 
 export default function RootLayout({ children }: PropsWithChildren) {
+  const pathname = usePathname();
+
   return (
     <ThemeProvider theme={defaultTheme}>
-      <GlobalStyle />
+      <GlobalStyle pathname={pathname} />
       <html lang="pt-br">
         <head>
           <title>PET Computação</title>
@@ -29,7 +33,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
         </head>
         <body className={`${lexend.className}`}>
           <ContainerForBackground>
-            <Background>
+            <Background pathname={pathname}>
               <Fishes />
             </Background>
             <LayoutContainer>
