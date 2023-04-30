@@ -10,6 +10,14 @@ const config: Config = {
   collectCoverageFrom: ["src/modules/**/infra/http/controllers/*.(j|t)s", "src/modules/**/services/*.(j|t)s"],
   coverageDirectory: "coverage",
   coverageReporters: ["text-summary", "lcov"],
+  // coverageThreshold: {
+  //   global: {
+  //     branches: 100,
+  //     functions: 80,
+  //     lines: 80,
+  //     statements: 80,
+  //   },
+  // },
   moduleDirectories: ["node_modules", "src"],
   moduleFileExtensions: ["js", "json", "ts"],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: "<rootDir>/src/" }),
