@@ -1,7 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { Project } from "@prisma/client";
+import { Project, ProjectEdition } from "@prisma/client";
 
 import { PrismaService } from "@database/prisma.service";
+import { CreateEditionDTO } from "@modules/projects/dtos/CreateEdition.dto";
 import { CreateProjectDTO } from "@modules/projects/dtos/CreateProject.dto";
 import { ProjectsRepository } from "@modules/projects/repositories/projects.repository";
 
@@ -15,6 +16,14 @@ export class PrismaProjectsRepository implements ProjectsRepository {
     });
 
     return project;
+  }
+
+  public async createEdition(data: CreateEditionDTO): Promise<ProjectEdition> {
+    const edition = await this.prisma.projectEdition.create({
+      data,
+    });
+
+    return edition;
   }
 
   public async findByTitle(title: string): Promise<Project | null> {

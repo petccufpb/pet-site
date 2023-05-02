@@ -1,13 +1,15 @@
 import { Injectable } from "@nestjs/common";
-import { Project } from "@prisma/client";
+import { Project, ProjectEdition } from "@prisma/client";
 import { randomUUID } from "crypto";
 
+import { CreateEditionDTO } from "@modules/projects/dtos/CreateEdition.dto";
 import { CreateProjectDTO } from "@modules/projects/dtos/CreateProject.dto";
 
 import { ProjectsRepository } from "../projects.repository";
 
 @Injectable()
 export class FakeProjectsRepository implements ProjectsRepository {
+  private editions: ProjectEdition[] = [];
   private projects: Project[] = [];
 
   async create({ about, logoUrl, ...data }: CreateProjectDTO): Promise<Project> {
@@ -23,6 +25,21 @@ export class FakeProjectsRepository implements ProjectsRepository {
     this.projects.push(project);
 
     return project;
+  }
+
+  async createEdition({ name, number, ...data }: CreateEditionDTO): Promise<ProjectEdition> {
+    const edition = {
+      ...data,
+      name: name || "",
+      number: number || 1,
+      id: randomUUID(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    this.editions.push(edition);
+
+    return edition;
   }
 
   async findByTitle(title: string): Promise<Project | null> {

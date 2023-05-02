@@ -33,10 +33,21 @@ model MemberContact {
 }
 
 model Project {
-    id        String   @id @default(uuid())
+    id        String           @id @default(uuid())
     title     String
     about     String?
     logoUrl   String?
+    editions  ProjectEdition[]
+    createdAt DateTime         @default(now())
+    updatedAt DateTime         @updatedAt
+}
+
+model ProjectEdition {
+    id        String @id @default(uuid())
+    name      String?
+    number    Float
+    projectId String
+    project   Project  @relation(fields: [projectId], references: [id])
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
