@@ -22,6 +22,7 @@ describe("CreateParticipation", () => {
       endTime: new Date(),
       name: "Test Event",
       startTime: new Date(),
+      type: "side",
     });
     participant = await fakeProjectsRepository.createParticipant({
       age: 1,

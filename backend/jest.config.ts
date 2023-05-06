@@ -8,6 +8,10 @@ const config: Config = {
   clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: [
+    "!*",
+    "!**/*.(json)",
+    "!coverage/**/*",
+    "!dist/**/*",
     "!src/*.(js|ts)",
     "!src/database/*.(js|ts)",
     "!src/decorators/*.(js|ts)",
@@ -15,6 +19,7 @@ const config: Config = {
     "!src/modules/**/dtos/*.(js|ts)",
     "!src/modules/**/repositories/**/*.(js|ts)",
     "!src/modules/**/infra/http/controllers/*.(js|ts)",
+    "!typings/**/*",
   ],
   coverageDirectory: "coverage",
   coverageReporters: ["text-summary", "lcov"],

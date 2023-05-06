@@ -25,6 +25,7 @@ describe("CreateEvent", () => {
         name: "Test Event",
         onSite: true,
         startTime: new Date(),
+        type: "main",
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });
@@ -41,6 +42,7 @@ describe("CreateEvent", () => {
         name: "Test Event",
         onSite: true,
         startTime,
+        type: "main",
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });
@@ -58,6 +60,7 @@ describe("CreateEvent", () => {
         name: "Test Event",
         onSite: true,
         startTime,
+        type: "main",
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });
@@ -71,6 +74,7 @@ describe("CreateEvent", () => {
       name: "Test Event",
       onSite: true,
       startTime: new Date(),
+      type: "main",
     });
 
     expect(event).toHaveProperty("id");
@@ -84,6 +88,7 @@ describe("CreateEvent", () => {
       name: "Test Event",
       onSite: true,
       startTime: new Date(),
+      type: "main",
     });
 
     expect(event).toHaveProperty("id");
@@ -97,6 +102,7 @@ describe("CreateEvent", () => {
         name: "Test Event",
         onSite: true,
         startTime: new Date(),
+        type: "main",
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });
@@ -110,6 +116,7 @@ describe("CreateEvent", () => {
       name: "Test Event",
       onSite: false,
       startTime: new Date(),
+      type: "side",
     });
 
     expect(event).toHaveProperty("id");
@@ -123,6 +130,7 @@ describe("CreateEvent", () => {
       name: "Test Event",
       onSite: false,
       startTime: new Date(),
+      type: "side",
     });
 
     expect(event).toHaveProperty("id");
@@ -135,6 +143,7 @@ describe("CreateEvent", () => {
       name: "Test Event",
       onSite: false,
       startTime: new Date(),
+      type: "side",
     });
 
     expect(event).toHaveProperty("id");
@@ -148,6 +157,7 @@ describe("CreateEvent", () => {
       name: "Test Event",
       onSite: true,
       startTime: new Date(),
+      type: "main",
     });
 
     await expect(
@@ -158,6 +168,7 @@ describe("CreateEvent", () => {
         name: "Test Event",
         onSite: true,
         startTime: new Date(),
+        type: "main",
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });

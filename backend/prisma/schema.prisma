@@ -58,6 +58,7 @@ model ProjectEdition {
 model ProjectEvent {
     id           String                 @id @default(uuid())
     name         String
+    type         String
     capacity     Int?
     onSite       Boolean                @default(true)
     location     String?
