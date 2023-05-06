@@ -43,11 +43,36 @@ model Project {
 }
 
 model ProjectEdition {
-    id        String @id @default(uuid())
-    name      String?
-    number    Float
-    projectId String
-    project   Project  @relation(fields: [projectId], references: [id])
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    id           String                 @id @default(uuid())
+    name         String?
+    number       Float
+    participants ProjectParticipation[]
+    projectId    String
+    project      Project                @relation(fields: [projectId], references: [id])
+    createdAt    DateTime               @default(now())
+    updatedAt    DateTime               @updatedAt
+}
+
+model ProjectParticipation {
+    id            String             @id @default(uuid())
+    editionId     String
+    edition       ProjectEdition    @relation(fields: [editionId], references: [id])
+    participantId String
+    participant   ProjectParticipant @relation(fields: [participantId], references: [id])
+    createdAt     DateTime           @default(now())
+    updatedAt     DateTime           @updatedAt
+}
+
+model ProjectParticipant {
+    id                   String                 @id @default(uuid())
+    name                 String
+    email                String                 @unique
+    age                  Int
+    phoneNumber          String                 @unique
+    matricula            Int                    @unique
+    course               String
+    university           String
+    projectsParticipated ProjectParticipation[]
+    createdAt            DateTime               @default(now())
+    updatedAt            DateTime               @updatedAt
 }

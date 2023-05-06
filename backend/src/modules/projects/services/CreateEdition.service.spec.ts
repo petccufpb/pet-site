@@ -1,5 +1,3 @@
-import { HttpException } from "@nestjs/common";
-
 import { FakeProjectsRepository } from "../repositories/fakes/projects.repository";
 import { CreateEdition } from "./CreateEdition.service";
 

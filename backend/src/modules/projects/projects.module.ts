@@ -5,6 +5,9 @@ import { PrismaService } from "@database/prisma.service";
 import ProjectsController from "./infra/http/controllers/projects.controller";
 import { PrismaProjectsRepository } from "./infra/prisma/repositories/projects.repository";
 import { ProjectsRepository } from "./repositories/projects.repository";
+import { CreateEdition } from "./services/CreateEdition.service";
+import { CreateParticipant } from "./services/CreateParticipant.service";
+import { CreateParticipation } from "./services/CreateParticipation.service";
 import { CreateProject } from "./services/CreateProject.service";
 
 @Module({
@@ -15,7 +18,7 @@ import { CreateProject } from "./services/CreateProject.service";
       provide: ProjectsRepository,
       useClass: PrismaProjectsRepository,
     },
-    ...[CreateProject],
+    ...[CreateEdition, CreateParticipant, CreateParticipation, CreateProject],
   ],
 })
 export class ProjectsModule {}

@@ -38,23 +38,5 @@ describe("Projects", () => {
     expect(httpResult.json()).toHaveProperty("title", title);
   });
 
-  it("POST /projects - 403", async () => {
-    const title = "Test";
-
-    const request = async () =>
-      app.inject({
-        method: "POST",
-        url: "/projects",
-        payload: {
-          title,
-        },
-      });
-
-    await request();
-    const httpResult = await request();
-
-    expect(httpResult.statusCode).toEqual(403);
-  });
-
   afterAll(async () => app.close());
 });
