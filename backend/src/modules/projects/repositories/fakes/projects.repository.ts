@@ -5,6 +5,7 @@ import {
   ProjectEvent,
   ProjectParticipant,
   ProjectParticipation,
+  ProjectSpeaker,
 } from "@prisma/client";
 import { randomUUID } from "crypto";
 import { isSameHour, isSameMinute } from "date-fns";
@@ -13,6 +14,7 @@ import { CreateEditionDTO } from "@modules/projects/dtos/CreateEdition.dto";
 import { CreateEventDTO } from "@modules/projects/dtos/CreateEvent.dto";
 import { CreateParticipantDTO } from "@modules/projects/dtos/CreateParticipant.dto";
 import { CreateProjectDTO } from "@modules/projects/dtos/CreateProject.dto";
+import { CreateSpeakerDTO } from "@modules/projects/dtos/CreateSpeaker.dto";
 
 import { CreateRepoParticipation, FindExistingEventDTO, ProjectsRepository } from "../projects.repository";
 
@@ -23,8 +25,9 @@ export class FakeProjectsRepository implements ProjectsRepository {
   private participants: ProjectParticipant[] = [];
   private participations: ProjectParticipation[] = [];
   private projects: Project[] = [];
+  private speakers: ProjectSpeaker[] = [];
 
-  async create({ about, logoUrl, ...data }: CreateProjectDTO): Promise<Project> {
+  public async create({ about, logoUrl, ...data }: CreateProjectDTO): Promise<Project> {
     const project = {
       ...data,
       about: about || "",
@@ -39,7 +42,7 @@ export class FakeProjectsRepository implements ProjectsRepository {
     return project;
   }
 
-  async createEdition({ name, number, ...data }: CreateEditionDTO): Promise<ProjectEdition> {
+  public async createEdition({ name, number, ...data }: CreateEditionDTO): Promise<ProjectEdition> {
     const edition = {
       ...data,
       name: name || "",
@@ -54,7 +57,7 @@ export class FakeProjectsRepository implements ProjectsRepository {
     return edition;
   }
 
-  async createEvent({ capacity, location, onSite, ...data }: CreateEventDTO): Promise<ProjectEvent> {
+  public async createEvent({ capacity, location, onSite, ...data }: CreateEventDTO): Promise<ProjectEvent> {
     const event = {
       ...data,
       capacity: capacity || null,
@@ -70,7 +73,7 @@ export class FakeProjectsRepository implements ProjectsRepository {
     return event;
   }
 
-  async createParticipant(data: CreateParticipantDTO): Promise<ProjectParticipant> {
+  public async createParticipant(data: CreateParticipantDTO): Promise<ProjectParticipant> {
     const participant = {
       ...data,
       id: randomUUID(),
@@ -83,7 +86,7 @@ export class FakeProjectsRepository implements ProjectsRepository {
     return participant;
   }
 
-  async createParticipation({
+  public async createParticipation({
     editionId,
     eventId,
     ...data
@@ -102,68 +105,90 @@ export class FakeProjectsRepository implements ProjectsRepository {
     return participation;
   }
 
-  async findByTitle(title: string): Promise<Project | null> {
-    const project = this.projects.find(project => project.title === title) as Project | null;
+  public async createSpeaker(data: CreateSpeakerDTO): Promise<ProjectSpeaker> {
+    const speaker = {
+      ...data,
+      id: randomUUID(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    this.speakers.push(speaker);
+
+    return speaker;
+  }
+
+  public async findByTitle(title: string): Promise<Project | null> {
+    const project = this.projects.find(project => project.title === title) || null;
 
     return project;
   }
 
-  async findEditionById(id: string): Promise<ProjectEdition | null> {
-    const edition = this.editions.find(edition => edition.id === id) as ProjectEdition | null;
+  public async findEditionById(id: string): Promise<ProjectEdition | null> {
+    const edition = this.editions.find(edition => edition.id === id) || null;
 
     return edition;
   }
 
-  async findExistingEvent({
+  public async findExistingEvent({
     editionId,
     location,
     startTime,
   }: FindExistingEventDTO): Promise<ProjectEvent | null> {
-    const event = this.events.find(
-      event =>
-        event.editionId === editionId &&
-        event.location === location &&
-        isSameHour(event.startTime, startTime) &&
-        isSameMinute(event.startTime, startTime),
-    ) as ProjectEvent | null;
+    const event =
+      this.events.find(
+        event =>
+          event.editionId === editionId &&
+          event.location === location &&
+          isSameHour(event.startTime, startTime) &&
+          isSameMinute(event.startTime, startTime),
+      ) || null;
 
     return event;
   }
 
-  async findParticipantByEmail(email: string): Promise<ProjectParticipant | null> {
-    const participant = this.participants.find(
-      participant => participant.email === email,
-    ) as ProjectParticipant | null;
+  public async findParticipantByEmail(email: string): Promise<ProjectParticipant | null> {
+    const participant = this.participants.find(participant => participant.email === email) || null;
 
     return participant;
   }
 
-  async findParticipantByMatricula(matricula: number): Promise<ProjectParticipant | null> {
-    const participant = this.participants.find(
-      participant => participant.matricula === matricula,
-    ) as ProjectParticipant | null;
+  public async findParticipantByMatricula(matricula: number): Promise<ProjectParticipant | null> {
+    const participant = this.participants.find(participant => participant.matricula === matricula) || null;
 
     return participant;
   }
 
-  async findParticipantByPhone(phoneNumber: string): Promise<ProjectParticipant | null> {
-    const participant = this.participants.find(
-      participant => participant.phoneNumber === phoneNumber,
-    ) as ProjectParticipant | null;
+  public async findParticipantByPhone(phoneNumber: string): Promise<ProjectParticipant | null> {
+    const participant =
+      this.participants.find(participant => participant.phoneNumber === phoneNumber) || null;
 
     return participant;
   }
 
-  async findSameParticipation({
+  public async findSpeakerByEmail(email: string): Promise<ProjectSpeaker | null> {
+    const speaker = this.speakers.find(speaker => speaker.email === email) || null;
+
+    return speaker;
+  }
+
+  public async findSpeakerById(id: string): Promise<ProjectSpeaker | null> {
+    const speaker = this.speakers.find(speaker => speaker.id === id) || null;
+
+    return speaker;
+  }
+
+  public async findSameParticipation({
     editionId,
     eventId,
     participantId,
   }: CreateRepoParticipation): Promise<ProjectParticipation | null> {
-    const participation = this.participations.find(
-      participation =>
-        participation.participantId === participantId &&
-        (participation.editionId === editionId || participation.eventId === eventId),
-    ) as ProjectParticipation | null;
+    const participation =
+      this.participations.find(
+        participation =>
+          participation.participantId === participantId &&
+          (participation.editionId === editionId || participation.eventId === eventId),
+      ) || null;
 
     return participation;
   }

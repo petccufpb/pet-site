@@ -30,6 +30,11 @@ export class CreateEventDTO implements Partial<ProjectEvent> {
   onSite?: boolean;
 
   @IsNotEmpty()
+  @IsString()
+  @IsUUID()
+  speakerId!: string;
+
+  @IsNotEmpty()
   @IsDate()
   startTime!: Date;
 

@@ -10,6 +10,7 @@ import { CreateEvent } from "./services/CreateEvent.service";
 import { CreateParticipant } from "./services/CreateParticipant.service";
 import { CreateParticipation } from "./services/CreateParticipation.service";
 import { CreateProject } from "./services/CreateProject.service";
+import { CreateSpeaker } from "./services/CreateSpeaker.service";
 
 @Module({
   controllers: [ProjectsController],
@@ -19,7 +20,7 @@ import { CreateProject } from "./services/CreateProject.service";
       provide: ProjectsRepository,
       useClass: PrismaProjectsRepository,
     },
-    ...[CreateEdition, CreateEvent, CreateParticipant, CreateParticipation, CreateProject],
+    ...[CreateEdition, CreateEvent, CreateParticipant, CreateParticipation, CreateProject, CreateSpeaker],
   ],
 })
 export class ProjectsModule {}

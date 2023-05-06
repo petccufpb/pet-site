@@ -1,5 +1,5 @@
 import { HttpException } from "@nestjs/common";
-import { ProjectEdition } from "@prisma/client";
+import { ProjectEdition, ProjectSpeaker } from "@prisma/client";
 
 import { FakeProjectsRepository } from "../repositories/fakes/projects.repository";
 import { CreateEvent } from "./CreateEvent.service";
@@ -7,6 +7,7 @@ import { CreateEvent } from "./CreateEvent.service";
 describe("CreateEvent", () => {
   let edition: ProjectEdition;
   let service: CreateEvent;
+  let speaker: ProjectSpeaker;
 
   beforeEach(async () => {
     const fakeProjectsRepository = new FakeProjectsRepository();
@@ -14,6 +15,11 @@ describe("CreateEvent", () => {
 
     const { id: projectId } = await fakeProjectsRepository.create({ title: "Test Project" });
     edition = await fakeProjectsRepository.createEdition({ date: new Date(), number: 1, projectId });
+    speaker = await fakeProjectsRepository.createSpeaker({
+      email: "test@gmail.com",
+      name: "Test Speaker",
+      photoUrl: "http://test.com/photo.png",
+    });
   });
 
   it("should not be able to create an event without an edition", async () => {
@@ -24,6 +30,7 @@ describe("CreateEvent", () => {
         location: "Test Room",
         name: "Test Event",
         onSite: true,
+        speakerId: speaker.id,
         startTime: new Date(),
         type: "main",
       }),
@@ -41,6 +48,7 @@ describe("CreateEvent", () => {
         location: "Test Room",
         name: "Test Event",
         onSite: true,
+        speakerId: speaker.id,
         startTime,
         type: "main",
       }),
@@ -59,6 +67,7 @@ describe("CreateEvent", () => {
         location: "Test Room",
         name: "Test Event",
         onSite: true,
+        speakerId: speaker.id,
         startTime,
         type: "main",
       }),
@@ -73,6 +82,7 @@ describe("CreateEvent", () => {
       location: "Test Room",
       name: "Test Event",
       onSite: true,
+      speakerId: speaker.id,
       startTime: new Date(),
       type: "main",
     });
@@ -87,6 +97,7 @@ describe("CreateEvent", () => {
       location: "Test Room",
       name: "Test Event",
       onSite: true,
+      speakerId: speaker.id,
       startTime: new Date(),
       type: "main",
     });
@@ -101,6 +112,7 @@ describe("CreateEvent", () => {
         endTime: new Date(),
         name: "Test Event",
         onSite: true,
+        speakerId: speaker.id,
         startTime: new Date(),
         type: "main",
       }),
@@ -115,6 +127,7 @@ describe("CreateEvent", () => {
       location: "https://meet.google.com/aaa-aaaa-aaa",
       name: "Test Event",
       onSite: false,
+      speakerId: speaker.id,
       startTime: new Date(),
       type: "side",
     });
@@ -129,6 +142,7 @@ describe("CreateEvent", () => {
       location: "https://meet.google.com/aaa-aaaa-aaa",
       name: "Test Event",
       onSite: false,
+      speakerId: speaker.id,
       startTime: new Date(),
       type: "side",
     });
@@ -142,6 +156,7 @@ describe("CreateEvent", () => {
       endTime: new Date(),
       name: "Test Event",
       onSite: false,
+      speakerId: speaker.id,
       startTime: new Date(),
       type: "side",
     });
@@ -156,6 +171,7 @@ describe("CreateEvent", () => {
       location: "Test Room",
       name: "Test Event",
       onSite: true,
+      speakerId: speaker.id,
       startTime: new Date(),
       type: "main",
     });
@@ -167,6 +183,7 @@ describe("CreateEvent", () => {
         location: "Test Room",
         name: "Test Event",
         onSite: true,
+        speakerId: speaker.id,
         startTime: new Date(),
         type: "main",
       }),

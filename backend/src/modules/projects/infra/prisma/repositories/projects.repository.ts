@@ -5,6 +5,7 @@ import {
   ProjectEvent,
   ProjectParticipant,
   ProjectParticipation,
+  ProjectSpeaker,
 } from "@prisma/client";
 
 import { PrismaService } from "@database/prisma.service";
@@ -12,6 +13,7 @@ import { CreateEditionDTO } from "@modules/projects/dtos/CreateEdition.dto";
 import { CreateEventDTO } from "@modules/projects/dtos/CreateEvent.dto";
 import { CreateParticipantDTO } from "@modules/projects/dtos/CreateParticipant.dto";
 import { CreateProjectDTO } from "@modules/projects/dtos/CreateProject.dto";
+import { CreateSpeakerDTO } from "@modules/projects/dtos/CreateSpeaker.dto";
 import {
   CreateRepoParticipation,
   FindExistingEventDTO,
@@ -52,6 +54,12 @@ export class PrismaProjectsRepository implements ProjectsRepository {
     return participation;
   }
 
+  public async createSpeaker(data: CreateSpeakerDTO): Promise<ProjectSpeaker> {
+    const speaker = await this.prisma.projectSpeaker.create({ data });
+
+    return speaker;
+  }
+
   public async findByTitle(title: string): Promise<Project | null> {
     const project = await this.prisma.project.findFirst({
       where: { title },
@@ -77,7 +85,7 @@ export class PrismaProjectsRepository implements ProjectsRepository {
   }
 
   public async findParticipantByEmail(email: string): Promise<ProjectParticipant | null> {
-    const participant = this.prisma.projectParticipant.findFirst({
+    const participant = await this.prisma.projectParticipant.findFirst({
       where: { email },
     });
 
@@ -85,7 +93,7 @@ export class PrismaProjectsRepository implements ProjectsRepository {
   }
 
   public async findParticipantByMatricula(matricula: number): Promise<ProjectParticipant | null> {
-    const participant = this.prisma.projectParticipant.findFirst({
+    const participant = await this.prisma.projectParticipant.findFirst({
       where: { matricula },
     });
 
@@ -93,15 +101,31 @@ export class PrismaProjectsRepository implements ProjectsRepository {
   }
 
   public async findParticipantByPhone(phoneNumber: string): Promise<ProjectParticipant | null> {
-    const participant = this.prisma.projectParticipant.findFirst({
+    const participant = await this.prisma.projectParticipant.findFirst({
       where: { phoneNumber },
     });
 
     return participant;
   }
 
+  public async findSpeakerByEmail(email: string): Promise<ProjectSpeaker | null> {
+    const speaker = await this.prisma.projectSpeaker.findFirst({
+      where: { email },
+    });
+
+    return speaker;
+  }
+
+  public async findSpeakerById(id: string): Promise<ProjectSpeaker | null> {
+    const speaker = await this.prisma.projectSpeaker.findFirst({
+      where: { id },
+    });
+
+    return speaker;
+  }
+
   public async findSameParticipation(where: CreateRepoParticipation): Promise<ProjectParticipation | null> {
-    const participation = this.prisma.projectParticipation.findFirst({ where });
+    const participation = await this.prisma.projectParticipation.findFirst({ where });
 
     return participation;
   }
