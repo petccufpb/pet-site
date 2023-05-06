@@ -84,9 +84,15 @@ export class FakeProjectsRepository implements ProjectsRepository {
     return participant;
   }
 
-  async createParticipation(data: CreateParticipationDTO): Promise<ProjectParticipation> {
+  async createParticipation({
+    editionId,
+    eventId,
+    ...data
+  }: CreateParticipationDTO): Promise<ProjectParticipation> {
     const participation = {
       ...data,
+      editionId: editionId || null,
+      eventId: eventId || null,
       id: randomUUID(),
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -151,10 +157,13 @@ export class FakeProjectsRepository implements ProjectsRepository {
 
   async findSameParticipation({
     editionId,
+    eventId,
     participantId,
   }: CreateParticipationDTO): Promise<ProjectParticipation | null> {
     const participation = this.participations.find(
-      participation => participation.editionId === editionId && participation.participantId === participantId,
+      participation =>
+        participation.participantId === participantId &&
+        (participation.editionId === editionId || participation.eventId === eventId),
     ) as ProjectParticipation | null;
 
     return participation;

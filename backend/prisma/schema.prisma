@@ -56,23 +56,26 @@ model ProjectEdition {
 }
 
 model ProjectEvent {
-    id        String         @id @default(uuid())
-    name      String
-    capacity  Int?
-    onSite    Boolean        @default(true)
-    location  String
-    startTime DateTime
-    endTime   DateTime
-    editionId String
-    edition   ProjectEdition @relation(fields: [editionId], references: [id])
-    createdAt DateTime       @default(now())
-    updatedAt DateTime       @updatedAt
+    id           String         @id @default(uuid())
+    name         String
+    capacity     Int?
+    onSite       Boolean        @default(true)
+    location     String?
+    startTime    DateTime
+    endTime      DateTime
+    participants ProjectParticipation[]
+    editionId    String
+    edition      ProjectEdition @relation(fields: [editionId], references: [id])
+    createdAt    DateTime       @default(now())
+    updatedAt    DateTime       @updatedAt
 }
 
 model ProjectParticipation {
     id            String             @id @default(uuid())
-    editionId     String
-    edition       ProjectEdition    @relation(fields: [editionId], references: [id])
+    editionId     String?
+    edition       ProjectEdition?    @relation(fields: [editionId], references: [id])
+    eventId       String?
+    event         ProjectEvent? @relation(fields: [eventId], references: [id])
     participantId String
     participant   ProjectParticipant @relation(fields: [participantId], references: [id])
     createdAt     DateTime           @default(now())

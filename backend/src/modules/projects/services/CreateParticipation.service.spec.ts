@@ -1,11 +1,12 @@
 import { HttpException } from "@nestjs/common";
-import { ProjectEdition, ProjectParticipant } from "@prisma/client";
+import { ProjectEdition, ProjectEvent, ProjectParticipant } from "@prisma/client";
 
 import { FakeProjectsRepository } from "../repositories/fakes/projects.repository";
 import { CreateParticipation } from "./CreateParticipation.service";
 
 describe("CreateParticipation", () => {
   let edition: ProjectEdition;
+  let event: ProjectEvent;
   let fakeProjectsRepository: FakeProjectsRepository;
   let participant: ProjectParticipant;
   let service: CreateParticipation;
@@ -16,6 +17,12 @@ describe("CreateParticipation", () => {
 
     const { id: projectId } = await fakeProjectsRepository.create({ title: "Test Project" });
     edition = await fakeProjectsRepository.createEdition({ date: new Date(), number: 1, projectId });
+    event = await fakeProjectsRepository.createEvent({
+      editionId: edition.id,
+      endTime: new Date(),
+      name: "Test Event",
+      startTime: new Date(),
+    });
     participant = await fakeProjectsRepository.createParticipant({
       age: 1,
       course: "Test Course",
@@ -27,9 +34,18 @@ describe("CreateParticipation", () => {
     });
   });
 
-  it("should successfully create a participation", async () => {
+  it("should successfully create an edition participation", async () => {
     const participation = await service.execute({
       editionId: edition.id,
+      participantId: participant.id,
+    });
+
+    expect(participation).toHaveProperty("id");
+  });
+
+  it("should successfully create an event participation", async () => {
+    const participation = await service.execute({
+      eventId: event.id,
       participantId: participant.id,
     });
 
@@ -45,6 +61,18 @@ describe("CreateParticipation", () => {
     await expect(
       service.execute({
         editionId: edition.id,
+        participantId: participant.id,
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
+
+    await service.execute({
+      eventId: event.id,
+      participantId: participant.id,
+    });
+
+    await expect(
+      service.execute({
+        eventId: event.id,
         participantId: participant.id,
       }),
     ).rejects.toBeInstanceOf(HttpException);
