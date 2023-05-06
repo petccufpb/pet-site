@@ -4,7 +4,8 @@ import { APP_INTERCEPTOR } from "@nestjs/core";
 import { redisStore } from "cache-manager-redis-yet";
 import type { RedisClientOptions } from "redis";
 
-import { MembersModule } from "./modules/members/members.module";
+import { MembersModule } from "@modules/members/members.module";
+import { ProjectsModule } from "@modules/projects/projects.module";
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { MembersModule } from "./modules/members/members.module";
       ],
     }),
     MembersModule,
+    ProjectsModule,
   ],
   controllers: [],
   providers: [

@@ -15,7 +15,7 @@ describe("CreateParticipation", () => {
     service = new CreateParticipation(fakeProjectsRepository);
 
     const { id: projectId } = await fakeProjectsRepository.create({ title: "Test Project" });
-    edition = await fakeProjectsRepository.createEdition({ number: 1, projectId });
+    edition = await fakeProjectsRepository.createEdition({ date: new Date(), number: 1, projectId });
     participant = await fakeProjectsRepository.createParticipant({
       age: 1,
       course: "Test Course",

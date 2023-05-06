@@ -1,7 +1,7 @@
 import { FakeProjectsRepository } from "../repositories/fakes/projects.repository";
 import { CreateEdition } from "./CreateEdition.service";
 
-describe("CreateProject", () => {
+describe("CreateEdition", () => {
   let fakeProjectsRepository: FakeProjectsRepository;
   let service: CreateEdition;
 
@@ -17,6 +17,7 @@ describe("CreateProject", () => {
 
     const edition = await service.execute({
       projectId,
+      date: new Date(),
       number: 1,
     });
 

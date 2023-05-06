@@ -1,11 +1,19 @@
 import { Body, Controller, Post } from "@nestjs/common";
-import { Project, ProjectEdition, ProjectParticipant, ProjectParticipation } from "@prisma/client";
+import {
+  Project,
+  ProjectEdition,
+  ProjectEvent,
+  ProjectParticipant,
+  ProjectParticipation,
+} from "@prisma/client";
 
 import { CreateEditionDTO } from "@modules/projects/dtos/CreateEdition.dto";
+import { CreateEventDTO } from "@modules/projects/dtos/CreateEvent.dto";
 import { CreateParticipantDTO } from "@modules/projects/dtos/CreateParticipant.dto";
 import { CreateParticipationDTO } from "@modules/projects/dtos/CreateParticipation.dto";
 import { CreateProjectDTO } from "@modules/projects/dtos/CreateProject.dto";
 import { CreateEdition } from "@modules/projects/services/CreateEdition.service";
+import { CreateEvent } from "@modules/projects/services/CreateEvent.service";
 import { CreateParticipant } from "@modules/projects/services/CreateParticipant.service";
 import { CreateParticipation } from "@modules/projects/services/CreateParticipation.service";
 import { CreateProject } from "@modules/projects/services/CreateProject.service";
@@ -14,6 +22,7 @@ import { CreateProject } from "@modules/projects/services/CreateProject.service"
 export default class ProjectsController {
   constructor(
     private createEdition: CreateEdition,
+    private createEvent: CreateEvent,
     private createParticipant: CreateParticipant,
     private createParticipation: CreateParticipation,
     private createProject: CreateProject,
@@ -31,6 +40,13 @@ export default class ProjectsController {
     const edition = await this.createEdition.execute(body);
 
     return edition;
+  }
+
+  @Post("events")
+  async postProjectsEvents(@Body() body: CreateEventDTO): Promise<ProjectEvent> {
+    const event = await this.createEvent.execute(body);
+
+    return event;
   }
 
   @Post("participants")

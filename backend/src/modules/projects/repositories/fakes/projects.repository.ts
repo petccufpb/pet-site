@@ -1,17 +1,26 @@
 import { Injectable } from "@nestjs/common";
-import { Project, ProjectEdition, ProjectParticipant, ProjectParticipation } from "@prisma/client";
+import {
+  Project,
+  ProjectEdition,
+  ProjectEvent,
+  ProjectParticipant,
+  ProjectParticipation,
+} from "@prisma/client";
 import { randomUUID } from "crypto";
+import { isSameHour, isSameMinute } from "date-fns";
 
 import { CreateEditionDTO } from "@modules/projects/dtos/CreateEdition.dto";
+import { CreateEventDTO } from "@modules/projects/dtos/CreateEvent.dto";
 import { CreateParticipantDTO } from "@modules/projects/dtos/CreateParticipant.dto";
 import { CreateParticipationDTO } from "@modules/projects/dtos/CreateParticipation.dto";
 import { CreateProjectDTO } from "@modules/projects/dtos/CreateProject.dto";
 
-import { ProjectsRepository } from "../projects.repository";
+import { FindExistingEventDTO, ProjectsRepository } from "../projects.repository";
 
 @Injectable()
 export class FakeProjectsRepository implements ProjectsRepository {
   private editions: ProjectEdition[] = [];
+  private events: ProjectEvent[] = [];
   private participants: ProjectParticipant[] = [];
   private participations: ProjectParticipation[] = [];
   private projects: Project[] = [];
@@ -46,6 +55,22 @@ export class FakeProjectsRepository implements ProjectsRepository {
     return edition;
   }
 
+  async createEvent({ capacity, location, onSite, ...data }: CreateEventDTO): Promise<ProjectEvent> {
+    const event = {
+      ...data,
+      capacity: capacity || null,
+      location: location || null,
+      onSite: onSite || true,
+      id: randomUUID(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    this.events.push(event);
+
+    return event;
+  }
+
   async createParticipant(data: CreateParticipantDTO): Promise<ProjectParticipant> {
     const participant = {
       ...data,
@@ -76,6 +101,28 @@ export class FakeProjectsRepository implements ProjectsRepository {
     const project = this.projects.find(project => project.title === title) as Project | null;
 
     return project;
+  }
+
+  async findEditionById(id: string): Promise<ProjectEdition | null> {
+    const edition = this.editions.find(edition => edition.id === id) as ProjectEdition | null;
+
+    return edition;
+  }
+
+  async findExistingEvent({
+    editionId,
+    location,
+    startTime,
+  }: FindExistingEventDTO): Promise<ProjectEvent | null> {
+    const event = this.events.find(
+      event =>
+        event.editionId === editionId &&
+        event.location === location &&
+        isSameHour(event.startTime, startTime) &&
+        isSameMinute(event.startTime, startTime),
+    ) as ProjectEvent | null;
+
+    return event;
   }
 
   async findParticipantByEmail(email: string): Promise<ProjectParticipant | null> {

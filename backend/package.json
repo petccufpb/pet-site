@@ -18,6 +18,7 @@
   "dependencies": {
     "@fastify/helmet": "^10.1.0",
     "@fastify/static": "^6.10.0",
+    "@hyoretsu/nest-decorators": "^1.0.2",
     "@nestjs/common": "^9.3.12",
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.3.12",
@@ -28,6 +29,7 @@
     "cache-manager-redis-yet": "^4.1.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "date-fns": "^2.30.0",
     "redis": "^4.6.5",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"

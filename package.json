@@ -14,7 +14,7 @@
       "eslint --fix"
     ],
     "backend/src/**/*.ts": [
-      "npm run -w backend test --bail --findRelatedTests"
+      "pnpm -F backend test -- --bail --findRelatedTests"
     ]
   },
   "devDependencies": {
