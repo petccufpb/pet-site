@@ -11,9 +11,12 @@ import { PrismaService } from "@database/prisma.service";
 import { CreateEditionDTO } from "@modules/projects/dtos/CreateEdition.dto";
 import { CreateEventDTO } from "@modules/projects/dtos/CreateEvent.dto";
 import { CreateParticipantDTO } from "@modules/projects/dtos/CreateParticipant.dto";
-import { CreateParticipationDTO } from "@modules/projects/dtos/CreateParticipation.dto";
 import { CreateProjectDTO } from "@modules/projects/dtos/CreateProject.dto";
-import { FindExistingEventDTO, ProjectsRepository } from "@modules/projects/repositories/projects.repository";
+import {
+  CreateRepoParticipation,
+  FindExistingEventDTO,
+  ProjectsRepository,
+} from "@modules/projects/repositories/projects.repository";
 
 @Injectable()
 export class PrismaProjectsRepository implements ProjectsRepository {
@@ -43,7 +46,7 @@ export class PrismaProjectsRepository implements ProjectsRepository {
     return participant;
   }
 
-  public async createParticipation(data: CreateParticipationDTO): Promise<ProjectParticipation> {
+  public async createParticipation(data: CreateRepoParticipation): Promise<ProjectParticipation> {
     const participation = await this.prisma.projectParticipation.create({ data });
 
     return participation;
@@ -97,7 +100,7 @@ export class PrismaProjectsRepository implements ProjectsRepository {
     return participant;
   }
 
-  public async findSameParticipation(where: CreateParticipationDTO): Promise<ProjectParticipation | null> {
+  public async findSameParticipation(where: CreateRepoParticipation): Promise<ProjectParticipation | null> {
     const participation = this.prisma.projectParticipation.findFirst({ where });
 
     return participation;

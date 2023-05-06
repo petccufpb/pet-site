@@ -12,10 +12,9 @@ import { isSameHour, isSameMinute } from "date-fns";
 import { CreateEditionDTO } from "@modules/projects/dtos/CreateEdition.dto";
 import { CreateEventDTO } from "@modules/projects/dtos/CreateEvent.dto";
 import { CreateParticipantDTO } from "@modules/projects/dtos/CreateParticipant.dto";
-import { CreateParticipationDTO } from "@modules/projects/dtos/CreateParticipation.dto";
 import { CreateProjectDTO } from "@modules/projects/dtos/CreateProject.dto";
 
-import { FindExistingEventDTO, ProjectsRepository } from "../projects.repository";
+import { CreateRepoParticipation, FindExistingEventDTO, ProjectsRepository } from "../projects.repository";
 
 @Injectable()
 export class FakeProjectsRepository implements ProjectsRepository {
@@ -88,7 +87,7 @@ export class FakeProjectsRepository implements ProjectsRepository {
     editionId,
     eventId,
     ...data
-  }: CreateParticipationDTO): Promise<ProjectParticipation> {
+  }: CreateRepoParticipation): Promise<ProjectParticipation> {
     const participation = {
       ...data,
       editionId: editionId || null,
@@ -159,7 +158,7 @@ export class FakeProjectsRepository implements ProjectsRepository {
     editionId,
     eventId,
     participantId,
-  }: CreateParticipationDTO): Promise<ProjectParticipation | null> {
+  }: CreateRepoParticipation): Promise<ProjectParticipation | null> {
     const participation = this.participations.find(
       participation =>
         participation.participantId === participantId &&

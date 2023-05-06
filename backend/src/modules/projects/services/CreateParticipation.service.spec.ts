@@ -34,19 +34,61 @@ describe("CreateParticipation", () => {
     });
   });
 
-  it("should successfully create an edition participation", async () => {
+  it("should be able to create a participation with email", async () => {
     const participation = await service.execute({
       editionId: edition.id,
-      participantId: participant.id,
+      email: "test@gmail.com",
     });
 
     expect(participation).toHaveProperty("id");
   });
 
-  it("should successfully create an event participation", async () => {
+  it("should be able to create a participation with matricula", async () => {
+    const participation = await service.execute({
+      editionId: edition.id,
+      matricula: 20200015280,
+    });
+
+    expect(participation).toHaveProperty("id");
+  });
+
+  it("should not be able to create a participation for a non-existent participant", async () => {
+    await expect(
+      service.execute({
+        editionId: edition.id,
+        email: "test2@gmail.com",
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
+
+    await expect(
+      service.execute({
+        editionId: edition.id,
+        matricula: 20200015281,
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
+  });
+
+  it("should be able to create a participation without email nor matricula", async () => {
+    await expect(
+      service.execute({
+        editionId: edition.id,
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
+  });
+
+  it("should be able to create an edition participation", async () => {
+    const participation = await service.execute({
+      editionId: edition.id,
+      matricula: 20200015280,
+    });
+
+    expect(participation).toHaveProperty("id");
+  });
+
+  it("should be able to create an event participation", async () => {
     const participation = await service.execute({
       eventId: event.id,
-      participantId: participant.id,
+      matricula: 20200015280,
     });
 
     expect(participation).toHaveProperty("id");
@@ -55,25 +97,25 @@ describe("CreateParticipation", () => {
   it("should not be able to create the same participation 2 times", async () => {
     await service.execute({
       editionId: edition.id,
-      participantId: participant.id,
+      matricula: 20200015280,
     });
 
     await expect(
       service.execute({
         editionId: edition.id,
-        participantId: participant.id,
+        matricula: 20200015280,
       }),
     ).rejects.toBeInstanceOf(HttpException);
 
     await service.execute({
       eventId: event.id,
-      participantId: participant.id,
+      matricula: 20200015280,
     });
 
     await expect(
       service.execute({
         eventId: event.id,
-        participantId: participant.id,
+        matricula: 20200015280,
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });
