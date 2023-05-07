@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import {
   Project,
   ProjectAttendance,
+  ProjectCertificate,
   ProjectEdition,
   ProjectEvent,
   ProjectParticipant,
@@ -16,6 +17,9 @@ import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
 import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import ProjectsRepository, {
+  CertificateInfo,
+  CompleteProjectEdition,
+  CompleteProjectEvent,
   CreateRepoAttendance,
   CreateRepoParticipation,
   FindExistingEventDTO,
@@ -29,6 +33,10 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     const attendance = await this.prisma.projectAttendance.create({ data });
 
     return attendance;
+  }
+
+  public async createCertificates(data: CertificateInfo[]): Promise<void> {
+    await this.prisma.projectCertificate.createMany({ data });
   }
 
   public async createEdition(data: CreateEditionDTO): Promise<ProjectEdition> {
@@ -73,17 +81,47 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     return attendance;
   }
 
-  public async findEditionById(id: string): Promise<ProjectEdition | null> {
+  public async findCertificatesByEditionId(editionId: string): Promise<ProjectCertificate[]> {
+    const certificates = await this.prisma.projectCertificate.findMany({
+      where: {
+        editionId,
+        eventId: null,
+      },
+    });
+
+    return certificates;
+  }
+
+  public async findCertificatesByEventId(eventId: string): Promise<ProjectCertificate[]> {
+    const certificates = await this.prisma.projectCertificate.findMany({
+      where: { eventId },
+    });
+
+    return certificates;
+  }
+
+  public async findEditionById(id: string): Promise<CompleteProjectEdition | null> {
     const edition = await this.prisma.projectEdition.findFirst({
       where: { id },
+      include: {
+        certificateTemplate: true,
+        events: {
+          include: {
+            speaker: true,
+          },
+        },
+      },
     });
 
     return edition;
   }
 
-  public async findEventById(id: string): Promise<ProjectEvent | null> {
+  public async findEventById(id: string): Promise<CompleteProjectEvent | null> {
     const event = await this.prisma.projectEvent.findFirst({
       where: { id },
+      include: {
+        speaker: true,
+      },
     });
 
     return event;
@@ -125,6 +163,22 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     const participation = await this.prisma.projectParticipation.findFirst({ where });
 
     return participation;
+  }
+
+  public async findParticipationsByEdition(editionId: string): Promise<ProjectParticipation[]> {
+    const participants = await this.prisma.projectParticipation.findMany({
+      where: { editionId },
+    });
+
+    return participants;
+  }
+
+  public async findParticipationsByEvent(eventId: string): Promise<ProjectParticipation[]> {
+    const participants = await this.prisma.projectParticipation.findMany({
+      where: { eventId },
+    });
+
+    return participants;
   }
 
   public async findProjectByTitle(title: string): Promise<Project | null> {

@@ -52,36 +52,64 @@ model ProjectAttendance {
     updatedAt     DateTime           @updatedAt
 }
 
+model ProjectCertificate {
+    id            String             @id @default(uuid())
+    participantId String
+    participant   ProjectParticipant @relation(fields: [participantId], references: [id])
+    editionId     String
+    edition       ProjectEdition     @relation(fields: [editionId], references: [id])
+    eventId       String?
+    event         ProjectEvent?      @relation(fields: [eventId], references: [id])
+    createdAt     DateTime           @default(now())
+    updatedAt     DateTime           @updatedAt
+}
+
+model ProjectCertificateTemplate {
+    id            String          @id @default(uuid())
+    text          String
+    backgroundUrl String
+    editionId     String?         @unique
+    edition       ProjectEdition? @relation(fields: [editionId], references: [id])
+    eventId       String?         @unique
+    event         ProjectEvent?   @relation(fields: [eventId], references: [id])
+    createdAt     DateTime        @default(now())
+    updatedAt     DateTime        @updatedAt
+}
+
 model ProjectEdition {
-    id           String                 @id @default(uuid())
-    name         String?
-    number       Float
-    date         DateTime
-    events       ProjectEvent[]
-    participants ProjectParticipation[]
-    projectId    String
-    project      Project                @relation(fields: [projectId], references: [id])
-    createdAt    DateTime               @default(now())
-    updatedAt    DateTime               @updatedAt
+    id                  String                     @id @default(uuid())
+    name                String?
+    number              Float
+    date                DateTime
+    certificateTemplate ProjectCertificateTemplate?
+    certificates        ProjectCertificate[]
+    events              ProjectEvent[]
+    participants        ProjectParticipation[]
+    projectId           String
+    project             Project                    @relation(fields: [projectId], references: [id])
+    createdAt           DateTime                   @default(now())
+    updatedAt           DateTime                   @updatedAt
 }
 
 model ProjectEvent {
-    id           String                 @id @default(uuid())
-    name         String
-    type         String
-    capacity     Int?
-    onSite       Boolean                @default(true)
-    location     String?
-    startTime    DateTime
-    endTime      DateTime
-    speakerId    String
-    speaker      ProjectSpeaker         @relation(fields: [speakerId], references: [id])
-    participants ProjectParticipation[]
-    attendees    ProjectAttendance[]
-    editionId    String
-    edition      ProjectEdition         @relation(fields: [editionId], references: [id])
-    createdAt    DateTime               @default(now())
-    updatedAt    DateTime               @updatedAt
+    id                  String                      @id @default(uuid())
+    name                String
+    type                String
+    capacity            Int?
+    onSite              Boolean                     @default(true)
+    location            String?
+    startTime           DateTime
+    endTime             DateTime
+    certificateTemplate ProjectCertificateTemplate?
+    certificates        ProjectCertificate[]
+    speakerId           String
+    speaker             ProjectSpeaker              @relation(fields: [speakerId], references: [id])
+    participants        ProjectParticipation[]
+    attendees           ProjectAttendance[]
+    editionId           String
+    edition             ProjectEdition              @relation(fields: [editionId], references: [id])
+    createdAt           DateTime                    @default(now())
+    updatedAt           DateTime                    @updatedAt
 }
 
 model ProjectParticipation {
@@ -105,6 +133,7 @@ model ProjectParticipant {
     matricula            Int                    @unique
     course               String
     university           String
+    certificates         ProjectCertificate[]
     projectsParticipated ProjectParticipation[]
     attendances          ProjectAttendance[]
     createdAt            DateTime               @default(now())

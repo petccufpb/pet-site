@@ -44,7 +44,7 @@ describe("CreateParticipation", () => {
   it("should be able to create a participation with email", async () => {
     const participation = await service.execute({
       editionId: edition.id,
-      email: "test@gmail.com",
+      email: participant.email,
     });
 
     expect(participation).toHaveProperty("id");
@@ -53,7 +53,7 @@ describe("CreateParticipation", () => {
   it("should be able to create a participation with matricula", async () => {
     const participation = await service.execute({
       editionId: edition.id,
-      matricula: 20200015280,
+      matricula: participant.matricula,
     });
 
     expect(participation).toHaveProperty("id");
@@ -86,7 +86,7 @@ describe("CreateParticipation", () => {
   it("should be able to create an edition participation", async () => {
     const participation = await service.execute({
       editionId: edition.id,
-      matricula: 20200015280,
+      matricula: participant.matricula,
     });
 
     expect(participation).toHaveProperty("id");
@@ -95,12 +95,12 @@ describe("CreateParticipation", () => {
   it("should be able to create an event participation", async () => {
     await service.execute({
       editionId: edition.id,
-      matricula: 20200015280,
+      matricula: participant.matricula,
     });
 
     const participation = await service.execute({
       eventId: event.id,
-      matricula: 20200015280,
+      matricula: participant.matricula,
     });
 
     expect(participation).toHaveProperty("id");
@@ -136,25 +136,25 @@ describe("CreateParticipation", () => {
   it("should not be able to create the same participation 2 times", async () => {
     await service.execute({
       editionId: edition.id,
-      matricula: 20200015280,
+      matricula: participant.matricula,
     });
 
     await expect(
       service.execute({
         editionId: edition.id,
-        matricula: 20200015280,
+        matricula: participant.matricula,
       }),
     ).rejects.toBeInstanceOf(HttpException);
 
     await service.execute({
       eventId: event.id,
-      matricula: 20200015280,
+      email: participant.email,
     });
 
     await expect(
       service.execute({
         eventId: event.id,
-        matricula: 20200015280,
+        email: participant.email,
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });

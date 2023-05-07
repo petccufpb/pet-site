@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import {
   Project,
   ProjectAttendance,
+  ProjectCertificate,
   ProjectEdition,
   ProjectEvent,
   ProjectParticipant,
@@ -18,6 +19,9 @@ import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 
 import ProjectsRepository, {
+  CertificateInfo,
+  CompleteProjectEdition,
+  CompleteProjectEvent,
   CreateRepoAttendance,
   CreateRepoParticipation,
   FindExistingEventDTO,
@@ -26,6 +30,7 @@ import ProjectsRepository, {
 @Injectable()
 export default class FakeProjectsRepository implements ProjectsRepository {
   private attendances: ProjectAttendance[] = [];
+  private certificates: ProjectCertificate[] = [];
   private editions: ProjectEdition[] = [];
   private events: ProjectEvent[] = [];
   private participants: ProjectParticipant[] = [];
@@ -44,6 +49,20 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     this.attendances.push(attendance);
 
     return attendance;
+  }
+
+  public async createCertificates(data: CertificateInfo[]): Promise<void> {
+    data.forEach(({ eventId, ...info }) => {
+      const certificate = {
+        ...info,
+        eventId: eventId || null,
+        id: randomUUID(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      this.certificates.push(certificate);
+    });
   }
 
   public async createEdition({ name, number, ...data }: CreateEditionDTO): Promise<ProjectEdition> {
@@ -149,14 +168,42 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     return attendance;
   }
 
-  public async findEditionById(id: string): Promise<ProjectEdition | null> {
-    const edition = this.editions.find(edition => edition.id === id) || null;
+  public async findCertificatesByEditionId(editionId: string): Promise<ProjectCertificate[]> {
+    const certificates = this.certificates.filter(
+      certificate => certificate.editionId === editionId && certificate.eventId === null,
+    );
+
+    return certificates;
+  }
+
+  public async findCertificatesByEventId(eventId: string): Promise<ProjectCertificate[]> {
+    const certificates = this.certificates.filter(certificate => certificate.eventId === eventId);
+
+    return certificates;
+  }
+
+  public async findEditionById(id: string): Promise<CompleteProjectEdition | null> {
+    const edition = (this.editions.find(edition => edition.id === id) as CompleteProjectEdition) || null;
+
+    if (edition) {
+      // @ts-ignore
+      edition.events = this.events
+        .filter(event => event.editionId === id)
+        .map(event => ({
+          ...event,
+          speaker: this.speakers.find(speaker => speaker.id === event.speakerId) as ProjectSpeaker,
+        }));
+    }
 
     return edition;
   }
 
-  public async findEventById(id: string): Promise<ProjectEvent | null> {
-    const event = this.events.find(event => event.id === id) || null;
+  public async findEventById(id: string): Promise<CompleteProjectEvent | null> {
+    const event = (this.events.find(event => event.id === id) as CompleteProjectEvent) || null;
+
+    if (event) {
+      event.speaker = this.speakers.find(speaker => speaker.id === event.speakerId) as ProjectSpeaker;
+    }
 
     return event;
   }
@@ -212,10 +259,16 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     return participation;
   }
 
-  public async findProjectByTitle(title: string): Promise<Project | null> {
-    const project = this.projects.find(project => project.title === title) || null;
+  public async findParticipationsByEdition(editionId: string): Promise<ProjectParticipation[]> {
+    const participations = this.participations.filter(participation => participation.editionId === editionId);
 
-    return project;
+    return participations;
+  }
+
+  public async findParticipationsByEvent(eventId: string): Promise<ProjectParticipation[]> {
+    const participations = this.participations.filter(participation => participation.eventId === eventId);
+
+    return participations;
   }
 
   public async findSpeakerByEmail(email: string): Promise<ProjectSpeaker | null> {
@@ -228,5 +281,11 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     const speaker = this.speakers.find(speaker => speaker.id === id) || null;
 
     return speaker;
+  }
+
+  public async findProjectByTitle(title: string): Promise<Project | null> {
+    const project = this.projects.find(project => project.title === title) || null;
+
+    return project;
   }
 }

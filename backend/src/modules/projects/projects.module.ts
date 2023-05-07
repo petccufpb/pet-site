@@ -7,7 +7,9 @@ import PrismaProjectsRepository from "./infra/prisma/repositories/projects.repos
 import ProjectsRepository from "./repositories/projects.repository";
 import CreateAttendance from "./services/CreateAttendance.service";
 import CreateEdition from "./services/CreateEdition.service";
+import CreateEditionCertificates from "./services/CreateEditionCertificates.service";
 import CreateEvent from "./services/CreateEvent.service";
+import CreateEventCertificates from "./services/CreateEventCertificates.service";
 import CreateParticipant from "./services/CreateParticipant.service";
 import CreateParticipation from "./services/CreateParticipation.service";
 import CreateProject from "./services/CreateProject.service";
@@ -24,7 +26,9 @@ import CreateSpeaker from "./services/CreateSpeaker.service";
     ...[
       CreateAttendance,
       CreateEdition,
+      CreateEditionCertificates,
       CreateEvent,
+      CreateEventCertificates,
       CreateParticipant,
       CreateParticipation,
       CreateProject,

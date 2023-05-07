@@ -1,6 +1,7 @@
 import { Body, Controller, Post } from "@nestjs/common";
 import {
   Project,
+  ProjectCertificate,
   ProjectEdition,
   ProjectEvent,
   ProjectParticipant,
@@ -8,6 +9,7 @@ import {
   ProjectSpeaker,
 } from "@prisma/client";
 
+import CreateCertificatesDTO from "@modules/projects/dtos/CreateCertificates.dto";
 import CreateEditionDTO from "@modules/projects/dtos/CreateEdition.dto";
 import CreateEventDTO from "@modules/projects/dtos/CreateEvent.dto";
 import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
@@ -15,7 +17,9 @@ import CreateParticipationDTO from "@modules/projects/dtos/CreateParticipation.d
 import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import CreateEdition from "@modules/projects/services/CreateEdition.service";
+import CreateEditionCertificates from "@modules/projects/services/CreateEditionCertificates.service";
 import CreateEvent from "@modules/projects/services/CreateEvent.service";
+import CreateEventCertificates from "@modules/projects/services/CreateEventCertificates.service";
 import CreateParticipant from "@modules/projects/services/CreateParticipant.service";
 import CreateParticipation from "@modules/projects/services/CreateParticipation.service";
 import CreateProject from "@modules/projects/services/CreateProject.service";
@@ -25,7 +29,9 @@ import CreateSpeaker from "@modules/projects/services/CreateSpeaker.service";
 export default class ProjectsController {
   constructor(
     private createEdition: CreateEdition,
+    private createEditionCertificates: CreateEditionCertificates,
     private createEvent: CreateEvent,
+    private createEventCertificates: CreateEventCertificates,
     private createParticipant: CreateParticipant,
     private createParticipation: CreateParticipation,
     private createProject: CreateProject,
@@ -37,6 +43,21 @@ export default class ProjectsController {
     const project = await this.createProject.execute(body);
 
     return project;
+  }
+
+  @Post("certificates")
+  async postProjectsCertificates(
+    @Body() { editionId, eventId }: CreateCertificatesDTO,
+  ): Promise<ProjectCertificate[]> {
+    let certificates: ProjectCertificate[];
+
+    if (eventId) {
+      certificates = await this.createEventCertificates.execute({ editionId, eventId });
+    } else {
+      certificates = await this.createEditionCertificates.execute(editionId);
+    }
+
+    return certificates;
   }
 
   @Post("editions")
