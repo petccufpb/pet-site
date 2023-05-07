@@ -93,12 +93,35 @@ describe("CreateParticipation", () => {
   });
 
   it("should be able to create an event participation", async () => {
+    await service.execute({
+      editionId: edition.id,
+      matricula: 20200015280,
+    });
+
     const participation = await service.execute({
       eventId: event.id,
       matricula: 20200015280,
     });
 
     expect(participation).toHaveProperty("id");
+  });
+
+  it("should not be able to create a participation for a non-existent event", async () => {
+    await expect(
+      service.execute({
+        eventId: "fake-event-id",
+        matricula: 20200015280,
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
+  });
+
+  it("should not be able to create a participation for an event without an edition participation", async () => {
+    await expect(
+      service.execute({
+        eventId: event.id,
+        matricula: 20200015280,
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
   });
 
   it("should not be able to create the same participation 2 times", async () => {

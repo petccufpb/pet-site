@@ -150,6 +150,12 @@ export class FakeProjectsRepository implements ProjectsRepository {
     return edition;
   }
 
+  public async findEventById(id: string): Promise<ProjectEvent | null> {
+    const event = this.events.find(event => event.id === id) || null;
+
+    return event;
+  }
+
   public async findExistingEvent({
     editionId,
     location,
@@ -186,6 +192,21 @@ export class FakeProjectsRepository implements ProjectsRepository {
     return participant;
   }
 
+  public async findParticipation({
+    editionId,
+    eventId,
+    participantId,
+  }: CreateRepoParticipation): Promise<ProjectParticipation | null> {
+    const participation =
+      this.participations.find(
+        participation =>
+          participation.participantId === participantId &&
+          (participation.editionId === editionId || participation.eventId === eventId),
+      ) || null;
+
+    return participation;
+  }
+
   public async findSpeakerByEmail(email: string): Promise<ProjectSpeaker | null> {
     const speaker = this.speakers.find(speaker => speaker.email === email) || null;
 
@@ -208,20 +229,5 @@ export class FakeProjectsRepository implements ProjectsRepository {
       ) || null;
 
     return attendance;
-  }
-
-  public async findSameParticipation({
-    editionId,
-    eventId,
-    participantId,
-  }: CreateRepoParticipation): Promise<ProjectParticipation | null> {
-    const participation =
-      this.participations.find(
-        participation =>
-          participation.participantId === participantId &&
-          (participation.editionId === editionId || participation.eventId === eventId),
-      ) || null;
-
-    return participation;
   }
 }

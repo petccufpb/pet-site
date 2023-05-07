@@ -84,6 +84,14 @@ export class PrismaProjectsRepository implements ProjectsRepository {
     return edition;
   }
 
+  public async findEventById(id: string): Promise<ProjectEvent | null> {
+    const event = await this.prisma.projectEvent.findFirst({
+      where: { id },
+    });
+
+    return event;
+  }
+
   public async findExistingEvent(where: FindExistingEventDTO): Promise<ProjectEvent | null> {
     const event = await this.prisma.projectEvent.findFirst({
       where,
@@ -116,6 +124,12 @@ export class PrismaProjectsRepository implements ProjectsRepository {
     return participant;
   }
 
+  public async findParticipation(where: CreateRepoParticipation): Promise<ProjectParticipation | null> {
+    const participation = await this.prisma.projectParticipation.findFirst({ where });
+
+    return participation;
+  }
+
   public async findSpeakerByEmail(email: string): Promise<ProjectSpeaker | null> {
     const speaker = await this.prisma.projectSpeaker.findFirst({
       where: { email },
@@ -136,11 +150,5 @@ export class PrismaProjectsRepository implements ProjectsRepository {
     const attendance = await this.prisma.projectAttendance.findFirst({ where });
 
     return attendance;
-  }
-
-  public async findSameParticipation(where: CreateRepoParticipation): Promise<ProjectParticipation | null> {
-    const participation = await this.prisma.projectParticipation.findFirst({ where });
-
-    return participation;
   }
 }

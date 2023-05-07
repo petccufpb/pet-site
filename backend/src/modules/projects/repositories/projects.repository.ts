@@ -40,12 +40,13 @@ export abstract class ProjectsRepository {
   abstract createSpeaker(data: CreateSpeakerDTO): Promise<ProjectSpeaker>;
   abstract findByTitle(title: string): Promise<Project | null>;
   abstract findEditionById(id: string): Promise<ProjectEdition | null>;
+  abstract findEventById(id: string): Promise<ProjectEvent | null>;
   abstract findExistingEvent(data: FindExistingEventDTO): Promise<ProjectEvent | null>;
   abstract findParticipantByEmail(email: string): Promise<ProjectParticipant | null>;
   abstract findParticipantByMatricula(matricula: number): Promise<ProjectParticipant | null>;
   abstract findParticipantByPhone(phone: string): Promise<ProjectParticipant | null>;
+  abstract findParticipation(data: CreateRepoParticipation): Promise<ProjectParticipation | null>;
   abstract findSameAttendance(data: CreateRepoAttendance): Promise<ProjectAttendance | null>;
-  abstract findSameParticipation(data: CreateRepoParticipation): Promise<ProjectParticipation | null>;
   abstract findSpeakerById(id: string): Promise<ProjectSpeaker | null>;
   abstract findSpeakerByEmail(email: string): Promise<ProjectSpeaker | null>;
 }
