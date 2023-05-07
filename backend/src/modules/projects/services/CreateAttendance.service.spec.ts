@@ -1,15 +1,17 @@
 import { HttpException } from "@nestjs/common";
-import { ProjectEvent } from "@prisma/client";
+import { ProjectEdition, ProjectEvent, ProjectParticipant } from "@prisma/client";
 
 import { FakeProjectsRepository } from "../repositories/fakes/projects.repository";
 import { CreateAttendance } from "./CreateAttendance.service";
 
 describe("CreateAttendance", () => {
   let event: ProjectEvent;
+  let fakeProjectsRepository: FakeProjectsRepository;
+  let participant: ProjectParticipant;
   let service: CreateAttendance;
 
   beforeEach(async () => {
-    const fakeProjectsRepository = new FakeProjectsRepository();
+    fakeProjectsRepository = new FakeProjectsRepository();
     service = new CreateAttendance(fakeProjectsRepository);
 
     const { id: projectId } = await fakeProjectsRepository.create({ title: "Test Project" });
@@ -31,7 +33,7 @@ describe("CreateAttendance", () => {
       startTime: new Date(),
       type: "side",
     });
-    await fakeProjectsRepository.createParticipant({
+    participant = await fakeProjectsRepository.createParticipant({
       age: 1,
       course: "Test Course",
       email: "test@gmail.com",
@@ -43,6 +45,11 @@ describe("CreateAttendance", () => {
   });
 
   it("should be able to create an attendance with email", async () => {
+    await fakeProjectsRepository.createParticipation({
+      eventId: event.id,
+      participantId: participant.id,
+    });
+
     const attendance = await service.execute({
       eventId: event.id,
       email: "test@gmail.com",
@@ -52,12 +59,26 @@ describe("CreateAttendance", () => {
   });
 
   it("should be able to create an attendance with matricula", async () => {
+    await fakeProjectsRepository.createParticipation({
+      eventId: event.id,
+      participantId: participant.id,
+    });
+
     const attendance = await service.execute({
       eventId: event.id,
       matricula: 20200015280,
     });
 
     expect(attendance).toHaveProperty("id");
+  });
+
+  it("should not be able to create an attendance without participating in the event", async () => {
+    await expect(
+      service.execute({
+        eventId: event.id,
+        matricula: 20200015280,
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
   });
 
   it("should not be able to create an attendance for a non-existent participant", async () => {
@@ -76,7 +97,16 @@ describe("CreateAttendance", () => {
     ).rejects.toBeInstanceOf(HttpException);
   });
 
-  it("should be able to create an attendance without email nor matricula", async () => {
+  it("should not be able to create an attendance for a non-existent event", async () => {
+    await expect(
+      service.execute({
+        eventId: "fake-event-id",
+        matricula: 20200015280,
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
+  });
+
+  it("should not be able to create an attendance without email nor matricula", async () => {
     await expect(
       service.execute({
         eventId: event.id,
@@ -85,6 +115,11 @@ describe("CreateAttendance", () => {
   });
 
   it("should not be able to create the same attendance 2 times", async () => {
+    await fakeProjectsRepository.createParticipation({
+      eventId: event.id,
+      participantId: participant.id,
+    });
+
     await service.execute({
       eventId: event.id,
       matricula: 20200015280,
