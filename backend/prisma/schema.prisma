@@ -42,6 +42,16 @@ model Project {
     updatedAt DateTime         @updatedAt
 }
 
+model ProjectAttendance {
+    id            String             @id @default(uuid())
+    participantId String
+    participant   ProjectParticipant @relation(fields: [participantId], references: [id])
+    eventId       String?
+    event         ProjectEvent?      @relation(fields: [eventId], references: [id])
+    createdAt     DateTime           @default(now())
+    updatedAt     DateTime           @updatedAt
+}
+
 model ProjectEdition {
     id           String                 @id @default(uuid())
     name         String?
@@ -67,6 +77,7 @@ model ProjectEvent {
     speakerId    String
     speaker      ProjectSpeaker         @relation(fields: [speakerId], references: [id])
     participants ProjectParticipation[]
+    attendees    ProjectAttendance[]
     editionId    String
     edition      ProjectEdition         @relation(fields: [editionId], references: [id])
     createdAt    DateTime               @default(now())
@@ -95,6 +106,7 @@ model ProjectParticipant {
     course               String
     university           String
     projectsParticipated ProjectParticipation[]
+    attendances          ProjectAttendance[]
     createdAt            DateTime               @default(now())
     updatedAt            DateTime               @updatedAt
 }

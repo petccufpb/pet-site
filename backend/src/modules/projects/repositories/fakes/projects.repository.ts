@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import {
   Project,
+  ProjectAttendance,
   ProjectEdition,
   ProjectEvent,
   ProjectParticipant,
@@ -16,10 +17,16 @@ import { CreateParticipantDTO } from "@modules/projects/dtos/CreateParticipant.d
 import { CreateProjectDTO } from "@modules/projects/dtos/CreateProject.dto";
 import { CreateSpeakerDTO } from "@modules/projects/dtos/CreateSpeaker.dto";
 
-import { CreateRepoParticipation, FindExistingEventDTO, ProjectsRepository } from "../projects.repository";
+import {
+  CreateRepoAttendance,
+  CreateRepoParticipation,
+  FindExistingEventDTO,
+  ProjectsRepository,
+} from "../projects.repository";
 
 @Injectable()
 export class FakeProjectsRepository implements ProjectsRepository {
+  private attendances: ProjectAttendance[] = [];
   private editions: ProjectEdition[] = [];
   private events: ProjectEvent[] = [];
   private participants: ProjectParticipant[] = [];
@@ -40,6 +47,19 @@ export class FakeProjectsRepository implements ProjectsRepository {
     this.projects.push(project);
 
     return project;
+  }
+
+  public async createAttendance({ ...data }: CreateRepoAttendance): Promise<ProjectAttendance> {
+    const attendance = {
+      ...data,
+      id: randomUUID(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    this.attendances.push(attendance);
+
+    return attendance;
   }
 
   public async createEdition({ name, number, ...data }: CreateEditionDTO): Promise<ProjectEdition> {
@@ -176,6 +196,18 @@ export class FakeProjectsRepository implements ProjectsRepository {
     const speaker = this.speakers.find(speaker => speaker.id === id) || null;
 
     return speaker;
+  }
+
+  public async findSameAttendance({
+    eventId,
+    participantId,
+  }: CreateRepoAttendance): Promise<ProjectAttendance | null> {
+    const attendance =
+      this.attendances.find(
+        attendance => attendance.participantId === participantId && attendance.eventId === eventId,
+      ) || null;
+
+    return attendance;
   }
 
   public async findSameParticipation({

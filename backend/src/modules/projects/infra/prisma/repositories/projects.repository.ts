@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import {
   Project,
+  ProjectAttendance,
   ProjectEdition,
   ProjectEvent,
   ProjectParticipant,
@@ -15,6 +16,7 @@ import { CreateParticipantDTO } from "@modules/projects/dtos/CreateParticipant.d
 import { CreateProjectDTO } from "@modules/projects/dtos/CreateProject.dto";
 import { CreateSpeakerDTO } from "@modules/projects/dtos/CreateSpeaker.dto";
 import {
+  CreateRepoAttendance,
   CreateRepoParticipation,
   FindExistingEventDTO,
   ProjectsRepository,
@@ -28,6 +30,12 @@ export class PrismaProjectsRepository implements ProjectsRepository {
     const project = await this.prisma.project.create({ data });
 
     return project;
+  }
+
+  public async createAttendance(data: CreateRepoAttendance): Promise<ProjectAttendance> {
+    const attendance = await this.prisma.projectAttendance.create({ data });
+
+    return attendance;
   }
 
   public async createEdition(data: CreateEditionDTO): Promise<ProjectEdition> {
@@ -77,11 +85,11 @@ export class PrismaProjectsRepository implements ProjectsRepository {
   }
 
   public async findExistingEvent(where: FindExistingEventDTO): Promise<ProjectEvent | null> {
-    const project = await this.prisma.projectEvent.findFirst({
+    const event = await this.prisma.projectEvent.findFirst({
       where,
     });
 
-    return project;
+    return event;
   }
 
   public async findParticipantByEmail(email: string): Promise<ProjectParticipant | null> {
@@ -122,6 +130,12 @@ export class PrismaProjectsRepository implements ProjectsRepository {
     });
 
     return speaker;
+  }
+
+  public async findSameAttendance(where: CreateRepoParticipation): Promise<ProjectAttendance | null> {
+    const attendance = await this.prisma.projectAttendance.findFirst({ where });
+
+    return attendance;
   }
 
   public async findSameParticipation(where: CreateRepoParticipation): Promise<ProjectParticipation | null> {
