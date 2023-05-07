@@ -35,6 +35,12 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     return attendance;
   }
 
+  public async createCertificate(data: CertificateInfo): Promise<ProjectCertificate> {
+    const certificate = await this.prisma.projectCertificate.create({ data });
+
+    return certificate;
+  }
+
   public async createCertificates(data: CertificateInfo[]): Promise<void> {
     await this.prisma.projectCertificate.createMany({ data });
   }

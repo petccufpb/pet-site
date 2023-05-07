@@ -49,6 +49,7 @@ export type CompleteProjectEdition = ProjectEdition & {
 
 export default abstract class ProjectsRepository {
   abstract createAttendance(data: CreateRepoAttendance): Promise<ProjectAttendance>;
+  abstract createCertificate(data: CertificateInfo): Promise<ProjectCertificate>;
   abstract createCertificates(data: CertificateInfo[]): Promise<void>;
   abstract createEdition(data: CreateEditionDTO): Promise<ProjectEdition>;
   abstract createEvent(data: CreateEventDTO): Promise<ProjectEvent>;

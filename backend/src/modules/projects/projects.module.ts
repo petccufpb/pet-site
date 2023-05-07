@@ -6,6 +6,7 @@ import ProjectsController from "./infra/http/controllers/projects.controller";
 import PrismaProjectsRepository from "./infra/prisma/repositories/projects.repository";
 import ProjectsRepository from "./repositories/projects.repository";
 import CreateAttendance from "./services/CreateAttendance.service";
+import CreateCertificate from "./services/CreateCertificate.service";
 import CreateEdition from "./services/CreateEdition.service";
 import CreateEditionCertificates from "./services/CreateEditionCertificates.service";
 import CreateEvent from "./services/CreateEvent.service";
@@ -25,6 +26,7 @@ import CreateSpeaker from "./services/CreateSpeaker.service";
     },
     ...[
       CreateAttendance,
+      CreateCertificate,
       CreateEdition,
       CreateEditionCertificates,
       CreateEvent,

@@ -51,6 +51,20 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     return attendance;
   }
 
+  public async createCertificate({ eventId, ...data }: CertificateInfo): Promise<ProjectCertificate> {
+    const certificate = {
+      ...data,
+      eventId: eventId || null,
+      id: randomUUID(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    this.certificates.push(certificate);
+
+    return certificate;
+  }
+
   public async createCertificates(data: CertificateInfo[]): Promise<void> {
     data.forEach(({ eventId, ...info }) => {
       const certificate = {

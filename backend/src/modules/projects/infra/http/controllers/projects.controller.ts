@@ -9,6 +9,7 @@ import {
   ProjectSpeaker,
 } from "@prisma/client";
 
+import CreateCertificateDTO from "@modules/projects/dtos/CreateCertificate.dto";
 import CreateCertificatesDTO from "@modules/projects/dtos/CreateCertificates.dto";
 import CreateEditionDTO from "@modules/projects/dtos/CreateEdition.dto";
 import CreateEventDTO from "@modules/projects/dtos/CreateEvent.dto";
@@ -16,6 +17,7 @@ import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
 import CreateParticipationDTO from "@modules/projects/dtos/CreateParticipation.dto";
 import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
+import CreateCertificate from "@modules/projects/services/CreateCertificate.service";
 import CreateEdition from "@modules/projects/services/CreateEdition.service";
 import CreateEditionCertificates from "@modules/projects/services/CreateEditionCertificates.service";
 import CreateEvent from "@modules/projects/services/CreateEvent.service";
@@ -28,6 +30,7 @@ import CreateSpeaker from "@modules/projects/services/CreateSpeaker.service";
 @Controller("projects")
 export default class ProjectsController {
   constructor(
+    private createCertificate: CreateCertificate,
     private createEdition: CreateEdition,
     private createEditionCertificates: CreateEditionCertificates,
     private createEvent: CreateEvent,
@@ -56,6 +59,13 @@ export default class ProjectsController {
     } else {
       certificates = await this.createEditionCertificates.execute(editionId);
     }
+
+    return certificates;
+  }
+
+  @Post("certificates/create")
+  async postProjectsCertificatesCreate(@Body() body: CreateCertificateDTO): Promise<ProjectCertificate> {
+    const certificates = await this.createCertificate.execute(body);
 
     return certificates;
   }
