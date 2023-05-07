@@ -10,7 +10,7 @@ import {
   ProjectSpeaker,
 } from "@prisma/client";
 import { randomUUID } from "crypto";
-import { isSameHour, isSameMinute } from "date-fns";
+import { isBefore, isSameHour, isSameMinute } from "date-fns";
 
 import CreateEditionDTO from "@modules/projects/dtos/CreateEdition.dto";
 import CreateEventDTO from "@modules/projects/dtos/CreateEvent.dto";
@@ -168,6 +168,25 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     this.speakers.push(speaker);
 
     return speaker;
+  }
+
+  public async findAllEditions(projectId: string): Promise<CompleteProjectEdition[]> {
+    const editions = this.editions.filter(
+      edition => edition.projectId === projectId,
+    ) as CompleteProjectEdition[];
+
+    editions.forEach(edition => {
+      edition.events = this.events
+        .filter(event => event.editionId === edition.id)
+        .map(event => ({
+          ...event,
+          speaker: this.speakers.find(speaker => speaker.id === event.speakerId) as ProjectSpeaker,
+        }));
+    });
+
+    editions.sort((a, b) => Number(isBefore(a.date, b.date)) * 2 - 1);
+
+    return editions;
   }
 
   public async findAttendance({

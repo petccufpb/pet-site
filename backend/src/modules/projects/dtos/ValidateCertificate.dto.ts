@@ -1,4 +1,4 @@
-import { IsOptional } from "@hyoretsu/nest-decorators";
+import { IsOptional } from "@hyoretsu/decorators";
 import { IsNotEmpty, IsNumber, IsString, Min } from "class-validator";
 
 export default class ValidateCertificateDTO {

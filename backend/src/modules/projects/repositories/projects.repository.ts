@@ -57,6 +57,7 @@ export default abstract class ProjectsRepository {
   abstract createParticipation(data: CreateRepoParticipation): Promise<ProjectParticipation>;
   abstract createProject(data: CreateProjectDTO): Promise<Project>;
   abstract createSpeaker(data: CreateSpeakerDTO): Promise<ProjectSpeaker>;
+  abstract findAllEditions(projectId: string): Promise<CompleteProjectEdition[]>;
   abstract findAttendance(data: CreateRepoAttendance): Promise<ProjectAttendance | null>;
   abstract findCertificateById(id: string): Promise<ProjectCertificate | null>;
   abstract findCertificatesByEditionId(editionId: string): Promise<ProjectCertificate[]>;

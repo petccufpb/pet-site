@@ -1,4 +1,4 @@
-import { IsOptional } from "@hyoretsu/nest-decorators";
+import { IsOptional } from "@hyoretsu/decorators";
 import { ProjectCertificate } from "@prisma/client";
 import { IsNotEmpty, IsString, IsUUID } from "class-validator";
 

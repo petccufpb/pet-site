@@ -81,6 +81,25 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     return speaker;
   }
 
+  public async findAllEditions(projectId: string): Promise<CompleteProjectEdition[]> {
+    const editions = await this.prisma.projectEdition.findMany({
+      where: { projectId },
+      include: {
+        certificateTemplate: true,
+        events: {
+          include: {
+            speaker: true,
+          },
+        },
+      },
+      orderBy: {
+        date: "desc",
+      },
+    });
+
+    return editions;
+  }
+
   public async findAttendance(where: CreateRepoParticipation): Promise<ProjectAttendance | null> {
     const attendance = await this.prisma.projectAttendance.findFirst({ where });
 

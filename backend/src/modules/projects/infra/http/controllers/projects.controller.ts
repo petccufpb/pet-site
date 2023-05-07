@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { QueryRequired } from "@hyoretsu/decorators";
+import { Body, Controller, Get, Post } from "@nestjs/common";
 import {
   Project,
   ProjectCertificate,
@@ -27,6 +28,7 @@ import CreateParticipant from "@modules/projects/services/CreateParticipant.serv
 import CreateParticipation from "@modules/projects/services/CreateParticipation.service";
 import CreateProject from "@modules/projects/services/CreateProject.service";
 import CreateSpeaker from "@modules/projects/services/CreateSpeaker.service";
+import FindLatestEdition from "@modules/projects/services/FindLatestEdition.service";
 import ValidateCertificate from "@modules/projects/services/ValidateCertificate.service";
 
 @Controller("projects")
@@ -41,6 +43,7 @@ export default class ProjectsController {
     private createParticipation: CreateParticipation,
     private createProject: CreateProject,
     private createSpeaker: CreateSpeaker,
+    private findLatestEdition: FindLatestEdition,
     private validateCertificate: ValidateCertificate,
   ) {}
 
@@ -83,6 +86,15 @@ export default class ProjectsController {
   @Post("editions")
   async postProjectsEditions(@Body() body: CreateEditionDTO): Promise<ProjectEdition> {
     const edition = await this.createEdition.execute(body);
+
+    return edition;
+  }
+
+  @Get("editions/latest")
+  async getProjectsEditionsLatest(@QueryRequired("project") projectTitle: string): Promise<ProjectEdition> {
+    const edition = await this.findLatestEdition.execute({
+      projectTitle,
+    });
 
     return edition;
   }

@@ -1,4 +1,4 @@
-import { IsOptional } from "@hyoretsu/nest-decorators";
+import { IsOptional } from "@hyoretsu/decorators";
 import { ProjectEvent } from "@prisma/client";
 import { IsBoolean, IsDate, IsIn, IsNotEmpty, IsNumber, IsString, IsUUID, Min } from "class-validator";
 
