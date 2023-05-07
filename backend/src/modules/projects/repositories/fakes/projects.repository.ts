@@ -182,6 +182,12 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     return attendance;
   }
 
+  public async findCertificateById(id: string): Promise<ProjectCertificate | null> {
+    const certificate = (await this.certificates.find(certificate => certificate.id === id)) || null;
+
+    return certificate;
+  }
+
   public async findCertificatesByEditionId(editionId: string): Promise<ProjectCertificate[]> {
     const certificates = this.certificates.filter(
       certificate => certificate.editionId === editionId && certificate.eventId === null,

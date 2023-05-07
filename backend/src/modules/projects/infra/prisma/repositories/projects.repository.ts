@@ -87,6 +87,14 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     return attendance;
   }
 
+  public async findCertificateById(id: string): Promise<ProjectCertificate | null> {
+    const certificate = await this.prisma.projectCertificate.findFirst({
+      where: { id },
+    });
+
+    return certificate;
+  }
+
   public async findCertificatesByEditionId(editionId: string): Promise<ProjectCertificate[]> {
     const certificates = await this.prisma.projectCertificate.findMany({
       where: {

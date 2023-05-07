@@ -15,6 +15,7 @@ import CreateParticipant from "./services/CreateParticipant.service";
 import CreateParticipation from "./services/CreateParticipation.service";
 import CreateProject from "./services/CreateProject.service";
 import CreateSpeaker from "./services/CreateSpeaker.service";
+import ValidateCertificate from "./services/ValidateCertificate.service";
 
 @Module({
   controllers: [ProjectsController],
@@ -35,6 +36,7 @@ import CreateSpeaker from "./services/CreateSpeaker.service";
       CreateParticipation,
       CreateProject,
       CreateSpeaker,
+      ValidateCertificate,
     ],
   ],
 })

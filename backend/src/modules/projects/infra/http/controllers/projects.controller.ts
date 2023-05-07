@@ -17,6 +17,7 @@ import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
 import CreateParticipationDTO from "@modules/projects/dtos/CreateParticipation.dto";
 import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
+import ValidateCertificateDTO from "@modules/projects/dtos/ValidateCertificate.dto";
 import CreateCertificate from "@modules/projects/services/CreateCertificate.service";
 import CreateEdition from "@modules/projects/services/CreateEdition.service";
 import CreateEditionCertificates from "@modules/projects/services/CreateEditionCertificates.service";
@@ -26,6 +27,7 @@ import CreateParticipant from "@modules/projects/services/CreateParticipant.serv
 import CreateParticipation from "@modules/projects/services/CreateParticipation.service";
 import CreateProject from "@modules/projects/services/CreateProject.service";
 import CreateSpeaker from "@modules/projects/services/CreateSpeaker.service";
+import ValidateCertificate from "@modules/projects/services/ValidateCertificate.service";
 
 @Controller("projects")
 export default class ProjectsController {
@@ -39,6 +41,7 @@ export default class ProjectsController {
     private createParticipation: CreateParticipation,
     private createProject: CreateProject,
     private createSpeaker: CreateSpeaker,
+    private validateCertificate: ValidateCertificate,
   ) {}
 
   @Post()
@@ -68,6 +71,13 @@ export default class ProjectsController {
     const certificates = await this.createCertificate.execute(body);
 
     return certificates;
+  }
+
+  @Post("certificates/validate")
+  async postProjectsCertificatesValidate(@Body() body: ValidateCertificateDTO): Promise<boolean> {
+    const validity = await this.validateCertificate.execute(body);
+
+    return validity;
   }
 
   @Post("editions")
