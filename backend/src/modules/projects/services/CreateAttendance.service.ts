@@ -1,11 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { ProjectParticipant, ProjectAttendance } from "@prisma/client";
+import { ProjectAttendance } from "@prisma/client";
 
-import { CreateAttendanceDTO } from "../dtos/CreateAttendance.dto";
-import { ProjectsRepository } from "../repositories/projects.repository";
+import CreateAttendanceDTO from "../dtos/CreateAttendance.dto";
+import ProjectsRepository from "../repositories/projects.repository";
 
 @Injectable()
-export class CreateAttendance {
+export default class CreateAttendance {
   constructor(private projectsRepository: ProjectsRepository) {}
 
   public async execute({ email, eventId, matricula }: CreateAttendanceDTO): Promise<ProjectAttendance> {
@@ -14,19 +14,19 @@ export class CreateAttendance {
     if (email) {
       const foundParticipant = await this.projectsRepository.findParticipantByEmail(email);
       if (!foundParticipant) {
-        throw new HttpException("There's no participant with this email.", HttpStatus.NOT_FOUND);
+        throw new HttpException("There's no participant with this email", HttpStatus.NOT_FOUND);
       }
 
       participantId = foundParticipant.id;
     } else if (matricula) {
       const foundParticipant = await this.projectsRepository.findParticipantByMatricula(matricula);
       if (!foundParticipant) {
-        throw new HttpException("There's no participant with this matricula.", HttpStatus.NOT_FOUND);
+        throw new HttpException("There's no participant with this matricula", HttpStatus.NOT_FOUND);
       }
 
       participantId = foundParticipant.id;
     } else {
-      throw new HttpException("You need to provide either an email or a matricula.", HttpStatus.BAD_REQUEST);
+      throw new HttpException("You need to provide either an email or a matricula", HttpStatus.BAD_REQUEST);
     }
 
     const event = await this.projectsRepository.findEventById(eventId);
@@ -44,9 +44,9 @@ export class CreateAttendance {
       participantId,
     };
 
-    const existingAttendance = await this.projectsRepository.findSameAttendance(payload);
+    const existingAttendance = await this.projectsRepository.findAttendance(payload);
     if (existingAttendance) {
-      throw new HttpException("This attendance already exists.", HttpStatus.CONFLICT);
+      throw new HttpException("This attendance already exists", HttpStatus.CONFLICT);
     }
 
     const Attendance = await this.projectsRepository.createAttendance(payload);

@@ -1,8 +1,8 @@
 import { IsOptional } from "@hyoretsu/nest-decorators";
 import { ProjectParticipation } from "@prisma/client";
-import { IsEmail, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsEmail, IsNumber, IsString } from "class-validator";
 
-export class CreateParticipationDTO implements Partial<ProjectParticipation> {
+export default class CreateParticipationDTO implements Partial<ProjectParticipation> {
   @IsOptional()
   @IsString()
   editionId?: string;

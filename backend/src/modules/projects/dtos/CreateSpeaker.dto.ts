@@ -1,7 +1,7 @@
 import { ProjectSpeaker } from "@prisma/client";
 import { IsEmail, IsNotEmpty, IsString, IsUrl } from "class-validator";
 
-export class CreateSpeakerDTO implements Partial<ProjectSpeaker> {
+export default class CreateSpeakerDTO implements Partial<ProjectSpeaker> {
   @IsNotEmpty()
   @IsString()
   @IsEmail()

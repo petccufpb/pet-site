@@ -1,7 +1,7 @@
 import { ProjectEdition } from "@prisma/client";
 import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString, IsUUID, Min } from "class-validator";
 
-export class CreateEditionDTO implements Partial<ProjectEdition> {
+export default class CreateEditionDTO implements Partial<ProjectEdition> {
   @IsNotEmpty()
   @IsDate()
   date!: Date;

@@ -11,21 +11,20 @@ import {
 import { randomUUID } from "crypto";
 import { isSameHour, isSameMinute } from "date-fns";
 
-import { CreateEditionDTO } from "@modules/projects/dtos/CreateEdition.dto";
-import { CreateEventDTO } from "@modules/projects/dtos/CreateEvent.dto";
-import { CreateParticipantDTO } from "@modules/projects/dtos/CreateParticipant.dto";
-import { CreateProjectDTO } from "@modules/projects/dtos/CreateProject.dto";
-import { CreateSpeakerDTO } from "@modules/projects/dtos/CreateSpeaker.dto";
+import CreateEditionDTO from "@modules/projects/dtos/CreateEdition.dto";
+import CreateEventDTO from "@modules/projects/dtos/CreateEvent.dto";
+import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
+import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
+import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 
-import {
+import ProjectsRepository, {
   CreateRepoAttendance,
   CreateRepoParticipation,
   FindExistingEventDTO,
-  ProjectsRepository,
 } from "../projects.repository";
 
 @Injectable()
-export class FakeProjectsRepository implements ProjectsRepository {
+export default class FakeProjectsRepository implements ProjectsRepository {
   private attendances: ProjectAttendance[] = [];
   private editions: ProjectEdition[] = [];
   private events: ProjectEvent[] = [];
@@ -33,21 +32,6 @@ export class FakeProjectsRepository implements ProjectsRepository {
   private participations: ProjectParticipation[] = [];
   private projects: Project[] = [];
   private speakers: ProjectSpeaker[] = [];
-
-  public async create({ about, logoUrl, ...data }: CreateProjectDTO): Promise<Project> {
-    const project = {
-      ...data,
-      about: about || "",
-      logoUrl: logoUrl || "",
-      id: randomUUID(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-
-    this.projects.push(project);
-
-    return project;
-  }
 
   public async createAttendance({ ...data }: CreateRepoAttendance): Promise<ProjectAttendance> {
     const attendance = {
@@ -125,6 +109,21 @@ export class FakeProjectsRepository implements ProjectsRepository {
     return participation;
   }
 
+  public async createProject({ about, logoUrl, ...data }: CreateProjectDTO): Promise<Project> {
+    const project = {
+      ...data,
+      about: about || "",
+      logoUrl: logoUrl || "",
+      id: randomUUID(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    this.projects.push(project);
+
+    return project;
+  }
+
   public async createSpeaker(data: CreateSpeakerDTO): Promise<ProjectSpeaker> {
     const speaker = {
       ...data,
@@ -138,10 +137,16 @@ export class FakeProjectsRepository implements ProjectsRepository {
     return speaker;
   }
 
-  public async findByTitle(title: string): Promise<Project | null> {
-    const project = this.projects.find(project => project.title === title) || null;
+  public async findAttendance({
+    eventId,
+    participantId,
+  }: CreateRepoAttendance): Promise<ProjectAttendance | null> {
+    const attendance =
+      this.attendances.find(
+        attendance => attendance.participantId === participantId && attendance.eventId === eventId,
+      ) || null;
 
-    return project;
+    return attendance;
   }
 
   public async findEditionById(id: string): Promise<ProjectEdition | null> {
@@ -207,6 +212,12 @@ export class FakeProjectsRepository implements ProjectsRepository {
     return participation;
   }
 
+  public async findProjectByTitle(title: string): Promise<Project | null> {
+    const project = this.projects.find(project => project.title === title) || null;
+
+    return project;
+  }
+
   public async findSpeakerByEmail(email: string): Promise<ProjectSpeaker | null> {
     const speaker = this.speakers.find(speaker => speaker.email === email) || null;
 
@@ -217,17 +228,5 @@ export class FakeProjectsRepository implements ProjectsRepository {
     const speaker = this.speakers.find(speaker => speaker.id === id) || null;
 
     return speaker;
-  }
-
-  public async findSameAttendance({
-    eventId,
-    participantId,
-  }: CreateRepoAttendance): Promise<ProjectAttendance | null> {
-    const attendance =
-      this.attendances.find(
-        attendance => attendance.participantId === participantId && attendance.eventId === eventId,
-      ) || null;
-
-    return attendance;
   }
 }

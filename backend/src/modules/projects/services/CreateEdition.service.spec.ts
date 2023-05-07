@@ -1,5 +1,5 @@
-import { FakeProjectsRepository } from "../repositories/fakes/projects.repository";
-import { CreateEdition } from "./CreateEdition.service";
+import FakeProjectsRepository from "../repositories/fakes/projects.repository";
+import CreateEdition from "./CreateEdition.service";
 
 describe("CreateEdition", () => {
   let fakeProjectsRepository: FakeProjectsRepository;
@@ -10,8 +10,8 @@ describe("CreateEdition", () => {
     service = new CreateEdition(fakeProjectsRepository);
   });
 
-  it("should successfully create an edition", async () => {
-    const { id: projectId } = await fakeProjectsRepository.create({
+  it("should be able to create an edition", async () => {
+    const { id: projectId } = await fakeProjectsRepository.createProject({
       title: "Test",
     });
 

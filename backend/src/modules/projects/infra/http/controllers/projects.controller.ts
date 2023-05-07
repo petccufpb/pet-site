@@ -8,18 +8,18 @@ import {
   ProjectSpeaker,
 } from "@prisma/client";
 
-import { CreateEditionDTO } from "@modules/projects/dtos/CreateEdition.dto";
-import { CreateEventDTO } from "@modules/projects/dtos/CreateEvent.dto";
-import { CreateParticipantDTO } from "@modules/projects/dtos/CreateParticipant.dto";
-import { CreateParticipationDTO } from "@modules/projects/dtos/CreateParticipation.dto";
-import { CreateProjectDTO } from "@modules/projects/dtos/CreateProject.dto";
-import { CreateSpeakerDTO } from "@modules/projects/dtos/CreateSpeaker.dto";
-import { CreateEdition } from "@modules/projects/services/CreateEdition.service";
-import { CreateEvent } from "@modules/projects/services/CreateEvent.service";
-import { CreateParticipant } from "@modules/projects/services/CreateParticipant.service";
-import { CreateParticipation } from "@modules/projects/services/CreateParticipation.service";
-import { CreateProject } from "@modules/projects/services/CreateProject.service";
-import { CreateSpeaker } from "@modules/projects/services/CreateSpeaker.service";
+import CreateEditionDTO from "@modules/projects/dtos/CreateEdition.dto";
+import CreateEventDTO from "@modules/projects/dtos/CreateEvent.dto";
+import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
+import CreateParticipationDTO from "@modules/projects/dtos/CreateParticipation.dto";
+import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
+import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
+import CreateEdition from "@modules/projects/services/CreateEdition.service";
+import CreateEvent from "@modules/projects/services/CreateEvent.service";
+import CreateParticipant from "@modules/projects/services/CreateParticipant.service";
+import CreateParticipation from "@modules/projects/services/CreateParticipation.service";
+import CreateProject from "@modules/projects/services/CreateProject.service";
+import CreateSpeaker from "@modules/projects/services/CreateSpeaker.service";
 
 @Controller("projects")
 export default class ProjectsController {

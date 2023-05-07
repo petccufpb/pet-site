@@ -11,7 +11,7 @@ describe("CreateMember", () => {
     service = new CreateMember(fakeMembersRepository);
   });
 
-  it("should successfully create a member", async () => {
+  it("should be able to create a member", async () => {
     const user = await service.execute({
       name: "John Doe",
     });

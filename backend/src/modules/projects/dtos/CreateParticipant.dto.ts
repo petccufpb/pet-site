@@ -1,7 +1,7 @@
 import { ProjectParticipant } from "@prisma/client";
 import { IsNotEmpty, IsNumber, IsOptional, IsString, Min } from "class-validator";
 
-export class CreateParticipantDTO implements Partial<ProjectParticipant> {
+export default class CreateParticipantDTO implements Partial<ProjectParticipant> {
   @IsNumber()
   @Min(0)
   age!: number;

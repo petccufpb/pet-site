@@ -1,7 +1,7 @@
 import { HttpException } from "@nestjs/common";
 
-import { FakeProjectsRepository } from "../repositories/fakes/projects.repository";
-import { CreateSpeaker } from "./CreateSpeaker.service";
+import FakeProjectsRepository from "../repositories/fakes/projects.repository";
+import CreateSpeaker from "./CreateSpeaker.service";
 
 describe("CreateSpeaker", () => {
   let service: CreateSpeaker;

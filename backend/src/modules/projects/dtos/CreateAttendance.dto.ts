@@ -2,7 +2,7 @@ import { IsOptional } from "@hyoretsu/nest-decorators";
 import { ProjectAttendance } from "@prisma/client";
 import { IsEmail, IsNotEmpty, IsNumber, IsString, IsUUID } from "class-validator";
 
-export class CreateAttendanceDTO implements Partial<ProjectAttendance> {
+export default class CreateAttendanceDTO implements Partial<ProjectAttendance> {
   @IsOptional()
   @IsString()
   @IsEmail()

@@ -1,7 +1,7 @@
 import { Project } from "@prisma/client";
 import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 
-export class CreateProjectDTO implements Partial<Project> {
+export default class CreateProjectDTO implements Partial<Project> {
   @IsOptional()
   @IsString()
   about?: string;

@@ -1,8 +1,8 @@
 import { HttpException } from "@nestjs/common";
 import { ProjectEdition, ProjectEvent, ProjectParticipant } from "@prisma/client";
 
-import { FakeProjectsRepository } from "../repositories/fakes/projects.repository";
-import { CreateParticipation } from "./CreateParticipation.service";
+import FakeProjectsRepository from "../repositories/fakes/projects.repository";
+import CreateParticipation from "./CreateParticipation.service";
 
 describe("CreateParticipation", () => {
   let edition: ProjectEdition;
@@ -15,7 +15,7 @@ describe("CreateParticipation", () => {
     fakeProjectsRepository = new FakeProjectsRepository();
     service = new CreateParticipation(fakeProjectsRepository);
 
-    const { id: projectId } = await fakeProjectsRepository.create({ title: "Test Project" });
+    const { id: projectId } = await fakeProjectsRepository.createProject({ title: "Test Project" });
     edition = await fakeProjectsRepository.createEdition({ date: new Date(), number: 1, projectId });
     const { id: speakerId } = await fakeProjectsRepository.createSpeaker({
       email: "test@gmail.com",

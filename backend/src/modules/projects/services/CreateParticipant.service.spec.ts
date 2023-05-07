@@ -1,7 +1,7 @@
 import { HttpException } from "@nestjs/common";
 
-import { FakeProjectsRepository } from "../repositories/fakes/projects.repository";
-import { CreateParticipant } from "./CreateParticipant.service";
+import FakeProjectsRepository from "../repositories/fakes/projects.repository";
+import CreateParticipant from "./CreateParticipant.service";
 
 describe("CreateParticipant", () => {
   let service: CreateParticipant;
@@ -11,7 +11,7 @@ describe("CreateParticipant", () => {
     service = new CreateParticipant(fakeProjectsRepository);
   });
 
-  it("should successfully create a participant", async () => {
+  it("should be able to create a participant", async () => {
     const participant = await service.execute({
       age: 1,
       course: "Test Course",

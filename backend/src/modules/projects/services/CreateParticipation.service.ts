@@ -1,12 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { ProjectEdition, ProjectParticipant, ProjectParticipation } from "@prisma/client";
 
-import { CreateParticipationDTO } from "../dtos/CreateParticipation.dto";
-import { ProjectsRepository } from "../repositories/projects.repository";
+import CreateParticipationDTO from "../dtos/CreateParticipation.dto";
+import ProjectsRepository from "../repositories/projects.repository";
 import { CreateRepoParticipation } from "../repositories/projects.repository";
 
 @Injectable()
-export class CreateParticipation {
+export default class CreateParticipation {
   constructor(private projectsRepository: ProjectsRepository) {}
 
   public async execute({
@@ -20,19 +20,19 @@ export class CreateParticipation {
     if (email) {
       const foundParticipant = await this.projectsRepository.findParticipantByEmail(email);
       if (!foundParticipant) {
-        throw new HttpException("There's no participant with this email.", HttpStatus.NOT_FOUND);
+        throw new HttpException("There's no participant with this email", HttpStatus.NOT_FOUND);
       }
 
       participantId = foundParticipant.id;
     } else if (matricula) {
       const foundParticipant = await this.projectsRepository.findParticipantByMatricula(matricula);
       if (!foundParticipant) {
-        throw new HttpException("There's no participant with this matricula.", HttpStatus.NOT_FOUND);
+        throw new HttpException("There's no participant with this matricula", HttpStatus.NOT_FOUND);
       }
 
       participantId = foundParticipant.id;
     } else {
-      throw new HttpException("You need to provide either an email or a matricula.", HttpStatus.BAD_REQUEST);
+      throw new HttpException("You need to provide either an email or a matricula", HttpStatus.BAD_REQUEST);
     }
 
     let payload: CreateRepoParticipation;
@@ -72,7 +72,7 @@ export class CreateParticipation {
 
     const existingParticipation = await this.projectsRepository.findParticipation(payload);
     if (existingParticipation) {
-      throw new HttpException("This participation already exists.", HttpStatus.FORBIDDEN);
+      throw new HttpException("This participation already exists", HttpStatus.FORBIDDEN);
     }
 
     const participation = await this.projectsRepository.createParticipation(payload);

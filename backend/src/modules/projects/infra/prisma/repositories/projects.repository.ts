@@ -10,27 +10,20 @@ import {
 } from "@prisma/client";
 
 import { PrismaService } from "@database/prisma.service";
-import { CreateEditionDTO } from "@modules/projects/dtos/CreateEdition.dto";
-import { CreateEventDTO } from "@modules/projects/dtos/CreateEvent.dto";
-import { CreateParticipantDTO } from "@modules/projects/dtos/CreateParticipant.dto";
-import { CreateProjectDTO } from "@modules/projects/dtos/CreateProject.dto";
-import { CreateSpeakerDTO } from "@modules/projects/dtos/CreateSpeaker.dto";
-import {
+import CreateEditionDTO from "@modules/projects/dtos/CreateEdition.dto";
+import CreateEventDTO from "@modules/projects/dtos/CreateEvent.dto";
+import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
+import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
+import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
+import ProjectsRepository, {
   CreateRepoAttendance,
   CreateRepoParticipation,
   FindExistingEventDTO,
-  ProjectsRepository,
 } from "@modules/projects/repositories/projects.repository";
 
 @Injectable()
-export class PrismaProjectsRepository implements ProjectsRepository {
+export default class PrismaProjectsRepository implements ProjectsRepository {
   constructor(private prisma: PrismaService) {}
-
-  public async create(data: CreateProjectDTO): Promise<Project> {
-    const project = await this.prisma.project.create({ data });
-
-    return project;
-  }
 
   public async createAttendance(data: CreateRepoAttendance): Promise<ProjectAttendance> {
     const attendance = await this.prisma.projectAttendance.create({ data });
@@ -62,18 +55,22 @@ export class PrismaProjectsRepository implements ProjectsRepository {
     return participation;
   }
 
+  public async createProject(data: CreateProjectDTO): Promise<Project> {
+    const project = await this.prisma.project.create({ data });
+
+    return project;
+  }
+
   public async createSpeaker(data: CreateSpeakerDTO): Promise<ProjectSpeaker> {
     const speaker = await this.prisma.projectSpeaker.create({ data });
 
     return speaker;
   }
 
-  public async findByTitle(title: string): Promise<Project | null> {
-    const project = await this.prisma.project.findFirst({
-      where: { title },
-    });
+  public async findAttendance(where: CreateRepoParticipation): Promise<ProjectAttendance | null> {
+    const attendance = await this.prisma.projectAttendance.findFirst({ where });
 
-    return project;
+    return attendance;
   }
 
   public async findEditionById(id: string): Promise<ProjectEdition | null> {
@@ -130,6 +127,14 @@ export class PrismaProjectsRepository implements ProjectsRepository {
     return participation;
   }
 
+  public async findProjectByTitle(title: string): Promise<Project | null> {
+    const project = await this.prisma.project.findFirst({
+      where: { title },
+    });
+
+    return project;
+  }
+
   public async findSpeakerByEmail(email: string): Promise<ProjectSpeaker | null> {
     const speaker = await this.prisma.projectSpeaker.findFirst({
       where: { email },
@@ -144,11 +149,5 @@ export class PrismaProjectsRepository implements ProjectsRepository {
     });
 
     return speaker;
-  }
-
-  public async findSameAttendance(where: CreateRepoParticipation): Promise<ProjectAttendance | null> {
-    const attendance = await this.prisma.projectAttendance.findFirst({ where });
-
-    return attendance;
   }
 }

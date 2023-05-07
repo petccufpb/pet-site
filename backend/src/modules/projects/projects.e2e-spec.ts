@@ -1,9 +1,9 @@
 import { FastifyAdapter, NestFastifyApplication } from "@nestjs/platform-fastify";
 import { Test } from "@nestjs/testing";
 
-import { ProjectsModule } from "./projects.module";
-import { FakeProjectsRepository } from "./repositories/fakes/projects.repository";
-import { ProjectsRepository } from "./repositories/projects.repository";
+import ProjectsModule from "./projects.module";
+import FakeProjectsRepository from "./repositories/fakes/projects.repository";
+import ProjectsRepository from "./repositories/projects.repository";
 
 describe("Projects", () => {
   let app: NestFastifyApplication;

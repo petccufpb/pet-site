@@ -5,7 +5,7 @@ import { redisStore } from "cache-manager-redis-yet";
 import type { RedisClientOptions } from "redis";
 
 import { MembersModule } from "@modules/members/members.module";
-import { ProjectsModule } from "@modules/projects/projects.module";
+import ProjectsModule from "@modules/projects/projects.module";
 
 @Module({
   imports: [

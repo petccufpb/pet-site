@@ -1,7 +1,7 @@
 import { HttpException } from "@nestjs/common";
 
-import { FakeProjectsRepository } from "../repositories/fakes/projects.repository";
-import { CreateProject } from "./CreateProject.service";
+import FakeProjectsRepository from "../repositories/fakes/projects.repository";
+import CreateProject from "./CreateProject.service";
 
 describe("CreateProject", () => {
   let service: CreateProject;
@@ -11,7 +11,7 @@ describe("CreateProject", () => {
     service = new CreateProject(fakeProjectsRepository);
   });
 
-  it("should successfully create a project", async () => {
+  it("should be able to create a project", async () => {
     const project = await service.execute({
       title: "Test",
       about: "Anything",
@@ -21,7 +21,7 @@ describe("CreateProject", () => {
     expect(project).toHaveProperty("id");
   });
 
-  it("should successfully create a project without about/logoUrl", async () => {
+  it("should be able to create a project without about/logoUrl", async () => {
     const project = await service.execute({
       title: "Test",
     });
