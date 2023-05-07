@@ -13,28 +13,29 @@ export default class CreateCertificate {
     email,
     eventId,
     matricula,
+    participantId,
   }: CreateCertificateDTO): Promise<ProjectCertificate> {
-    let participantId: string;
+    if (!participantId) {
+      if (email) {
+        const foundParticipant = await this.projectsRepository.findParticipantByEmail(email);
+        if (!foundParticipant) {
+          throw new HttpException("There's no participant with this email", HttpStatus.NOT_FOUND);
+        }
 
-    if (email) {
-      const foundParticipant = await this.projectsRepository.findParticipantByEmail(email);
-      if (!foundParticipant) {
-        throw new HttpException("There's no participant with this email", HttpStatus.NOT_FOUND);
+        participantId = foundParticipant.id;
+      } else if (matricula) {
+        const foundParticipant = await this.projectsRepository.findParticipantByMatricula(matricula);
+        if (!foundParticipant) {
+          throw new HttpException("There's no participant with this matricula", HttpStatus.NOT_FOUND);
+        }
+
+        participantId = foundParticipant.id;
+      } else {
+        throw new HttpException(
+          "You need to provide an email, a matricula or the participant's ID",
+          HttpStatus.BAD_REQUEST,
+        );
       }
-
-      participantId = foundParticipant.id;
-    } else if (matricula) {
-      const foundParticipant = await this.projectsRepository.findParticipantByMatricula(matricula);
-      if (!foundParticipant) {
-        throw new HttpException("There's no participant with this matricula", HttpStatus.NOT_FOUND);
-      }
-
-      participantId = foundParticipant.id;
-    } else {
-      throw new HttpException(
-        "You need to provide an email, a matricula or the participant's ID",
-        HttpStatus.BAD_REQUEST,
-      );
     }
 
     if (editionId) {

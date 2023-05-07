@@ -20,4 +20,9 @@ export default class CreateCertificateDTO {
   @IsOptional()
   @IsNumber()
   matricula?: number;
+
+  @IsOptional()
+  @IsString()
+  @IsUUID()
+  participantId?: string;
 }

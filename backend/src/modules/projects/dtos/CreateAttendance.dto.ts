@@ -16,4 +16,9 @@ export default class CreateAttendanceDTO implements Partial<ProjectAttendance> {
   @IsOptional()
   @IsNumber()
   matricula?: number;
+
+  @IsOptional()
+  @IsString()
+  @IsUUID()
+  participantId?: string;
 }

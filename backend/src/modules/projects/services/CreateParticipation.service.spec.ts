@@ -41,7 +41,16 @@ describe("CreateParticipation", () => {
     });
   });
 
-  it("should be able to create a participation with email", async () => {
+  it("should be able to create a participation using ID", async () => {
+    const participation = await service.execute({
+      editionId: edition.id,
+      participantId: participant.id,
+    });
+
+    expect(participation).toHaveProperty("id");
+  });
+
+  it("should be able to create a participation using email", async () => {
     const participation = await service.execute({
       editionId: edition.id,
       email: participant.email,
@@ -50,7 +59,7 @@ describe("CreateParticipation", () => {
     expect(participation).toHaveProperty("id");
   });
 
-  it("should be able to create a participation with matricula", async () => {
+  it("should be able to create a participation using matricula", async () => {
     const participation = await service.execute({
       editionId: edition.id,
       matricula: participant.matricula,

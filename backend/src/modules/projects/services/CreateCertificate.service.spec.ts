@@ -49,6 +49,21 @@ describe("CreateCertificate", () => {
     });
   });
 
+  it("should be able to create a certificate using ID", async () => {
+    const editionCertificate = await service.execute({
+      editionId: edition.id,
+      participantId: participant.id,
+    });
+
+    const eventCertificate = await service.execute({
+      eventId: event.id,
+      participantId: participant.id,
+    });
+
+    expect(editionCertificate).toHaveProperty("id");
+    expect(eventCertificate).toHaveProperty("id");
+  });
+
   it("should be able to create a certificate using email", async () => {
     const editionCertificate = await service.execute({
       editionId: edition.id,

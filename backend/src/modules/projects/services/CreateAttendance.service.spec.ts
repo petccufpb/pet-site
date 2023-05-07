@@ -44,7 +44,21 @@ describe("CreateAttendance", () => {
     });
   });
 
-  it("should be able to create an attendance with email", async () => {
+  it("should be able to create an attendance using ID", async () => {
+    await fakeProjectsRepository.createParticipation({
+      eventId: event.id,
+      participantId: participant.id,
+    });
+
+    const attendance = await service.execute({
+      eventId: event.id,
+      participantId: participant.id,
+    });
+
+    expect(attendance).toHaveProperty("id");
+  });
+
+  it("should be able to create an attendance using email", async () => {
     await fakeProjectsRepository.createParticipation({
       eventId: event.id,
       participantId: participant.id,
@@ -58,7 +72,7 @@ describe("CreateAttendance", () => {
     expect(attendance).toHaveProperty("id");
   });
 
-  it("should be able to create an attendance with matricula", async () => {
+  it("should be able to create an attendance using matricula", async () => {
     await fakeProjectsRepository.createParticipation({
       eventId: event.id,
       participantId: participant.id,
