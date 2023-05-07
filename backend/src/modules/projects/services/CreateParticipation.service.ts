@@ -59,6 +59,11 @@ export class CreateParticipation {
         participantId,
       };
     } else {
+      const edition = await this.projectsRepository.findEditionById(editionId as string);
+      if (!edition) {
+        throw new HttpException("This edition does not exist", HttpStatus.NOT_FOUND);
+      }
+
       payload = {
         editionId,
         participantId,

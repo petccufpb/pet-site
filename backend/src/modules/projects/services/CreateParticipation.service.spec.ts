@@ -106,6 +106,15 @@ describe("CreateParticipation", () => {
     expect(participation).toHaveProperty("id");
   });
 
+  it("should not be able to create a participation for a non-existent edition", async () => {
+    await expect(
+      service.execute({
+        editionId: "fake-edition-id",
+        matricula: 20200015280,
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
+  });
+
   it("should not be able to create a participation for a non-existent event", async () => {
     await expect(
       service.execute({
