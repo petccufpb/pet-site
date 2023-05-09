@@ -32,7 +32,8 @@ export const Route = styled.div`
 `;
 
 export const RouteLink = styled(Link)<{ tab: string }>`
-  font-weight: ${props => (props.tab == props.href ? "bold" : "normal")};
+  font-weight: ${props =>
+    props.tab.split("/")[1] === props.href.toString().split("/")[1] ? "bold" : "normal"};
   color: ${({ theme }) => theme.colors["base-white"]};
   text-align: center;
   text-decoration: none;
@@ -42,7 +43,7 @@ export const RouteLink = styled(Link)<{ tab: string }>`
 
   ::after {
     content: "";
-    display: ${props => (props.tab == props.href ? "block" : "none")};
+    display: ${props => (props.tab.split("/")[1] === props.href.toString().split("/")[1] ? "block" : "none")};
     position: absolute;
     width: 1rem;
     bottom: -0.5rem;

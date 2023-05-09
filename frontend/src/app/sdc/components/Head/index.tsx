@@ -21,7 +21,7 @@ export function Head() {
     <HeadContainer className={baiJamjuree.className}>
       <LastEditionSection>
         <SectionTitle>ULTIMA EDIÇÃO</SectionTitle>
-        <Image alt="Logo da SDC XXIX" src={LastEditionLogo} width="360"></Image>
+        <Image alt="Logo da SDC XXIX" src={LastEditionLogo} width="360" priority></Image>
         <SubscribeCount>
           <FireHexagon></FireHexagon>
           <div>+450 INSCRITOS</div>

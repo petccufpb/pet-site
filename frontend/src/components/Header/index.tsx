@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { ListItem, PETHeader, RouteLink, RouteList, VerticalLine } from "./styles";
@@ -7,58 +8,46 @@ import { ListItem, PETHeader, RouteLink, RouteList, VerticalLine } from "./style
 const inter = Inter({ subsets: ["latin"] });
 
 export function Header() {
-  const [tab, setTab] = useState("");
-
-  useEffect(() => {
-    setTab(document.location.pathname);
-  }, []);
-
-  function switchTab(e: React.MouseEvent<HTMLUListElement>) {
-    const target = e.target as Element;
-    if (target.tagName === "A") {
-      const anchorTarget = e.target as HTMLAnchorElement;
-      setTab(anchorTarget.pathname);
-    }
-  }
+  const pathname = usePathname();
 
   return (
     <PETHeader className={inter.className}>
       <Image src="/images/logo.png" alt="Logo PET Computação" width={75} height={40}></Image>
       <nav>
-        <RouteList onClick={switchTab}>
+        <RouteList>
           <ListItem>
-            <RouteLink href="/" tab={tab}>
+            <RouteLink href="/" tab={pathname}>
               Início
             </RouteLink>
           </ListItem>
           <ListItem>
-            <RouteLink href="/historia" tab={tab}>
+            <RouteLink href="/historia" tab={pathname}>
               História
             </RouteLink>
           </ListItem>
           <ListItem>
-            <RouteLink href="/time" tab={tab}>
+            <RouteLink href="/time" tab={pathname}>
               Time
             </RouteLink>
           </ListItem>
           <ListItem>
-            <RouteLink href="/projetos" tab={tab}>
+            <RouteLink href="/projetos" tab={pathname}>
               Projetos
             </RouteLink>
           </ListItem>
           <ListItem>
-            <RouteLink href="/sdc" tab={tab}>
+            <RouteLink href="/sdc" tab={pathname}>
               SDC
             </RouteLink>
           </ListItem>
           <VerticalLine />
           <ListItem>
-            <RouteLink href="/selecao" tab={tab}>
+            <RouteLink href="/selecao" tab={pathname}>
               Seleção
             </RouteLink>
           </ListItem>
           <ListItem>
-            <RouteLink href="/artigos" tab={tab}>
+            <RouteLink href="/artigos" tab={pathname}>
               Artigos
             </RouteLink>
           </ListItem>

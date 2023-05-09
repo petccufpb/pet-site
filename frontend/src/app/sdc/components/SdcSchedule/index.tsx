@@ -10,10 +10,10 @@ export function SdcSchedule() {
     <SdcScheduleContainer className={baiJamjuree.className}>
       <SectionTitle>Clique e filtre todos os eventos de um dia específico</SectionTitle>
       <DaySelector>
-        <Day>Dia 01</Day>
-        <Day>Dia 02</Day>
-        <Day>Dia 03</Day>
-        <Day>Dia 04</Day>
+        <Day selected={false}>Dia 01</Day>
+        <Day selected={false}>Dia 02</Day>
+        <Day selected={false}>Dia 03</Day>
+        <Day selected={false}>Dia 04</Day>
       </DaySelector>
       <Table className={baiJamjuree.className}>
         <tr>
@@ -49,7 +49,7 @@ export function SdcSchedule() {
             title: "Como ser RICO",
             speaker: "Leonardo Vidal",
             day: 3,
-            time: "10:0",
+            time: "10:00",
             available: false,
             type: "minicurso",
           }}

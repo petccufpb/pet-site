@@ -22,7 +22,7 @@ export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
     }
     body {
         background: ${({ theme, pathname }) =>
-          pathname === "/sdc" ? theme.colors.sdc["background"] : theme.colors["second-blue"]};
+          pathname.startsWith("/sdc") ? theme.colors.sdc["background"] : theme.colors["second-blue"]};
         color: ${({ theme }) => theme.colors["base-white"]};
         position: relative;
     }
