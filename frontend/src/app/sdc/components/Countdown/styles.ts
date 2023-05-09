@@ -16,7 +16,7 @@ export const Timer = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  font-weight: 300;
+  font-weight: 500;
 `;
 
 export const Divider = styled.div`
