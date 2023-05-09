@@ -9,6 +9,10 @@ export const Content = styled.div`
   height: 100%;
   padding: 2rem;
   gap: 4rem;
+
+  @media (max-width: 35rem) {
+    padding: 2rem 0;
+  }
 `;
 
 export const FormDescription = styled.div`

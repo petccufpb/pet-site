@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 export const Content = styled.div`
   border-radius: 1rem;
-  width: 31rem;
+  width: min(100%, 31rem);
   max-height: 42rem;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), transparent 70%);
   display: grid;

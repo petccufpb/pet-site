@@ -51,12 +51,12 @@ export function Header() {
               SDC
             </RouteLink>
           </ListItem>
+          <VerticalLine />
           <ListItem>
             <RouteLink href="/selecao" tab={tab}>
               Seleção
             </RouteLink>
           </ListItem>
-          <VerticalLine />
           <ListItem>
             <RouteLink href="/artigos" tab={tab}>
               Artigos

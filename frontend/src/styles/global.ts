@@ -8,6 +8,7 @@ export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
         padding: 0;
         box-sizing: border-box;
         outline: none;
+        -webkit-font-smoothing: subpixel-antialiased;
         ::-webkit-scrollbar {
             width: 0.45rem;
         }
@@ -23,7 +24,7 @@ export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
         background: ${({ theme, pathname }) =>
           pathname === "/sdc" ? theme.colors.sdc["background"] : theme.colors["second-blue"]};
         color: ${({ theme }) => theme.colors["base-white"]};
-        -webkit-font-smoothing: antialiased;
+        position: relative;
     }
     body, input, textarea, button {
         font-family: ${({ theme }) => theme.fonts.regular};

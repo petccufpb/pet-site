@@ -50,9 +50,11 @@ export const NameContainer = styled.div`
   padding-left: 1rem;
 `;
 
-export const Divider = styled.hr`
+export const Divider = styled.hr<{ pathname: string }>`
   margin-top: 1rem;
-  border: 1px solid ${({ theme }) => theme.colors["second-blue"]};
+  border: 1px solid
+    ${({ theme, pathname }) =>
+      pathname === "/sdc" ? theme.colors["sixth-blue"] : theme.colors["second-blue"]};
 `;
 
 export const SocialMediaInfo = styled.div`

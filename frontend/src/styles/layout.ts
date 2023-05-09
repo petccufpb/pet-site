@@ -38,5 +38,4 @@ export const Background = styled.div<{ pathname: string }>`
 export const ContainerForBackground = styled.div`
   width: 100%;
   height: 100%;
-  position: relative;
 `;

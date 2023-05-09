@@ -80,7 +80,7 @@ export function Footer() {
           <div>Projeto Seletivo</div>
         </div>
       </Content>
-      <Divider />
+      <Divider pathname={pathname} />
       <SocialMediaInfo>
         <SocialMediaIconContainer href="https://www.linkedin.com/company/petccufpb/">
           <FaLinkedinIn size={24} />

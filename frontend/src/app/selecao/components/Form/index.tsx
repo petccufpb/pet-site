@@ -1,6 +1,7 @@
 "use client";
 
 import { DataStatus, FileUploadEvent, FilesToUpload } from "@app/selecao/types";
+import { fork } from "child_process";
 import { Inter } from "next/font/google";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FaExclamationCircle, FaIdCard, FaPaperPlane, FaUser } from "react-icons/fa";
@@ -55,6 +56,13 @@ const cpfSchema = z.string().refine(val => {
 // Função para checar se o nome possui mais de uma palavra.
 // (para evitar que seja colocado apenas o 1º nome).
 const nameSchema = z.string().refine(val => {
+  const allowedCharacters = " abcdefghijklmnopqrstuvwxyzãõáéíóúç";
+
+  for (const l of val) {
+    console.log(l.toLowerCase());
+    if (!allowedCharacters.includes(l.toLowerCase())) return false;
+  }
+
   const split = val.split(" ");
 
   return split.length > 1 && split[0].length > 0 && split[1].length > 0;
