@@ -310,6 +310,18 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     return participations;
   }
 
+  public async findProjectById(id: string): Promise<Project | null> {
+    const project = this.projects.find(project => project.id === id) || null;
+
+    return project;
+  }
+
+  public async findProjectByTitle(title: string): Promise<Project | null> {
+    const project = this.projects.find(project => project.title === title) || null;
+
+    return project;
+  }
+
   public async findSpeakerByEmail(email: string): Promise<ProjectSpeaker | null> {
     const speaker = this.speakers.find(speaker => speaker.email === email) || null;
 
@@ -320,11 +332,5 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     const speaker = this.speakers.find(speaker => speaker.id === id) || null;
 
     return speaker;
-  }
-
-  public async findProjectByTitle(title: string): Promise<Project | null> {
-    const project = this.projects.find(project => project.title === title) || null;
-
-    return project;
   }
 }

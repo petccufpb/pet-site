@@ -29,6 +29,7 @@ import CreateParticipation from "@modules/projects/services/CreateParticipation.
 import CreateProject from "@modules/projects/services/CreateProject.service";
 import CreateSpeaker from "@modules/projects/services/CreateSpeaker.service";
 import FindLatestEdition from "@modules/projects/services/FindLatestEdition.service";
+import ListEditions from "@modules/projects/services/ListEditions.service";
 import ValidateCertificate from "@modules/projects/services/ValidateCertificate.service";
 
 @Controller("projects")
@@ -44,6 +45,7 @@ export default class ProjectsController {
     private createProject: CreateProject,
     private createSpeaker: CreateSpeaker,
     private findLatestEdition: FindLatestEdition,
+    private listEditions: ListEditions,
     private validateCertificate: ValidateCertificate,
   ) {}
 
@@ -81,6 +83,13 @@ export default class ProjectsController {
     const validity = await this.validateCertificate.execute(body);
 
     return validity;
+  }
+
+  @Get("editions")
+  async getProjectsEditions(@QueryRequired("projectId") projectId: string): Promise<ProjectEdition[]> {
+    const editions = await this.listEditions.execute({ projectId });
+
+    return editions;
   }
 
   @Post("editions")
