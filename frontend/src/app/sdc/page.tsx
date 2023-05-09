@@ -17,7 +17,7 @@ export default function SDC() {
     <div>
       <Background />
       <Head />
-      <Countdown startingTime="Jan 5, 2024 08:30:00" />
+      <Countdown startingTime="Jul 7, 2023 08:30:00" />
       <FeatureList />
       <ScheduleDesc />
       <SdcSchedule />
