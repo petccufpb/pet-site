@@ -1,6 +1,5 @@
 import { baiJamjuree } from "@app/sdc/page";
 import { SectionTitle } from "@app/sdc/styles";
-import { HiArrowUpRight } from "react-icons/hi2";
 
 import { SdcActivity } from "../SdcActivity";
 import { Day, DaySelector, SdcScheduleContainer, Table } from "./styles";

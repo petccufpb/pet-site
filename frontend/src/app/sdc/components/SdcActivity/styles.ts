@@ -33,6 +33,10 @@ export const Subscribe = styled(SdcButton)`
     availability ? theme.colors["fifth-blue"] : theme.colors["fourth-grey"]};
   background: ${({ availability }) => (availability ? "rgba(0, 114, 237, 0.6)" : "rgba(34, 34, 34, 0.6)")};
   color: ${({ availability, theme }) => (availability ? "white" : theme.colors["fourth-grey"])};
+  transition: 450ms;
+  &:hover {
+    filter: ${({ availability }) => (availability ? "brightness(.8)" : "")};
+  }
 `;
 
 export const SpeakerPhoto = styled(Image)`

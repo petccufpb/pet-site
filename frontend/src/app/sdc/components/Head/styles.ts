@@ -21,10 +21,17 @@ export const InstagramContainer = styled.div`
   display: flex;
   gap: 0.5rem;
   align-items: center;
-
-  text-decoration: underline;
-
   padding: 0.5rem 0;
+  cursor: pointer;
+  transition: 450ms;
+
+  div {
+    border-bottom: 0.5px solid white;
+  }
+
+  &:hover {
+    filter: brightness(0.7);
+  }
 `;
 
 export const HeadContainer = styled.div`
@@ -44,6 +51,11 @@ export const SubscribeButton = styled.button`
   margin: 0.5rem 0;
 
   font-size: ${({ theme }) => theme.textSizes["text-regular-xs"]};
+  transition: 450ms;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
 `;
 
 export const SubscribeCount = styled.div`
