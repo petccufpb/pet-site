@@ -23,6 +23,13 @@ const inter = Inter({ subsets: ["latin"] });
 export function Footer() {
   const pathname = usePathname();
 
+  function handleScrollTop() {
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
   return (
     <ContentContainer className={inter.className} pathname={pathname}>
       <Content>
@@ -94,8 +101,8 @@ export function Footer() {
         <SocialMediaIconContainer href="https://www.youtube.com/@PETComputacaoUFPB">
           <FaYoutube size={24} />
         </SocialMediaIconContainer>
-        <ExpandMenuContainer white>
-          <FaChevronUp size={24} />
+        <ExpandMenuContainer white onClick={() => handleScrollTop()}>
+          <FaChevronUp size={18} />
         </ExpandMenuContainer>
       </SocialMediaInfo>
     </ContentContainer>

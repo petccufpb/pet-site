@@ -84,6 +84,7 @@ export const SocialMediaIconContainer = styled.a<{ white?: boolean }>`
 
 export const ExpandMenuContainer = styled(SocialMediaIconContainer)`
   margin-left: auto;
+  cursor: pointer;
 `;
 
 export const NextInfo = styled(Flex)`
