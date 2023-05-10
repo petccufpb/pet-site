@@ -1,17 +1,19 @@
 "use client";
 
 import { baiJamjuree, inter } from "@app/sdc/page";
-import PetSDC from "@assets/PetSDC.svg";
-import { Content, FirstColumn, Forms, InputContainer, SecondColumn, Steps } from "./styles";
-import { useState } from "react";
-import { Background } from "../components/Background";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, ArrowRight, Check } from "@phosphor-icons/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import InputMask from "react-input-mask";
 import Select from "react-select";
-import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+
+import PetSDC from "@assets/PetSDC.svg";
+
+import { Background } from "../components/Background";
+import { Content, FirstColumn, Forms, InputContainer, SecondColumn, Steps } from "./styles";
 
 const sendFormSchema = z.object({
   name: z
@@ -51,14 +53,16 @@ export default function Inscricao() {
     resolver: zodResolver(sendFormSchema),
   });
 
+  let fieldGroups: JSX.Element[] = [];
+
   function renderStep() {
-    let markers = [];
+    const markers = [];
     for (let i = 0; i < fieldGroups.length; i++)
       markers.push(<div className={step >= i ? "active" : "inactive"}></div>);
     return markers;
   }
 
-  const fieldGroups = [
+  fieldGroups = [
     <>
       <InputContainer>
         <div>Email</div>
@@ -121,7 +125,6 @@ export default function Inscricao() {
 
   return (
     <>
-      <Background />
       <Content>
         <FirstColumn>
           <PetSDC />

@@ -48,8 +48,10 @@ export const BackgroundContainer = styled.div`
 export const Grid = styled.div`
   position: absolute !important;
   z-index: -1;
+  top: 10%;
+  left: 15%;
 
-  img {
+  svg {
     position: absolute;
     z-index: -1;
   }

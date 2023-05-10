@@ -1,13 +1,20 @@
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+
+import GridSDC from "@assets/grid.svg";
+
 import { BackgroundContainer, Grid } from "./styles";
-import GridSDC from "@assets/gridSDC.png";
 
 export function Background() {
+  const pathname = usePathname();
+
   return (
     <>
-      <Grid>
-        <Image alt="grid" src={GridSDC} width="1208" priority></Image>
-      </Grid>
+      {pathname !== "/sdc" && (
+        <Grid>
+          <GridSDC alt="grid" width="1208" priority></GridSDC>
+        </Grid>
+      )}
       <BackgroundContainer>
         <svg>
           <circle r="20rem" fill="#0072ED"></circle>
