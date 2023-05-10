@@ -44,14 +44,19 @@ export const HeadContainer = styled.div`
 `;
 
 export const SubscribeButton = styled.button`
+  justify-content: center;
   border: 1px solid ${({ theme }) => theme.colors["base-green"]};
-  color: ${({ theme }) => theme.colors["base-green"]};
+  
   background: ${({ theme }) => theme.colors["opacity-green"]};
   border-radius: 2rem;
   margin: 0.5rem 0;
 
   font-size: ${({ theme }) => theme.textSizes["text-regular-xs"]};
   transition: 450ms;
+
+  a{
+    color: ${({ theme }) => theme.colors["base-green"]};
+  }
 
   &:hover {
     filter: brightness(0.8);

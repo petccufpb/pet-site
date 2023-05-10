@@ -44,3 +44,13 @@ export const BackgroundContainer = styled.div`
     opacity: 50%;
   }
 `;
+
+export const Grid = styled.div`
+  position: absolute !important;
+  z-index: -1;
+
+  img {
+    position: absolute;
+    z-index: -1;
+  }
+`;

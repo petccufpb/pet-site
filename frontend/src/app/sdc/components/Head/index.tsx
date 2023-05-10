@@ -44,7 +44,7 @@ export function Head() {
               <div>@petccufpb</div>
             </InstagramContainer>
           </div>
-          <SubscribeButton className={baiJamjuree.className}>GARANTIR MINHA VAGA</SubscribeButton>
+          <SubscribeButton className={baiJamjuree.className}><a href={'sdc/inscricao'}>GARANTIR MINHA VAGA</a></SubscribeButton>
         </MoreInfo>
       </Section>
     </HeadContainer>

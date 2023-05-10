@@ -5,6 +5,7 @@ export const ScheduleTitle = styled.div`
   font-size: ${({ theme }) => theme.textSizes["text-title-xl"]};
   color: #0072ed;
   margin: 1rem 0;
+  font-weight: 500;
 `;
 
 export const ScheduleDescContainer = styled.div`
