@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>undefined</loc><lastmod>2023-04-21T21:43:29.475Z</lastmod><changefreq>monthly</changefreq><priority>1</priority><xhtml:link rel="alternate" hreflang="pt" href="undefined/pt"/></url>
-<url><loc>undefined/projetos</loc><lastmod>2023-04-21T21:43:29.475Z</lastmod><changefreq>monthly</changefreq><priority>1</priority><xhtml:link rel="alternate" hreflang="pt" href="undefined/pt/projetos"/></url>
-<url><loc>undefined/sdc</loc><lastmod>2023-04-21T21:43:29.475Z</lastmod><changefreq>monthly</changefreq><priority>1</priority><xhtml:link rel="alternate" hreflang="pt" href="undefined/pt/sdc"/></url>
-<url><loc>undefined/historia</loc><lastmod>2023-04-21T21:43:29.475Z</lastmod><changefreq>monthly</changefreq><priority>1</priority><xhtml:link rel="alternate" hreflang="pt" href="undefined/pt/historia"/></url>
-<url><loc>undefined/selecao</loc><lastmod>2023-04-21T21:43:29.475Z</lastmod><changefreq>monthly</changefreq><priority>1</priority><xhtml:link rel="alternate" hreflang="pt" href="undefined/pt/selecao"/></url>
-<url><loc>undefined/time</loc><lastmod>2023-04-21T21:43:29.475Z</lastmod><changefreq>monthly</changefreq><priority>1</priority><xhtml:link rel="alternate" hreflang="pt" href="undefined/pt/time"/></url>
-<url><loc>undefined/artigos</loc><lastmod>2023-04-21T21:43:29.475Z</lastmod><changefreq>monthly</changefreq><priority>1</priority><xhtml:link rel="alternate" hreflang="pt" href="undefined/pt/artigos"/></url>
+<url><loc>undefined</loc><lastmod>2023-05-10T13:43:59.915Z</lastmod><changefreq>monthly</changefreq><priority>1</priority><xhtml:link rel="alternate" hreflang="pt" href="undefined/pt"/></url>
+<url><loc>undefined/projetos</loc><lastmod>2023-05-10T13:43:59.915Z</lastmod><changefreq>monthly</changefreq><priority>1</priority><xhtml:link rel="alternate" hreflang="pt" href="undefined/pt/projetos"/></url>
+<url><loc>undefined/sdc</loc><lastmod>2023-05-10T13:43:59.915Z</lastmod><changefreq>monthly</changefreq><priority>1</priority><xhtml:link rel="alternate" hreflang="pt" href="undefined/pt/sdc"/></url>
+<url><loc>undefined/sdc/inscricao</loc><lastmod>2023-05-10T13:43:59.915Z</lastmod><changefreq>monthly</changefreq><priority>1</priority><xhtml:link rel="alternate" hreflang="pt" href="undefined/pt/sdc/inscricao"/></url>
+<url><loc>undefined/selecao</loc><lastmod>2023-05-10T13:43:59.915Z</lastmod><changefreq>monthly</changefreq><priority>1</priority><xhtml:link rel="alternate" hreflang="pt" href="undefined/pt/selecao"/></url>
+<url><loc>undefined/time</loc><lastmod>2023-05-10T13:43:59.915Z</lastmod><changefreq>monthly</changefreq><priority>1</priority><xhtml:link rel="alternate" hreflang="pt" href="undefined/pt/time"/></url>
+<url><loc>undefined/historia</loc><lastmod>2023-05-10T13:43:59.915Z</lastmod><changefreq>monthly</changefreq><priority>1</priority><xhtml:link rel="alternate" hreflang="pt" href="undefined/pt/historia"/></url>
+<url><loc>undefined/artigos</loc><lastmod>2023-05-10T13:43:59.915Z</lastmod><changefreq>monthly</changefreq><priority>1</priority><xhtml:link rel="alternate" hreflang="pt" href="undefined/pt/artigos"/></url>
 </urlset>

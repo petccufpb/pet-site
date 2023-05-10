@@ -1,7 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import styled from "styled-components";
 
-export const SdcButton = styled.div<{ availability: boolean }>`
+export const SdcButton = styled(Link)<{ availability: boolean }>`
   font-family: inherit;
   color: white;
   margin: 0 auto;

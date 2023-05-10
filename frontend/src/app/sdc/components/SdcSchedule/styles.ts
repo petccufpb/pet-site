@@ -15,16 +15,23 @@ export const DaySelector = styled.div`
 `;
 
 export const Day = styled.div<{ selected: boolean }>`
-  cursor: pointer;
-  background: rgba(0, 114, 237, 0.2);
+  cursor: ${({ selected }) => (selected ? "default" : "pointer")};
+  background: ${({ selected }) => (selected ? "rgba(0, 114, 237, 0.2)" : "rgba(34, 34, 34, 0.6)")};
   border-radius: 2rem;
-  border: 1px solid ${({ theme }) => theme.colors["fifth-blue"]};
+  border: 1px solid;
+  border-color: ${({ selected, theme }) =>
+    selected ? theme.colors["fifth-blue"] : theme.colors["fourth-grey"]};
   padding: 0.3rem;
   max-width: 5.8rem;
   width: 100%;
   text-align: center;
   font-weight: 300;
   font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
+  transition: 450ms;
+
+  &:hover {
+    filter: ${({ selected }) => (selected ? "" : "brightness(.8)")};
+  }
 `;
 
 export const Table = styled.table`

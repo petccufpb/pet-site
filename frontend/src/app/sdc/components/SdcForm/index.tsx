@@ -54,17 +54,18 @@ export function SdcForm({
     day: string;
     time: string;
   };
-  sections: { title: string; placeholder: string }[];
+  sections?: { title: string; placeholder: string }[];
 }) {
   return (
     <SdcFormContainer className={inter.className} borderType={borderType}>
       <DateOrNothing date={date}></DateOrNothing>
-      {sections.map(section => (
-        <InputContainer key={section.title}>
-          <div>{section.title}</div>
-          <input type="text" placeholder={section.placeholder} />
-        </InputContainer>
-      ))}
+      {sections &&
+        sections.map(section => (
+          <InputContainer key={section.title}>
+            <div>{section.title}</div>
+            <input type="text" placeholder={section.placeholder} />
+          </InputContainer>
+        ))}
       <ButtonContainer type={type}>
         <CancelButtonOrNothing type={type} />
         <ConfirmButton>

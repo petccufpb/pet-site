@@ -29,12 +29,12 @@ export function SdcActivity({ info }: { info: SdcActivityProps }) {
       <th>Dia 0{info.day}</th>
       <th>{info.time}</th>
       <th>
-        <Availability availability={info.available}>
+        <Availability href="#" availability={info.available}>
           {info.available ? "DISPONÍVEL" : "INDISPONÍVEL"}
         </Availability>
       </th>
       <th>
-        <Subscribe availability={info.available}>
+        <Subscribe href="/sdc/minicurso/id" availability={info.available}>
           <span>FAZER INSCRIÇÃO</span>
           <HiArrowUpRight />
         </Subscribe>
