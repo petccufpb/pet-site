@@ -9,10 +9,6 @@ export const BackgroundContainer = styled.div`
   width: 100%;
   height: 100%;
 
-  svg {
-    opacity: 80%;
-  }
-
   svg:nth-child(1) {
     position: absolute;
     top: 0;

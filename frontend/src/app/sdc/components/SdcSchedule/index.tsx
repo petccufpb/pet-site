@@ -15,44 +15,46 @@ export function SdcSchedule() {
         <Day selected={false}>Dia 04</Day>
       </DaySelector>
       <Table className={baiJamjuree.className}>
-        <tr>
-          <th>Ministrante</th>
-          <th>Tipo</th>
-          <th>Dia</th>
-          <th>Hora</th>
-          <th>Vagas</th>
-          <th></th>
-        </tr>
-        <SdcActivity
-          info={{
-            title: "Um kinder ovo vale mais que um diploma",
-            speaker: "Bruno Buck",
-            day: 1,
-            time: "09:45",
-            available: true,
-            type: "palestra",
-          }}
-        />
-        <SdcActivity
-          info={{
-            title: "Como usar o CHAT GPT",
-            speaker: "Samanthinha",
-            day: 2,
-            time: "08:00",
-            available: false,
-            type: "palestra",
-          }}
-        />
-        <SdcActivity
-          info={{
-            title: "Como ser RICO",
-            speaker: "Leonardo Vidal",
-            day: 3,
-            time: "10:00",
-            available: false,
-            type: "minicurso",
-          }}
-        />
+        <tbody>
+          <tr>
+            <th>Ministrante</th>
+            <th>Tipo</th>
+            <th>Dia</th>
+            <th>Hora</th>
+            <th>Vagas</th>
+            <th></th>
+          </tr>
+          <SdcActivity
+            info={{
+              title: "Um kinder ovo vale mais que um diploma",
+              speaker: "Bruno Buck",
+              day: 1,
+              time: "09:45",
+              available: true,
+              type: "palestra",
+            }}
+          />
+          <SdcActivity
+            info={{
+              title: "Como usar o CHAT GPT",
+              speaker: "Samanthinha",
+              day: 2,
+              time: "08:00",
+              available: false,
+              type: "palestra",
+            }}
+          />
+          <SdcActivity
+            info={{
+              title: "Como ser RICO",
+              speaker: "Leonardo Vidal",
+              day: 3,
+              time: "10:00",
+              available: false,
+              type: "minicurso",
+            }}
+          />
+        </tbody>
       </Table>
     </SdcScheduleContainer>
   );

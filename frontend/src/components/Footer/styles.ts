@@ -5,7 +5,7 @@ import styled from "styled-components";
 export const ContentContainer = styled.div<{ pathname: string }>`
   z-index: 1;
   background-color: ${({ theme, pathname }) =>
-    pathname.startsWith("/sdc") ? "transparent" : theme.colors["second-black"]};
+    pathname.split("/")[1] === "sdc" ? "transparent" : theme.colors["second-black"]};
 `;
 
 export const Content = styled.div`
@@ -54,7 +54,7 @@ export const Divider = styled.hr<{ pathname: string }>`
   margin-top: 1rem;
   border: 1px solid
     ${({ theme, pathname }) =>
-      pathname.startsWith("/sdc") ? theme.colors["sixth-blue"] : theme.colors["second-blue"]};
+      pathname.split("/")[1] === "sdc" ? theme.colors["sixth-blue"] : theme.colors["second-blue"]};
 `;
 
 export const SocialMediaInfo = styled.div`

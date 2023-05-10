@@ -24,7 +24,7 @@ export const Background = styled.div<{ pathname: string }>`
   bottom: 0;
 
   overflow: hidden;
-  display: ${({ pathname }) => (pathname.startsWith("/sdc") ? "none" : "block")};
+  display: ${({ pathname }) => (pathname.split("/")[1] === "sdc" ? "none" : "block")};
 
   svg {
     position: absolute;

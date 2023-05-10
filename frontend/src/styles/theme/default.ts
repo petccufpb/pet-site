@@ -22,6 +22,7 @@ const defaultTheme = {
     "third-grey": "rgba(255,255,230,0.6)",
     "fourth-grey": "#222222",
     "fifth-grey": "#7C7C8A",
+    "sixth-grey": "#A9A9B2",
     "gradient-blue": "linear-gradient(to bottom, #73E5E2, #3D66BC)",
     "base-green": "#04D361",
     "opacity-green": "rgba(4,211,97, 20%)",

@@ -2,7 +2,6 @@
 
 import { Bai_Jamjuree, Inter } from "next/font/google";
 
-import { Background } from "./components/Background";
 import { Countdown } from "./components/Countdown";
 import { FeatureList } from "./components/FeaturesList";
 import { Head } from "./components/Head";
@@ -15,7 +14,6 @@ export const inter = Inter({ subsets: ["latin"], weight: ["500", "400", "300"] }
 export default function SDC() {
   return (
     <div>
-      <Background />
       <Head />
       <Countdown startingTime="Jul 7, 2023 08:30:00" />
       <FeatureList />

@@ -1,6 +1,6 @@
 "use client";
 import { Lexend } from "next/font/google";
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren } from "react";
 import { ThemeProvider } from "styled-components";
 
 import StyledComponentsRegistry from "@components/registry";
@@ -18,7 +18,7 @@ import { Background, ContainerForBackground, LayoutContainer } from "../styles/l
 
 import { usePathname } from "next/navigation";
 
-const lexend = Lexend({ subsets: ["latin"] });
+const lexend = Lexend({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
 export default function RootLayout({ children }: PropsWithChildren) {
   const pathname = usePathname();
