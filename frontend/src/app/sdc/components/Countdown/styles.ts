@@ -10,6 +10,12 @@ export const CountdownContainer = styled.div`
     font-weight: 300;
     font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
   }
+
+  @media (max-width: 900px) {
+    > span {
+      display: none;
+    }
+  }
 `;
 
 export const Timer = styled.div`

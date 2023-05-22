@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import { ListItem, PETHeader, RouteLink, RouteList, VerticalLine } from "./styles";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], weight: "variable" });
 
 export function Header() {
   const pathname = usePathname();

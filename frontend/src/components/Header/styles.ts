@@ -12,6 +12,8 @@ export const PETHeader = styled.header`
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
+
+  overflow-x: hidden;
 `;
 
 export const RouteList = styled.ul`

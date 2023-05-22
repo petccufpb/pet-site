@@ -12,31 +12,31 @@ export function FeatureList() {
     <FeatureListContainer className={baiJamjuree.className}>
       <Feature>
         <Networking />
-        <div>
+        <span>
           <h3>100% NETWORKING</h3>
           <div>Compartilhe todas suas experiências e faça novos amigos.</div>
-        </div>
+        </span>
       </Feature>
       <Feature>
         <Minicurso />
-        <div>
+        <span>
           <h3>MINICURSOS</h3>
           <div>Corre e já garante sua vaga os minicursos lotam rápido.</div>
-        </div>
+        </span>
       </Feature>
       <Feature>
         <Certificate />
-        <div>
+        <span>
           <h3>CERTIFICADOS</h3>
           <div>Complemente o seu currículo com certificados de participação e aprendizado.</div>
-        </div>
+        </span>
       </Feature>
       <Feature>
         <CoffeeBreak />
-        <div>
+        <span>
           <h3>COFFEE BREAK</h3>
           <div>E sempre teremos aquela pausinha entre o evento para fazer um lanche.</div>
-        </div>
+        </span>
       </Feature>
     </FeatureListContainer>
   );

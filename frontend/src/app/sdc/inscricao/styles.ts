@@ -4,6 +4,10 @@ export const Content = styled.main`
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-top: 8rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const FirstColumn = styled.div`
@@ -40,6 +44,10 @@ export const FirstColumn = styled.div`
       font-weight: 500;
       font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
     }
+
+    @media (max-width: 768px) {
+      margin: 0 auto;
+    }
   }
 `;
 
@@ -56,6 +64,10 @@ export const SecondColumn = styled.div`
       font-weight: 400;
       font-size: 1rem;
       padding-bottom: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      padding: 1.5rem 0;
     }
   }
 `;

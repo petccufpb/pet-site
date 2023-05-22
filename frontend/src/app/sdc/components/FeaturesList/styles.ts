@@ -5,26 +5,43 @@ export const FeatureListContainer = styled.div`
   grid-template-columns: repeat(4, 1fr);
   justify-content: space-between;
   margin: 7.5rem 1em;
-  gap: 2rem;
+  overflow-x: hidden;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const Feature = styled.div`
   display: grid;
-  gap: 1rem;
-  grid-auto-flow: column;
+  grid-template-columns: auto 1fr;
+  justify-content: center;
+  overflow-x: hidden;
+  gap: 0.5rem;
+  max-width: 15rem;
 
-  > div {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  > svg {
+    z-index: 10;
   }
 
-  > div > div {
+  > span {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    /* justify-content: center; */
+  }
+
+  > span > div {
     opacity: 0.6;
     font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
   }
 
-  > div > h3 {
+  > span > h3 {
     font-weight: 500;
   }
 `;

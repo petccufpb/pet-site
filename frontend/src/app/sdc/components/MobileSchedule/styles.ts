@@ -1,10 +1,11 @@
+import Image from "next/image";
 import styled from "styled-components";
 
 export const SdcScheduleContainer = styled.div`
   margin-top: 6rem;
 
-  // Only render if the screen is bigger than 900px
-  @media (max-width: 768px) {
+  // Only render if the screen is smaller than 900px
+  @media (min-width: 768px) {
     display: none;
   }
 `;
@@ -39,55 +40,52 @@ export const Day = styled.div<{ selected: boolean }>`
   }
 `;
 
-export const Table = styled.table`
+export const Table = styled.div`
+  display: grid;
+
+  > div:not(:last-child) {
+    border-bottom: 0.5px solid white;
+  }
+`;
+
+export const EventContainer = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+
+  align-items: center;
+`;
+
+export const Event = styled.div`
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+
+  align-items: center;
   width: 100%;
-  color: rgba(255, 255, 255, 0.6);
 
-  // Linhas
-  tr {
-    display: grid;
-    grid-template-columns: 2fr 4fr 1fr 1fr 2fr 2.2fr;
-    text-align: center;
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-
-    // Primeira coluna de cada linha
-    th:first-child {
-      text-align: left;
-      color: white;
-      font-weight: 600;
-    }
-  }
-
-  // Primeira linha (legenda)
-  tr:first-child {
-    font-weight: 500;
+  > div:first-child,
+  > div:last-child {
     color: white;
+    font-weight: 500;
+    font-size: ${({ theme }) => theme.textSizes["text-regular-m"]};
   }
 
-  // Colunas
-  th {
-    overflow-x: hidden;
-    word-break: break-word;
-    font-weight: 300;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    width: 100%;
-    gap: 1rem;
-
-    // *PALESTRA*
-    b {
-      font-weight: 600;
-    }
+  > div:nth-child(even) {
+    text-align: right;
   }
 
-  th:first-child {
-    justify-content: start;
+  > div:nth-child(odd) {
+    text-align: left;
   }
 
-  tr:last-child {
-    border-bottom-style: none;
+  > div {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: ${({ theme }) => theme.textSizes["text-regular-xs"]};
   }
+`;
+
+export const SpeakerPhoto = styled(Image)`
+  border-radius: 100%;
 `;

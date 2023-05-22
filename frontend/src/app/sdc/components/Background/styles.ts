@@ -6,7 +6,7 @@ export const BackgroundContainer = styled.div`
   filter: blur(10rem);
   top: 0;
   left: 0;
-  width: 100%;
+  width: 1920px;
   height: 100%;
 
   svg:nth-child(1) {

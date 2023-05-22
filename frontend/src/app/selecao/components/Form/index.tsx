@@ -19,7 +19,7 @@ import {
   Warning,
 } from "./styles";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], weight: "variable" });
 
 // Função que checa se o CPF é válido através
 // dos últimos 2 dígitos de validação.

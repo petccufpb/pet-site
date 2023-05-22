@@ -30,6 +30,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <head>
           <title>PET Computação</title>
           <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         </head>
         <body className={`${lexend.className}`}>
           <ContainerForBackground>

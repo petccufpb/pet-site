@@ -138,7 +138,6 @@ export default function Inscricao() {
             <span>Verificar Programação</span>
           </a>
         </FirstColumn>
-
         <SecondColumn>
           <div>
             <h3>Bem-vindo a Semana da Computação!</h3>
@@ -146,7 +145,6 @@ export default function Inscricao() {
               Precisamos de algumas informações para criar sua inscrição! Ah, essas informações estarão
               presentes em seu certificado.
             </p>
-
             <Steps className={baiJamjuree.className}>
               <h6>Passo {step + 1} de 2</h6>
               <div className="bar">{renderStep()}</div>
@@ -171,7 +169,6 @@ export default function Inscricao() {
                   <ArrowRight width={16} />
                 </button>
               )}
-
               {step > 0 && (
                 <button
                   type="button"

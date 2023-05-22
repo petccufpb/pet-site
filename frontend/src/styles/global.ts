@@ -38,4 +38,13 @@ export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
     a {
         text-decoration: none;
     }
+
+    html, body {
+        overflow-x: hidden;
+    }
+
+    main {
+        overflow-x: hidden;
+        word-wrap: break-word;
+    }
 `;
