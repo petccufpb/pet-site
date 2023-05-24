@@ -74,7 +74,7 @@ export function Countdown({ startingTime }: { startingTime: string }) {
       </Timer>
       <span>
         THIS IS A<br />
-        WATER SPLITTER
+        GAME CHANGER
       </span>
     </CountdownContainer>
   );

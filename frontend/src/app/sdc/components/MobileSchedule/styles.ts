@@ -4,8 +4,8 @@ import styled from "styled-components";
 export const SdcScheduleContainer = styled.div`
   margin-top: 6rem;
 
-  // Only render if the screen is smaller than 900px
-  @media (min-width: 768px) {
+  // Apenas renderizar se a tela é menor que 900px.
+  @media (min-width: 900px) {
     display: none;
   }
 `;
@@ -44,7 +44,7 @@ export const Table = styled.div`
   display: grid;
 
   > div:not(:last-child) {
-    border-bottom: 0.5px solid white;
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.4);
   }
 `;
 
@@ -56,11 +56,11 @@ export const EventContainer = styled.div`
   align-items: center;
 `;
 
-export const Event = styled.div`
+export const Event = styled.div<{ available: boolean }>`
   display: grid;
   grid-auto-flow: row;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
 
   align-items: center;
   width: 100%;
@@ -80,9 +80,20 @@ export const Event = styled.div`
     text-align: left;
   }
 
-  > div {
+  > div,
+  > span {
     color: rgba(255, 255, 255, 0.6);
     font-size: ${({ theme }) => theme.textSizes["text-regular-xs"]};
+  }
+
+  > span {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+
+    svg {
+      color: ${({ theme, available }) => (available ? theme.colors["base-green"] : theme.colors["base-red"])};
+    }
   }
 `;
 

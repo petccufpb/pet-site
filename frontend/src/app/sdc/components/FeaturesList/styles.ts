@@ -6,13 +6,16 @@ export const FeatureListContainer = styled.div`
   justify-content: space-between;
   margin: 7.5rem 1em;
   overflow-x: hidden;
+  gap: 2rem;
 
   @media (max-width: 900px) {
+    justify-items: center;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 480px) {
+    justify-items: start;
     grid-template-columns: 1fr;
   }
 `;
@@ -23,7 +26,6 @@ export const Feature = styled.div`
   justify-content: center;
   overflow-x: hidden;
   gap: 0.5rem;
-  max-width: 15rem;
 
   > svg {
     z-index: 10;
@@ -43,5 +45,9 @@ export const Feature = styled.div`
 
   > span > h3 {
     font-weight: 500;
+  }
+
+  @media (min-width: 900px) {
+    max-width: 15rem;
   }
 `;

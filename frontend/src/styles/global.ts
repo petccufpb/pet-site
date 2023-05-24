@@ -20,23 +20,28 @@ export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
                 background: ${({ theme }) => theme.colors["base-blue"]};
         }
     }
+
     body {
         background: ${({ theme, pathname }) =>
           pathname.split("/")[1] === "sdc" ? theme.colors.sdc["background"] : theme.colors["second-blue"]};
         color: ${({ theme }) => theme.colors["base-white"]};
         position: relative;
     }
+
     body, input, textarea, button {
         font-family: ${({ theme }) => theme.fonts.regular};
         font-weight: 400;
         font-size: 1rem;
         overflow-x: hidden;
     }
+
     button {
         cursor: pointer;
     }
+
     a {
         text-decoration: none;
+        color: inherit;
     }
 
     html, body {

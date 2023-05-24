@@ -46,6 +46,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
           </ContainerForBackground>
           <Footer />
         </body>
+        <noscript>Você precisa ter Javascript habilitado para acessar esta página.</noscript>
       </html>
     </ThemeProvider>
   );

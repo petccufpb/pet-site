@@ -1,6 +1,7 @@
 import { baiJamjuree } from "@app/sdc/page";
 import { SectionTitle } from "@app/sdc/styles";
 import { MouseEvent, useState } from "react";
+import { FaCheck, FaTimes } from "react-icons/fa";
 
 import Leleo from "@assets/leleo.png";
 
@@ -36,28 +37,37 @@ export function MobileSchedule() {
       <Table>
         <EventContainer>
           <SpeakerPhoto src={Leleo} alt="Palestrante"></SpeakerPhoto>
-          <Event>
+          <Event available={true}>
             <div>Bruno Bruck</div>
             <div>Um kinder ovo vale mais que um diploma</div>
-            <div>Palestra</div>
+            <span>
+              <FaCheck />
+              <span>Palestra</span>
+            </span>
             <div>Dia 1 - 09:45</div>
           </Event>
         </EventContainer>
         <EventContainer>
           <SpeakerPhoto src={Leleo} alt="Palestrante"></SpeakerPhoto>
-          <Event>
+          <Event available={false}>
             <div>Samantha</div>
             <div>Como Desenhar o Petrúcio</div>
-            <div>Minicurso</div>
+            <span>
+              <FaTimes />
+              <span>Minicurso (esgotado)</span>
+            </span>
             <div>Dia 2 - 08:00</div>
           </Event>
         </EventContainer>
         <EventContainer>
           <SpeakerPhoto src={Leleo} alt="Palestrante"></SpeakerPhoto>
-          <Event>
+          <Event available={true}>
             <div>Leonardo Vidal</div>
             <div>Como Ficar Rico</div>
-            <div>Palestra</div>
+            <span>
+              <FaCheck />
+              <span>Palestra</span>
+            </span>
             <div>Dia 3 - 10:00</div>
           </Event>
         </EventContainer>

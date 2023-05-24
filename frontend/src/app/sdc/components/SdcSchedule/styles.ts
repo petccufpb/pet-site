@@ -3,8 +3,8 @@ import styled from "styled-components";
 export const SdcScheduleContainer = styled.div`
   margin-top: 6rem;
 
-  // Only render if the screen is bigger than 900px
-  @media (max-width: 768px) {
+  // Apenas renderizar se a tela é maior que 900px.
+  @media (max-width: 900px) {
     display: none;
   }
 `;
@@ -76,6 +76,8 @@ export const Table = styled.table`
     justify-content: center;
     width: 100%;
     gap: 1rem;
+
+    font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
 
     // *PALESTRA*
     b {

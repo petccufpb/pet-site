@@ -87,7 +87,7 @@ export const SubscribeButton = styled.button`
 
   background: ${({ theme }) => theme.colors["opacity-green"]};
   border-radius: 2rem;
-  margin: 0.5rem auto;
+  margin: 0.5rem 0;
 
   font-size: ${({ theme }) => theme.textSizes["text-regular-xs"]};
   transition: 450ms;
@@ -101,6 +101,10 @@ export const SubscribeButton = styled.button`
 
   &:hover {
     filter: brightness(0.8);
+  }
+
+  @media (max-width: 900px) {
+    margin: 0.5rem auto;
   }
 `;
 

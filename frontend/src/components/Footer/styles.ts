@@ -81,7 +81,7 @@ export const SocialMediaIconContainer = styled.a<{ white?: boolean }>`
   }
 `;
 
-export const ExpandMenuContainer = styled(SocialMediaIconContainer)`
+export const ScrollToTop = styled(SocialMediaIconContainer)`
   margin-left: auto;
   cursor: pointer;
 `;
@@ -144,6 +144,6 @@ export const Developers = styled.div`
 
   > img {
     border-radius: 100%;
-    border: 1px solid ${({ theme }) => theme.colors["fifth-blue"]};
+    border: 2px solid ${({ theme }) => theme.colors["fifth-blue"]};
   }
 `;

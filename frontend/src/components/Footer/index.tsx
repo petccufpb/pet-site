@@ -13,11 +13,10 @@ import {
   Developers,
   DevelopersContainer,
   Divider,
-  ExpandMenuContainer,
+  ScrollToTop,
   Flex,
   NameContainer,
   NextInfo,
-  NextInfoContainer,
   NextLogoContainer,
   PETBranding,
   SocialMediaIconContainer,
@@ -94,10 +93,10 @@ export function Footer() {
         <DevelopersContainer>
           <div className={baiJamjuree.className}>Development by</div>
           <Developers>
-            <Image src={Leleo} alt="Desenvolvedor" height={50}></Image>
-            <Image src={Leleo} alt="Desenvolvedor" height={50}></Image>
-            <Image src={Leleo} alt="Desenvolvedor" height={50}></Image>
-            <Image src={Leleo} alt="Desenvolvedor" height={50}></Image>
+            <Image src={Leleo} alt="Desenvolvedor" height={45}></Image>
+            <Image src={Leleo} alt="Desenvolvedor" height={45}></Image>
+            <Image src={Leleo} alt="Desenvolvedor" height={45}></Image>
+            <Image src={Leleo} alt="Desenvolvedor" height={45}></Image>
           </Developers>
         </DevelopersContainer>
       </NextInfo>
@@ -115,9 +114,9 @@ export function Footer() {
         <SocialMediaIconContainer href="https://www.youtube.com/@PETComputacaoUFPB">
           <FaYoutube size={24} />
         </SocialMediaIconContainer>
-        <ExpandMenuContainer white onClick={() => handleScrollTop()}>
+        <ScrollToTop white onClick={() => handleScrollTop()}>
           <FaChevronUp size={18} />
-        </ExpandMenuContainer>
+        </ScrollToTop>
       </SocialMediaInfo>
     </ContentContainer>
   );

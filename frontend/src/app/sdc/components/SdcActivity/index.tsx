@@ -1,3 +1,4 @@
+import { FaTimesCircle } from "react-icons/fa";
 import { HiArrowUpRight } from "react-icons/hi2";
 
 import Leleo from "@assets/leleo.png";
@@ -29,14 +30,17 @@ export function SdcActivity({ info }: { info: SdcActivityProps }) {
       <th>Dia 0{info.day}</th>
       <th>{info.time}</th>
       <th>
-        <Availability href="#" availability={info.available}>
-          {info.available ? "DISPONÍVEL" : "INDISPONÍVEL"}
+        <Availability availability={info.available}>
+          {info.available ? "DISPONÍVEL" : "ESGOTADO"}
+          {!info.available && <FaTimesCircle />}
         </Availability>
       </th>
       <th>
-        <Subscribe href="/sdc/minicurso/id" availability={info.available}>
-          <span>FAZER INSCRIÇÃO</span>
-          <HiArrowUpRight />
+        <Subscribe availability={info.available}>
+          <a href="/sdc/minicurso/id">
+            <span>FAZER INSCRIÇÃO</span>
+            <HiArrowUpRight />
+          </a>
         </Subscribe>
       </th>
     </tr>
