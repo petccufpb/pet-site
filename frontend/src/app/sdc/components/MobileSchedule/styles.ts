@@ -61,6 +61,7 @@ export const Event = styled.div<{ available: boolean }>`
   grid-auto-flow: row;
   grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr;
+  column-gap: 0.5rem;
 
   align-items: center;
   width: 100%;
@@ -69,7 +70,7 @@ export const Event = styled.div<{ available: boolean }>`
   > div:last-child {
     color: white;
     font-weight: 500;
-    font-size: ${({ theme }) => theme.textSizes["text-regular-m"]};
+    font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
   }
 
   > div:nth-child(even) {
@@ -84,6 +85,10 @@ export const Event = styled.div<{ available: boolean }>`
   > span {
     color: rgba(255, 255, 255, 0.6);
     font-size: ${({ theme }) => theme.textSizes["text-regular-xs"]};
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   > span {
