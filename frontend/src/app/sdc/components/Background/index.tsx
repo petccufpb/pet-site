@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import GridSDC from "@assets/grid.svg";
@@ -16,20 +15,20 @@ export function Background() {
         </Grid>
       )}
       <BackgroundContainer>
-        <svg>
-          <circle r="20rem" fill="#0072ED"></circle>
+        <svg height="400" width="400">
+          <ellipse cx="200" cy="200" rx="200" ry="200"></ellipse>
         </svg>
-        <svg>
-          <circle r="20rem" fill="#0072ED"></circle>
+        <svg height="400" width="400">
+          <ellipse cx="200" cy="200" rx="200" ry="200"></ellipse>
         </svg>
-        <svg>
-          <circle r="20rem" fill="#0072ED"></circle>
+        <svg height="400" width="400">
+          <ellipse cx="200" cy="200" rx="200" ry="200"></ellipse>
         </svg>
-        <svg>
-          <circle r="20rem" fill="#0072ED"></circle>
+        <svg height="400" width="400">
+          <ellipse cx="200" cy="200" rx="200" ry="200"></ellipse>
         </svg>
-        <svg>
-          <circle r="20rem" fill="#0072ED"></circle>
+        <svg height="400" width="400">
+          <ellipse cx="200" cy="200" rx="200" ry="200"></ellipse>
         </svg>
       </BackgroundContainer>
     </>
