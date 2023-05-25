@@ -1,4 +1,4 @@
-/*abraao, aran, lucas*/
+/* Abraão, Aran, Lucas */
 
 import { Container } from "./components/Container";
 
