@@ -31,6 +31,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
           <title>PET Computação</title>
           <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <noscript>Você precisa ter Javascript habilitado para acessar esta página.</noscript>
         </head>
         <body className={`${lexend.className}`}>
           <ContainerForBackground>
@@ -46,7 +47,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
           </ContainerForBackground>
           <Footer />
         </body>
-        <noscript>Você precisa ter Javascript habilitado para acessar esta página.</noscript>
       </html>
     </ThemeProvider>
   );

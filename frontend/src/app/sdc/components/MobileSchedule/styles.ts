@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import styled from "styled-components";
 
 export const SdcScheduleContainer = styled.div`
@@ -48,7 +49,7 @@ export const Table = styled.div`
   }
 `;
 
-export const EventContainer = styled.div`
+export const EventContainer = styled(Link)`
   display: flex;
   gap: 0.5rem;
   padding: 0.5rem;

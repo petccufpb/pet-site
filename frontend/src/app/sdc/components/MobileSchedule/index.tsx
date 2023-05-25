@@ -35,7 +35,7 @@ export function MobileSchedule() {
         </Day>
       </DaySelector>
       <Table>
-        <EventContainer>
+        <EventContainer href="/sdc">
           <SpeakerPhoto src={Leleo} alt="Palestrante"></SpeakerPhoto>
           <Event available={true}>
             <div>Bruno Bruck</div>
@@ -47,7 +47,7 @@ export function MobileSchedule() {
             <div>Dia 1 - 09:45</div>
           </Event>
         </EventContainer>
-        <EventContainer>
+        <EventContainer href="/sdc">
           <SpeakerPhoto src={Leleo} alt="Palestrante"></SpeakerPhoto>
           <Event available={false}>
             <div>Samantha</div>
@@ -59,7 +59,7 @@ export function MobileSchedule() {
             <div>Dia 2 - 08:00</div>
           </Event>
         </EventContainer>
-        <EventContainer>
+        <EventContainer href="/sdc/minicurso/id">
           <SpeakerPhoto src={Leleo} alt="Palestrante"></SpeakerPhoto>
           <Event available={true}>
             <div>Leonardo Vidal</div>
