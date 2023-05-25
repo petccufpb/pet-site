@@ -2,8 +2,10 @@
 
 import styled from "styled-components";
 
-export const ContentContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors["second-black"]};
+export const ContentContainer = styled.div<{ pathname: string }>`
+  z-index: 1;
+  background-color: ${({ theme, pathname }) =>
+    pathname.split("/")[1] === "sdc" ? "transparent" : theme.colors["second-black"]};
 `;
 
 export const Content = styled.div`
@@ -16,7 +18,7 @@ export const Content = styled.div`
   padding-top: 4rem;
 
   @media (max-width: 71rem) {
-    padding: 4rem 1rem;
+    padding: 4rem 1rem 0 1rem;
     grid-template-columns: repeat(auto-fit, minmax(400px, auto));
     gap: 2.5rem;
   }
@@ -48,9 +50,10 @@ export const NameContainer = styled.div`
   padding-left: 1rem;
 `;
 
-export const Divider = styled.hr`
-  margin-top: 1rem;
-  border: 1px solid ${({ theme }) => theme.colors["second-blue"]};
+export const Divider = styled.hr<{ pathname: string }>`
+  border: 1px solid
+    ${({ theme, pathname }) =>
+      pathname.split("/")[1] === "sdc" ? theme.colors["sixth-blue"] : theme.colors["second-blue"]};
 `;
 
 export const SocialMediaInfo = styled.div`
@@ -78,23 +81,69 @@ export const SocialMediaIconContainer = styled.a<{ white?: boolean }>`
   }
 `;
 
-export const ExpandMenuContainer = styled(SocialMediaIconContainer)`
+export const ScrollToTop = styled(SocialMediaIconContainer)`
   margin-left: auto;
+  cursor: pointer;
 `;
 
 export const NextInfo = styled(Flex)`
-  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  max-width: 70rem;
+  margin: 0 auto;
+  width: 100%;
+
+  align-items: center;
+
+  @media (max-width: 70rem) {
+    padding: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const NextLogoContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 3.5rem;
   margin-right: 1rem;
+  gap: 0.5rem;
+  height: 100%;
+
+  svg {
+    width: 3.5rem;
+  }
 `;
 
 export const VerticalCenterDiv = styled.div`
   margin-top: auto;
   margin-bottom: auto;
+`;
+
+export const DevelopersContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-bottom: 2rem;
+
+  gap: 0.5rem;
+
+  div {
+    font-weight: bold;
+    color: #e1f9ff60;
+  }
+`;
+
+export const Developers = styled.div`
+  display: flex;
+
+  > img:not(:first-child) {
+    margin-left: -0.5rem;
+  }
+
+  > img {
+    border-radius: 100%;
+    border: 2px solid ${({ theme }) => theme.colors["fifth-blue"]};
+  }
 `;

@@ -12,11 +12,13 @@ export const PETHeader = styled.header`
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
+
+  overflow-x: hidden;
 `;
 
 export const RouteList = styled.ul`
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-auto-flow: column;
   grid-column-gap: 1rem;
 `;
 
@@ -32,7 +34,8 @@ export const Route = styled.div`
 `;
 
 export const RouteLink = styled(Link)<{ tab: string }>`
-  font-weight: ${props => (props.tab == props.href ? "800" : "normal")};
+  font-weight: ${props =>
+    props.tab.split("/")[1] === props.href.toString().split("/")[1] ? "bold" : "normal"};
   color: ${({ theme }) => theme.colors["base-white"]};
   text-align: center;
   text-decoration: none;
@@ -42,9 +45,9 @@ export const RouteLink = styled(Link)<{ tab: string }>`
 
   ::after {
     content: "";
-    display: ${props => (props.tab == props.href ? "block" : "none")};
+    display: ${props => (props.tab.split("/")[1] === props.href.toString().split("/")[1] ? "block" : "none")};
     position: absolute;
-    width: 15%;
+    width: 1rem;
     bottom: -0.5rem;
     height: 4px;
     border-radius: 3rem;

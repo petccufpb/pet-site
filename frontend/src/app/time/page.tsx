@@ -1,6 +1,6 @@
 "use client";
 
-import FotoTime from "../assets/foto-time.jpg";
+import FotoTime from "../../assets/foto-time.jpg";
 
 import { MemberList } from "./components/MemberList";
 import { PhotoBubble } from "./components/PhotoBubble";
@@ -20,7 +20,7 @@ export default function Time() {
         </DescriptionContainer>
       </PhotoContainer>
       <div>
-        <MemberList type="tutors" />
+        <MemberList type="tutor" />
         <MemberList type="members" />
       </div>
     </Content>

@@ -1,31 +1,50 @@
 "use client";
-import { Inter, Lexend } from "next/font/google";
+import { Lexend } from "next/font/google";
 import { PropsWithChildren } from "react";
 import { ThemeProvider } from "styled-components";
+
+import StyledComponentsRegistry from "@components/registry";
+
+import Fishes from "@assets/fish.svg";
 
 import { GlobalStyle } from "@styles/global";
 import defaultTheme from "@styles/theme/default";
 
 import "@styles/global";
+
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
-import { LayoutContainer } from "../styles/layout";
+import { Background, ContainerForBackground, LayoutContainer } from "../styles/layout";
 
-const lexend = Lexend({ subsets: ["latin"] });
+import { usePathname } from "next/navigation";
+
+const lexend = Lexend({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
 export default function RootLayout({ children }: PropsWithChildren) {
+  const pathname = usePathname();
+
   return (
     <ThemeProvider theme={defaultTheme}>
-      <GlobalStyle />
+      <GlobalStyle pathname={pathname} />
       <html lang="pt-br">
         <head>
           <title>PET Computação</title>
+          <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <noscript>Você precisa ter Javascript habilitado para acessar esta página.</noscript>
         </head>
         <body className={`${lexend.className}`}>
-          <LayoutContainer>
-            <Header />
-            {children}
-          </LayoutContainer>
+          <ContainerForBackground>
+            <Background pathname={pathname}>
+              <Fishes />
+            </Background>
+            <LayoutContainer>
+              <StyledComponentsRegistry>
+                <Header />
+                <main>{children}</main>
+              </StyledComponentsRegistry>
+            </LayoutContainer>
+          </ContainerForBackground>
           <Footer />
         </body>
       </html>

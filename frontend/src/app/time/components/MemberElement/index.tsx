@@ -4,10 +4,10 @@ import { FaEnvelope, FaGithubAlt, FaInstagram, FaQuestionCircle } from "react-ic
 import defaultTheme from "@styles/theme/default";
 
 import { MemberType } from "../MemberType";
-import { SocialMediaLink } from "../SocialMediaLink";
 import {
-  Divider,
   Content,
+  Divider,
+  MemberDescription,
   MemberImage,
   MemberImageBorder,
   MemberInfo,
@@ -21,15 +21,26 @@ export interface MemberColorTheme {
   gradient: string;
 }
 
-export function MemberElement({ member, tutor }: { member: Member; tutor?: boolean }) {
+export function MemberElement({
+  member,
+  tutor,
+  founder,
+}: {
+  member: Member;
+  tutor?: boolean;
+  founder?: boolean;
+}) {
   let colorTheme: MemberColorTheme;
-
-  console.log(member);
 
   if (tutor) {
     colorTheme = {
       color: defaultTheme.colors["third-blue"],
       gradient: defaultTheme.colors["gradient-blue"],
+    };
+  } else if (founder) {
+    colorTheme = {
+      color: defaultTheme.colors["base-red"],
+      gradient: defaultTheme.colors["second-gradient-red"],
     };
   } else if (member.isActive) {
     colorTheme = {
@@ -38,7 +49,7 @@ export function MemberElement({ member, tutor }: { member: Member; tutor?: boole
     };
   } else {
     colorTheme = {
-      color: defaultTheme.colors["base-red"],
+      color: defaultTheme.colors["second-red"],
       gradient: defaultTheme.colors["gradient-red"],
     };
   }
@@ -56,14 +67,16 @@ export function MemberElement({ member, tutor }: { member: Member; tutor?: boole
         </MemberImageBorder>
       </div>
       <MemberInfo>
-        <h3>{member.name}</h3>
-        <MemberTypeContainer>
-          <MemberType tutor={tutor} member={member} />
-          <QuestionMark>
-            <FaQuestionCircle />
-            <small>{member.about}</small>
-          </QuestionMark>
-        </MemberTypeContainer>
+        <MemberDescription>
+          <h3>{member.name}</h3>
+          <MemberTypeContainer>
+            <MemberType member={member} />
+            <QuestionMark>
+              <FaQuestionCircle />
+              <small>{member.about}</small>
+            </QuestionMark>
+          </MemberTypeContainer>
+        </MemberDescription>
         <Divider colorTheme={colorTheme} />
         <SocialMediaIcons colorTheme={colorTheme}>
           {/*
