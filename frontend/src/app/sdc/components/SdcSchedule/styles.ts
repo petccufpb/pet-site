@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SdcScheduleContainer = styled.div`
-  margin-top: 6rem;
+  margin: 6rem 0;
 
   // Apenas renderizar se a tela é maior que 900px.
   @media (max-width: 900px) {
