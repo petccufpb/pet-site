@@ -1,4 +1,4 @@
-/* Abraão, Aran, Lucas */
+/* Abraão, Aran, Lucas. */
 
 import { Container } from "./components/Container";
 
