@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
 
-module.exports = phase => ({
+module.exports = () => ({
   compiler: {
-    styledComponents: true,
+    styledComponents: {
+      ssr: true,
+    },
   },
   eslint: {
     ignoreDuringBuilds: true,
@@ -26,6 +28,12 @@ module.exports = phase => ({
   },
   images: {
     remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: "",
+        pathname: "/u/**",
+      },
       {
         protocol: "https",
         hostname: "drive.google.com",

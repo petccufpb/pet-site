@@ -1,3 +1,5 @@
+"use client";
+
 import { baiJamjuree } from "@app/sdc/page";
 import { SectionTitle } from "@app/sdc/styles";
 import { MouseEvent, useState } from "react";

@@ -1,56 +1,103 @@
-import { Inter } from "next/font/google";
+import { baiJamjuree, inter } from "@app/sdc/page";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 
 import { ListItem, PETHeader, RouteLink, RouteList, VerticalLine } from "./styles";
 
-const inter = Inter({ subsets: ["latin"], weight: "variable" });
+const routes = {
+  start: [
+    {
+      name: "Início",
+      path: "/",
+    },
+    {
+      name: "História",
+      path: "/historia",
+    },
+    {
+      name: "Time",
+      path: "/time",
+    },
+    {
+      name: "Projetos",
+      path: "/projetos",
+    },
+    {
+      name: "SDC",
+      path: "/sdc",
+    },
+  ],
+  end: [
+    {
+      name: "Seleção",
+      path: "/selecao",
+    },
+    {
+      name: "Artigos",
+      path: "/artigos",
+    },
+  ],
+};
+
+const sdcRoutes = {
+  start: [
+    {
+      name: "Início",
+      path: "/sdc",
+    },
+    {
+      name: "Inscrição",
+      path: "/sdc/inscricao",
+    },
+  ],
+  end: [
+    {
+      name: "Verificar Certificado",
+      path: "/sdc/certificado",
+    },
+  ],
+};
 
 export function Header() {
   const pathname = usePathname();
+  const isSDC = pathname.startsWith("/sdc");
 
   return (
-    <PETHeader className={inter.className}>
+    <PETHeader className={isSDC ? baiJamjuree.className : inter.className}>
       <Image src="/images/logo.png" alt="Logo PET Computação" width={75} height={40}></Image>
       <nav>
         <RouteList>
-          <ListItem>
-            <RouteLink href="/" tab={pathname}>
-              Início
-            </RouteLink>
-          </ListItem>
-          <ListItem>
-            <RouteLink href="/historia" tab={pathname}>
-              História
-            </RouteLink>
-          </ListItem>
-          <ListItem>
-            <RouteLink href="/time" tab={pathname}>
-              Time
-            </RouteLink>
-          </ListItem>
-          <ListItem>
-            <RouteLink href="/projetos" tab={pathname}>
-              Projetos
-            </RouteLink>
-          </ListItem>
-          <ListItem>
-            <RouteLink href="/sdc" tab={pathname}>
-              SDC
-            </RouteLink>
-          </ListItem>
+          {isSDC
+            ? sdcRoutes.start.map((route, i) => (
+                <ListItem key={i}>
+                  <RouteLink href={route.path} tab={pathname}>
+                    {route.name}
+                  </RouteLink>
+                </ListItem>
+              ))
+            : routes.start.map((route, i) => (
+                <ListItem key={i}>
+                  <RouteLink href={route.path} tab={pathname}>
+                    {route.name}
+                  </RouteLink>
+                </ListItem>
+              ))}
           <VerticalLine />
-          <ListItem>
-            <RouteLink href="/selecao" tab={pathname}>
-              Seleção
-            </RouteLink>
-          </ListItem>
-          <ListItem>
-            <RouteLink href="/artigos" tab={pathname}>
-              Artigos
-            </RouteLink>
-          </ListItem>
+          {isSDC
+            ? sdcRoutes.end.map((route, i) => (
+                <ListItem key={i}>
+                  <RouteLink href={route.path} tab={pathname}>
+                    {route.name}
+                  </RouteLink>
+                </ListItem>
+              ))
+            : routes.end.map((route, i) => (
+                <ListItem key={i}>
+                  <RouteLink href={route.path} tab={pathname}>
+                    {route.name}
+                  </RouteLink>
+                </ListItem>
+              ))}
         </RouteList>
       </nav>
     </PETHeader>

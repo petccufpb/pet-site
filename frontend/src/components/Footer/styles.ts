@@ -146,4 +146,21 @@ export const Developers = styled.div`
     border-radius: 100%;
     border: 2px solid ${({ theme }) => theme.colors["fifth-blue"]};
   }
+
+  /* Fazer as imagens terem ordem reversa de z-index */
+  > img:nth-child(1) {
+    z-index: 2;
+  }
+
+  > img:nth-child(2) {
+    z-index: 1;
+  }
+
+  > img:nth-child(3) {
+    z-index: 0;
+  }
+
+  > img:nth-child(4) {
+    z-index: -1;
+  }
 `;

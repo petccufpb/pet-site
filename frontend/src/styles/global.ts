@@ -52,4 +52,8 @@ export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
         overflow-x: hidden;
         word-wrap: break-word;
     }
+
+    input, button {
+        font-family: inherit;
+    }
 `;

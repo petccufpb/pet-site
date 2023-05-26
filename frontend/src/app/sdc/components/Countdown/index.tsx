@@ -1,3 +1,5 @@
+"use client";
+
 import { baiJamjuree } from "@app/sdc/page";
 import { useState } from "react";
 

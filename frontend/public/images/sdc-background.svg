@@ -1,0 +1,22 @@
+<svg style="width: 100%;height:100%;filter:brightness(0.25);" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="80" result="blur1" />
+      <feGaussianBlur in="blur1" stdDeviation="80" result="blur2" />
+    </filter>
+    <radialGradient id="bgGradient">
+      <stop offset="0%" stop-color="#0072ed80" />
+    </radialGradient>
+    </defs>
+    <g fill="#0072ed" filter="url(#blur)" >
+    <ellipse cx="0" cy="0" rx="320" ry="320" />
+    <ellipse cx="90%" cy="25%" rx="320" ry="320" />
+    <g style="opacity: 60%;">
+      <ellipse cx="15%" cy="48%" rx="320" ry="320" />
+    </g>
+    <g style="opacity: 60%;">
+      <ellipse cx="60%" cy="75%" rx="320" ry="320" />
+    </g>
+    <ellipse cx="10%" cy="100%" rx="320" ry="320" />
+    </g>
+</svg>

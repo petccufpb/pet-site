@@ -12,7 +12,6 @@ import { z } from "zod";
 
 import PetSDC from "@assets/PetSDC.svg";
 
-import { Background } from "../components/Background";
 import { Content, FirstColumn, Forms, InputContainer, SecondColumn, Steps } from "./styles";
 
 const sendFormSchema = z.object({
@@ -118,6 +117,7 @@ export default function Inscricao() {
       </InputContainer>
     </>,
   ];
+
   function sendForm(data: any) {
     setOutput(JSON.stringify(data, null, 2));
     router.push("/sdc");

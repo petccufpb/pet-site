@@ -1,3 +1,5 @@
+"use client";
+
 import { Section } from "@app/sdc/styles";
 import styled from "styled-components";
 

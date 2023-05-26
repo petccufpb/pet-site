@@ -15,7 +15,7 @@ export const LayoutContainer = styled.div`
   }
 `;
 
-export const Background = styled.div<{ pathname: string }>`
+export const Background = styled.div`
   width: 100vw;
   height: 100%;
   position: absolute;
@@ -24,7 +24,6 @@ export const Background = styled.div<{ pathname: string }>`
   bottom: 0;
 
   overflow: hidden;
-  display: ${({ pathname }) => (pathname.split("/")[1] === "sdc" ? "none" : "block")};
 
   svg {
     position: absolute;

@@ -35,9 +35,12 @@ export default function RootLayout({ children }: PropsWithChildren) {
         </head>
         <body className={`${lexend.className}`}>
           <ContainerForBackground>
-            <Background pathname={pathname}>
-              <Fishes />
-            </Background>
+            {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
+            {pathname.split("/")[1] !== "sdc" && (
+              <Background>
+                <Fishes />
+              </Background>
+            )}
             <LayoutContainer>
               <StyledComponentsRegistry>
                 <Header />

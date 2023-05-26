@@ -1,5 +1,3 @@
-"use client";
-
 import { Bai_Jamjuree, Inter } from "next/font/google";
 
 import { Countdown } from "./components/Countdown";

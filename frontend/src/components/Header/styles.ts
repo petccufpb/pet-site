@@ -9,17 +9,25 @@ export const VerticalLine = styled.span`
 
 export const PETHeader = styled.header`
   padding: 2rem 0 2rem 0;
-  display: grid;
+  display: flex;
   grid-template-columns: 1fr 1fr;
   align-items: center;
+  width: 100%;
 
   overflow-x: hidden;
+
+  > nav {
+    width: 100%;
+  }
 `;
 
 export const RouteList = styled.ul`
   display: grid;
   grid-auto-flow: column;
-  grid-column-gap: 1rem;
+  gap: 2rem;
+
+  width: 100%;
+  justify-content: flex-end;
 `;
 
 export const ListItem = styled.li`
@@ -34,23 +42,28 @@ export const Route = styled.div`
 `;
 
 export const RouteLink = styled(Link)<{ tab: string }>`
-  font-weight: ${props =>
-    props.tab.split("/")[1] === props.href.toString().split("/")[1] ? "bold" : "normal"};
+  font-weight: ${({ tab, href }) => (tab === href.toString() ? "bold" : "normal")};
   color: ${({ theme }) => theme.colors["base-white"]};
   text-align: center;
   text-decoration: none;
   display: flex;
   justify-content: center;
   position: relative;
+  transition: filter 250ms ease-in-out;
 
   ::after {
     content: "";
-    display: ${props => (props.tab.split("/")[1] === props.href.toString().split("/")[1] ? "block" : "none")};
+    display: ${({ tab, href }) => (tab === href.toString() ? "block" : "none")};
     position: absolute;
     width: 1rem;
     bottom: -0.5rem;
     height: 4px;
     border-radius: 3rem;
-    background: ${({ theme }) => theme.colors["base-blue"]};
+    background: ${({ theme, tab }) =>
+      tab.startsWith("/sdc") ? theme.colors["fifth-blue"] : theme.colors["base-blue"]};
+  }
+
+  &:hover {
+    filter: ${({ tab, href }) => (tab === href.toString() ? "none" : "brightness(0.8)")};
   }
 `;
