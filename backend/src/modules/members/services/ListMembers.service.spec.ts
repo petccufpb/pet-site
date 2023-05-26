@@ -11,7 +11,7 @@ describe("ListMembers", () => {
     service = new ListMembers(membersRepository);
   });
 
-  it("should successfully list all members", async () => {
+  it("should be able to list all members", async () => {
     const user = await membersRepository.create({
       name: "John Doe",
     });

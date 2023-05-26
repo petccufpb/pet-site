@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb-base", "@shared/eslint"],
+  "extends": ["@shared/eslint"],
   "env": {
     "node": true
   },
