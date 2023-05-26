@@ -16,18 +16,136 @@ model Member {
     type        String?
     isActive    Boolean         @default(true)
     contactInfo MemberContact[]
-    createdAt   DateTime @default(now())
+    createdAt   DateTime        @default(now())
     // Só tem default pq eu esqueci de botar quando criei a tabela
-    updatedAt   DateTime @updatedAt @default(now())
+    updatedAt   DateTime        @updatedAt @default(now())
 }
 
 model MemberContact {
-    id        String @id @default(uuid())
+    id        String   @id @default(uuid())
     name      String
     snsId     String
     memberId  String
-    member    Member @relation(fields: [memberId], references: [id])
+    member    Member   @relation(fields: [memberId], references: [id])
     createdAt DateTime @default(now())
     // Só tem default pq eu esqueci de botar quando criei a tabela
     updatedAt DateTime @updatedAt @default(now())
+}
+
+model Project {
+    id        String           @id @default(uuid())
+    title     String
+    about     String?
+    logoUrl   String?
+    editions  ProjectEdition[]
+    createdAt DateTime         @default(now())
+    updatedAt DateTime         @updatedAt
+}
+
+model ProjectAttendance {
+    id            String             @id @default(uuid())
+    participantId String
+    participant   ProjectParticipant @relation(fields: [participantId], references: [id])
+    eventId       String?
+    event         ProjectEvent?      @relation(fields: [eventId], references: [id])
+    createdAt     DateTime           @default(now())
+    updatedAt     DateTime           @updatedAt
+}
+
+model ProjectCertificate {
+    id            String             @id @default(uuid())
+    participantId String
+    participant   ProjectParticipant @relation(fields: [participantId], references: [id])
+    editionId     String
+    edition       ProjectEdition     @relation(fields: [editionId], references: [id])
+    eventId       String?
+    event         ProjectEvent?      @relation(fields: [eventId], references: [id])
+    createdAt     DateTime           @default(now())
+    updatedAt     DateTime           @updatedAt
+}
+
+model ProjectCertificateTemplate {
+    id            String          @id @default(uuid())
+    text          String
+    backgroundUrl String
+    editionId     String?         @unique
+    edition       ProjectEdition? @relation(fields: [editionId], references: [id])
+    eventId       String?         @unique
+    event         ProjectEvent?   @relation(fields: [eventId], references: [id])
+    createdAt     DateTime        @default(now())
+    updatedAt     DateTime        @updatedAt
+}
+
+model ProjectEdition {
+    id                  String                     @id @default(uuid())
+    name                String?
+    number              Float
+    date                DateTime
+    certificateTemplate ProjectCertificateTemplate?
+    certificates        ProjectCertificate[]
+    events              ProjectEvent[]
+    participants        ProjectParticipation[]
+    projectId           String
+    project             Project                    @relation(fields: [projectId], references: [id])
+    createdAt           DateTime                   @default(now())
+    updatedAt           DateTime                   @updatedAt
+}
+
+model ProjectEvent {
+    id                  String                      @id @default(uuid())
+    name                String
+    type                String
+    capacity            Int?
+    onSite              Boolean                     @default(true)
+    location            String?
+    startTime           DateTime
+    endTime             DateTime
+    certificateTemplate ProjectCertificateTemplate?
+    certificates        ProjectCertificate[]
+    speakerId           String
+    speaker             ProjectSpeaker              @relation(fields: [speakerId], references: [id])
+    participants        ProjectParticipation[]
+    attendees           ProjectAttendance[]
+    editionId           String
+    edition             ProjectEdition              @relation(fields: [editionId], references: [id])
+    createdAt           DateTime                    @default(now())
+    updatedAt           DateTime                    @updatedAt
+}
+
+model ProjectParticipation {
+    id            String             @id @default(uuid())
+    editionId     String?
+    edition       ProjectEdition?    @relation(fields: [editionId], references: [id])
+    eventId       String?
+    event         ProjectEvent?      @relation(fields: [eventId], references: [id])
+    participantId String
+    participant   ProjectParticipant @relation(fields: [participantId], references: [id])
+    createdAt     DateTime           @default(now())
+    updatedAt     DateTime           @updatedAt
+}
+
+model ProjectParticipant {
+    id                   String                 @id @default(uuid())
+    name                 String
+    email                String                 @unique
+    age                  Int
+    phoneNumber          String                 @unique
+    matricula            Int                    @unique
+    course               String
+    university           String
+    certificates         ProjectCertificate[]
+    projectsParticipated ProjectParticipation[]
+    attendances          ProjectAttendance[]
+    createdAt            DateTime               @default(now())
+    updatedAt            DateTime               @updatedAt
+}
+
+model ProjectSpeaker {
+    id        String         @id @default(uuid())
+    name      String
+    email     String         @unique
+    photoUrl  String
+    events    ProjectEvent[]
+    createdAt DateTime       @default(now())
+    updatedAt DateTime       @updatedAt
 }

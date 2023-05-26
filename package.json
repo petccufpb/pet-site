@@ -14,8 +14,7 @@
       "eslint --fix"
     ],
     "backend/src/**/*.ts": [
-      "eslint --fix",
-      "pnpm -F backend test"
+      "pnpm -F backend test -- --bail --findRelatedTests"
     ]
   },
   "devDependencies": {
