@@ -75,7 +75,7 @@ export const SocialMediaInfo = styled.div`
   }
 `;
 
-export const SocialMediaIconContainer = styled.a<{ white?: boolean }>`
+export const SocialMediaIconContainer = styled.a`
   padding: 0.65rem;
   display: grid;
   place-items: center;
@@ -84,11 +84,22 @@ export const SocialMediaIconContainer = styled.a<{ white?: boolean }>`
   margin-right: 0.5rem;
 
   > svg {
-    color: ${props => (props.white ? props.theme.colors["base-white"] : props.theme.colors["base-blue"])};
+    color: ${({ theme }) => theme.colors["base-blue"]};
   }
 `;
 
-export const ScrollToTop = styled(SocialMediaIconContainer)`
+export const ScrollToTop = styled.div`
+  padding: 0.65rem;
+  display: grid;
+  place-items: center;
+  border-radius: 0.4rem;
+  background-color: ${({ theme }) => theme.colors["second-blue"]};
+  margin-right: 0.5rem;
+
+  > svg {
+    color: ${({ theme }) => theme.colors["base-white"]};
+  }
+
   margin-left: auto;
   cursor: pointer;
 `;

@@ -44,13 +44,18 @@ export function Head() {
           <MoreInfo>
             <div>
               <Title>MAIS INFORMAÇÕES</Title>
-              <InstagramContainer>
+              <InstagramContainer
+                aria-label="Instagram PET Computação"
+                href="https://www.instagram.com/petccufpb/"
+              >
                 <FaInstagram size={20}></FaInstagram>
                 <div>@petccufpb</div>
               </InstagramContainer>
             </div>
             <SubscribeButton className={baiJamjuree.className}>
-              <Link href="sdc/inscricao">GARANTIR MINHA VAGA</Link>
+              <Link aria-label="Inscrição" href="sdc/inscricao">
+                GARANTIR MINHA VAGA
+              </Link>
             </SubscribeButton>
           </MoreInfo>
         </JustifyBetween>

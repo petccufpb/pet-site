@@ -1,6 +1,7 @@
-import { ClientTypeIt } from "@app/components/ClientTypeIt";
 import { SDC_READY, baiJamjuree, inter } from "@app/sdc/page";
 import { SectionTitle } from "@app/sdc/styles";
+
+import { Scrambles } from "@components/ClientTextScramble";
 
 import { ScheduleDescContainer, ScheduleSubtitle, ScheduleTitle } from "./styles";
 
@@ -9,14 +10,7 @@ export function ScheduleDesc() {
     <ScheduleDescContainer>
       <SectionTitle className={baiJamjuree.className}>MAIS SOBRE A SEMANA DA COMPUTAÇÃO</SectionTitle>
       <ScheduleTitle>
-        <ClientTypeIt
-          sdcReady={SDC_READY}
-          options={{
-            speed: 150,
-            waitUntilVisible: true,
-            startDelay: 300,
-          }}
-        ></ClientTypeIt>
+        <Scrambles text={SDC_READY ? "Tudo que você pode participar" : "EM BREVE..."} />
       </ScheduleTitle>
       <ScheduleSubtitle style={inter.style}>
         {SDC_READY

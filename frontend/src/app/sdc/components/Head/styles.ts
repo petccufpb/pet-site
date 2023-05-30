@@ -1,6 +1,7 @@
 "use client";
 
 import { Section } from "@app/sdc/styles";
+import Link from "next/link";
 import styled from "styled-components";
 
 export const LastEditionSection = styled(Section)`
@@ -32,7 +33,7 @@ export const MoreInfo = styled.div`
   justify-content: space-between;
 `;
 
-export const InstagramContainer = styled.div`
+export const InstagramContainer = styled(Link)`
   display: flex;
   gap: 0.5rem;
   align-items: center;

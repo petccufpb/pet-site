@@ -25,7 +25,7 @@ export const PETHeader = styled.header`
   }
 `;
 
-export const RouteList = styled.ul`
+export const RouteList = styled.div`
   display: grid;
   grid-auto-flow: column;
   gap: 2rem;

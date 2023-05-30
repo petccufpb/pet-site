@@ -4,6 +4,7 @@ import { baiJamjuree, inter } from "@app/sdc/page";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, ArrowRight, Check } from "@phosphor-icons/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -137,10 +138,10 @@ export default function Inscricao() {
             Participe agora, da Semana da computação e garanta sua vaga em minicursos e palestras! Corre que
             ainda dá tempo.
           </p>
-          <a className={inter.className} href="/sdc">
+          <Link aria-label="Verificar Programação" className={inter.className} href="/sdc">
             <Check width={16} />
             <span>Verificar Programação</span>
-          </a>
+          </Link>
         </FirstColumn>
         <SecondColumn>
           <div>

@@ -42,6 +42,10 @@ export function MobileHeader() {
     window.addEventListener("resize", documentHeight);
   }, []);
 
+  function closeHeader() {
+    setExpand(false);
+  }
+
   return (
     <HeaderContainer expand={expand}>
       <Image height={45} src={Logo} alt="Logo PET Computação UFPB" />
@@ -58,7 +62,7 @@ export function MobileHeader() {
         className={baiJamjuree.className}
       >
         <div>MENU</div>
-        <Links>
+        <Links onClick={() => closeHeader()}>
           <RouteLink tab={pathname} href="/sdc">
             Início
           </RouteLink>

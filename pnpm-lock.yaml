@@ -222,9 +222,15 @@ importers:
       '@svgr/webpack':
         specifier: ^7.0.0
         version: 7.0.0
+      '@twistezo/react-text-scramble':
+        specifier: ^1.0.6
+        version: 1.0.6
       '@types/node':
         specifier: 18.15.11
         version: 18.15.11
+      '@types/nprogress':
+        specifier: ^0.2.0
+        version: 0.2.0
       '@types/react':
         specifier: 18.0.31
         version: 18.0.31
@@ -255,6 +261,9 @@ importers:
       next-sitemap:
         specifier: ^4.0.6
         version: 4.0.6(@next/env@13.2.4)(next@13.3.0)
+      nprogress:
+        specifier: ^0.2.0
+        version: 0.2.0
       react-dropzone:
         specifier: ^14.2.3
         version: 14.2.3(react@18.2.0)
@@ -4601,6 +4610,10 @@ packages:
     resolution: {integrity: sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==}
     dev: true
 
+  /@twistezo/react-text-scramble@1.0.6:
+    resolution: {integrity: sha512-DOCy9Bt0sXXpLIDRzHcAv9yDd4yOYrf1I9hNMLjykKHQKQ2zdP8w4A+mHh0VP0cy/PjJSTeo3NWCY6ptNcR0YA==}
+    dev: true
+
   /@types/babel__core@7.20.0:
     resolution: {integrity: sha512-+n8dL/9GWblDO0iU6eZAwEIJVr5DWigtle+Q6HLOrh/pdbXOhOtqzq8VPPE2zvNJzSKY4vH/z3iT3tn0A3ypiQ==}
     dependencies:
@@ -4746,6 +4759,10 @@ packages:
 
   /@types/node@18.15.11:
     resolution: {integrity: sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q==}
+    dev: true
+
+  /@types/nprogress@0.2.0:
+    resolution: {integrity: sha512-1cYJrqq9GezNFPsWTZpFut/d4CjpZqA0vhqDUPFWYKF1oIyBz5qnoYMzR+0C/T96t3ebLAC1SSnwrVOm5/j74A==}
     dev: true
 
   /@types/parse-json@4.0.0:
@@ -8399,6 +8416,10 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       path-key: 4.0.0
+    dev: true
+
+  /nprogress@0.2.0:
+    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
     dev: true
 
   /nth-check@2.1.1:

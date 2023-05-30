@@ -21,7 +21,7 @@ export const Container = styled.div`
 
   @media (max-width: 1050px) {
     h1 {
-      font-size: 4.5rem;
+      font-size: 4rem;
     }
 
     text-align: center;

@@ -15,6 +15,8 @@ export const CountdownContainer = styled.div`
     > span {
       display: none;
     }
+
+    justify-content: center;
   }
 `;
 

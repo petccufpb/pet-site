@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FaTimesCircle } from "react-icons/fa";
 import { HiArrowUpRight } from "react-icons/hi2";
 
@@ -37,10 +38,10 @@ export function SdcActivity({ info }: { info: SdcActivityProps }) {
       </th>
       <th>
         <Subscribe availability={info.available}>
-          <a href="/sdc/minicurso/id">
+          <Link aria-label="Realizar Inscrição" href="/sdc/minicurso/id">
             <span>FAZER INSCRIÇÃO</span>
             <HiArrowUpRight />
-          </a>
+          </Link>
         </Subscribe>
       </th>
     </tr>

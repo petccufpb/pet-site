@@ -41,7 +41,7 @@ export function Footer() {
       <Content>
         <PETBranding>
           <Flex>
-            <Link href="https://youtu.be/dQw4w9WgXcQ" target="_blank">
+            <Link aria-label="Surpresa..." href="https://youtu.be/dQw4w9WgXcQ" target="_blank">
               <Petrucio width={130} height={130} />
             </Link>
             <NameContainer>
@@ -60,7 +60,9 @@ export function Footer() {
           <div>R. dos Escoteiros, s/n - Mangabeira, João Pessoa - PB, 58055-000</div>
           <br />
           <div>
-            <a href="mailto:petcc@ci.ufpb.br">petcc@ci.ufpb.br</a>
+            <Link aria-label="Email do PET Computação" href="mailto:petcc@ci.ufpb.br">
+              petcc@ci.ufpb.br
+            </Link>
           </div>
         </div>
         <NoMobile>
@@ -97,19 +99,28 @@ export function Footer() {
       </NextInfo>
       <Divider pathname={pathname} />
       <SocialMediaInfo>
-        <SocialMediaIconContainer href="https://www.linkedin.com/company/petccufpb/">
+        <SocialMediaIconContainer
+          aria-label="Linkedin do PET Computação"
+          href="https://www.linkedin.com/company/petccufpb/"
+        >
           <FaLinkedinIn size={24} />
         </SocialMediaIconContainer>
-        <SocialMediaIconContainer href="https://github.com/petccufpb">
+        <SocialMediaIconContainer aria-label="Github do PET Computação" href="https://github.com/petccufpb">
           <FaGithubAlt size={24} />
         </SocialMediaIconContainer>
-        <SocialMediaIconContainer href="https://www.instagram.com/petccufpb/">
+        <SocialMediaIconContainer
+          aria-label="Instagram do PET Computação"
+          href="https://www.instagram.com/petccufpb/"
+        >
           <FaInstagram size={24} />
         </SocialMediaIconContainer>
-        <SocialMediaIconContainer href="https://www.youtube.com/@PETComputacaoUFPB">
+        <SocialMediaIconContainer
+          aria-label="Youtube do PET Computação"
+          href="https://www.youtube.com/@PETComputacaoUFPB"
+        >
           <FaYoutube size={24} />
         </SocialMediaIconContainer>
-        <ScrollToTop href="#" onClick={() => handleScrollTop()}>
+        <ScrollToTop onClick={() => handleScrollTop()}>
           <FaChevronUp size={18} />
         </ScrollToTop>
       </SocialMediaInfo>

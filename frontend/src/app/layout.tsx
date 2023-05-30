@@ -2,6 +2,9 @@
 
 import { Lexend } from "next/font/google";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { Router } from "next/router";
+import NProgress from "nprogress";
 import { PropsWithChildren, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 
@@ -16,11 +19,16 @@ import { Background, ContainerForBackground, LayoutContainer } from "@styles/lay
 import defaultTheme from "@styles/theme/default";
 
 import { Footer } from "../components/Footer";
+import "nprogress/nprogress.css";
 
 const lexend = Lexend({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800"] });
 
 export default function RootLayout({ children }: PropsWithChildren) {
   const pathname = usePathname();
+
+  Router.events.on("routeChangeStart", () => NProgress.start());
+  Router.events.on("routeChangeComplete", () => NProgress.done());
+  Router.events.on("routeChangeError", () => NProgress.done());
 
   return (
     <ThemeProvider theme={defaultTheme}>
