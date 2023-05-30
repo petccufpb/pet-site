@@ -29,11 +29,11 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <ThemeProvider theme={defaultTheme}>
         <html lang="pt-br">
           <Head>
-            <title key={0}>Plataforma | SDC - PET Computação UFPB</title>
+            <title key={0}>PET Ciência da Computação - Universidade Federal da Paraíba</title>
             <meta
               key={1}
               name="description"
-              content="Todo semestre o PET Computação (Programa de Educação Tutorial) realiza a Semana da Computação, queacontece junto com a entrada de novos estudantes na universidade. A Semana é dedicada para todosos profissionais da área de TI e ainda dá as boas-vindas aos novos estudantes dos cursos. Aprogramação contempla palestras da área de computação, empreendedorismo, minicursos, workshops,jogos, mesas redondas e mais."
+              content="O Programa de Educação Tutorial (PET) Ciência da Computação da Universidade Federal da Paraíba é um grupo que tem como pilares: Ensino, Pesquisa e Extensão."
             />
           </Head>
           <head>
