@@ -1,11 +1,10 @@
 "use client";
 
 import { Lexend } from "next/font/google";
+import Head from "next/head";
 import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
-import { Router } from "next/router";
-import NProgress from "nprogress";
-import { PropsWithChildren, useEffect } from "react";
+import NextTopLoader from "nextjs-toploader";
+import { PropsWithChildren } from "react";
 import { ThemeProvider } from "styled-components";
 
 import { Header } from "@components/Header";
@@ -19,32 +18,31 @@ import { Background, ContainerForBackground, LayoutContainer } from "@styles/lay
 import defaultTheme from "@styles/theme/default";
 
 import { Footer } from "../components/Footer";
-import "nprogress/nprogress.css";
 
 const lexend = Lexend({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800"] });
 
 export default function RootLayout({ children }: PropsWithChildren) {
   const pathname = usePathname();
 
-  Router.events.on("routeChangeStart", () => NProgress.start());
-  Router.events.on("routeChangeComplete", () => NProgress.done());
-  Router.events.on("routeChangeError", () => NProgress.done());
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle pathname={pathname} />
       <html lang="pt-br">
-        <head>
-          <title>PET Ciência da Computação - Universidade Federal da Paraíba</title>
-          <link rel="shortcut icon" href="/images/logo-sm.png" type="image/x-icon" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <Head>
+          <title key={0}>Semana da Computação - PET Computação UFPB</title>
           <meta
+            key={1}
             name="description"
-            content="O Programa de Educação Tutorial (PET) Ciência da Computação da Universidade Federal da Paraíba é um grupo que tem como pilares: Ensino, Pesquisa e Extensão."
+            content="Todo semestre o PET Computação (Programa de Educação Tutorial) realiza a Semana da Computação, queacontece junto com a entrada de novos estudantes na universidade. A Semana é dedicada para todosos profissionais da área de TI e ainda dá as boas-vindas aos novos estudantes dos cursos. Aprogramação contempla palestras da área de computação, empreendedorismo, minicursos, workshops,jogos, mesas redondas e mais."
           />
+        </Head>
+        <head>
+          <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <noscript>Você precisa ter Javascript habilitado para acessar esta página.</noscript>
         </head>
         <body className={lexend.className}>
+          <NextTopLoader color="#0072ED" />
           <ContainerForBackground>
             {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
             {pathname.split("/")[1] !== "sdc" && (

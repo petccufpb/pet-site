@@ -15,17 +15,17 @@ export function Scrambles({ text }: { text: string }) {
   const gen = () => {
     const textArray = [];
     if (text) {
-      //variations with change in size
+      // variations with change in size
       for (let i = text.length; i >= 0; i--) {
         let tmp = shuffle(text);
         tmp = tmp.slice(0, text.length - i);
         textArray.push(tmp);
       }
-      //variations without change in size
+      // variations without change in size
       for (let i = 0; i < 6; i++) {
         textArray.push(shuffle(text));
       }
-      //normal text
+      // normal text
       textArray.push(text);
     }
     return textArray;
@@ -44,6 +44,7 @@ export function Scrambles({ text }: { text: string }) {
     };
 
     let interval: NodeJS.Timer | null = null;
+
     if (play && activeText < textArray.length - 1) {
       interval = setInterval(() => {
         setActiveText(activeText + 1);
@@ -51,6 +52,7 @@ export function Scrambles({ text }: { text: string }) {
     } else if (!play) {
       click();
     }
+
     return () => clearInterval(interval || 0);
   }, [play, activeText, textArray.length]);
 

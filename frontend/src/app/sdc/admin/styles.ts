@@ -115,12 +115,11 @@ export const SendButton = styled(Button)`
   outline-color: ${({ theme }) => theme.colors["base-green"]};
 
   &:hover {
-    background-color: ${({ theme }) => `${theme.colors["base-green"]}90`};
+    background-color: ${({ theme }) => `${theme.colors["base-green"]}60`};
   }
 `;
 
 export const SelectionContainer = styled(Flex)`
   width: 100%;
   justify-content: center;
-  padding: 0.5rem 0;
 `;

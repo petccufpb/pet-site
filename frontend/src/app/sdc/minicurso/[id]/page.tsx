@@ -6,6 +6,8 @@ import Image from "next/image";
 import { HiCheck } from "react-icons/hi2";
 
 import Bruck from "@assets/images/bruck.png";
+import Logo from "@assets/images/logo.svg";
+import Petrucio from "@assets/images/petrucio.svg";
 
 import { DescriptionContainer, FormContainer, MinicursoContainer, SpeakerInfo } from "./styles";
 
@@ -14,8 +16,8 @@ export default function Minicurso() {
     <MinicursoContainer>
       <DescriptionContainer>
         <span>
-          <Image src="/images/petrucio.svg" alt="Logo PET Computação" width={120} height={66}></Image>
-          <Image src="/images/logo.png" alt="Logo PET Computação" width={100} height={55}></Image>
+          <Petrucio alt="Logo PET Computação" width={120} height={66}></Petrucio>
+          <Logo alt="Logo PET Computação" width={100} height={55}></Logo>
         </span>
         <h1>
           <div>Minicurso,</div>

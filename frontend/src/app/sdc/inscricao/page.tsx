@@ -12,6 +12,7 @@ import InputMask from "react-input-mask";
 import Select from "react-select";
 import { z } from "zod";
 
+import Logo from "@assets/images/logo.svg";
 import Petrucio from "@assets/images/petrucio.svg";
 
 import { Content, FirstColumn, Forms, InputContainer, PETSDC, SecondColumn, Steps } from "./styles";
@@ -131,7 +132,7 @@ export default function Inscricao() {
         <FirstColumn>
           <PETSDC>
             <Petrucio width={110} />
-            <Image src="/images/logo.png" alt="Logo PET Computação" width={120} height={65} />
+            <Logo alt="Logo PET Computação" width={120} height={65} />
           </PETSDC>
           <h1 className={inter.className}>Garanta sua vaga agora!</h1>
           <p className={baiJamjuree.className}>

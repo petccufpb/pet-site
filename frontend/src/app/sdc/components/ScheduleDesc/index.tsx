@@ -1,7 +1,7 @@
 import { SDC_READY, baiJamjuree, inter } from "@app/sdc/page";
 import { SectionTitle } from "@app/sdc/styles";
 
-import { Scrambles } from "@components/ClientTextScramble";
+import { Scrambles } from "@components/Scrambles";
 
 import { ScheduleDescContainer, ScheduleSubtitle, ScheduleTitle } from "./styles";
 

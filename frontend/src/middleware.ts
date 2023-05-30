@@ -6,7 +6,12 @@ export default function middleware(request: NextRequest) {
     IMPORTANTE: REMOVER ESSE CÓDIGO DEPOIS
     QUE O RESTO DO SITE ESTIVER PRONTO. */
   if (!request.nextUrl.pathname.startsWith("/sdc")) {
-    return NextResponse.redirect(new URL("/sdc", request.url));
+    return NextResponse.redirect(new URL("/sdc", request.url), {
+      // IMPORTANTE: Se mantermos o default (301), os navegadores irão
+      // cachear o redirecionamento e não irão atualizar o cache quando
+      // pararmos de fazer este redirecionamento.
+      status: 302,
+    });
   }
 
   if (
@@ -21,5 +26,5 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|robots.txt|images).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|favicon.svg|robots.txt|images).*)"],
 };

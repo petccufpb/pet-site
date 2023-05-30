@@ -1,5 +1,4 @@
 import { Bai_Jamjuree, Inter } from "next/font/google";
-import { BsFillMegaphoneFill } from "react-icons/bs";
 
 import { Countdown } from "./components/Countdown";
 import { FeatureList } from "./components/FeaturesList";
@@ -7,7 +6,6 @@ import { Head } from "./components/Head";
 import { MobileSchedule } from "./components/MobileSchedule";
 import { ScheduleDesc } from "./components/ScheduleDesc";
 import { SdcSchedule } from "./components/SdcSchedule";
-import { ComingSoon } from "./styles";
 
 export const baiJamjuree = Bai_Jamjuree({
   subsets: ["latin"],

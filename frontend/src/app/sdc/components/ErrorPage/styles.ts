@@ -1,7 +1,7 @@
 "use client";
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const ErrorPageContainer = styled.div`
   width: 100%;
   height: 80%;
 
@@ -17,6 +17,15 @@ export const Container = styled.div`
   > div {
     color: #ffffff80;
     font-weight: 300;
+  }
+
+  a {
+    font-size: 0.9em;
+    color: #ffffff95;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    border-bottom: 1px solid #ffffff95;
   }
 
   @media (max-width: 1050px) {

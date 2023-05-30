@@ -1,11 +1,11 @@
 "use client";
 
 import { baiJamjuree, inter } from "@app/sdc/page";
-import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import Logo from "@assets/images/logo.png";
+import Logo from "@assets/images/logo.svg";
 
 import { ListItem, PETHeader, RouteLink, RouteList, VerticalLine } from "./styles";
 
@@ -107,7 +107,9 @@ export function Header() {
 
   return (
     <PETHeader className={isSDC ? baiJamjuree.className : inter.className}>
-      <Image src={Logo} alt="Logo PET Computação" width={75} height={40}></Image>
+      <Link href="/" aria-label="Início">
+        <Logo alt="Logo PET Computação" width={80} />
+      </Link>
       <nav>
         <RouteList>
           {routes.start.map((route, i) => (

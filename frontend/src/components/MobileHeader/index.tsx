@@ -9,7 +9,7 @@ import { FaInstagram, FaLinkedin } from "react-icons/fa";
 
 import { Developers } from "@components/Developers";
 
-import Logo from "@assets/images/logo.png";
+import Logo from "@assets/images/logo.svg";
 
 import { ExpandMenu, HeaderContainer, Links, RouteLink, SocialMediaLinks, ToggleButton } from "./styles";
 
@@ -48,7 +48,7 @@ export function MobileHeader() {
 
   return (
     <HeaderContainer expand={expand}>
-      <Image height={45} src={Logo} alt="Logo PET Computação UFPB" />
+      <Logo height={45} alt="Logo PET Computação UFPB" />
       <ToggleButton expand={expand} onClick={() => setExpand(!expand)}>
         <div />
         <div />

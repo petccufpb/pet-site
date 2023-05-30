@@ -20,6 +20,11 @@ export const PETHeader = styled.header`
     width: 100%;
   }
 
+  > svg {
+    width: 90px;
+    opacity: 0.99;
+  }
+
   @media (max-width: 1080px) {
     display: none;
   }

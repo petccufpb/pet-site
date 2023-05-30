@@ -1,10 +1,5 @@
-import { Container } from "./styles";
+import ErrorPage from "../components/ErrorPage";
 
 export default function EmBreve() {
-  return (
-    <Container>
-      <h1>Em breve</h1>
-      <div>Fique ligado, em breve essa página estará disponível!</div>
-    </Container>
-  );
+  return <ErrorPage title="Em breve" subtitle="Fique ligado, em breve essa página estará disponível!" />;
 }
