@@ -29,7 +29,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <ThemeProvider theme={defaultTheme}>
         <html lang="pt-br">
           <Head>
-            <title key={0}>Semana da Computação - PET Computação UFPB</title>
+            <title key={0}>Plataforma | SDC - PET Computação UFPB</title>
             <meta
               key={1}
               name="description"
