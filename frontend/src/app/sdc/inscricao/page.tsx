@@ -3,6 +3,7 @@
 import { baiJamjuree, inter } from "@app/sdc/page";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, ArrowRight, Check } from "@phosphor-icons/react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -10,9 +11,9 @@ import InputMask from "react-input-mask";
 import Select from "react-select";
 import { z } from "zod";
 
-import PetSDC from "@assets/PetSDC.svg";
+import Petrucio from "@assets/images/petrucio.svg";
 
-import { Content, FirstColumn, Forms, InputContainer, SecondColumn, Steps } from "./styles";
+import { Content, FirstColumn, Forms, InputContainer, PETSDC, SecondColumn, Steps } from "./styles";
 
 const sendFormSchema = z.object({
   name: z
@@ -127,7 +128,10 @@ export default function Inscricao() {
     <>
       <Content>
         <FirstColumn>
-          <PetSDC />
+          <PETSDC>
+            <Petrucio width={110} />
+            <Image src="/images/logo.png" alt="Logo PET Computação" width={120} height={65} />
+          </PETSDC>
           <h1 className={inter.className}>Garanta sua vaga agora!</h1>
           <p className={baiJamjuree.className}>
             Participe agora, da Semana da computação e garanta sua vaga em minicursos e palestras! Corre que

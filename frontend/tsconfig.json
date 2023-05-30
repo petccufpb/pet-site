@@ -11,7 +11,7 @@
     "noEmit": true,
     "outDir": "./build",
     "paths": {
-      "@assets/*": ["../public/images/*"],
+      "@assets/*": ["../public/*"],
       "@api": ["services/api.ts"],
       "@app/*": ["app/*"],
       "@components/*": ["components/*"],
@@ -33,6 +33,6 @@
     "target": "es5",
     "typeRoots": ["./node_modules/@types", "./src/@types"]
   },
-  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/sdc/admin/page.tsx.no", "src/app/sdc/inscricao/page.tsx", "src/app/sdc/minicurso/[id]/page.tsx", "src/middleware.ts.old"],
   "exclude": ["node_modules"]
 }

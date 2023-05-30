@@ -19,6 +19,10 @@ export const PETHeader = styled.header`
   > nav {
     width: 100%;
   }
+
+  @media (max-width: 1080px) {
+    display: none;
+  }
 `;
 
 export const RouteList = styled.ul`

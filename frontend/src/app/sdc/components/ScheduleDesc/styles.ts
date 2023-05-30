@@ -6,11 +6,12 @@ export const ScheduleTitle = styled.div`
   width: 100%;
   font-size: ${({ theme }) => theme.textSizes["text-title-xl"]};
   color: #0072ed;
-  margin: 1rem 0;
+  margin: 0.5rem 0;
   font-weight: 500;
 `;
 
 export const ScheduleDescContainer = styled.div`
+  margin-bottom: 7rem;
   div {
     text-align: center;
   }
@@ -21,6 +22,6 @@ export const ScheduleDescContainer = styled.div`
 `;
 
 export const ScheduleSubtitle = styled.div`
-  font-weight: 400;
   opacity: 80%;
+  font-size: 0.9em;
 `;

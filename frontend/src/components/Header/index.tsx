@@ -1,10 +1,15 @@
+"use client";
+
 import { baiJamjuree, inter } from "@app/sdc/page";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+
+import Logo from "@assets/images/logo.png";
 
 import { ListItem, PETHeader, RouteLink, RouteList, VerticalLine } from "./styles";
 
-const routes = {
+const defaultRoutes = {
   start: [
     {
       name: "Início",
@@ -39,7 +44,7 @@ const routes = {
   ],
 };
 
-const sdcRoutes = {
+const defaultSdcRoutes = {
   start: [
     {
       name: "Início",
@@ -52,52 +57,74 @@ const sdcRoutes = {
   ],
   end: [
     {
-      name: "Verificar Certificado",
+      name: "Certificados",
       path: "/sdc/certificado",
     },
   ],
 };
 
 export function Header() {
+  const [sdcRoutes, setSdcRoutes] = useState(defaultSdcRoutes);
+
+  const [routes, setRoutes] = useState(defaultRoutes);
+
   const pathname = usePathname();
   const isSDC = pathname.startsWith("/sdc");
 
+  useEffect(() => {
+    if (pathname.startsWith("/sdc/minicurso")) {
+      setSdcRoutes({
+        start: [
+          ...defaultSdcRoutes.start,
+          {
+            name: "Minicurso",
+            path: pathname,
+          },
+        ],
+        end: defaultSdcRoutes.end,
+      });
+    }
+
+    if (pathname.startsWith("/sdc/admin")) {
+      setSdcRoutes({
+        start: defaultSdcRoutes.start,
+        end: [
+          ...defaultSdcRoutes.end,
+          {
+            name: "Admin",
+            path: pathname,
+          },
+        ],
+      });
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    if (isSDC) {
+      setRoutes(sdcRoutes);
+    }
+  }, [isSDC, sdcRoutes]);
+
   return (
     <PETHeader className={isSDC ? baiJamjuree.className : inter.className}>
-      <Image src="/images/logo.png" alt="Logo PET Computação" width={75} height={40}></Image>
+      <Image src={Logo} alt="Logo PET Computação" width={75} height={40}></Image>
       <nav>
         <RouteList>
-          {isSDC
-            ? sdcRoutes.start.map((route, i) => (
-                <ListItem key={i}>
-                  <RouteLink href={route.path} tab={pathname}>
-                    {route.name}
-                  </RouteLink>
-                </ListItem>
-              ))
-            : routes.start.map((route, i) => (
-                <ListItem key={i}>
-                  <RouteLink href={route.path} tab={pathname}>
-                    {route.name}
-                  </RouteLink>
-                </ListItem>
-              ))}
+          {routes.start.map((route, i) => (
+            <ListItem key={i}>
+              <RouteLink href={route.path} tab={pathname}>
+                {route.name}
+              </RouteLink>
+            </ListItem>
+          ))}
           <VerticalLine />
-          {isSDC
-            ? sdcRoutes.end.map((route, i) => (
-                <ListItem key={i}>
-                  <RouteLink href={route.path} tab={pathname}>
-                    {route.name}
-                  </RouteLink>
-                </ListItem>
-              ))
-            : routes.end.map((route, i) => (
-                <ListItem key={i}>
-                  <RouteLink href={route.path} tab={pathname}>
-                    {route.name}
-                  </RouteLink>
-                </ListItem>
-              ))}
+          {routes.end.map((route, i) => (
+            <ListItem key={i}>
+              <RouteLink href={route.path} tab={pathname}>
+                {route.name}
+              </RouteLink>
+            </ListItem>
+          ))}
         </RouteList>
       </nav>
     </PETHeader>

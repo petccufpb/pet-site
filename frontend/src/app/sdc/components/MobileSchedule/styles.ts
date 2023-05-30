@@ -44,7 +44,7 @@ export const Day = styled.div<{ selected: boolean }>`
 export const Table = styled.div`
   display: grid;
 
-  > div:not(:last-child) {
+  > a:not(:last-child) {
     border-bottom: 0.5px solid rgba(255, 255, 255, 0.4);
   }
 `;
@@ -63,6 +63,7 @@ export const Event = styled.div<{ available: boolean }>`
   grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr;
   column-gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.6);
 
   align-items: center;
   width: 100%;
@@ -84,25 +85,38 @@ export const Event = styled.div<{ available: boolean }>`
 
   > div,
   > span {
-    color: rgba(255, 255, 255, 0.6);
     font-size: ${({ theme }) => theme.textSizes["text-regular-xs"]};
 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-
-  > span {
-    display: flex;
-    gap: 0.3rem;
-    align-items: center;
-
-    svg {
-      color: ${({ theme, available }) => (available ? theme.colors["base-green"] : theme.colors["base-red"])};
-    }
-  }
 `;
 
 export const SpeakerPhoto = styled(Image)`
+  border-radius: 100%;
+`;
+
+export const Availability = styled.div<{ available: boolean }>`
+  display: inline-flex;
+  gap: 0.2rem;
+  color: ${({ theme, available }) => (available ? theme.colors["base-green"] : "inherit")};
+  align-items: flex-end;
+
+  margin-right: auto;
+
+  border-width: 1px;
+  border-bottom-style: ${({ available }) => (available ? "solid" : "none")};
+  border-color: ${({ theme }) => theme.colors["base-green"]};
+`;
+
+export const DummyPicture = styled.div`
+  width: 40px;
+  height: 40px;
+  aspect-ratio: 1/1;
+
+  background-color: grey;
+  color: #d3d3d3;
+
   border-radius: 100%;
 `;

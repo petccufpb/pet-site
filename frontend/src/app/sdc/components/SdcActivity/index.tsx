@@ -1,7 +1,7 @@
 import { FaTimesCircle } from "react-icons/fa";
 import { HiArrowUpRight } from "react-icons/hi2";
 
-import Leleo from "@assets/leleo.png";
+import Leleo from "@assets/images/leleo.png";
 
 import { Availability, SpeakerPhoto, Subscribe } from "./styles";
 

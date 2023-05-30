@@ -5,13 +5,11 @@ import { baiJamjuree, inter } from "@app/sdc/page";
 import Image from "next/image";
 import { HiCheck } from "react-icons/hi2";
 
-import Bruck from "@assets/bruck.png";
+import Bruck from "@assets/images/bruck.png";
 
 import { DescriptionContainer, FormContainer, MinicursoContainer, SpeakerInfo } from "./styles";
 
-export default function Minicurso({ params }: { params: { id: string } }) {
-  console.log(params.id);
-
+export default function Minicurso() {
   return (
     <MinicursoContainer>
       <DescriptionContainer>

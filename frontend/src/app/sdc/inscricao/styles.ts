@@ -1,21 +1,28 @@
 import styled from "styled-components";
 
-export const Content = styled.main`
+export const Content = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  margin-top: 8rem;
+  margin: auto;
+  height: 85%;
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
   }
 `;
 
 export const FirstColumn = styled.div`
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
   h1 {
     font-size: 4rem;
     max-width: 480px;
     line-height: 100%;
-    padding-bottom: 1rem;
   }
 
   p {
@@ -23,7 +30,6 @@ export const FirstColumn = styled.div`
     line-height: 140%;
     font-size: ${({ theme }) => theme.textSizes["text-title-xs"]};
     max-width: 480px;
-    padding-bottom: 2rem;
   }
 
   a {
@@ -44,35 +50,60 @@ export const FirstColumn = styled.div`
       font-weight: 500;
       font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
     }
+  }
 
-    @media (max-width: 768px) {
+  @media (max-width: 900px) {
+    @media (max-width: 900px) {
+      display: none;
+    }
+
+    margin: 0 auto;
+
+    a {
+      display: none;
       margin: 0 auto;
+    }
+
+    p {
+      padding-bottom: 0;
+    }
+
+    h1 {
+      padding-top: 1rem;
     }
   }
 `;
 
 export const SecondColumn = styled.div`
+  margin: auto 0;
+
   > div {
     padding: 1.5rem;
+
     h3 {
+      margin-bottom: 0.5rem;
       font-weight: 700;
       font-size: ${({ theme }) => theme.textSizes["text-title-m"]};
     }
+
     p {
-      padding-top: 0.75rem;
       color: #a9a9b2;
       font-weight: 400;
       font-size: 1rem;
       padding-bottom: 1.5rem;
     }
 
-    @media (max-width: 768px) {
-      padding: 1.5rem 0;
+    @media (max-width: 900px) {
+      padding: 0;
     }
   }
 `;
 export const Steps = styled.section`
   padding-bottom: 2rem;
+  width: min(100%, 31rem);
+  margin: 0 auto;
+  text-align: left;
+
   h6 {
     font-size: 12px;
     margin-bottom: 1rem;
@@ -96,6 +127,10 @@ export const Steps = styled.section`
         background: #323238;
       }
     }
+
+    @media (max-width: 900px) {
+      /* justify-content: center; */
+    }
   }
 `;
 
@@ -113,7 +148,7 @@ export const Forms = styled.form`
   z-index: 1;
   box-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, 0.3);
   border: auto 0;
-  /* margin: auto; */
+  margin: 0 auto;
 
   ::before {
     z-index: -1;
@@ -161,6 +196,10 @@ export const Forms = styled.form`
       cursor: not-allowed;
     }
   }
+
+  @media (max-width: 900px) {
+    padding: 2rem 1rem;
+  }
 `;
 
 export const InputContainer = styled.div`
@@ -171,5 +210,18 @@ export const InputContainer = styled.div`
   span {
     color: #d5232d;
     font-size: ${({ theme }) => theme.textSizes["text-regular-xs"]};
+  }
+`;
+
+export const PETSDC = styled.div`
+  display: flex;
+  gap: 1rem;
+
+  align-items: center;
+`;
+
+export const NoMobile = styled.div`
+  @media (max-width: 768px) {
+    display: none;
   }
 `;

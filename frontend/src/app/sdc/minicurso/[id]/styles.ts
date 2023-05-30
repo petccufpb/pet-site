@@ -6,9 +6,13 @@ export const MinicursoContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 100%;
-  align-items: start;
+  align-items: center;
   justify-content: center;
   padding-top: 7rem;
+
+  @media (max-width: 1050px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const DescriptionContainer = styled.div`
@@ -41,7 +45,7 @@ export const DescriptionContainer = styled.div`
     background: rgba(0, 114, 237, 0.2);
     max-width: 16rem;
     width: 100%;
-    padding: 1rem 0;
+    padding: 0.7rem 0;
     gap: 0.5rem;
     border-radius: 0.5rem;
     transition: 450ms;
@@ -49,6 +53,10 @@ export const DescriptionContainer = styled.div`
     &:hover {
       filter: brightness(0.8);
     }
+  }
+
+  @media (max-width: 1050px) {
+    display: none;
   }
 `;
 

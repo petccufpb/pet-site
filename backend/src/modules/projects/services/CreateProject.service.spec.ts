@@ -21,7 +21,7 @@ describe("CreateProject", () => {
     expect(project).toHaveProperty("id");
   });
 
-  it("should be able to create a project without about/logoUrl", async () => {
+  it("should be able to create a project without about/logourl(", async () => {
     const project = await service.execute({
       title: "Test",
     });

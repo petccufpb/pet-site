@@ -13,13 +13,20 @@ export const Content = styled.div`
   margin-right: auto;
   margin-left: auto;
   display: grid;
-  grid-template-columns: 3fr 2fr 1fr 1fr;
+  grid-template-columns: 3fr 2fr 1fr 1.6fr;
   gap: 1rem;
   padding-top: 4rem;
+  font-size: 0.9em;
+
+  overflow-x: hidden;
+  > div {
+    word-break: break-word;
+    width: 100%;
+  }
 
   @media (max-width: 71rem) {
     padding: 4rem 1rem 0 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(400px, auto));
+    grid-template-columns: repeat(auto-fit, min(400px, 100%));
     gap: 2.5rem;
   }
 
@@ -92,6 +99,7 @@ export const NextInfo = styled(Flex)`
   max-width: 70rem;
   margin: 0 auto;
   width: 100%;
+  font-size: 0.9em;
 
   align-items: center;
 
@@ -119,48 +127,4 @@ export const NextLogoContainer = styled.div`
 export const VerticalCenterDiv = styled.div`
   margin-top: auto;
   margin-bottom: auto;
-`;
-
-export const DevelopersContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  padding-bottom: 2rem;
-
-  gap: 0.5rem;
-
-  div {
-    font-weight: bold;
-    color: #e1f9ff60;
-  }
-`;
-
-export const Developers = styled.div`
-  display: flex;
-
-  > img:not(:first-child) {
-    margin-left: -0.5rem;
-  }
-
-  > img {
-    border-radius: 100%;
-    border: 2px solid ${({ theme }) => theme.colors["fifth-blue"]};
-  }
-
-  /* Fazer as imagens terem ordem reversa de z-index */
-  > img:nth-child(1) {
-    z-index: 2;
-  }
-
-  > img:nth-child(2) {
-    z-index: 1;
-  }
-
-  > img:nth-child(3) {
-    z-index: 0;
-  }
-
-  > img:nth-child(4) {
-    z-index: -1;
-  }
 `;

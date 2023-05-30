@@ -4,17 +4,9 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
   width: 100%;
   gap: 1rem;
   margin-top: 3rem;
-`;
-
-export const Dashboard = styled.div`
-  display: grid;
-  grid-template-columns: auto 1fr;
-  width: 100%;
-  height: 100%;
 `;
 
 export const AreaSelector = styled.div`
@@ -40,6 +32,8 @@ export const InputContainer = styled.span`
   display: inline-flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
+  overflow: hidden;
 
   input {
     /*  beautiful modern tech input */
@@ -71,11 +65,19 @@ export const Flex = styled.div`
 
 export const Area = styled.div`
   width: 100%;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(5, 1fr);
   display: grid;
-  flex-wrap: wrap;
-  column-gap: 2rem;
-  row-gap: 1rem;
+  column-gap: 1rem;
+  row-gap: 2rem;
+
+  @media (max-width: 1050px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: none;
+    grid-template-rows: repeat(1fr);
+  }
 `;
 
 export const Button = styled.div`
@@ -115,4 +117,10 @@ export const SendButton = styled(Button)`
   &:hover {
     background-color: ${({ theme }) => `${theme.colors["base-green"]}90`};
   }
+`;
+
+export const SelectionContainer = styled(Flex)`
+  width: 100%;
+  justify-content: center;
+  padding: 0.5rem 0;
 `;

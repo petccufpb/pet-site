@@ -1,29 +1,30 @@
-import { baiJamjuree } from "@app/sdc/page";
+"use client";
+
+import { NoMobile } from "@app/sdc/inscricao/styles";
 import { Inter } from "next/font/google";
-import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaChevronUp, FaGithubAlt, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 
-import Leleo from "@assets/leleo.png";
-import Petrucio from "@assets/petrucio.svg";
+import { Developers } from "@components/Developers";
+
+import Petrucio from "@assets/images/petrucio.svg";
 
 import {
   Content,
   ContentContainer,
-  Developers,
-  DevelopersContainer,
   Divider,
-  ScrollToTop,
   Flex,
   NameContainer,
   NextInfo,
   NextLogoContainer,
   PETBranding,
+  ScrollToTop,
   SocialMediaIconContainer,
   SocialMediaInfo,
 } from "./styles";
 
-const inter = Inter({ subsets: ["latin"], weight: "variable" });
+const inter = Inter({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] });
 
 export function Footer() {
   const pathname = usePathname();
@@ -40,7 +41,9 @@ export function Footer() {
       <Content>
         <PETBranding>
           <Flex>
-            <Petrucio width={140} height={140} />
+            <Link href="https://youtu.be/dQw4w9WgXcQ" target="_blank">
+              <Petrucio width={130} height={130} />
+            </Link>
             <NameContainer>
               <h1>PET</h1>
               <h1>Computação</h1>
@@ -60,7 +63,7 @@ export function Footer() {
             <a href="mailto:petcc@ci.ufpb.br">petcc@ci.ufpb.br</a>
           </div>
         </div>
-        <div>
+        <NoMobile>
           <div>
             <b>Projetos</b>
           </div>
@@ -70,8 +73,8 @@ export function Footer() {
           <div>Ensino</div>
           <br />
           <div>Extensão</div>
-        </div>
-        <div>
+        </NoMobile>
+        <NoMobile>
           <div>
             <b>Sobre</b>
           </div>
@@ -81,7 +84,7 @@ export function Footer() {
           <div>Equipe</div>
           <br />
           <div>Projeto Seletivo</div>
-        </div>
+        </NoMobile>
       </Content>
       <NextInfo>
         <NextLogoContainer>
@@ -90,35 +93,7 @@ export function Footer() {
           </svg>
           <div>Projeto Realizado em Next.js</div>
         </NextLogoContainer>
-        <DevelopersContainer>
-          <div className={baiJamjuree.className}>Development by</div>
-          <Developers>
-            <Image
-              src="https://avatars.githubusercontent.com/u/69207084?s=45&v=4"
-              alt="Abraão Homualdo"
-              width={45}
-              height={45}
-            ></Image>
-            <Image
-              src="https://avatars.githubusercontent.com/u/20804322?s=45&v=4"
-              alt="Aran Leite"
-              width={45}
-              height={45}
-            ></Image>
-            <Image
-              src="https://avatars.githubusercontent.com/u/41550197?s=45&v=4"
-              alt="Lucas Garrafielo"
-              width={45}
-              height={45}
-            ></Image>
-            <Image
-              src="https://avatars.githubusercontent.com/u/53544629?s=45&v=4"
-              alt="Ryann Carlos de Arruda Quintino"
-              width={45}
-              height={45}
-            ></Image>
-          </Developers>
-        </DevelopersContainer>
+        <Developers />
       </NextInfo>
       <Divider pathname={pathname} />
       <SocialMediaInfo>
@@ -134,7 +109,7 @@ export function Footer() {
         <SocialMediaIconContainer href="https://www.youtube.com/@PETComputacaoUFPB">
           <FaYoutube size={24} />
         </SocialMediaIconContainer>
-        <ScrollToTop white onClick={() => handleScrollTop()}>
+        <ScrollToTop href="#" onClick={() => handleScrollTop()}>
           <FaChevronUp size={18} />
         </ScrollToTop>
       </SocialMediaInfo>

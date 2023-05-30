@@ -59,7 +59,7 @@ export function MemberElement({
       <div>
         <MemberImageBorder colorTheme={colorTheme}>
           <MemberImage
-            src={member.photoUrl || "/images/no-profile-picture.svg"}
+            src={member.photoUrl || "/no-profile-picture.svg"}
             width={80}
             height={80}
             alt={member.name}

@@ -24,3 +24,19 @@ export const SectionTitle = styled(Title)`
   width: 100%;
   text-align: left;
 `;
+
+export const ComingSoon = styled.div`
+  width: 100%;
+  padding: 5rem 0;
+  text-align: center;
+
+  > div {
+    font-weight: bold;
+    font-size: ${({ theme }) => theme.textSizes["text-title-xl"]};
+  }
+
+  > span {
+    font-size: ${({ theme }) => theme.textSizes["text-title-s"]};
+    color: #ffffff90;
+  }
+`;

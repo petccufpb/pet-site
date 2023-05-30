@@ -1,4 +1,4 @@
-import Fire from "@assets/fire.svg";
+import Fire from "@assets/images/fire.svg";
 
 import { Content } from "./styles";
 

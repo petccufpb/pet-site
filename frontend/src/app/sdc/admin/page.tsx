@@ -14,9 +14,9 @@ import {
   AreaOption,
   AreaSelector,
   Container,
-  Flex,
   InputContainer,
   SelectButton,
+  SelectionContainer,
   SendButton,
 } from "./styles";
 
@@ -60,24 +60,24 @@ export default function AdminPage() {
           <Area>
             <InputContainer>
               <h3>Nº da Edição</h3>
-              <InputMask mask="99" placeholder="00" maskChar={null} {...register("edition")} />
+              <InputMask mask="99" maskChar={null} {...register("edition")} />
               {errors.edition && <span>{errors.edition.message}</span>}
             </InputContainer>
             <InputContainer>
               <h3>Nº de Dias</h3>
-              <InputMask mask="9" placeholder="0" maskChar={null} {...register("days")} />
+              <InputMask mask="9" maskChar={null} {...register("days")} />
               {errors.days && <span>{errors.days.message}</span>}
             </InputContainer>
             <InputContainer>
               <h3>Contém Gameday?</h3>
-              <Flex>
+              <SelectionContainer>
                 <SelectButton onClick={() => setGameDay(true)} selected={gameDay}>
                   Sim
                 </SelectButton>
                 <SelectButton onClick={() => setGameDay(false)} selected={!gameDay}>
                   Não
                 </SelectButton>
-              </Flex>
+              </SelectionContainer>
             </InputContainer>
             <InputContainer>
               <h3>Data de Início</h3>
@@ -102,6 +102,11 @@ export default function AdminPage() {
             <span>Cadastrar Evento</span>
             <HiOutlineCheckBadge size="1.1em" />
           </SendButton>
+        </AreaContainer>
+      )}
+      {selectedArea === 1 && (
+        <AreaContainer>
+          <Area>Teste</Area>
         </AreaContainer>
       )}
     </Container>

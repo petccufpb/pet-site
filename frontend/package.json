@@ -1,6 +1,7 @@
 {
   "name": "frontend",
   "private": true,
+  "homepage": "https://petccufpb.com",
   "scripts": {
     "build": "next build && next-sitemap",
     "dev": "next dev",
@@ -29,7 +30,6 @@
     "@types/react-dom": "18.0.11",
     "@types/react-input-mask": "^3.0.2",
     "@types/styled-components": "^5.1.26",
-    "babel-plugin-styled-components": "^2.1.3",
     "backend": "workspace:^",
     "eslint-config-next": "13.2.4",
     "eslint-plugin-jsx-a11y": "^6.7.1",
@@ -39,7 +39,7 @@
     "react-dropzone": "^14.2.3",
     "react-icons": "^4.8.0",
     "react-input-mask": "^2.0.4",
-    "sharp": "^0.32.1",
+    "typeit-react": "^2.6.4",
     "zod": "^3.21.4"
   }
 }

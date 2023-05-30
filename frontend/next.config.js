@@ -2,9 +2,7 @@
 
 module.exports = () => ({
   compiler: {
-    styledComponents: {
-      ssr: true,
-    },
+    styledComponents: true,
   },
   eslint: {
     ignoreDuringBuilds: true,

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaInstagram } from "react-icons/fa";
 
-import LastEditionLogo from "@assets/sdc.png";
+import LastEditionLogo from "@assets/images/sdc.png";
 
 import { FireHexagon } from "../Hexagon";
 import {
@@ -24,7 +24,7 @@ export function Head() {
       <LastEditionSection>
         <SectionTitle>ULTIMA EDIÇÃO</SectionTitle>
         <div>
-          <Image alt="Logo da SDC XXIX" src={LastEditionLogo} width="360" priority></Image>
+          <Image alt="Logo da SDC XXIX" src={LastEditionLogo} width="360" priority={true}></Image>
           <SubscribeCount>
             <FireHexagon></FireHexagon>
             <div>+450 INSCRITOS</div>

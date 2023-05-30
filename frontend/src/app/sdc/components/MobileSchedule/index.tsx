@@ -3,11 +3,22 @@
 import { baiJamjuree } from "@app/sdc/page";
 import { SectionTitle } from "@app/sdc/styles";
 import { MouseEvent, useState } from "react";
-import { FaCheck, FaTimes } from "react-icons/fa";
+import { FaCheck, FaQuestionCircle, FaTimes } from "react-icons/fa";
+import { HiArrowUpRight } from "react-icons/hi2";
 
-import Leleo from "@assets/leleo.png";
+import Leleo from "@assets/images/leleo.png";
 
-import { Day, DaySelector, Event, EventContainer, SdcScheduleContainer, SpeakerPhoto, Table } from "./styles";
+import {
+  Availability,
+  Day,
+  DaySelector,
+  DummyPicture,
+  Event,
+  EventContainer,
+  SdcScheduleContainer,
+  SpeakerPhoto,
+  Table,
+} from "./styles";
 
 export function MobileSchedule() {
   const [currentDay, setCurrentDay] = useState(1);
@@ -37,27 +48,27 @@ export function MobileSchedule() {
         </Day>
       </DaySelector>
       <Table>
-        <EventContainer href="/sdc">
+        <EventContainer href="/sdc/minicurso/id">
           <SpeakerPhoto src={Leleo} alt="Palestrante"></SpeakerPhoto>
           <Event available={true}>
             <div>Bruno Bruck</div>
             <div>Um kinder ovo vale mais que um diploma</div>
-            <span>
-              <FaCheck />
-              <span>Palestra</span>
-            </span>
+            <Availability available={true}>
+              <span>Inscreva-se</span>
+              <HiArrowUpRight height="1em" />
+            </Availability>
             <div>Dia 1 - 09:45</div>
           </Event>
         </EventContainer>
-        <EventContainer href="/sdc">
+        <EventContainer href="/sdc/minicurso/id">
           <SpeakerPhoto src={Leleo} alt="Palestrante"></SpeakerPhoto>
           <Event available={false}>
             <div>Samantha</div>
-            <div>Como Desenhar o Petrúcio</div>
-            <span>
-              <FaTimes />
-              <span>Minicurso (esgotado)</span>
-            </span>
+            <div>Minicurso • Como Desenhar o Petrúcio</div>
+            <Availability available={false}>
+              <span>Esgotado</span>
+              <FaTimes height="1em" />
+            </Availability>
             <div>Dia 2 - 08:00</div>
           </Event>
         </EventContainer>
@@ -65,11 +76,11 @@ export function MobileSchedule() {
           <SpeakerPhoto src={Leleo} alt="Palestrante"></SpeakerPhoto>
           <Event available={true}>
             <div>Leonardo Vidal</div>
-            <div>Como Ficar Rico</div>
-            <span>
-              <FaCheck />
-              <span>Palestra</span>
-            </span>
+            <div>Palestra • Como Ficar Rico</div>
+            <Availability available={true}>
+              <span>Inscreva-se</span>
+              <HiArrowUpRight height="1em" />
+            </Availability>
             <div>Dia 3 - 10:00</div>
           </Event>
         </EventContainer>

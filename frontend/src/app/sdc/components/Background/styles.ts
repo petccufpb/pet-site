@@ -7,19 +7,11 @@ export const BackgroundContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  background-image: url("/images/sdc-background.svg");
-  background-size: 100% 100%;
 
-  svg {
-    fill: #0072ed;
-    width: 100%;
-    height: 100%;
-  }
+  overflow-x: visible;
 
-  @media (max-width: 900px) {
-    background-image: url("/images/sdc-background-sm.svg");
-  }
+  display: flex;
+  justify-content: center;
 `;
 
 export const Grid = styled.div`
@@ -31,5 +23,27 @@ export const Grid = styled.div`
   svg {
     position: absolute;
     z-index: -1;
+  }
+`;
+
+export const SVGBackground = styled.svg`
+  background: black;
+  opacity: 30%;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  /* max-width: 1920px; */
+  margin: 0 auto;
+
+  overflow-x: visible;
+`;
+
+export const SdcEllipse = styled.ellipse`
+  @media (max-width: 1050px) {
+    rx: 400;
+    ry: 400;
+
+    rx: 400px;
+    ry: 400px;
   }
 `;
