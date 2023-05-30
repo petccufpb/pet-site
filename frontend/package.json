@@ -41,6 +41,7 @@
     "react-dropzone": "^14.2.3",
     "react-icons": "^4.8.0",
     "react-input-mask": "^2.0.4",
+    "sharp": "^0.32.1",
     "typeit-react": "^2.6.4",
     "zod": "^3.21.4"
   }

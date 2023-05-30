@@ -219,9 +219,3 @@ export const PETSDC = styled.div`
 
   align-items: center;
 `;
-
-export const NoMobile = styled.div`
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;

@@ -74,14 +74,14 @@ export function MobileHeader() {
           </RouteLink>
         </Links>
         <SocialMediaLinks>
-          <Link href="https://www.instagram.com/petccufpb/">
+          <a href="https://www.instagram.com/petccufpb/">
             <FaInstagram />
             <span>INSTAGRAM</span>
-          </Link>
-          <Link href="https://linkedin.com/company/petccufpb/">
+          </a>
+          <a href="https://linkedin.com/company/petccufpb/">
             <FaLinkedin />
             <span>LINKEDIN</span>
-          </Link>
+          </a>
         </SocialMediaLinks>
         <Developers color="#00000060" />
       </ExpandMenu>

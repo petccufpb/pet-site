@@ -1,6 +1,5 @@
 "use client";
 
-import { NoMobile } from "@app/sdc/inscricao/styles";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -18,10 +17,12 @@ import {
   NameContainer,
   NextInfo,
   NextLogoContainer,
+  NoMobile,
   PETBranding,
   ScrollToTop,
   SocialMediaIconContainer,
   SocialMediaInfo,
+  StyledLink,
 } from "./styles";
 
 const inter = Inter({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] });
@@ -41,9 +42,9 @@ export function Footer() {
       <Content>
         <PETBranding>
           <Flex>
-            <Link aria-label="Surpresa..." href="https://youtu.be/dQw4w9WgXcQ" target="_blank">
+            <a aria-label="Surpresa..." href="https://youtu.be/dQw4w9WgXcQ" target="_blank">
               <Petrucio width={130} height={130} />
-            </Link>
+            </a>
             <NameContainer>
               <h1>PET</h1>
               <h1>Computação</h1>
@@ -54,19 +55,6 @@ export function Footer() {
         </PETBranding>
         <div>
           <div>
-            <b>Contato</b>
-          </div>
-          <br />
-          <div>R. dos Escoteiros, s/n - Mangabeira, João Pessoa - PB, 58055-000</div>
-          <br />
-          <div>
-            <Link aria-label="Email do PET Computação" href="mailto:petcc@ci.ufpb.br">
-              petcc@ci.ufpb.br
-            </Link>
-          </div>
-        </div>
-        <NoMobile>
-          <div>
             <b>Projetos</b>
           </div>
           <br />
@@ -75,8 +63,21 @@ export function Footer() {
           <div>Ensino</div>
           <br />
           <div>Extensão</div>
-        </NoMobile>
-        <NoMobile>
+        </div>
+        <div>
+          <div>
+            <b>Contato</b>
+          </div>
+          <br />
+          <div>R. dos Escoteiros, s/n - Mangabeira, João Pessoa - PB, 58055-000</div>
+          <br />
+          <div>
+            <StyledLink aria-label="Email do PET Computação" href="mailto:petcc@ci.ufpb.br">
+              petcc@ci.ufpb.br
+            </StyledLink>
+          </div>
+        </div>
+        <div>
           <div>
             <b>Sobre</b>
           </div>
@@ -86,7 +87,7 @@ export function Footer() {
           <div>Equipe</div>
           <br />
           <div>Projeto Seletivo</div>
-        </NoMobile>
+        </div>
       </Content>
       <NextInfo>
         <NextLogoContainer>

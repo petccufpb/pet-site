@@ -12,8 +12,9 @@ export const Content = styled.div`
   max-width: 70rem;
   margin-right: auto;
   margin-left: auto;
-  display: grid;
-  grid-template-columns: 3fr 2fr 1fr 1.6fr;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 1rem;
   padding-top: 4rem;
   font-size: 0.9em;
@@ -21,12 +22,12 @@ export const Content = styled.div`
   overflow-x: hidden;
   > div {
     word-break: break-word;
-    width: 100%;
+    /* width: 100%; */
   }
 
-  @media (max-width: 71rem) {
+  @media (max-width: 70rem) {
     padding: 4rem 1rem 0 1rem;
-    grid-template-columns: repeat(auto-fit, min(400px, 100%));
+    /* justify-content: start; */
     gap: 2.5rem;
   }
 
@@ -36,12 +37,15 @@ export const Content = styled.div`
 `;
 
 export const PETBranding = styled.div`
-  width: 100%;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
+  /* margin-left: auto;
+  margin-right: auto; */
+
+  @media (max-width: 978px) {
+    width: 100%;
+  }
 `;
 
 export const Flex = styled.div`
@@ -114,8 +118,9 @@ export const NextInfo = styled(Flex)`
 
   align-items: center;
 
-  @media (max-width: 70rem) {
+  @media (max-width: 71rem) {
     padding: 1rem;
+    padding-bottom: 0;
   }
 
   @media (max-width: 768px) {
@@ -138,4 +143,14 @@ export const NextLogoContainer = styled.div`
 export const VerticalCenterDiv = styled.div`
   margin-top: auto;
   margin-bottom: auto;
+`;
+
+// export const NoMobile = styled.div`
+//   @media (max-width: 768px) {
+//     display: none;
+//   }
+// `;
+
+export const StyledLink = styled.a`
+  border-bottom: 1px solid ${({ theme }) => theme.colors["base-white"]};
 `;

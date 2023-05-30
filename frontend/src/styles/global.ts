@@ -22,8 +22,10 @@ export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
     }
 
     body {
+        background: black;
         background: ${({ theme, pathname }) =>
           pathname.split("/")[1] === "sdc" ? theme.colors.sdc["background"] : theme.colors["second-blue"]};
+        color: white;
         color: ${({ theme }) => theme.colors["base-white"]};
         position: relative;
     }
