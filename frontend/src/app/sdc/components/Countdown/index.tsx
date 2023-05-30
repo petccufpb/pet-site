@@ -1,52 +1,62 @@
 "use client";
 
 import { baiJamjuree } from "@app/sdc/page";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { CountdownContainer, Divider, TimeUnit, Timer } from "./styles";
 
 export function Countdown({ startingTime }: { startingTime: string }) {
   const countDownDate = new Date(startingTime).getTime();
 
-  function countTime() {
-    const now = new Date().getTime();
+  const [timeRemaining, setTimeRemaining] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+    done: false,
+  });
 
-    const distance = countDownDate - now;
+  useEffect(() => {
+    function countTime() {
+      const now = new Date().getTime();
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      const distance = countDownDate - now;
 
-    if (distance < 0) {
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      if (distance < 0) {
+        return {
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+          done: true,
+        };
+      }
+
       return {
-        days: 0,
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-        done: true,
+        days,
+        hours,
+        minutes,
+        seconds,
+        done: false,
       };
     }
 
-    return {
-      days,
-      hours,
-      minutes,
-      seconds,
-      done: false,
-    };
-  }
+    const x = setInterval(() => {
+      const time = countTime();
+      setTimeRemaining(countTime());
 
-  const [timeRemaining, setTimeRemaining] = useState(countTime());
+      if (time.done) {
+        clearInterval(x);
+      }
+    }, 1000);
 
-  const x = setInterval(() => {
-    const time = countTime();
     setTimeRemaining(countTime());
-
-    if (time.done) {
-      clearInterval(x);
-    }
-  }, 1000);
+  }, [countDownDate]);
 
   return (
     <CountdownContainer className={baiJamjuree.className}>
@@ -58,7 +68,7 @@ export function Countdown({ startingTime }: { startingTime: string }) {
         </div>
         <Divider />
         <TimeUnit>
-          <h3>{timeRemaining.days}</h3>
+          <h3>{timeRemaining?.days}</h3>
           <span>DIAS</span>
         </TimeUnit>
         <TimeUnit>

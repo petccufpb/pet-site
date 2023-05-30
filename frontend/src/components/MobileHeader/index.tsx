@@ -9,7 +9,7 @@ import { FaInstagram, FaLinkedin } from "react-icons/fa";
 
 import { Developers } from "@components/Developers";
 
-import Logo from "@assets/images/logo.svg";
+import Logo from "@assets/images/logo.svg?svgr";
 
 import { ExpandMenu, HeaderContainer, Links, RouteLink, SocialMediaLinks, ToggleButton } from "./styles";
 

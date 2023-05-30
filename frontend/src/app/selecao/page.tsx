@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-import Logo from "@assets/images/logo.svg";
-import Petrucio from "@assets/images/petrucio.svg";
+import Logo from "@assets/images/logo.svg?svgr";
+import Petrucio from "@assets/images/petrucio.svg?svgr";
 
 import { SelecaoForm } from "./components/Form";
 import { Content, FormDescription } from "./styles";

@@ -14,7 +14,7 @@ export const HeaderContainer = styled.div<{ expand: boolean }>`
     z-index: -1;
   }
 
-  @media (min-width: 1080px) {
+  @media (min-width: 768px) {
     display: none;
   }
 `;

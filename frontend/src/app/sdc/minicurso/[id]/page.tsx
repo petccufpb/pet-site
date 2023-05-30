@@ -6,8 +6,8 @@ import Image from "next/image";
 import { HiCheck } from "react-icons/hi2";
 
 import Bruck from "@assets/images/bruck.png";
-import Logo from "@assets/images/logo.svg";
-import Petrucio from "@assets/images/petrucio.svg";
+import Logo from "@assets/images/logo.svg?svgr";
+import Petrucio from "@assets/images/petrucio.svg?svgr";
 
 import { DescriptionContainer, FormContainer, MinicursoContainer, SpeakerInfo } from "./styles";
 

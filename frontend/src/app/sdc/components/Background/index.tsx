@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 
-import GridSDC from "@assets/images/grid.svg";
+import GridSDC from "@assets/images/grid.svg?svgr";
 
 import { BackgroundContainer, Grid, SVGBackground, SdcEllipse } from "./styles";
 
@@ -13,7 +13,7 @@ export function Background() {
     <>
       {pathname !== "/sdc" && (
         <Grid>
-          <GridSDC alt="grid" width="1208"></GridSDC>
+          <GridSDC alt="grid" width="1208" />
         </Grid>
       )}
       <BackgroundContainer>

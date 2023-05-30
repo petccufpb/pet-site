@@ -25,7 +25,7 @@ export const PETHeader = styled.header`
     opacity: 0.99;
   }
 
-  @media (max-width: 1080px) {
+  @media (max-width: 768px) {
     display: none;
   }
 `;
@@ -39,7 +39,7 @@ export const RouteList = styled.div`
   justify-content: flex-end;
 `;
 
-export const ListItem = styled.li`
+export const ListItem = styled.div`
   list-style: none;
   text-decoration: none;
 `;

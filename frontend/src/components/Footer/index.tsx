@@ -7,7 +7,7 @@ import { FaChevronUp, FaGithubAlt, FaInstagram, FaLinkedinIn, FaYoutube } from "
 
 import { Developers } from "@components/Developers";
 
-import Petrucio from "@assets/images/petrucio.svg";
+import Petrucio from "@assets/images/petrucio.svg?svgr";
 
 import {
   Content,
@@ -17,7 +17,6 @@ import {
   NameContainer,
   NextInfo,
   NextLogoContainer,
-  NoMobile,
   PETBranding,
   ScrollToTop,
   SocialMediaIconContainer,

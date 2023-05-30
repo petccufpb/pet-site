@@ -1,7 +1,3 @@
-import Fire from "@assets/images/fire.svg";
-
-import { Content } from "./styles";
-
 export function FireHexagon() {
   return (
     <svg width="25" height="27" viewBox="0 0 25 27" fill="none" xmlns="http://www.w3.org/2000/svg">

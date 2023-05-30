@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import Logo from "@assets/images/logo.svg";
+import Logo from "@assets/images/logo.svg?svgr";
 
 import { ListItem, PETHeader, RouteLink, RouteList, VerticalLine } from "./styles";
 

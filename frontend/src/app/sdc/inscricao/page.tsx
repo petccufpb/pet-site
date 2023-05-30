@@ -12,8 +12,8 @@ import InputMask from "react-input-mask";
 import Select from "react-select";
 import { z } from "zod";
 
-import Logo from "@assets/images/logo.svg";
-import Petrucio from "@assets/images/petrucio.svg";
+import Logo from "@assets/images/logo.svg?svgr";
+import Petrucio from "@assets/images/petrucio.svg?svgr";
 
 import { Content, FirstColumn, Forms, InputContainer, PETSDC, SecondColumn, Steps } from "./styles";
 

@@ -1,9 +1,9 @@
 import { baiJamjuree } from "@app/sdc/page";
 
-import Certificate from "@assets/images/certificate.svg";
-import CoffeeBreak from "@assets/images/coffee-break.svg";
-import Minicurso from "@assets/images/minicurso.svg";
-import Networking from "@assets/images/networking.svg";
+import Certificate from "@assets/images/certificate.svg?svgr";
+import CoffeeBreak from "@assets/images/coffee-break.svg?svgr";
+import Minicurso from "@assets/images/minicurso.svg?svgr";
+import Networking from "@assets/images/networking.svg?svgr";
 
 import { Feature, FeatureListContainer } from "./styles";
 

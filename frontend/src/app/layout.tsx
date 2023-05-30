@@ -11,7 +11,7 @@ import { Header } from "@components/Header";
 import { MobileHeader } from "@components/MobileHeader";
 import StyledComponentsRegistry from "@components/registry";
 
-import Fishes from "@assets/images/fish.svg";
+import Fishes from "@assets/images/fish.svg?svgr";
 
 import { GlobalStyle } from "@styles/global";
 import { Background, ContainerForBackground, LayoutContainer } from "@styles/layout";
