@@ -1,7 +1,6 @@
-"use client";
-
 import { SdcForm } from "@app/sdc/components/SdcForm";
 import { baiJamjuree, inter } from "@app/sdc/page";
+import { Metadata } from "next";
 import Image from "next/image";
 import { HiCheck } from "react-icons/hi2";
 
@@ -10,6 +9,10 @@ import Logo from "@assets/images/logo.svg?svgr";
 import Petrucio from "@assets/images/petrucio.svg?svgr";
 
 import { DescriptionContainer, FormContainer, MinicursoContainer, SpeakerInfo } from "./styles";
+
+export const metadata: Metadata = {
+  title: "Plataforma | SDC - Minicurso",
+};
 
 export default function Minicurso() {
   return (

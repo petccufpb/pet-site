@@ -3,7 +3,6 @@
 import { baiJamjuree, inter } from "@app/sdc/page";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, ArrowRight, Check } from "@phosphor-icons/react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
