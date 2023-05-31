@@ -3,11 +3,12 @@
 import { baiJamjuree } from "@app/sdc/page";
 import { SectionTitle } from "@app/sdc/styles";
 import { MouseEvent, useEffect, useState } from "react";
+import type { SDCScheduleData } from "sdc";
 
 import { SdcActivity } from "../SdcActivity";
 import { Day, DaySelector, SdcScheduleContainer, Table } from "./styles";
 
-export function SdcSchedule() {
+export function SdcSchedule({ data }: { data: SDCScheduleData }) {
   const [currentDay, setCurrentDay] = useState(1);
 
   function changeSelectedDay(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) {

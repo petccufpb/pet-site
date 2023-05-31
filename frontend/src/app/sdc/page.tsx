@@ -1,3 +1,4 @@
+import { SDCScheduleData } from "@types/sdc";
 import { Bai_Jamjuree, Inter } from "next/font/google";
 
 import { Countdown } from "./components/Countdown";
@@ -13,18 +14,22 @@ export const baiJamjuree = Bai_Jamjuree({
 });
 export const inter = Inter({ subsets: ["latin"], weight: ["600", "500", "400", "300", "200", "700", "800"] });
 
-export const SDC_READY = false;
+export const SDC_READY = true;
 
-export default function SDC() {
+export default async function SDC() {
+  const sdcData: SDCScheduleData = await (
+    await fetch("http://localhost:3333/projects/editions/latest?project=SDC")
+  ).json();
+
   return (
     <div>
       <Head />
-      <Countdown startingTime="Jul 7, 2023 08:30:00" />
+      <Countdown startingTime={sdcData.date} />
       <FeatureList />
       <ScheduleDesc />
       {SDC_READY && (
         <>
-          <SdcSchedule />
+          <SdcSchedule data={sdcData} />
           <MobileSchedule />
         </>
       )}

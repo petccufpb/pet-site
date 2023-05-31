@@ -14,13 +14,13 @@ export default function middleware(request: NextRequest) {
     });
   }
 
-  if (
+  /* if (
     request.nextUrl.pathname === "/sdc/inscricao" ||
     request.nextUrl.pathname.startsWith("/sdc/minicurso") ||
     request.nextUrl.pathname === "/sdc/certificado"
   ) {
     return NextResponse.rewrite(new URL("/sdc/em-breve", request.url));
-  }
+  } */
 
   return NextResponse.next();
 }
