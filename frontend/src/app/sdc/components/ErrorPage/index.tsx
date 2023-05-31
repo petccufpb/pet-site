@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { FaChevronLeft } from "react-icons/fa";
 
 import { ErrorPageContainer } from "./styles";
@@ -10,7 +9,7 @@ export default function ErrorPage({
 }: {
   title: string;
   subtitle: string;
-  goBackButton: boolean | undefined;
+  goBackButton?: boolean | undefined;
 }) {
   return (
     <ErrorPageContainer>
@@ -20,7 +19,7 @@ export default function ErrorPage({
           <span>Voltar para o Início</span>
         </a>
       )}
-      <h1>{title}</h1>
+      <span>{title}</span>
       <div>{subtitle}</div>
     </ErrorPageContainer>
   );

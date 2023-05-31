@@ -10,8 +10,9 @@ export const ErrorPageContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  > h1 {
-    font-size: 5rem;
+  > span {
+    font-size: 3.5rem;
+    font-weight: bold;
   }
 
   > div {
