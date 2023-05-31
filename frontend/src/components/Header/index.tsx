@@ -107,7 +107,7 @@ export function Header() {
 
   return (
     <PETHeader className={isSDC ? baiJamjuree.className : inter.className}>
-      <Link href="/" aria-label="Início">
+      <Link href="/sdc" aria-label="Início">
         <Logo alt="Logo PET Computação" width={80} />
       </Link>
       <nav>
