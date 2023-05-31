@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+import { ScrambledText } from "./styles";
+
 export function Scrambles({ text }: { text: string }) {
   function shuffle(word: string) {
     return word
@@ -33,6 +35,7 @@ export function Scrambles({ text }: { text: string }) {
 
   const [textArray] = useState(gen);
   const [activeText, setActiveText] = useState(0);
+  const [newScramble, setNewScramble] = useState<string | null>(null);
   const [play, setPlay] = useState(false);
 
   useEffect(() => {
@@ -58,7 +61,7 @@ export function Scrambles({ text }: { text: string }) {
 
   return (
     <div>
-      <div>{textArray[activeText]}</div>
+      <ScrambledText>{newScramble || textArray[activeText]}</ScrambledText>
     </div>
   );
 }
