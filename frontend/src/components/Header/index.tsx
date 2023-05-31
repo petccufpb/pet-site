@@ -66,10 +66,10 @@ const defaultSdcRoutes = {
 export function Header() {
   const [sdcRoutes, setSdcRoutes] = useState(defaultSdcRoutes);
 
-  const [routes, setRoutes] = useState(defaultRoutes);
-
   const pathname = usePathname();
   const isSDC = pathname.startsWith("/sdc");
+
+  const [routes, setRoutes] = useState(isSDC ? defaultSdcRoutes : defaultRoutes);
 
   useEffect(() => {
     if (pathname.startsWith("/sdc/minicurso")) {
@@ -85,7 +85,7 @@ export function Header() {
       });
     }
 
-    if (pathname.startsWith("/sdc/admin")) {
+    if (pathname == "/sdc/admin") {
       setSdcRoutes({
         start: defaultSdcRoutes.start,
         end: [
@@ -102,7 +102,10 @@ export function Header() {
   useEffect(() => {
     if (isSDC) {
       setRoutes(sdcRoutes);
+      return;
     }
+
+    setRoutes(defaultRoutes);
   }, [isSDC, sdcRoutes]);
 
   return (
