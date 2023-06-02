@@ -32,6 +32,11 @@ export interface CreateRepoParticipation extends Omit<CreateParticipationDTO, "e
   participantId: string;
 }
 
+export interface FindEditionDTO {
+  number: number;
+  projectId: string;
+}
+
 export interface FindExistingEventDTO {
   editionId: string;
   location?: string;
@@ -63,6 +68,7 @@ export default abstract class ProjectsRepository {
   abstract findCertificatesByEditionId(editionId: string): Promise<ProjectCertificate[]>;
   abstract findCertificatesByEventId(eventId: string): Promise<ProjectCertificate[]>;
   abstract findEditionById(id: string): Promise<CompleteProjectEdition | null>;
+  abstract findEditionByNumber(where: FindEditionDTO): Promise<ProjectEdition | null>;
   abstract findEventById(id: string): Promise<CompleteProjectEvent | null>;
   abstract findExistingEvent(data: FindExistingEventDTO): Promise<ProjectEvent | null>;
   abstract findParticipantByEmail(email: string): Promise<ProjectParticipant | null>;

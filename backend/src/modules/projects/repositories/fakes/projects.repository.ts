@@ -24,6 +24,7 @@ import ProjectsRepository, {
   CompleteProjectEvent,
   CreateRepoAttendance,
   CreateRepoParticipation,
+  FindEditionDTO,
   FindExistingEventDTO,
 } from "../projects.repository";
 
@@ -233,6 +234,13 @@ export default class FakeProjectsRepository implements ProjectsRepository {
           speaker: this.speakers.find(speaker => speaker.id === event.speakerId) as ProjectSpeaker,
         }));
     }
+
+    return edition;
+  }
+
+  public async findEditionByNumber({ number, projectId }: FindEditionDTO): Promise<ProjectEdition | null> {
+    const edition =
+      this.editions.find(edition => edition.projectId === projectId && edition.number === number) || null;
 
     return edition;
   }

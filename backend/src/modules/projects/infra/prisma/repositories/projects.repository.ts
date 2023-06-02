@@ -22,6 +22,7 @@ import ProjectsRepository, {
   CompleteProjectEvent,
   CreateRepoAttendance,
   CreateRepoParticipation,
+  FindEditionDTO,
   FindExistingEventDTO,
 } from "@modules/projects/repositories/projects.repository";
 
@@ -144,6 +145,14 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
           },
         },
       },
+    });
+
+    return edition;
+  }
+
+  public async findEditionByNumber(where: FindEditionDTO): Promise<ProjectEdition | null> {
+    const edition = await this.prisma.projectEdition.findFirst({
+      where,
     });
 
     return edition;
