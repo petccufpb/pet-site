@@ -94,7 +94,14 @@ describe("CreateCertificate", () => {
     expect(eventCertificate).toHaveProperty("id");
   });
 
-  it("should not be able to create a certificate using non-registered email/matricula", async () => {
+  it("should not be able to create a certificate using non-registered email/ID/matricula", async () => {
+    await expect(
+      service.execute({
+        editionId: edition.id,
+        participantId: "fake-id",
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
+
     await expect(
       service.execute({
         editionId: edition.id,
@@ -126,7 +133,7 @@ describe("CreateCertificate", () => {
     ).rejects.toBeInstanceOf(HttpException);
   });
 
-  it("should not be able to create a certificate without email nor matricula", async () => {
+  it("should not be able to create a certificate without email/ID/matricula", async () => {
     await expect(
       service.execute({
         eventId: event.id,

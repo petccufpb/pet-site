@@ -72,6 +72,13 @@ describe("CreateParticipation", () => {
     await expect(
       service.execute({
         editionId: edition.id,
+        participantId: "fake-id",
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
+
+    await expect(
+      service.execute({
+        editionId: edition.id,
         email: "test2@gmail.com",
       }),
     ).rejects.toBeInstanceOf(HttpException);
@@ -84,7 +91,7 @@ describe("CreateParticipation", () => {
     ).rejects.toBeInstanceOf(HttpException);
   });
 
-  it("should be able to create a participation without email nor matricula", async () => {
+  it("should be able to create a participation without email/ID/matricula", async () => {
     await expect(
       service.execute({
         editionId: edition.id,

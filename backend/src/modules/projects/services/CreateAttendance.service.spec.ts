@@ -99,6 +99,13 @@ describe("CreateAttendance", () => {
     await expect(
       service.execute({
         eventId: event.id,
+        participantId: "fake-id",
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
+
+    await expect(
+      service.execute({
+        eventId: event.id,
         email: "test2@gmail.com",
       }),
     ).rejects.toBeInstanceOf(HttpException);
@@ -120,7 +127,7 @@ describe("CreateAttendance", () => {
     ).rejects.toBeInstanceOf(HttpException);
   });
 
-  it("should not be able to create an attendance without email nor matricula", async () => {
+  it("should not be able to create an attendance without email/ID/matricula", async () => {
     await expect(
       service.execute({
         eventId: event.id,

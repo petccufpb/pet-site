@@ -16,7 +16,12 @@ export default class CreateParticipation {
     matricula,
     participantId,
   }: CreateParticipationDTO): Promise<ProjectParticipation> {
-    if (!participantId) {
+    if (participantId) {
+      const foundParticipant = await this.projectsRepository.findParticipantById(participantId);
+      if (!foundParticipant) {
+        throw new HttpException("Não existe um aluno com esse ID", HttpStatus.NOT_FOUND);
+      }
+    } else {
       if (email) {
         const foundParticipant = await this.projectsRepository.findParticipantByEmail(email);
         if (!foundParticipant) {

@@ -13,7 +13,7 @@ export class CreateMember {
       const existingUser = await this.membersRepository.findByType(type);
 
       if (existingUser) {
-        throw new HttpException("There is already a decano/founder", HttpStatus.FORBIDDEN);
+        throw new HttpException("Já existe um decano/fundador", HttpStatus.FORBIDDEN);
       }
     }
 
