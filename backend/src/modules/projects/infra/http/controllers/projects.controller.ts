@@ -18,6 +18,7 @@ import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
 import CreateParticipationDTO from "@modules/projects/dtos/CreateParticipation.dto";
 import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
+import FindParticipantDTO from "@modules/projects/dtos/FindParticipant.dto";
 import ValidateCertificateDTO from "@modules/projects/dtos/ValidateCertificate.dto";
 import CreateCertificate from "@modules/projects/services/CreateCertificate.service";
 import CreateEdition from "@modules/projects/services/CreateEdition.service";
@@ -29,6 +30,7 @@ import CreateParticipation from "@modules/projects/services/CreateParticipation.
 import CreateProject from "@modules/projects/services/CreateProject.service";
 import CreateSpeaker from "@modules/projects/services/CreateSpeaker.service";
 import FindLatestEdition from "@modules/projects/services/FindLatestEdition.service";
+import FindParticipant from "@modules/projects/services/FindParticipant.service";
 import ListEditions from "@modules/projects/services/ListEditions.service";
 import ValidateCertificate from "@modules/projects/services/ValidateCertificate.service";
 
@@ -45,6 +47,7 @@ export default class ProjectsController {
     private createProject: CreateProject,
     private createSpeaker: CreateSpeaker,
     private findLatestEdition: FindLatestEdition,
+    private findParticipant: FindParticipant,
     private listEditions: ListEditions,
     private validateCertificate: ValidateCertificate,
   ) {}
@@ -118,6 +121,13 @@ export default class ProjectsController {
   @Post("participants")
   async postProjectsParticipants(@Body() body: CreateParticipantDTO): Promise<ProjectParticipant> {
     const participant = await this.createParticipant.execute(body);
+
+    return participant;
+  }
+
+  @Post("participants/find")
+  async postProjectsParticipantsFind(@Body() body: FindParticipantDTO): Promise<ProjectParticipant | null> {
+    const participant = await this.findParticipant.execute(body);
 
     return participant;
   }
