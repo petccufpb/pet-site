@@ -1,5 +1,5 @@
 import { IsOptional } from "@hyoretsu/decorators";
-import { IsNotEmpty, IsNumber, IsString, Min } from "class-validator";
+import { IsNotEmpty, IsString } from "class-validator";
 
 export default class ValidateCertificateDTO {
   @IsNotEmpty()
@@ -11,7 +11,6 @@ export default class ValidateCertificateDTO {
   email?: string;
 
   @IsOptional()
-  @IsNumber()
-  @Min(0)
-  matricula?: number;
+  @IsString()
+  matricula?: string;
 }

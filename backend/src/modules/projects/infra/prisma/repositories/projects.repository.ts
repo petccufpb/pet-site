@@ -176,7 +176,7 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     return participant;
   }
 
-  public async findParticipantByMatricula(matricula: number): Promise<ProjectParticipant | null> {
+  public async findParticipantByMatricula(matricula: string): Promise<ProjectParticipant | null> {
     const participant = await this.prisma.projectParticipant.findFirst({
       where: { matricula },
     });

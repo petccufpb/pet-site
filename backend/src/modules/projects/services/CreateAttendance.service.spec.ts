@@ -37,7 +37,7 @@ describe("CreateAttendance", () => {
       age: 1,
       course: "Test Course",
       email: "test@gmail.com",
-      matricula: 20200015280,
+      matricula: "20200015280",
       name: "Test",
       phoneNumber: "+55 83 99999-9999",
       university: "Test University",
@@ -80,7 +80,7 @@ describe("CreateAttendance", () => {
 
     const attendance = await service.execute({
       eventId: event.id,
-      matricula: 20200015280,
+      matricula: "20200015280",
     });
 
     expect(attendance).toHaveProperty("id");
@@ -90,7 +90,7 @@ describe("CreateAttendance", () => {
     await expect(
       service.execute({
         eventId: event.id,
-        matricula: 20200015280,
+        matricula: "20200015280",
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });
@@ -106,7 +106,7 @@ describe("CreateAttendance", () => {
     await expect(
       service.execute({
         eventId: event.id,
-        matricula: 20200015281,
+        matricula: "20200015281",
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });
@@ -115,7 +115,7 @@ describe("CreateAttendance", () => {
     await expect(
       service.execute({
         eventId: "fake-event-id",
-        matricula: 20200015280,
+        matricula: "20200015280",
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });
@@ -136,13 +136,13 @@ describe("CreateAttendance", () => {
 
     await service.execute({
       eventId: event.id,
-      matricula: 20200015280,
+      matricula: "20200015280",
     });
 
     await expect(
       service.execute({
         eventId: event.id,
-        matricula: 20200015280,
+        matricula: "20200015280",
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });

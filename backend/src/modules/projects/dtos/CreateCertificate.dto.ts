@@ -1,5 +1,5 @@
 import { IsOptional } from "@hyoretsu/decorators";
-import { IsEmail, IsNumber, IsString, IsUUID } from "class-validator";
+import { IsEmail, IsString, IsUUID } from "class-validator";
 
 export default class CreateCertificateDTO {
   @IsOptional()
@@ -18,8 +18,8 @@ export default class CreateCertificateDTO {
   eventId?: string;
 
   @IsOptional()
-  @IsNumber()
-  matricula?: number;
+  @IsString()
+  matricula?: string;
 
   @IsOptional()
   @IsString()

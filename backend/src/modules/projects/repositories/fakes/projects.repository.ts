@@ -270,7 +270,7 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     return participant;
   }
 
-  public async findParticipantByMatricula(matricula: number): Promise<ProjectParticipant | null> {
+  public async findParticipantByMatricula(matricula: string): Promise<ProjectParticipant | null> {
     const participant = this.participants.find(participant => participant.matricula === matricula) || null;
 
     return participant;

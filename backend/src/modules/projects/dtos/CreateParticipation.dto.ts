@@ -1,6 +1,6 @@
 import { IsOptional } from "@hyoretsu/decorators";
 import { ProjectParticipation } from "@prisma/client";
-import { IsEmail, IsNumber, IsString, IsUUID } from "class-validator";
+import { IsEmail, IsString, IsUUID } from "class-validator";
 
 export default class CreateParticipationDTO implements Partial<ProjectParticipation> {
   @IsOptional()
@@ -17,8 +17,8 @@ export default class CreateParticipationDTO implements Partial<ProjectParticipat
   eventId?: string;
 
   @IsOptional()
-  @IsNumber()
-  matricula?: number;
+  @IsString()
+  matricula?: string;
 
   @IsOptional()
   @IsString()

@@ -34,7 +34,7 @@ describe("CreateParticipation", () => {
       age: 1,
       course: "Test Course",
       email: "test@gmail.com",
-      matricula: 20200015280,
+      matricula: "20200015280",
       name: "Test",
       phoneNumber: "+55 83 99999-9999",
       university: "Test University",
@@ -79,7 +79,7 @@ describe("CreateParticipation", () => {
     await expect(
       service.execute({
         editionId: edition.id,
-        matricula: 20200015281,
+        matricula: "20200015281",
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });
@@ -119,7 +119,7 @@ describe("CreateParticipation", () => {
     await expect(
       service.execute({
         editionId: "fake-edition-id",
-        matricula: 20200015280,
+        matricula: "20200015280",
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });
@@ -128,7 +128,7 @@ describe("CreateParticipation", () => {
     await expect(
       service.execute({
         eventId: "fake-event-id",
-        matricula: 20200015280,
+        matricula: "20200015280",
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });
@@ -137,7 +137,7 @@ describe("CreateParticipation", () => {
     await expect(
       service.execute({
         eventId: event.id,
-        matricula: 20200015280,
+        matricula: "20200015280",
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });
