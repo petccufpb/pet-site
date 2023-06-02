@@ -11,7 +11,7 @@ export default class CreateSpeaker {
   public async execute({ email, ...data }: CreateSpeakerDTO): Promise<ProjectSpeaker> {
     const sameEmail = await this.projectsRepository.findSpeakerByEmail(email);
     if (sameEmail) {
-      throw new HttpException("There is already a speaker with this email", HttpStatus.CONFLICT);
+      throw new HttpException("Já existe um palestrante com esse email", HttpStatus.CONFLICT);
     }
 
     const speaker = await this.projectsRepository.createSpeaker({ ...data, email });

@@ -18,30 +18,33 @@ export default class CreateAttendance {
       if (email) {
         const foundParticipant = await this.projectsRepository.findParticipantByEmail(email);
         if (!foundParticipant) {
-          throw new HttpException("There's no participant with this email", HttpStatus.NOT_FOUND);
+          throw new HttpException("Não existe um aluno com esse email", HttpStatus.NOT_FOUND);
         }
 
         participantId = foundParticipant.id;
       } else if (matricula) {
         const foundParticipant = await this.projectsRepository.findParticipantByMatricula(matricula);
         if (!foundParticipant) {
-          throw new HttpException("There's no participant with this matricula", HttpStatus.NOT_FOUND);
+          throw new HttpException("Não existe um aluno com essa matrícula", HttpStatus.NOT_FOUND);
         }
 
         participantId = foundParticipant.id;
       } else {
-        throw new HttpException("You need to provide either an email or a matricula", HttpStatus.BAD_REQUEST);
+        throw new HttpException("Você deve enviar um email, matrícula ou ID", HttpStatus.BAD_REQUEST);
       }
     }
 
     const event = await this.projectsRepository.findEventById(eventId);
     if (!event) {
-      throw new HttpException("This event does not exist", HttpStatus.NOT_FOUND);
+      throw new HttpException("Esse evento não existe", HttpStatus.NOT_FOUND);
     }
 
     const participation = await this.projectsRepository.findParticipation({ eventId, participantId });
     if (!participation) {
-      throw new HttpException("You must be participating in an event to attend it", HttpStatus.FORBIDDEN);
+      throw new HttpException(
+        "Você deve estar participando em um evento para marcar frequência nele",
+        HttpStatus.FORBIDDEN,
+      );
     }
 
     const payload = {
@@ -51,7 +54,7 @@ export default class CreateAttendance {
 
     const existingAttendance = await this.projectsRepository.findAttendance(payload);
     if (existingAttendance) {
-      throw new HttpException("This attendance already exists", HttpStatus.CONFLICT);
+      throw new HttpException("Você já marcou frequência", HttpStatus.CONFLICT);
     }
 
     const Attendance = await this.projectsRepository.createAttendance(payload);

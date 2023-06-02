@@ -13,24 +13,24 @@ export default class ValidateCertificate {
     if (email) {
       const foundParticipant = await this.projectsRepository.findParticipantByEmail(email);
       if (!foundParticipant) {
-        throw new HttpException("There's no participant with this email", HttpStatus.NOT_FOUND);
+        throw new HttpException("Não existe um aluno com esse email", HttpStatus.NOT_FOUND);
       }
 
       participantId = foundParticipant.id;
     } else if (matricula) {
       const foundParticipant = await this.projectsRepository.findParticipantByMatricula(matricula);
       if (!foundParticipant) {
-        throw new HttpException("There's no participant with this matricula", HttpStatus.NOT_FOUND);
+        throw new HttpException("Não existe um aluno com essa matrícula", HttpStatus.NOT_FOUND);
       }
 
       participantId = foundParticipant.id;
     } else {
-      throw new HttpException("You need to provide either an email or a matricula", HttpStatus.BAD_REQUEST);
+      throw new HttpException("Você deve enviar um email, matrícula ou ID", HttpStatus.BAD_REQUEST);
     }
 
     const certificate = await this.projectsRepository.findCertificateById(certificateId);
     if (!certificate) {
-      throw new HttpException("This certificate does not exist", HttpStatus.NOT_FOUND);
+      throw new HttpException("Esse certificado não existe", HttpStatus.NOT_FOUND);
     }
 
     return certificate.participantId === participantId;

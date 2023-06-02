@@ -11,7 +11,7 @@ export default class ListEditions {
   public async execute({ projectId }: ListEditionsDTO): Promise<ProjectEdition[]> {
     const project = await this.projectsRepository.findProjectById(projectId);
     if (!project) {
-      throw new HttpException("This project does not exist", HttpStatus.NOT_FOUND);
+      throw new HttpException("Esse projeto não existe", HttpStatus.NOT_FOUND);
     }
 
     const editions = await this.projectsRepository.findAllEditions(projectId);

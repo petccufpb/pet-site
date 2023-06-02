@@ -16,17 +16,17 @@ export default class CreateParticipant {
   }: CreateParticipantDTO): Promise<ProjectParticipant> {
     const sameEmail = await this.projectsRepository.findParticipantByEmail(email);
     if (sameEmail) {
-      throw new HttpException("There's already a participant with this email", HttpStatus.FORBIDDEN);
+      throw new HttpException("Já existe um aluno com esse email", HttpStatus.FORBIDDEN);
     }
 
     const sameMatricula = await this.projectsRepository.findParticipantByMatricula(matricula);
     if (sameMatricula) {
-      throw new HttpException("There's already a participant with this matricula", HttpStatus.FORBIDDEN);
+      throw new HttpException("Já existe um aluno com essa matrícula", HttpStatus.FORBIDDEN);
     }
 
     const samePhone = await this.projectsRepository.findParticipantByPhone(phoneNumber);
     if (samePhone) {
-      throw new HttpException("There's already a participant with this phone number", HttpStatus.FORBIDDEN);
+      throw new HttpException("Já existe um aluno com esse telefone", HttpStatus.FORBIDDEN);
     }
 
     const participant = await this.projectsRepository.createParticipant({

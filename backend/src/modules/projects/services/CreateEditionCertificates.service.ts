@@ -13,7 +13,7 @@ export default class CreateEditionCertificates {
   public async execute(editionId: string): Promise<ProjectCertificate[]> {
     const existingEdition = await this.projectsRepository.findEditionById(editionId);
     if (!existingEdition) {
-      throw new HttpException("This edition does not exist", HttpStatus.NOT_FOUND);
+      throw new HttpException("Essa edição não existe", HttpStatus.NOT_FOUND);
     }
 
     const { events } = (await this.projectsRepository.findEditionById(editionId)) as CompleteProjectEdition;

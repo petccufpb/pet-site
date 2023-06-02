@@ -18,20 +18,23 @@ export default class CreateEvent {
     ...data
   }: CreateEventDTO): Promise<ProjectEvent> {
     if (onSite && !location) {
-      throw new HttpException("Please provide a location for on-site events", HttpStatus.BAD_REQUEST);
+      throw new HttpException("Forneça uma localização para eventos presenciais", HttpStatus.BAD_REQUEST);
     }
 
     if (isBefore(endTime, startTime)) {
-      throw new HttpException("End time is before start time", HttpStatus.BAD_REQUEST);
+      throw new HttpException("Horário de término é antes do horário de início", HttpStatus.BAD_REQUEST);
     }
 
     const edition = await this.projectsRepository.findEditionById(editionId);
     if (!edition) {
-      throw new HttpException("This edition does not exist", HttpStatus.NOT_FOUND);
+      throw new HttpException("Essa edição não existe", HttpStatus.NOT_FOUND);
     }
 
     if (isBefore(startTime, edition.date)) {
-      throw new HttpException("Start time is before this edition's date", HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        "Horário de início do evento é antes da data de início da edição",
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     if (onSite) {
@@ -43,7 +46,7 @@ export default class CreateEvent {
 
       if (existingEvent) {
         throw new HttpException(
-          "An event already exists at the same time and location for this edition",
+          "Um evento já existe no mesmo local e horário para esta edição",
           HttpStatus.FORBIDDEN,
         );
       }

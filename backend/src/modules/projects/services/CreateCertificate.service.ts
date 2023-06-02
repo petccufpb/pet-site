@@ -19,29 +19,26 @@ export default class CreateCertificate {
       if (email) {
         const foundParticipant = await this.projectsRepository.findParticipantByEmail(email);
         if (!foundParticipant) {
-          throw new HttpException("There's no participant with this email", HttpStatus.NOT_FOUND);
+          throw new HttpException("Não existe um aluno com esse email", HttpStatus.NOT_FOUND);
         }
 
         participantId = foundParticipant.id;
       } else if (matricula) {
         const foundParticipant = await this.projectsRepository.findParticipantByMatricula(matricula);
         if (!foundParticipant) {
-          throw new HttpException("There's no participant with this matricula", HttpStatus.NOT_FOUND);
+          throw new HttpException("Não existe um aluno com essa matrícula", HttpStatus.NOT_FOUND);
         }
 
         participantId = foundParticipant.id;
       } else {
-        throw new HttpException(
-          "You need to provide an email, a matricula or the participant's ID",
-          HttpStatus.BAD_REQUEST,
-        );
+        throw new HttpException("Você deve enviar um email, matrícula ou ID", HttpStatus.BAD_REQUEST);
       }
     }
 
     if (editionId) {
       const edition = await this.projectsRepository.findEditionById(editionId);
       if (!edition) {
-        throw new HttpException("This edition does not exist", HttpStatus.NOT_FOUND);
+        throw new HttpException("Essa edição não existe", HttpStatus.NOT_FOUND);
       }
 
       const certificate = await this.projectsRepository.createCertificate({
@@ -53,7 +50,7 @@ export default class CreateCertificate {
     } else {
       const event = await this.projectsRepository.findEventById(eventId as string);
       if (!event) {
-        throw new HttpException("This event does not exist", HttpStatus.NOT_FOUND);
+        throw new HttpException("Esse evento não existe", HttpStatus.NOT_FOUND);
       }
 
       const certificate = await this.projectsRepository.createCertificate({

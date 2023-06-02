@@ -11,7 +11,7 @@ export default class CreateProject {
   public async execute({ title, ...data }: CreateProjectDTO): Promise<Project> {
     const existingProject = await this.projectsRepository.findProjectByTitle(title);
     if (existingProject) {
-      throw new HttpException("There is already a project with this title", HttpStatus.FORBIDDEN);
+      throw new HttpException("Já existe um projeto com esse nome", HttpStatus.FORBIDDEN);
     }
 
     const project = await this.projectsRepository.createProject({ title, ...data });

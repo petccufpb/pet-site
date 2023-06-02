@@ -20,19 +20,19 @@ export default class CreateParticipation {
       if (email) {
         const foundParticipant = await this.projectsRepository.findParticipantByEmail(email);
         if (!foundParticipant) {
-          throw new HttpException("There's no participant with this email", HttpStatus.NOT_FOUND);
+          throw new HttpException("Não existe um aluno com esse email", HttpStatus.NOT_FOUND);
         }
 
         participantId = foundParticipant.id;
       } else if (matricula) {
         const foundParticipant = await this.projectsRepository.findParticipantByMatricula(matricula);
         if (!foundParticipant) {
-          throw new HttpException("There's no participant with this matricula", HttpStatus.NOT_FOUND);
+          throw new HttpException("Não existe um aluno com essa matrícula", HttpStatus.NOT_FOUND);
         }
 
         participantId = foundParticipant.id;
       } else {
-        throw new HttpException("You need to provide either an email or a matricula", HttpStatus.BAD_REQUEST);
+        throw new HttpException("Você deve enviar um email, matrícula ou ID", HttpStatus.BAD_REQUEST);
       }
     }
 
@@ -41,7 +41,7 @@ export default class CreateParticipation {
     if (eventId) {
       const event = await this.projectsRepository.findEventById(eventId);
       if (!event) {
-        throw new HttpException("This event does not exist", HttpStatus.NOT_FOUND);
+        throw new HttpException("Esse evento não existe", HttpStatus.NOT_FOUND);
       }
 
       const editionParticipation = await this.projectsRepository.findParticipation({
@@ -50,7 +50,7 @@ export default class CreateParticipation {
       });
       if (!editionParticipation) {
         throw new HttpException(
-          "You need to be participating in the main edition in order to participante in an event",
+          "Você deve estar inscrito na edição correspondente para participar de um evento",
           HttpStatus.FORBIDDEN,
         );
       }
@@ -62,7 +62,7 @@ export default class CreateParticipation {
     } else {
       const edition = await this.projectsRepository.findEditionById(editionId as string);
       if (!edition) {
-        throw new HttpException("This edition does not exist", HttpStatus.NOT_FOUND);
+        throw new HttpException("Essa edição não existe", HttpStatus.NOT_FOUND);
       }
 
       payload = {
@@ -73,7 +73,7 @@ export default class CreateParticipation {
 
     const existingParticipation = await this.projectsRepository.findParticipation(payload);
     if (existingParticipation) {
-      throw new HttpException("This participation already exists", HttpStatus.FORBIDDEN);
+      throw new HttpException("Essa inscrição já existe", HttpStatus.FORBIDDEN);
     }
 
     const participation = await this.projectsRepository.createParticipation(payload);

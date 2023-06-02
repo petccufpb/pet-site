@@ -10,7 +10,7 @@ export default class FindLatestEdition {
   public async execute({ projectTitle }: FindLatestEditionDTO): Promise<CompleteProjectEdition> {
     const project = await this.projectsRepository.findProjectByTitle(projectTitle);
     if (!project) {
-      throw new HttpException("There is no project with this title", HttpStatus.NOT_FOUND);
+      throw new HttpException("Não existe um projeto com esse nome", HttpStatus.NOT_FOUND);
     }
 
     const editions = await this.projectsRepository.findAllEditions(project.id);

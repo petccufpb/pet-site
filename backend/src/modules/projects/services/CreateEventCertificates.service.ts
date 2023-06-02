@@ -14,7 +14,7 @@ export default class CreateEventCertificates {
   }: Required<CreateCertificatesDTO>): Promise<ProjectCertificate[]> {
     const existingEvent = await this.projectsRepository.findEventById(eventId);
     if (!existingEvent) {
-      throw new HttpException("This event does not exist", HttpStatus.NOT_FOUND);
+      throw new HttpException("Esse evento não existe", HttpStatus.NOT_FOUND);
     }
 
     const participations = await this.projectsRepository.findParticipationsByEvent(eventId);
