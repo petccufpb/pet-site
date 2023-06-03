@@ -48,7 +48,11 @@ export function MobileSchedule({ data }: { data: SDCScheduleData }) {
       </DaySelector>
       <Table>
         {dayEvents.map(e => (
-          <EventContainer key={e.id} aria-label="Realizar Inscrição" href="/sdc/minicurso/id">
+          <EventContainer
+            key={e.id}
+            aria-label="Realizar Inscrição"
+            href={e.type === "main" ? "/sdc/inscricao" : `/sdc/minicurso/${e.id}`}
+          >
             <SpeakerPhoto
               width={45}
               height={45}
