@@ -21,7 +21,7 @@ export function SdcActivity({ data }: { data: SDCEventData }) {
     hour: "2-digit",
     minute: "2-digit",
   });
-  const available = data.capacity !== null;
+  const available = data.capacity ? data.participants.length < data.capacity : true;
 
   return (
     <SDCtr>

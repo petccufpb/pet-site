@@ -181,6 +181,7 @@ export default class FakeProjectsRepository implements ProjectsRepository {
         .filter(event => event.editionId === edition.id)
         .map(event => ({
           ...event,
+          participants: this.participations.filter(participation => participation.eventId === event.id),
           speaker: this.speakers.find(speaker => speaker.id === event.speakerId) as ProjectSpeaker,
         }));
     });
@@ -231,6 +232,7 @@ export default class FakeProjectsRepository implements ProjectsRepository {
         .filter(event => event.editionId === id)
         .map(event => ({
           ...event,
+          participants: this.participations.filter(participation => participation.eventId === event.id),
           speaker: this.speakers.find(speaker => speaker.id === event.speakerId) as ProjectSpeaker,
         }));
     }

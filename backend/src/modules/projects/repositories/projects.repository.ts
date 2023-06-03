@@ -44,6 +44,7 @@ export interface FindExistingEventDTO {
 }
 
 export type CompleteProjectEvent = ProjectEvent & {
+  participants: ProjectParticipation[];
   speaker: ProjectSpeaker;
 };
 

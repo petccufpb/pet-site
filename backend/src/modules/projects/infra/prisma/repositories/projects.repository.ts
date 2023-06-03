@@ -89,6 +89,7 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
         certificateTemplate: true,
         events: {
           include: {
+            participants: true,
             speaker: true,
           },
         },
@@ -141,6 +142,7 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
         certificateTemplate: true,
         events: {
           include: {
+            participants: true,
             speaker: true,
           },
         },
@@ -162,6 +164,7 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     const event = await this.prisma.projectEvent.findFirst({
       where: { id },
       include: {
+        participants: true,
         speaker: true,
       },
     });

@@ -12,6 +12,7 @@ declare module "sdc" {
     editionId: string;
     createdAt: string;
     updatedAt: string;
+    participants: any[];
     speaker: {
       id: string;
       name: string;
