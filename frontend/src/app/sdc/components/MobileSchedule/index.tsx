@@ -2,7 +2,6 @@
 
 import { SectionTitle } from "@app/sdc/styles";
 import { MouseEvent, useEffect, useState } from "react";
-import { FaTimes } from "react-icons/fa";
 import { HiArrowUpRight } from "react-icons/hi2";
 import { SDCScheduleData } from "sdc";
 
