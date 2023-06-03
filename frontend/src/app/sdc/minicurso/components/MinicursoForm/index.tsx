@@ -14,7 +14,7 @@ import {
   ConfirmButton,
   DateContainer,
   InputContainer,
-  SdcFormContainer,
+  FormContainer,
 } from "./styles";
 
 function DateOrNothing({ date }: { date?: { day: string; time: string } }) {
@@ -140,14 +140,14 @@ export function MinicursoForm({
         pauseOnHover
         theme="dark"
       />
-      <SdcFormContainer borderType={borderType} onSubmit={handleSubmit(sendForm)}>
+      <FormContainer borderType={borderType} onSubmit={handleSubmit(sendForm)}>
         <DateOrNothing date={date}></DateOrNothing>
         {sections &&
           sections.map(section => (
             <InputContainer key={section.title}>
               <div>{section.title}</div>
               <input type="text" placeholder={section.placeholder} {...register(section.id)} />
-              {errors[section.id] && <span>{errors[section.id].message}</span>}
+              {errors[section.id] && <span>{errors[section.id]?.message}</span>}
             </InputContainer>
           ))}
         <ButtonContainer type={type}>
@@ -157,7 +157,7 @@ export function MinicursoForm({
             {confirmType === "next" && <HiArrowRight />}
           </ConfirmButton>
         </ButtonContainer>
-      </SdcFormContainer>
+      </FormContainer>
     </>
   );
 }

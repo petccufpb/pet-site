@@ -2,7 +2,7 @@
 
 import styled from "styled-components";
 
-export const SdcFormContainer = styled.form<{ borderType: "static" | "gradient" }>`
+export const FormContainer = styled.form<{ borderType: "static" | "gradient" }>`
   font-family: ${({ theme }) => theme.fonts.sdc};
   font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
   border-radius: 0.5rem;
@@ -71,6 +71,11 @@ export const ButtonContainer = styled.div<{ type: "normal" | "cancel" }>`
 
   > button {
     width: ${({ type }) => (type === "cancel" ? "auto" : "100%")};
+  }
+
+  > button:disabled {
+    opacity: 40%;
+    cursor: not-allowed;
   }
 `;
 

@@ -33,5 +33,7 @@ declare module "sdc" {
     updatedAt: string;
     certificateTemplate: null | any; // replace any with the correct type
     events: SDCEventData[];
+    capacity: number;
+    participants: any[];
   };
 }

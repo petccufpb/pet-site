@@ -34,7 +34,7 @@ export const MoreInfo = styled.div`
   justify-content: space-between;
 `;
 
-export const InstagramContainer = styled(Link)`
+export const InstagramContainer = styled.a`
   display: flex;
   gap: 0.5rem;
   align-items: center;

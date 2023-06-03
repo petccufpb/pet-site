@@ -67,7 +67,7 @@ export function MobileHeader() {
           <RouteLink tab={pathname} href="/sdc/inscricao">
             Inscrição
           </RouteLink>
-          <RouteLink tab={pathname} href="/sdc/certificado">
+          <RouteLink tab={pathname} href="/sdc/certificados">
             Certificados
           </RouteLink>
         </Links>

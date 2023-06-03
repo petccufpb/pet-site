@@ -5,14 +5,13 @@ export async function POST(request: Request) {
 
   const d = {
     age: params.age,
-    course: "Ciência da Computação",
+    course: params.course,
     email: params.email,
     matricula: params.matricula,
     name: params.name,
     phoneNumber: params.celular,
-    university: "UFPB",
+    university: "undefined",
   };
-  console.log(d);
 
   const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/participants", {
     method: "POST",
@@ -23,8 +22,6 @@ export async function POST(request: Request) {
   });
 
   const data = await res.json();
-
-  console.log(res.status, data);
 
   if (res.status === 201) {
     return NextResponse.json(data);

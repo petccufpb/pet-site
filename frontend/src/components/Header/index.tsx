@@ -1,6 +1,5 @@
 "use client";
 
-import { baiJamjuree, inter } from "@app/sdc/page";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -58,7 +57,7 @@ const defaultSdcRoutes = {
   end: [
     {
       name: "Certificados",
-      path: "/sdc/certificado",
+      path: "/sdc/certificados",
     },
   ],
 };

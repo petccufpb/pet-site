@@ -16,6 +16,8 @@ import Logo from "@assets/images/logo.svg?svgr";
 import Petrucio from "@assets/images/petrucio.svg?svgr";
 
 import {
+  BackButton,
+  ButtonContainer,
   Content,
   FirstColumn,
   Forms,
@@ -23,8 +25,6 @@ import {
   PETSDC,
   SecondColumn,
   Steps,
-  ButtonContainer,
-  BackButton,
 } from "./styles";
 
 const sendFormSchema = z.object({
@@ -42,26 +42,34 @@ const sendFormSchema = z.object({
     }),
   email: z.string().nonempty("O email é obrigatório").email("Formato de email inválido"),
   celular: z.string().min(17, { message: "O número deve conter 9 dígitos" }),
-  matricula: z.string().length(11, { message: "Sua matrícula deve conter 11 dígitos" }),
+  matricula: z
+    .number({
+      invalid_type_error: "A matrícula deve ser um número",
+    })
+    .min(10000000000, { message: "Sua matrícula deve conter 11 dígitos" })
+    .max(99999999999, { message: "Sua matrícula deve conter 11 dígitos" }),
   age: z
     .number({
       invalid_type_error: "A Idade deve ser um número",
+      required_error: "A Idade é obrigatória",
     })
-    .positive()
+    .int({ message: "Sua idade deve ser um número inteiro" })
+    .positive({ message: "Sua idade deve ser positiva" })
+    .min(1, { message: "Idade inválida" })
     .max(120, { message: "Idade inválida" }),
 });
 
 type SendFormData = z.infer<typeof sendFormSchema>;
 
 export default function Inscricao() {
-  const [step, setStep] = useState(0);
-  const [output, setOutput] = useState("");
   const options = [
     { value: "cdia", label: "Ciência de Dados" },
     { value: "cc", label: "Ciência da Computação" },
     { value: "ec", label: "Engenharia da Computação" },
   ];
-  const router = useRouter();
+
+  const [step, setStep] = useState(0);
+  const [course, setCourse] = useState(options[1]);
 
   const {
     register,
@@ -115,7 +123,12 @@ export default function Inscricao() {
       </InputContainer>
       <InputContainer>
         <div>Matrícula</div>
-        <InputMask placeholder="20190113496" mask="99999999999" maskChar={null} {...register("matricula")} />
+        <InputMask
+          placeholder="20190113496"
+          mask="99999999999"
+          maskChar={null}
+          {...register("matricula", { valueAsNumber: true })}
+        />
         {errors.matricula && <span>{errors.matricula.message}</span>}
       </InputContainer>
 
@@ -123,13 +136,14 @@ export default function Inscricao() {
         <div>Curso</div>
         <Select
           form="sdc"
+          onChange={e => (e ? setCourse(e) : null)}
           defaultValue={options[1]}
           options={options}
           styles={{
             control: (baseStyles, state) => ({
               ...baseStyles,
-              background: "#121214",
               padding: ".4rem",
+              border: "none",
             }),
           }}
           theme={theme => ({
@@ -137,9 +151,11 @@ export default function Inscricao() {
             borderRadius: 2,
             colors: {
               ...theme.colors,
-              primary25: "#121214",
-              neutral15: "#121214",
-              primary: "#121214",
+              primary: "white",
+              neutral0: "#121214",
+              neutral80: "white",
+              neutral90: "white",
+              primary25: "#202020",
             },
           })}
         />
@@ -151,14 +167,16 @@ export default function Inscricao() {
     const i = toast.info("Carregando...");
     const res = await fetch("/api/subscribe/sdc", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        ...data,
+        matricula: data.matricula.toString(),
+        course: course.value,
+      }),
     });
 
     const d = await res.json();
 
     toast.dismiss(i);
-
-    console.log("status", res.status);
 
     if (res.status === 200) {
       toast.success("Inscrição realizada com sucesso!");
@@ -178,7 +196,6 @@ export default function Inscricao() {
         },
       });
     }
-    setOutput(JSON.stringify(data, null, 2));
   }
 
   return (
@@ -254,7 +271,8 @@ export default function Inscricao() {
                       errors.age !== undefined ||
                       emailValue?.length === 0 ||
                       nameValue?.length === 0 ||
-                      ageValue === undefined
+                      ageValue === undefined ||
+                      Number.isNaN(ageValue)
                     }
                   >
                     <span>Próximo Passo</span>

@@ -23,7 +23,7 @@ export default async function SDC() {
       {SDC_READY && (
         <>
           <SdcSchedule data={sdcData} />
-          <MobileSchedule />
+          <MobileSchedule data={sdcData} />
         </>
       )}
     </div>

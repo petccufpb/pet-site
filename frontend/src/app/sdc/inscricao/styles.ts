@@ -9,7 +9,6 @@ export const Content = styled.div`
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
     gap: 2rem;
-    text-align: center;
   }
 `;
 
@@ -185,6 +184,7 @@ export const Forms = styled.form`
   }
 
   button {
+    width: 100%;
     border: 1px solid ${({ theme }) => theme.colors["base-green"]};
     background: rgba(4, 211, 97, 0.2);
     font-family: inherit;
@@ -233,16 +233,16 @@ export const PETSDC = styled.div`
 
 export const ButtonContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: 1rem;
-
-  > button {
-    width: 100%;
-  }
 `;
 
 export const BackButton = styled.button`
   border: 1px solid ${({ theme }) => theme.colors["fifth-blue"]} !important;
   background: ${({ theme }) => theme.colors["fifth-blue"]}20 !important;
+
+  @media (max-width: 900px) {
+    width: 50% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
 `;

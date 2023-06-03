@@ -1,17 +1,15 @@
 "use client";
 
 import { SectionTitle } from "@app/sdc/styles";
-import { MouseEvent, useState } from "react";
-import { FaCheck, FaQuestionCircle, FaTimes } from "react-icons/fa";
+import { MouseEvent, useEffect, useState } from "react";
+import { FaTimes } from "react-icons/fa";
 import { HiArrowUpRight } from "react-icons/hi2";
-
-import Leleo from "@assets/images/leleo.png";
+import { SDCScheduleData } from "sdc";
 
 import {
   Availability,
   Day,
   DaySelector,
-  DummyPicture,
   Event,
   EventContainer,
   SdcScheduleContainer,
@@ -19,8 +17,13 @@ import {
   Table,
 } from "./styles";
 
-export function MobileSchedule() {
+export function MobileSchedule({ data }: { data: SDCScheduleData }) {
   const [currentDay, setCurrentDay] = useState(1);
+  const days: number[] = [...new Set(data.events.map(event => new Date(event.startTime).getDate()).sort())];
+
+  const [dayEvents, setDayEvents] = useState(
+    data.events.filter(event => new Date(event.startTime).getDate() === currentDay),
+  );
 
   function changeSelectedDay(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) {
     const element = e.target as HTMLDivElement;
@@ -29,60 +32,46 @@ export function MobileSchedule() {
     if (day) setCurrentDay(day);
   }
 
+  useEffect(() => {
+    setDayEvents(data.events.filter(event => new Date(event.startTime).getDate() === currentDay));
+  }, [currentDay, data.events]);
+
   return (
     <SdcScheduleContainer>
       <SectionTitle>Clique e filtre todos os eventos de um dia específico</SectionTitle>
       <DaySelector onClick={changeSelectedDay}>
-        <Day selected={currentDay === 1} data-day={1}>
-          Dia 01
-        </Day>
-        <Day selected={currentDay === 2} data-day={2}>
-          Dia 02
-        </Day>
-        <Day selected={currentDay === 3} data-day={3}>
-          Dia 03
-        </Day>
-        <Day selected={currentDay === 4} data-day={4}>
-          Dia 04
-        </Day>
+        {days.map(day => (
+          <Day key={day} selected={currentDay === day} data-day={day}>
+            Dia {day}
+          </Day>
+        ))}
       </DaySelector>
       <Table>
-        <EventContainer aria-label="Realizar Inscrição" href="/sdc/minicurso/id">
-          <SpeakerPhoto src={Leleo} alt="Palestrante"></SpeakerPhoto>
-          <Event available={true}>
-            <div>Bruno Bruck</div>
-            <div>Um kinder ovo vale mais que um diploma</div>
-            <Availability available={true}>
-              <span>Inscreva-se</span>
-              <HiArrowUpRight height="1em" />
-            </Availability>
-            <div>Dia 1 - 09:45</div>
-          </Event>
-        </EventContainer>
-        <EventContainer aria-label="Realizar Inscrição" href="/sdc/minicurso/id">
-          <SpeakerPhoto src={Leleo} alt="Palestrante"></SpeakerPhoto>
-          <Event available={false}>
-            <div>Samantha</div>
-            <div>Minicurso • Como Desenhar o Petrúcio</div>
-            <Availability available={false}>
-              <span>Esgotado</span>
-              <FaTimes height="1em" />
-            </Availability>
-            <div>Dia 2 - 08:00</div>
-          </Event>
-        </EventContainer>
-        <EventContainer aria-label="Realizar Inscrição" href="/sdc/minicurso/id">
-          <SpeakerPhoto src={Leleo} alt="Palestrante"></SpeakerPhoto>
-          <Event available={true}>
-            <div>Leonardo Vidal</div>
-            <div>Palestra • Como Ficar Rico</div>
-            <Availability available={true}>
-              <span>Inscreva-se</span>
-              <HiArrowUpRight height="1em" />
-            </Availability>
-            <div>Dia 3 - 10:00</div>
-          </Event>
-        </EventContainer>
+        {dayEvents.map(e => (
+          <EventContainer key={e.id} aria-label="Realizar Inscrição" href="/sdc/minicurso/id">
+            <SpeakerPhoto
+              width={45}
+              height={45}
+              src={"https://" + e.speaker.photoUrl}
+              alt={e.speaker.name}
+            ></SpeakerPhoto>
+            <Event available={true}>
+              <div>{e.speaker.name}</div>
+              <div>Um kinder ovo vale mais que um diploma</div>
+              <Availability available={data.capacity ? data.participants.length < data.capacity : true}>
+                <span>Inscreva-se</span>
+                <HiArrowUpRight height="1em" />
+              </Availability>
+              <div>
+                Dia {new Date(e.startTime).getDate()} -{" "}
+                {new Date(e.startTime).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </div>
+            </Event>
+          </EventContainer>
+        ))}
       </Table>
     </SdcScheduleContainer>
   );

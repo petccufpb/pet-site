@@ -1,21 +1,20 @@
-import { MinicursoForm } from "@app/sdc/components/MinicursoForm";
 import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { HiCheck } from "react-icons/hi2";
-import { ToastContainer } from "react-toastify";
 import { SDCEventData, SDCScheduleData } from "sdc";
 
 import Logo from "@assets/images/logo.svg?svgr";
 import Petrucio from "@assets/images/petrucio.svg?svgr";
 
+import { MinicursoForm } from "../components/MinicursoForm";
 import { DescriptionContainer, FormContainer, MinicursoContainer, SpeakerInfo } from "./styles";
 
 export const metadata: Metadata = {
   title: "Plataforma | SDC - Minicurso",
 };
 
-export default async function MiniMinicursoFormcurso({ params }: { params: { id: string } }) {
+export default async function Minicurso({ params }: { params: { id: string } }) {
   const schedule: SDCScheduleData = await (
     await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/editions/latest?project=SDC")
   ).json();
