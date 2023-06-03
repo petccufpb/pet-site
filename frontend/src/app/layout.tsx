@@ -1,3 +1,5 @@
+/*deploy*/
+
 "use client";
 
 import "@fontsource/bai-jamjuree";

@@ -12,7 +12,7 @@
     "prisma:migrate-deploy": "prisma migrate deploy",
     "start": "nest start",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/src/main",
     "test": "jest"
   },
   "dependencies": {
@@ -38,7 +38,6 @@
     "@nestjs/cli": "^9.3.0",
     "@nestjs/schematics": "^9.1.0",
     "@nestjs/testing": "^9.3.12",
-    "@shared/eslint-config-eslint": "workspace:^",
     "@types/jest": "^29.4.4",
     "@types/multer": "^1.4.7",
     "@types/multer-s3": "^3.0.0",

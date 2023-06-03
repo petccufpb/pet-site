@@ -1,14 +1,22 @@
 {
-  "extends": "../@shared/tsconfig.json",
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "baseUrl": "./src",
+    "declaration": true,
+    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "commonjs",
     "moduleResolution": "node",
     "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
     "outDir": "./build",
     "paths": {
       "@assets/*": ["../public/*"],
@@ -27,12 +35,24 @@
         "name": "next"
       }
     ],
+    "removeComments": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
+    "sourceMap": true,
     "strict": true,
+    "strictBindCallApply": true,
+    "strictNullChecks": true,
     "target": "es6",
     "typeRoots": ["./node_modules/@types", "./src/@types"]
   },
-  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/sdc/admin/page.tsx.no", "src/app/sdc/inscricao/page.tsx", "src/app/sdc/minicurso/[id]/page.tsx", "src/middleware.ts.old"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/app/sdc/admin/page.tsx.no",
+    "src/app/sdc/inscricao/page.tsx",
+    "src/app/sdc/minicurso/[id]/page.tsx",
+    "src/middleware.ts.old"
+  ],
   "exclude": ["node_modules"]
 }
