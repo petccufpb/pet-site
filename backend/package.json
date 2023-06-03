@@ -12,7 +12,7 @@
     "prisma:migrate-deploy": "prisma migrate deploy",
     "start": "nest start",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/src/main",
     "test": "jest"
   },
   "dependencies": {
