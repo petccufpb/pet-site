@@ -10,6 +10,7 @@ export const Container = styled.div`
 `;
 
 export const AreaSelector = styled.div`
+  font-family: ${({ theme }) => theme.fonts.sdc};
   display: flex;
   width: 100%;
   gap: 1rem;

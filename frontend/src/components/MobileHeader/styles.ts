@@ -53,6 +53,7 @@ export const ToggleButton = styled.div<{ expand: boolean }>`
 `;
 
 export const ExpandMenu = styled.div<{ expand: boolean; display: string; docHeight?: number }>`
+  font-family: ${({ theme }) => theme.fonts.sdc};
   display: ${({ display }) => display};
   position: fixed;
   top: 0;

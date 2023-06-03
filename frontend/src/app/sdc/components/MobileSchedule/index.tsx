@@ -1,6 +1,5 @@
 "use client";
 
-import { baiJamjuree } from "@app/sdc/page";
 import { SectionTitle } from "@app/sdc/styles";
 import { MouseEvent, useState } from "react";
 import { FaCheck, FaQuestionCircle, FaTimes } from "react-icons/fa";
@@ -31,7 +30,7 @@ export function MobileSchedule() {
   }
 
   return (
-    <SdcScheduleContainer className={baiJamjuree.className}>
+    <SdcScheduleContainer>
       <SectionTitle>Clique e filtre todos os eventos de um dia específico</SectionTitle>
       <DaySelector onClick={changeSelectedDay}>
         <Day selected={currentDay === 1} data-day={1}>

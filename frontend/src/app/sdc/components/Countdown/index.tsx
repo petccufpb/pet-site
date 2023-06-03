@@ -1,6 +1,5 @@
 "use client";
 
-import { baiJamjuree } from "@app/sdc/page";
 import { useEffect, useState } from "react";
 
 import { CountdownContainer, Divider, TimeUnit, Timer } from "./styles";
@@ -59,7 +58,7 @@ export function Countdown({ startingTime }: { startingTime: string }) {
   }, [countDownDate]);
 
   return (
-    <CountdownContainer className={baiJamjuree.className}>
+    <CountdownContainer>
       <Timer>
         <div>
           O EVENTO

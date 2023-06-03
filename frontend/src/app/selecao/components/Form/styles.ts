@@ -71,6 +71,7 @@ export const MaskedFormInput = styled(InputMask)`
   width: 100%;
   border: none;
   font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
+  font-family: ${({ theme }) => theme.fonts.alt};
   color: ${({ theme }) => theme.colors["base-grey"]};
   padding: 1rem 0;
   background: none;
@@ -86,6 +87,7 @@ export const FormInput = styled.input`
   width: 100%;
   border: none;
   font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
+  font-family: ${({ theme }) => theme.fonts.alt};
   color: ${({ theme }) => theme.colors["base-grey"]};
   padding: 1rem 0;
   background: none;
@@ -133,6 +135,7 @@ export const SendButton = styled.button<{ canSend: boolean }>`
   font-weight: 600;
   margin: 0 auto;
   cursor: ${({ canSend }) => (canSend ? "pointer" : "default")};
+  font-family: ${({ theme }) => theme.fonts.alt};
   transition: color 200ms ease-in-out;
 `;
 

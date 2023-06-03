@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const Content = styled.div`
   display: grid;
+  height: 100%;
   grid-template-columns: 1fr 1fr;
   margin: auto;
-  height: 85%;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
@@ -23,12 +23,14 @@ export const FirstColumn = styled.div`
     font-size: 4rem;
     max-width: 480px;
     line-height: 100%;
+    font-family: ${({ theme }) => theme.fonts.alt};
   }
 
   p {
     color: #a9a9b2;
     line-height: 140%;
     font-size: ${({ theme }) => theme.textSizes["text-title-xs"]};
+    font-family: ${({ theme }) => theme.fonts.sdc};
     max-width: 480px;
   }
 
@@ -44,6 +46,7 @@ export const FirstColumn = styled.div`
     border: 1px solid #0072ed;
     padding: 1rem;
     border-radius: 6px;
+    font-family: ${({ theme }) => theme.fonts.alt};
 
     span {
       color: white;
@@ -84,6 +87,7 @@ export const SecondColumn = styled.div`
       margin-bottom: 0.5rem;
       font-weight: 700;
       font-size: ${({ theme }) => theme.textSizes["text-title-m"]};
+      font-family: ${({ theme }) => theme.fonts.sdc};
     }
 
     p {
@@ -99,6 +103,7 @@ export const SecondColumn = styled.div`
   }
 `;
 export const Steps = styled.section`
+  font-family: ${({ theme }) => theme.fonts.sdc};
   padding-bottom: 2rem;
   width: min(100%, 31rem);
   margin: 0 auto;
@@ -135,6 +140,7 @@ export const Steps = styled.section`
 `;
 
 export const Forms = styled.form`
+  font-family: ${({ theme }) => theme.fonts.alt};
   font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
   border-radius: 0.5rem;
   width: min(100%, 31rem);
@@ -211,6 +217,11 @@ export const InputContainer = styled.div`
     color: #d5232d;
     font-size: ${({ theme }) => theme.textSizes["text-regular-xs"]};
   }
+
+  select {
+    color: white;
+    background-color: ${({ theme }) => theme.colors["fifth-black"]};
+  }
 `;
 
 export const PETSDC = styled.div`
@@ -218,4 +229,20 @@ export const PETSDC = styled.div`
   gap: 1rem;
 
   align-items: center;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  > button {
+    width: 100%;
+  }
+`;
+
+export const BackButton = styled.button`
+  border: 1px solid ${({ theme }) => theme.colors["fifth-blue"]} !important;
+  background: ${({ theme }) => theme.colors["fifth-blue"]}20 !important;
 `;

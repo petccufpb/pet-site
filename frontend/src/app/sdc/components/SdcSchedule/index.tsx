@@ -1,6 +1,5 @@
 "use client";
 
-import { baiJamjuree } from "@app/sdc/page";
 import { SectionTitle } from "@app/sdc/styles";
 import { MouseEvent, useEffect, useState } from "react";
 import type { SDCScheduleData } from "sdc";
@@ -9,7 +8,12 @@ import { SdcActivity } from "../SdcActivity";
 import { Day, DaySelector, SdcScheduleContainer, Table } from "./styles";
 
 export function SdcSchedule({ data }: { data: SDCScheduleData }) {
+  const days: number[] = [...new Set(data.events.map(event => new Date(event.startTime).getDate()).sort())];
+
   const [currentDay, setCurrentDay] = useState(1);
+  const [dayEvents, setDayEvents] = useState(
+    data.events.filter(event => new Date(event.startTime).getDate() === currentDay),
+  );
 
   function changeSelectedDay(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) {
     const element = e.target as HTMLDivElement;
@@ -18,24 +22,21 @@ export function SdcSchedule({ data }: { data: SDCScheduleData }) {
     if (day) setCurrentDay(day);
   }
 
+  useEffect(() => {
+    setDayEvents(data.events.filter(event => new Date(event.startTime).getDate() === currentDay));
+  }, [currentDay, data.events]);
+
   return (
-    <SdcScheduleContainer className={baiJamjuree.className}>
+    <SdcScheduleContainer>
       <SectionTitle>Clique e filtre todos os eventos de um dia específico</SectionTitle>
       <DaySelector onClick={changeSelectedDay}>
-        <Day selected={currentDay === 1} data-day={1}>
-          Dia 01
-        </Day>
-        <Day selected={currentDay === 2} data-day={2}>
-          Dia 02
-        </Day>
-        <Day selected={currentDay === 3} data-day={3}>
-          Dia 03
-        </Day>
-        <Day selected={currentDay === 4} data-day={4}>
-          Dia 04
-        </Day>
+        {days.map(day => (
+          <Day key={day} selected={currentDay === day} data-day={day}>
+            Dia {day}
+          </Day>
+        ))}
       </DaySelector>
-      <Table className={baiJamjuree.className}>
+      <Table>
         <tbody>
           <tr>
             <th>Ministrante</th>
@@ -45,36 +46,9 @@ export function SdcSchedule({ data }: { data: SDCScheduleData }) {
             <th>Vagas</th>
             <th></th>
           </tr>
-          <SdcActivity
-            info={{
-              title: "Um kinder ovo vale mais que um diploma",
-              speaker: "Bruno Buck",
-              day: 1,
-              time: "09:45",
-              available: true,
-              type: "palestra",
-            }}
-          />
-          <SdcActivity
-            info={{
-              title: "Como usar o CHAT GPT",
-              speaker: "Samanthinha",
-              day: 2,
-              time: "08:00",
-              available: false,
-              type: "palestra",
-            }}
-          />
-          <SdcActivity
-            info={{
-              title: "Como ser RICO",
-              speaker: "Leonardo Vidal",
-              day: 3,
-              time: "10:00",
-              available: false,
-              type: "minicurso",
-            }}
-          />
+          {dayEvents.map(e => (
+            <SdcActivity key={e.id} data={e} />
+          ))}
         </tbody>
       </Table>
     </SdcScheduleContainer>

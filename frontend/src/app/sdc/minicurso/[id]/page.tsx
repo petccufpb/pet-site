@@ -1,10 +1,11 @@
-import { SdcForm } from "@app/sdc/components/SdcForm";
-import { baiJamjuree, inter } from "@app/sdc/page";
+import { MinicursoForm } from "@app/sdc/components/MinicursoForm";
 import { Metadata } from "next";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import { HiCheck } from "react-icons/hi2";
+import { ToastContainer } from "react-toastify";
+import { SDCEventData, SDCScheduleData } from "sdc";
 
-import Bruck from "@assets/images/bruck.png";
 import Logo from "@assets/images/logo.svg?svgr";
 import Petrucio from "@assets/images/petrucio.svg?svgr";
 
@@ -14,7 +15,17 @@ export const metadata: Metadata = {
   title: "Plataforma | SDC - Minicurso",
 };
 
-export default function Minicurso() {
+export default async function MiniMinicursoFormcurso({ params }: { params: { id: string } }) {
+  const schedule: SDCScheduleData = await (
+    await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/editions/latest?project=SDC")
+  ).json();
+
+  const [event] = schedule.events.filter(({ id }: SDCEventData) => id === params.id);
+
+  if (!event) {
+    notFound();
+  }
+
   return (
     <MinicursoContainer>
       <DescriptionContainer>
@@ -26,27 +37,36 @@ export default function Minicurso() {
           <div>Minicurso,</div>
           <div>correeeeee!</div>
         </h1>
-        <h3 className={baiJamjuree.className}>Corre, que as vagas nesse minicurso estão se esgotando.</h3>
-        <button className={inter.className}>
+        <h3>Corre, que as vagas nesse minicurso estão se esgotando.</h3>
+        <button>
           <HiCheck />
           <span>Verificar Programação</span>
         </button>
       </DescriptionContainer>
       <FormContainer>
         <SpeakerInfo>
-          <Image src={Bruck} alt="Palestrante"></Image>
-          <h2>Bruno Bruck</h2>
-          <div className={baiJamjuree.className}>Como passar na cadeira de APA?</div>
+          <Image width={64} height={64} src={"https://" + event.speaker.photoUrl} alt="Palestrante"></Image>
+          <h2>{event.speaker.name}</h2>
+          <div>{event.name}</div>
         </SpeakerInfo>
-        <SdcForm
+        <MinicursoForm
           type="cancel"
+          id={event.id}
           sections={[
-            { title: "Seu nome", placeholder: "João da Silva" },
-            { title: "E-mail cadastrado", placeholder: "seuemail@exemplo.com" },
+            { title: "Seu nome", placeholder: "João da Silva", id: "name" },
+            { title: "E-mail cadastrado", placeholder: "seuemail@exemplo.com", id: "email" },
           ]}
           date={{
-            day: "17 de Julho de 2023",
-            time: "8:00h",
+            day: new Date(event.startTime).toLocaleDateString("pt-BR", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            }),
+            time:
+              new Date(event.startTime).toLocaleTimeString("pt-BR", {
+                hour: "2-digit",
+                minute: "2-digit",
+              }) + "h",
           }}
           confirmType="confirm"
         />

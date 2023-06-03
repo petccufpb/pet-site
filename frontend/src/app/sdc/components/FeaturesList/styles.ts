@@ -3,6 +3,7 @@
 import styled from "styled-components";
 
 export const FeatureListContainer = styled.div`
+  font-family: ${({ theme }) => theme.fonts.sdc};
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   justify-content: space-between;

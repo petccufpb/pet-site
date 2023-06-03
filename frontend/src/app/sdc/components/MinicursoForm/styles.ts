@@ -2,7 +2,8 @@
 
 import styled from "styled-components";
 
-export const SdcFormContainer = styled.div<{ borderType: "static" | "gradient" }>`
+export const SdcFormContainer = styled.form<{ borderType: "static" | "gradient" }>`
+  font-family: ${({ theme }) => theme.fonts.sdc};
   font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
   border-radius: 0.5rem;
   width: min(100%, 31rem);
@@ -55,6 +56,12 @@ export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
+
+  > span {
+    min-height: 1em;
+    font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
+    color: #d5232d;
+  }
 `;
 
 export const ButtonContainer = styled.div<{ type: "normal" | "cancel" }>`
@@ -95,6 +102,7 @@ export const CancelButton = styled.button`
 `;
 
 export const DateContainer = styled.div`
+  font-family: ${({ theme }) => theme.fonts.sdc};
   display: flex;
   gap: 1rem;
   padding-bottom: 1.3rem;
@@ -110,4 +118,10 @@ export const DateContainer = styled.div`
   svg {
     color: #a9a9b2;
   }
+`;
+
+export const Absolute = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
 `;

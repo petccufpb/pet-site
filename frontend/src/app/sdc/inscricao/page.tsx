@@ -1,20 +1,31 @@
 "use client";
 
-import { baiJamjuree, inter } from "@app/sdc/page";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, ArrowRight, Check } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import InputMask from "react-input-mask";
 import Select from "react-select";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { z } from "zod";
 
 import Logo from "@assets/images/logo.svg?svgr";
 import Petrucio from "@assets/images/petrucio.svg?svgr";
 
-import { Content, FirstColumn, Forms, InputContainer, PETSDC, SecondColumn, Steps } from "./styles";
+import {
+  Content,
+  FirstColumn,
+  Forms,
+  InputContainer,
+  PETSDC,
+  SecondColumn,
+  Steps,
+  ButtonContainer,
+  BackButton,
+} from "./styles";
 
 const sendFormSchema = z.object({
   name: z
@@ -25,13 +36,19 @@ const sendFormSchema = z.object({
         .trim()
         .split(" ")
         .map(word => {
-          return word[0].toLocaleUpperCase().concat(word.substring(1));
+          return word[0]?.toLocaleUpperCase().concat(word.substring(1));
         })
         .join(" ");
     }),
   email: z.string().nonempty("O email é obrigatório").email("Formato de email inválido"),
   celular: z.string().min(17, { message: "O número deve conter 9 dígitos" }),
-  matricula: z.string().array().length(11, { message: "O número deve conter 11 dígitos" }),
+  matricula: z.string().length(11, { message: "Sua matrícula deve conter 11 dígitos" }),
+  age: z
+    .number({
+      invalid_type_error: "A Idade deve ser um número",
+    })
+    .positive()
+    .max(120, { message: "Idade inválida" }),
 });
 
 type SendFormData = z.infer<typeof sendFormSchema>;
@@ -50,8 +67,10 @@ export default function Inscricao() {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    watch,
   } = useForm<SendFormData>({
     resolver: zodResolver(sendFormSchema),
+    mode: "onChange",
   });
 
   let fieldGroups: JSX.Element[] = [];
@@ -59,21 +78,28 @@ export default function Inscricao() {
   function renderStep() {
     const markers = [];
     for (let i = 0; i < fieldGroups.length; i++)
-      markers.push(<div className={step >= i ? "active" : "inactive"}></div>);
+      markers.push(<div key={i} className={step >= i ? "active" : "inactive"}></div>);
     return markers;
   }
+
+  const [emailValue, nameValue, ageValue] = watch(["email", "name", "age"]);
 
   fieldGroups = [
     <>
       <InputContainer>
         <div>Email</div>
-        <input type="text" placeholder="exemplo@gmail.com" {...register("email")} />
+        <input type="email" placeholder="exemplo@gmail.com" {...register("email")} />
         {errors.email && <span>{errors.email.message}</span>}
       </InputContainer>
       <InputContainer>
         <div>Nome completo</div>
         <input type="text" placeholder="João da Silva" {...register("name")} />
         {errors.name && <span>{errors.name.message}</span>}
+      </InputContainer>
+      <InputContainer>
+        <div>Idade</div>
+        <input type="string" placeholder="18" {...register("age", { valueAsNumber: true })} />
+        {errors.age && <span>{errors.age.message}</span>}
       </InputContainer>
     </>,
     <>
@@ -96,6 +122,7 @@ export default function Inscricao() {
       <InputContainer>
         <div>Curso</div>
         <Select
+          form="sdc"
           defaultValue={options[1]}
           options={options}
           styles={{
@@ -120,25 +147,66 @@ export default function Inscricao() {
     </>,
   ];
 
-  function sendForm(data: any) {
+  async function sendForm(data: any) {
+    const i = toast.info("Carregando...");
+    const res = await fetch("/api/subscribe/sdc", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    const d = await res.json();
+
+    toast.dismiss(i);
+
+    console.log("status", res.status);
+
+    if (res.status === 200) {
+      toast.success("Inscrição realizada com sucesso!");
+    } else {
+      toast.error(d.message || "Falha na inscrição", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          textAlign: "center",
+          color: "#fgfgfg",
+        },
+      });
+    }
     setOutput(JSON.stringify(data, null, 2));
-    router.push("/sdc");
   }
 
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <Content>
         <FirstColumn>
           <PETSDC>
             <Petrucio width={110} />
             <Logo alt="Logo PET Computação" width={120} height={65} />
           </PETSDC>
-          <h1 className={inter.className}>Garanta sua vaga agora!</h1>
-          <p className={baiJamjuree.className}>
+          <h1>Garanta sua vaga agora!</h1>
+          <p>
             Participe agora, da Semana da computação e garanta sua vaga em minicursos e palestras! Corre que
             ainda dá tempo.
           </p>
-          <Link aria-label="Verificar Programação" className={inter.className} href="/sdc">
+          <Link aria-label="Verificar Programação" href="/sdc">
             <Check width={16} />
             <span>Verificar Programação</span>
           </Link>
@@ -146,46 +214,54 @@ export default function Inscricao() {
         <SecondColumn>
           <div>
             <h3>Bem-vindo a Semana da Computação!</h3>
-            <p className={baiJamjuree.className}>
+            <p>
               Precisamos de algumas informações para criar sua inscrição! Ah, essas informações estarão
               presentes em seu certificado.
             </p>
-            <Steps className={baiJamjuree.className}>
+            <Steps>
               <h6>Passo {step + 1} de 2</h6>
               <div className="bar">{renderStep()}</div>
             </Steps>
-            <Forms onSubmit={handleSubmit(sendForm)} className={inter.className}>
+            <Forms onSubmit={handleSubmit(sendForm)} id="sdc">
               {fieldGroups[step]}
-              {step === fieldGroups.length - 1 && (
-                <button type="submit" disabled={!isValid}>
-                  <span>Confirmar inscrição</span>
-                  <Check width={16} />
-                </button>
-              )}
-              {step < fieldGroups.length - 1 && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setStep(step + 1);
-                  }}
-                  disabled={!isValid}
-                >
-                  <span>Próximo Passo</span>
-                  <ArrowRight width={16} />
-                </button>
-              )}
-              {step > 0 && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setStep(step - 1);
-                  }}
-                  disabled={!isValid}
-                >
-                  <ArrowLeft width={16} />
-                  <span>Voltar</span>
-                </button>
-              )}
+              <ButtonContainer>
+                {step > 0 && (
+                  <BackButton
+                    type="button"
+                    onClick={() => {
+                      setStep(step - 1);
+                    }}
+                  >
+                    <ArrowLeft width={16} />
+                    <span>Voltar</span>
+                  </BackButton>
+                )}
+                {step === fieldGroups.length - 1 && (
+                  <button type="submit" disabled={!isValid}>
+                    <span>Confirmar inscrição</span>
+                    <Check width={16} />
+                  </button>
+                )}
+                {step < fieldGroups.length - 1 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setStep(step + 1);
+                    }}
+                    disabled={
+                      errors.email !== undefined ||
+                      errors.name !== undefined ||
+                      errors.age !== undefined ||
+                      emailValue?.length === 0 ||
+                      nameValue?.length === 0 ||
+                      ageValue === undefined
+                    }
+                  >
+                    <span>Próximo Passo</span>
+                    <ArrowRight width={16} />
+                  </button>
+                )}
+              </ButtonContainer>
             </Forms>
           </div>
         </SecondColumn>

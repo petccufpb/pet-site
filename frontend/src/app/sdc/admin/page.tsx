@@ -7,7 +7,6 @@ import { HiOutlineCheckBadge } from "react-icons/hi2";
 import InputMask from "react-input-mask";
 import { z } from "zod";
 
-import { baiJamjuree } from "../page";
 import {
   Area,
   AreaContainer,
@@ -44,7 +43,7 @@ export default function AdminPage() {
   return (
     <Container>
       <h1>SDC: Área Administrativa</h1>
-      <AreaSelector style={baiJamjuree.style}>
+      <AreaSelector>
         <AreaOption onClick={() => setSelectedArea(0)} selected={selectedArea === 0}>
           Geral
         </AreaOption>

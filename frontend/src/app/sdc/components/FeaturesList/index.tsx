@@ -1,5 +1,3 @@
-import { baiJamjuree } from "@app/sdc/page";
-
 import Certificate from "@assets/images/certificate.svg?svgr";
 import CoffeeBreak from "@assets/images/coffee-break.svg?svgr";
 import Minicurso from "@assets/images/minicurso.svg?svgr";
@@ -9,7 +7,7 @@ import { Feature, FeatureListContainer } from "./styles";
 
 export function FeatureList() {
   return (
-    <FeatureListContainer className={baiJamjuree.className}>
+    <FeatureListContainer>
       <Feature>
         <Networking />
         <span>

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const CountdownContainer = styled.div`
+  font-family: ${({ theme }) => theme.fonts.sdc};
   display: grid;
   grid-auto-flow: column;
   justify-content: space-between;

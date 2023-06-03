@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const SdcScheduleContainer = styled.div`
+  font-family: ${({ theme }) => theme.fonts.sdc};
   margin: 6rem 0;
 
   // Apenas renderizar se a tela é maior que 900px.
@@ -40,6 +41,7 @@ export const Day = styled.div<{ selected: boolean }>`
 `;
 
 export const Table = styled.table`
+  font-family: ${({ theme }) => theme.fonts.sdc};
   width: 100%;
   color: rgba(255, 255, 255, 0.6);
 

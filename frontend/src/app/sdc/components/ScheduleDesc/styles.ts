@@ -22,6 +22,7 @@ export const ScheduleDescContainer = styled.div`
 `;
 
 export const ScheduleSubtitle = styled.div`
+  font-family: ${({ theme }) => theme.fonts.alt};
   opacity: 80%;
   font-size: 0.9em;
 `;

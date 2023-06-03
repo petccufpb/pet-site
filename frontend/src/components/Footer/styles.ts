@@ -6,6 +6,7 @@ export const ContentContainer = styled.div<{ pathname: string }>`
   z-index: 1;
   background-color: ${({ theme, pathname }) =>
     pathname.split("/")[1] === "sdc" ? "transparent" : theme.colors["second-black"]};
+  font-family: ${({ theme }) => theme.fonts.alt};
 `;
 
 export const Content = styled.div`

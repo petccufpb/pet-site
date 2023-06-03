@@ -3,6 +3,7 @@ import Link from "next/link";
 import styled from "styled-components";
 
 export const SdcScheduleContainer = styled.div`
+  font-family: ${({ theme }) => theme.fonts.sdc};
   margin-top: 6rem;
 
   // Apenas renderizar se a tela é menor que 900px.

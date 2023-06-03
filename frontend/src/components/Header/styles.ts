@@ -7,7 +7,8 @@ export const VerticalLine = styled.span`
   margin: 0 auto 0 auto;
 `;
 
-export const PETHeader = styled.header`
+export const PETHeader = styled.header<{ isSDC: boolean }>`
+  font-family: ${({ theme, isSDC }) => (isSDC ? theme.fonts.sdc : theme.fonts.alt)};
   padding: 2rem 0 2rem 0;
   display: flex;
   grid-template-columns: 1fr 1fr;

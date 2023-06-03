@@ -1,6 +1,15 @@
 "use client";
 
-import { Lexend } from "next/font/google";
+import "@fontsource/bai-jamjuree";
+import "@fontsource/bai-jamjuree/200.css";
+import "@fontsource/bai-jamjuree/300.css";
+import "@fontsource/bai-jamjuree/400.css";
+import "@fontsource/bai-jamjuree/500.css";
+import "@fontsource/bai-jamjuree/600.css";
+import "@fontsource/bai-jamjuree/700.css";
+import "@fontsource-variable/inter";
+import "@fontsource-variable/lexend";
+
 import Head from "next/head";
 import { usePathname } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
@@ -18,8 +27,6 @@ import { Background, ContainerForBackground, LayoutContainer } from "@styles/lay
 import defaultTheme from "@styles/theme/default";
 
 import { Footer } from "../components/Footer";
-
-const lexend = Lexend({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800"] });
 
 export default function RootLayout({ children }: PropsWithChildren) {
   const pathname = usePathname();
@@ -41,7 +48,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <noscript>Você precisa ter Javascript habilitado para acessar esta página.</noscript>
           </head>
-          <body className={lexend.className}>
+          <body>
             <NextTopLoader color="#0072ED" />
             <ContainerForBackground>
               {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}

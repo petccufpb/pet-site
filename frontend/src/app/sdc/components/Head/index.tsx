@@ -1,4 +1,3 @@
-import { baiJamjuree, inter } from "@app/sdc/page";
 import { Section, SectionTitle, Title } from "@app/sdc/styles";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,7 +19,7 @@ import {
 
 export function Head() {
   return (
-    <HeadContainer className={baiJamjuree.className}>
+    <HeadContainer>
       <LastEditionSection>
         <SectionTitle>ULTIMA EDIÇÃO</SectionTitle>
         <div>
@@ -34,7 +33,7 @@ export function Head() {
       <Section>
         <SectionTitle>SOBRE</SectionTitle>
         <JustifyBetween>
-          <Description className={inter.className}>
+          <Description>
             Todo semestre o PET Computação (Programa de Educação Tutorial) realiza a Semana da Computação, que
             acontece junto com a entrada de novos estudantes na universidade. A Semana é dedicada para todos
             os profissionais da área de TI e ainda dá as boas-vindas aos novos estudantes dos cursos. A
@@ -52,8 +51,8 @@ export function Head() {
                 <div>@petccufpb</div>
               </InstagramContainer>
             </div>
-            <SubscribeButton className={baiJamjuree.className}>
-              <Link aria-label="Inscrição" href="sdc/inscricao">
+            <SubscribeButton>
+              <Link aria-label="Inscrição" href="/sdc/inscricao">
                 GARANTIR MINHA VAGA
               </Link>
             </SubscribeButton>

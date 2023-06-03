@@ -23,6 +23,7 @@ export const LastEditionSection = styled(Section)`
 `;
 
 export const Description = styled.div`
+  font-family: ${({ theme }) => theme.fonts.alt};
   width: 100%;
 `;
 
@@ -51,6 +52,7 @@ export const InstagramContainer = styled(Link)`
 `;
 
 export const HeadContainer = styled.div`
+  font-family: ${({ theme }) => theme.fonts.sdc};
   display: grid;
 
   word-break: break-word;
@@ -85,6 +87,7 @@ export const HeadContainer = styled.div`
 `;
 
 export const SubscribeButton = styled.button`
+  font-family: ${({ theme }) => theme.fonts.sdc};
   justify-content: center;
   border: 1px solid ${({ theme }) => theme.colors["base-green"]};
 

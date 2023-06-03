@@ -2,7 +2,6 @@
 
 import { DataStatus, FileUploadEvent, FilesToUpload } from "@app/selecao/types";
 import { fork } from "child_process";
-import { Inter } from "next/font/google";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FaExclamationCircle, FaIdCard, FaPaperPlane, FaUser } from "react-icons/fa";
 import { z } from "zod";
@@ -18,8 +17,6 @@ import {
   UploadTitle,
   Warning,
 } from "./styles";
-
-const inter = Inter({ subsets: ["latin"], weight: "variable" });
 
 // Função que checa se o CPF é válido através
 // dos últimos 2 dígitos de validação.
@@ -140,18 +137,12 @@ export function SelecaoForm() {
       <FormSection>
         <InputContainer className={nameStatus}>
           <FaUser size={18} />
-          <FormInput
-            type="text"
-            className={inter.className}
-            placeholder="Nome Completo"
-            onChange={validateName}
-          />
+          <FormInput type="text" placeholder="Nome Completo" onChange={validateName} />
         </InputContainer>
         <InputContainer className={cpfStatus}>
           <FaIdCard size={18} />
           <MaskedFormInput
             type="text"
-            className={inter.className}
             placeholder="CPF"
             mask="999.999.999-99"
             maskChar={null}
@@ -173,7 +164,7 @@ export function SelecaoForm() {
         <FileInput type="matricula" filesToUpload={filesToUpload} onFileUpload={onFileUpload} />
         <FileInput type="historico" filesToUpload={filesToUpload} onFileUpload={onFileUpload} />
       </FormSection>
-      <SendButton className={inter.className} canSend={canSend}>
+      <SendButton canSend={canSend}>
         <FaPaperPlane />
         ENVIAR
       </SendButton>

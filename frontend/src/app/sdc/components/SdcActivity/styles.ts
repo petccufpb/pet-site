@@ -56,9 +56,17 @@ export const Subscribe = styled(SdcButton)`
     gap: 0.5rem;
     align-items: center;
     justify-content: center;
+
+    pointer-events: ${({ availability }) => (availability ? "auto" : "none")};
   }
 `;
 
 export const SpeakerPhoto = styled(Image)`
   border-radius: 100%;
+`;
+
+export const SDCtr = styled.tr`
+  * {
+    white-space: break-spaces;
+  }
 `;

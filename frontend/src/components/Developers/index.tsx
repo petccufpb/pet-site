@@ -1,4 +1,3 @@
-import { baiJamjuree } from "@app/sdc/page";
 import Image from "next/image";
 
 import { DevelopersContainer, DevelopersItem } from "./styles";
@@ -6,7 +5,7 @@ import { DevelopersContainer, DevelopersItem } from "./styles";
 export function Developers({ color = undefined }: { color?: string | undefined }) {
   return (
     <DevelopersContainer color={color}>
-      <div className={baiJamjuree.className}>Development by</div>
+      <div>Development by</div>
       <DevelopersItem>
         <a aria-label="Github de Abraão" href="https://github.com/abraaodev">
           <Image

@@ -13,6 +13,7 @@ export const DevelopersContainer = styled.div<{ color?: string }>`
   div {
     font-weight: bold;
     color: ${({ color }) => color || "#e1f9ff60"};
+    font-family: ${({ theme }) => theme.fonts.sdc};
   }
 
   @media (max-width: 768px) {

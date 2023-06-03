@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { ScrambledText } from "./styles";
 
-export function Scrambles({ text }: { text: string }) {
+export function Scrambles({ text, speed }: { text: string; speed: number }) {
   function shuffle(word: string) {
     return word
       .split("")
@@ -51,13 +51,13 @@ export function Scrambles({ text }: { text: string }) {
     if (play && activeText < textArray.length - 1) {
       interval = setInterval(() => {
         setActiveText(activeText + 1);
-      }, 90);
+      }, speed);
     } else if (!play) {
       click();
     }
 
     return () => clearInterval(interval || 0);
-  }, [play, activeText, textArray.length]);
+  }, [play, activeText, textArray.length, speed]);
 
   return (
     <div>

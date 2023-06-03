@@ -1,6 +1,5 @@
 "use client";
 
-import { Inter } from "next/font/google";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaChevronUp, FaGithubAlt, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
@@ -24,8 +23,6 @@ import {
   StyledLink,
 } from "./styles";
 
-const inter = Inter({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] });
-
 export function Footer() {
   const pathname = usePathname();
 
@@ -37,7 +34,7 @@ export function Footer() {
   }
 
   return (
-    <ContentContainer className={inter.className} pathname={pathname}>
+    <ContentContainer pathname={pathname}>
       <Content>
         <PETBranding>
           <Flex>

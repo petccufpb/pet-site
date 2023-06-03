@@ -38,8 +38,9 @@ const defaultTheme = {
     },
   },
   fonts: {
-    regular: "'Lexend'",
-    alt: "'Inter'",
+    regular: "'Lexend Variable'",
+    alt: "'Inter Variable'",
+    sdc: "'Bai Jamjuree'",
   },
   textSizes: {
     "text-title-xl": "3rem",

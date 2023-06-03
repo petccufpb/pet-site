@@ -1,6 +1,5 @@
 "use client";
 
-import { baiJamjuree } from "@app/sdc/page";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -59,7 +58,6 @@ export function MobileHeader() {
         expand={expand}
         onAnimationEndCapture={expandEvent}
         onAnimationStart={expandEvent}
-        className={baiJamjuree.className}
       >
         <div>MENU</div>
         <Links onClick={() => closeHeader()}>
