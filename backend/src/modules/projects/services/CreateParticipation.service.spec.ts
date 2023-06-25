@@ -1,3 +1,4 @@
+import { MailProvider, mailProviders } from "@hyoretsu/providers";
 import { HttpException } from "@nestjs/common";
 import { ProjectEdition, ProjectEvent, ProjectParticipant } from "@prisma/client";
 
@@ -7,13 +8,20 @@ import CreateParticipation from "./CreateParticipation.service";
 describe("CreateParticipation", () => {
   let edition: ProjectEdition;
   let event: ProjectEvent;
+  let fakeMailProvider: MailProvider;
   let fakeProjectsRepository: FakeProjectsRepository;
   let participant: ProjectParticipant;
   let service: CreateParticipation;
 
   beforeEach(async () => {
+    fakeMailProvider = new mailProviders.ethereal();
     fakeProjectsRepository = new FakeProjectsRepository();
-    service = new CreateParticipation(fakeProjectsRepository);
+    service = new CreateParticipation(
+      {
+        sendMail: async () => {},
+      } as MailProvider,
+      fakeProjectsRepository,
+    );
 
     const { id: projectId } = await fakeProjectsRepository.createProject({ title: "Test Project" });
     edition = await fakeProjectsRepository.createEdition({ date: new Date(), number: 1, projectId });

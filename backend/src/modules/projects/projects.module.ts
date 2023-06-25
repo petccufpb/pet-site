@@ -1,3 +1,4 @@
+import { MailProvider, MailProviderKeys, mailProviders } from "@hyoretsu/providers";
 import { Module } from "@nestjs/common";
 
 import { PrismaService } from "@database/prisma.service";
@@ -23,6 +24,10 @@ import ValidateCertificate from "./services/ValidateCertificate.service";
 @Module({
   controllers: [ProjectsController],
   providers: [
+    {
+      provide: MailProvider,
+      useClass: mailProviders[process.env.MAIL_DRIVER as MailProviderKeys],
+    },
     PrismaService,
     {
       provide: ProjectsRepository,

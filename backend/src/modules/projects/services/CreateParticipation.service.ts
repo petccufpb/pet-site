@@ -1,5 +1,6 @@
+import { MailProvider } from "@hyoretsu/providers";
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { ProjectEdition, ProjectParticipant, ProjectParticipation } from "@prisma/client";
+import { ProjectParticipant, ProjectParticipation } from "@prisma/client";
 
 import CreateParticipationDTO from "../dtos/CreateParticipation.dto";
 import ProjectsRepository from "../repositories/projects.repository";
@@ -7,7 +8,7 @@ import { CreateRepoParticipation } from "../repositories/projects.repository";
 
 @Injectable()
 export default class CreateParticipation {
-  constructor(private projectsRepository: ProjectsRepository) {}
+  constructor(private mailProvider: MailProvider, private projectsRepository: ProjectsRepository) {}
 
   public async execute({
     email,
@@ -16,21 +17,24 @@ export default class CreateParticipation {
     matricula,
     participantId,
   }: CreateParticipationDTO): Promise<ProjectParticipation> {
+    let foundParticipant: ProjectParticipant | null;
+    let title: string;
+
     if (participantId) {
-      const foundParticipant = await this.projectsRepository.findParticipantById(participantId);
+      foundParticipant = await this.projectsRepository.findParticipantById(participantId);
       if (!foundParticipant) {
         throw new HttpException("Não existe um aluno com esse ID", HttpStatus.NOT_FOUND);
       }
     } else {
       if (email) {
-        const foundParticipant = await this.projectsRepository.findParticipantByEmail(email);
+        foundParticipant = await this.projectsRepository.findParticipantByEmail(email);
         if (!foundParticipant) {
           throw new HttpException("Não existe um aluno com esse email", HttpStatus.NOT_FOUND);
         }
 
         participantId = foundParticipant.id;
       } else if (matricula) {
-        const foundParticipant = await this.projectsRepository.findParticipantByMatricula(matricula);
+        foundParticipant = await this.projectsRepository.findParticipantByMatricula(matricula);
         if (!foundParticipant) {
           throw new HttpException("Não existe um aluno com essa matrícula", HttpStatus.NOT_FOUND);
         }
@@ -48,6 +52,8 @@ export default class CreateParticipation {
       if (!event) {
         throw new HttpException("Esse evento não existe", HttpStatus.NOT_FOUND);
       }
+
+      title = event.name;
 
       const editionParticipation = await this.projectsRepository.findParticipation({
         editionId: event.editionId,
@@ -70,6 +76,10 @@ export default class CreateParticipation {
         throw new HttpException("Essa edição não existe", HttpStatus.NOT_FOUND);
       }
 
+      const project = await this.projectsRepository.findProjectById(edition.projectId);
+
+      title = edition.name || `${edition.number}ª edição do(a) ${project!.title}`;
+
       payload = {
         editionId,
         participantId,
@@ -82,6 +92,14 @@ export default class CreateParticipation {
     }
 
     const participation = await this.projectsRepository.createParticipation(payload);
+
+    await this.mailProvider.sendMail({
+      to: foundParticipant.email as string,
+      subject: `Confirmação de inscrição no(a) ${title}`,
+      body: `Olá estudante,\n\nSua inscrição n${
+        editionId ? "a" : "o minicurso"
+      } ${title} foi realizada com sucesso.\n\nAproveite!`,
+    });
 
     return participation;
   }
