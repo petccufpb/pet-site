@@ -3,8 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, ArrowRight, Check } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import InputMask from "react-input-mask";
 import Select from "react-select";
@@ -28,18 +27,7 @@ import {
 } from "./styles";
 
 const sendFormSchema = z.object({
-  name: z
-    .string()
-    .nonempty("Preencha este campo")
-    .transform(name => {
-      return name
-        .trim()
-        .split(" ")
-        .map(word => {
-          return word[0]?.toLocaleUpperCase().concat(word.substring(1));
-        })
-        .join(" ");
-    }),
+  name: z.string().nonempty("Preencha este campo"),
   email: z.string().nonempty("O email é obrigatório").email("Formato de email inválido"),
   celular: z.string().min(17, { message: "O número deve conter 9 dígitos" }),
   matricula: z
@@ -163,13 +151,20 @@ export default function Inscricao() {
     </>,
   ];
 
-  async function sendForm(data: any) {
+  async function sendForm({ matricula, name, ...data }: SendFormData) {
     const i = toast.info("Carregando...");
     const res = await fetch("/api/subscribe/sdc", {
       method: "POST",
       body: JSON.stringify({
         ...data,
-        matricula: data.matricula.toString(),
+        name: name
+          .trim()
+          .split(" ")
+          .map(word => {
+            return word[0]?.toLocaleUpperCase().concat(word.substring(1));
+          })
+          .join(" "),
+        matricula: matricula.toString(),
         course: course.value,
       }),
     });
