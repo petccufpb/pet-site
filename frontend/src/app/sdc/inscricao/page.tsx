@@ -34,7 +34,7 @@ const sendFormSchema = z.object({
     .number({
       invalid_type_error: "A matrícula deve ser um número",
     })
-    .min(10000000000, { message: "Sua matrícula deve conter 11 dígitos" })
+    .min(10000000, { message: "Sua matrícula deve conter no mínimo 8 dígitos [Matrículas Antigas]" })
     .max(99999999999, { message: "Sua matrícula deve conter 11 dígitos" }),
   age: z
     .number({
@@ -112,7 +112,7 @@ export default function Inscricao() {
       <InputContainer>
         <div>Matrícula</div>
         <InputMask
-          placeholder="20000115555"
+          placeholder="20000115555 ou 11109999"
           mask="99999999999"
           maskChar={null}
           {...register("matricula", { valueAsNumber: true })}
