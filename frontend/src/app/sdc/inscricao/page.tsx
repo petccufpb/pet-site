@@ -160,13 +160,12 @@ export default function Inscricao() {
       method: "POST",
       body: JSON.stringify({
         ...data,
-        name: name
-          .trim()
-          .split(" ")
-          .map(word => {
-            return word[0]?.toLocaleUpperCase().concat(word.substring(1));
-          })
-          .join(" "),
+        name: name.trim(),
+        //   .split(" ")
+        //   .map(word => {
+        //     return word[0]?.toLocaleUpperCase().concat(word.substring(1));
+        //   })
+        //   .join(" ")
         matricula: matricula.toString(),
         course: course.value,
       }),

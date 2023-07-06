@@ -16,6 +16,7 @@ import CreateEventDTO from "@modules/projects/dtos/CreateEvent.dto";
 import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
 import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
+import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParticipant.dto";
 import ProjectsRepository, {
   CertificateInfo,
   CompleteProjectEdition,
@@ -178,6 +179,14 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     });
 
     return event;
+  }
+
+  public async findExistingParticipant(
+    where: FindExistingParticipantDTO,
+  ): Promise<ProjectParticipant | null> {
+    const participant = await this.prisma.projectParticipant.findFirst({ where });
+
+    return participant;
   }
 
   public async findParticipantByEmail(email: string): Promise<ProjectParticipant | null> {
