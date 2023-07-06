@@ -103,12 +103,12 @@ export function CertificadoForm() {
       <CertificadoFormContainer onSubmit={handleSubmit(sendForm)} borderType="gradient">
         <InputContainer>
           <div>Matrícula</div>
-          <input type="text" placeholder="20200095558" {...register("matricula", { valueAsNumber: true })} />
+          <input type="text" placeholder="20000115555" {...register("matricula", { valueAsNumber: true })} />
           {errors.matricula && <span>{errors.matricula.message}</span>}
         </InputContainer>
         <InputContainer>
-          <div>UUID</div>
-          <input type="text" placeholder="7abfbb3668cbb3f936c9ecdb71ea7749" {...register("certificateId")} />
+          <div>Código Verificador</div>
+          <input type="text" placeholder="4fc502d1702f63d0e8f4d4a2c59ef" {...register("certificateId")} />
           {errors.certificateId && <span>{errors.certificateId.message}</span>}
         </InputContainer>
         <ButtonContainer type="normal">

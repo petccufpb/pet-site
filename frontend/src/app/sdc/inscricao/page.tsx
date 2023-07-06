@@ -112,7 +112,7 @@ export default function Inscricao() {
       <InputContainer>
         <div>Matrícula</div>
         <InputMask
-          placeholder="20190113496"
+          placeholder="20000115555"
           mask="99999999999"
           maskChar={null}
           {...register("matricula", { valueAsNumber: true })}
