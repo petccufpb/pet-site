@@ -8,30 +8,44 @@ import { SdcActivity } from "../SdcActivity";
 import { Day, DaySelector, SdcScheduleContainer, Table } from "./styles";
 
 export function SdcSchedule({ data }: { data: SDCScheduleData }) {
-  const days: number[] = [...new Set(data.events.map(event => new Date(event.startTime).getDate()).sort())];
+  const days: number[] = [
+    ...new Set(
+      data.events
+        .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())
+        .map(event => new Date(event.startTime).getDate()),
+    ),
+  ];
 
-  const [currentDay, setCurrentDay] = useState(1);
+  const [currentDay, setCurrentDay] = useState<number | null>(1);
   const [dayEvents, setDayEvents] = useState(
     data.events.filter(event => new Date(event.startTime).getDate() === currentDay),
   );
 
-  function changeSelectedDay(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) {
-    const element = e.target as HTMLDivElement;
-    const day = Number(element.dataset.day);
+  function changeSelectedDay(day: number) {
+    if (currentDay === day) {
+      setCurrentDay(null);
+      return;
+    }
 
     if (day) setCurrentDay(day);
   }
 
   useEffect(() => {
-    setDayEvents(data.events.filter(event => new Date(event.startTime).getDate() === currentDay));
+    if (currentDay) {
+      setDayEvents(data.events.filter(event => new Date(event.startTime).getDate() === currentDay));
+    } else {
+      setDayEvents(
+        data.events.sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()),
+      );
+    }
   }, [currentDay, data.events]);
 
   return (
     <SdcScheduleContainer>
       <SectionTitle>Clique e filtre todos os eventos de um dia específico</SectionTitle>
-      <DaySelector onClick={changeSelectedDay}>
+      <DaySelector>
         {days.map(day => (
-          <Day key={day} selected={currentDay === day} data-day={day}>
+          <Day key={day} selected={currentDay === day} onClick={() => changeSelectedDay(day)}>
             Dia {day}
           </Day>
         ))}

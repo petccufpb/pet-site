@@ -21,7 +21,7 @@ export const DaySelector = styled.div`
 `;
 
 export const Day = styled.div<{ selected: boolean }>`
-  cursor: ${({ selected }) => (selected ? "default" : "pointer")};
+  cursor: pointer;
   background: ${({ selected }) => (selected ? "rgba(0, 114, 237, 0.2)" : "rgba(34, 34, 34, 0.6)")};
   border-radius: 2rem;
   border: 1px solid;

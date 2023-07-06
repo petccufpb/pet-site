@@ -17,30 +17,38 @@ import {
 } from "./styles";
 
 export function MobileSchedule({ data }: { data: SDCScheduleData }) {
-  const [currentDay, setCurrentDay] = useState(1);
+  const [currentDay, setCurrentDay] = useState<number | null>(1);
   const days: number[] = [...new Set(data.events.map(event => new Date(event.startTime).getDate()).sort())];
 
   const [dayEvents, setDayEvents] = useState(
     data.events.filter(event => new Date(event.startTime).getDate() === currentDay),
   );
 
-  function changeSelectedDay(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) {
-    const element = e.target as HTMLDivElement;
-    const day = Number(element.dataset.day);
+  function changeSelectedDay(day: number) {
+    if (currentDay === day) {
+      setCurrentDay(null);
+      return;
+    }
 
     if (day) setCurrentDay(day);
   }
 
   useEffect(() => {
-    setDayEvents(data.events.filter(event => new Date(event.startTime).getDate() === currentDay));
+    if (currentDay) {
+      setDayEvents(data.events.filter(event => new Date(event.startTime).getDate() === currentDay));
+    } else {
+      setDayEvents(
+        data.events.sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()),
+      );
+    }
   }, [currentDay, data.events]);
 
   return (
     <SdcScheduleContainer>
       <SectionTitle>Clique e filtre todos os eventos de um dia específico</SectionTitle>
-      <DaySelector onClick={changeSelectedDay}>
+      <DaySelector>
         {days.map(day => (
-          <Day key={day} selected={currentDay === day} data-day={day}>
+          <Day key={day} selected={currentDay === day} onClick={() => changeSelectedDay(day)}>
             Dia {day}
           </Day>
         ))}
@@ -60,7 +68,7 @@ export function MobileSchedule({ data }: { data: SDCScheduleData }) {
             ></SpeakerPhoto>
             <Event available={true}>
               <div>{e.speaker.name}</div>
-              <div>Um kinder ovo vale mais que um diploma</div>
+              <div>{e.name}</div>
               <Availability available={data.capacity ? data.participants.length < data.capacity : true}>
                 <span>Inscreva-se</span>
                 <HiArrowUpRight height="1em" />
