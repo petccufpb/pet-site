@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { distanceBetweenCoordinates } from "@hyoretsu/utils";
 import { useForm } from "react-hook-form";
 import { HiArrowRight } from "react-icons/hi2";
 import { RiCalendarLine, RiTimeLine } from "react-icons/ri";
@@ -8,14 +9,17 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { z } from "zod";
 
+import { GeolocationFinder } from "../GeolocationFinder";
 import {
   ButtonContainer,
   CancelButton,
   ConfirmButton,
   DateContainer,
-  InputContainer,
   FormContainer,
+  InputContainer,
 } from "./styles";
+
+import { useEffect, useState } from "react";
 
 function DateOrNothing({ date }: { date?: { day: string; time: string } }) {
   if (date) {
@@ -62,12 +66,11 @@ const sendFormSchema = z.object({
 
 type SendFormData = z.infer<typeof sendFormSchema>;
 
-export function MinicursoForm({
+export function FrequenciaForm({
   date,
   sections,
   id,
-  /*   formAction,
-   */ type = "normal",
+  type = "normal",
   confirmType = "confirm",
   borderType = "static",
 }: {
@@ -80,27 +83,54 @@ export function MinicursoForm({
   };
   sections?: { title: string; placeholder: string; id: "name" | "email" }[];
   id: string;
-  /*   formAction: () => void;
-   */
 }) {
+  const [userLocation, setUserLocation] = useState<GeolocationPosition | null>(null);
+
   async function sendForm(data: any) {
     const i = toast.info("Carregando...");
 
-    const res = await fetch("/api/subscribe/event", {
+    if (!userLocation) return;
+
+    if (
+      distanceBetweenCoordinates(
+        [userLocation.coords.latitude, userLocation.coords.longitude],
+        [-7.162116870906208, -34.81715445965711],
+      ) > 1000
+    ) {
+      toast.dismiss(i);
+      toast.error("Você está fora da área do Centro de Informática.", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          textAlign: "center",
+          color: "#fgfgfg",
+        },
+      });
+      return;
+    }
+
+    const res = await fetch("/api/attendance", {
       method: "POST",
       body: JSON.stringify({
         email: data.email,
-        event: id,
+        eventId: id,
       }),
     });
 
-    const d = await res.json();
     toast.dismiss(i);
 
     if (res.status === 200) {
-      toast.success("Inscrição realizada com sucesso!");
+      toast.success("Frequência cadastrada com sucesso!");
     } else {
-      toast.error(d.message || "Falha na inscrição", {
+      const d = await res.json();
+
+      toast.error(d.message || "Falha no cadastro da frequência", {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -121,14 +151,18 @@ export function MinicursoForm({
     register,
     handleSubmit,
     formState: { errors, isValid },
-    watch,
   } = useForm<SendFormData>({
     resolver: zodResolver(sendFormSchema),
     mode: "onChange",
   });
 
+  useEffect(() => {
+    console.log(userLocation);
+  }, [userLocation]);
+
   return (
     <>
+      <GeolocationFinder onLocationAccess={setUserLocation} />
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -153,7 +187,7 @@ export function MinicursoForm({
           ))}
         <ButtonContainer type={type}>
           <CancelButtonOrNothing type={type} />
-          <ConfirmButton disabled={!isValid} type="submit">
+          <ConfirmButton disabled={!userLocation || !isValid} type="submit">
             <span>{confirmType === "next" ? "Próximo Passo" : "Confirmar"}</span>
             {confirmType === "next" && <HiArrowRight />}
           </ConfirmButton>

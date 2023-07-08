@@ -82,6 +82,8 @@ export function Header() {
         ],
         end: defaultSdcRoutes.end,
       });
+
+      return;
     }
 
     if (pathname == "/sdc/admin") {
@@ -91,6 +93,21 @@ export function Header() {
           ...defaultSdcRoutes.end,
           {
             name: "Admin",
+            path: pathname,
+          },
+        ],
+      });
+
+      return;
+    }
+
+    if (pathname.startsWith("/sdc/frequencia")) {
+      setSdcRoutes({
+        start: defaultSdcRoutes.start,
+        end: [
+          ...defaultSdcRoutes.end,
+          {
+            name: "Frequência",
             path: pathname,
           },
         ],
