@@ -129,7 +129,7 @@ describe("CreateEvent", () => {
       onSite: false,
       speakerId: speaker.id,
       startTime: new Date(),
-      type: "side",
+      type: "palestra",
     });
 
     expect(event).toHaveProperty("id");
@@ -144,7 +144,7 @@ describe("CreateEvent", () => {
       onSite: false,
       speakerId: speaker.id,
       startTime: new Date(),
-      type: "side",
+      type: "palestra",
     });
 
     expect(event).toHaveProperty("id");
@@ -158,7 +158,7 @@ describe("CreateEvent", () => {
       onSite: false,
       speakerId: speaker.id,
       startTime: new Date(),
-      type: "side",
+      type: "palestra",
     });
 
     expect(event).toHaveProperty("id");

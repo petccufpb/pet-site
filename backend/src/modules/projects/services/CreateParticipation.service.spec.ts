@@ -1,4 +1,4 @@
-import { MailProvider, mailProviders } from "@hyoretsu/providers";
+import { MailProvider } from "@hyoretsu/providers";
 import { HttpException } from "@nestjs/common";
 import { ProjectEdition, ProjectEvent, ProjectParticipant } from "@prisma/client";
 
@@ -8,13 +8,11 @@ import CreateParticipation from "./CreateParticipation.service";
 describe("CreateParticipation", () => {
   let edition: ProjectEdition;
   let event: ProjectEvent;
-  let fakeMailProvider: MailProvider;
   let fakeProjectsRepository: FakeProjectsRepository;
   let participant: ProjectParticipant;
   let service: CreateParticipation;
 
   beforeEach(async () => {
-    fakeMailProvider = new mailProviders.ethereal();
     fakeProjectsRepository = new FakeProjectsRepository();
     service = new CreateParticipation(
       {
@@ -36,7 +34,7 @@ describe("CreateParticipation", () => {
       name: "Test Event",
       speakerId,
       startTime: new Date(),
-      type: "side",
+      type: null,
     });
     participant = await fakeProjectsRepository.createParticipant({
       age: 1,

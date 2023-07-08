@@ -7,7 +7,10 @@ import CreateAttendance from "./CreateAttendance.service";
 describe("CreateAttendance", () => {
   let event: ProjectEvent;
   let fakeProjectsRepository: FakeProjectsRepository;
+  let minicurso: ProjectEvent;
+  let palestra: ProjectEvent;
   let participant: ProjectParticipant;
+  let randomEvent: ProjectEvent;
   let service: CreateAttendance;
 
   beforeEach(async () => {
@@ -31,7 +34,31 @@ describe("CreateAttendance", () => {
       name: "Test Event",
       speakerId,
       startTime: new Date(),
-      type: "side",
+      type: "main",
+    });
+    minicurso = await fakeProjectsRepository.createEvent({
+      editionId,
+      endTime: new Date(),
+      name: "Test Event",
+      speakerId,
+      startTime: new Date(),
+      type: "minicurso",
+    });
+    palestra = await fakeProjectsRepository.createEvent({
+      editionId,
+      endTime: new Date(),
+      name: "Test Event",
+      speakerId,
+      startTime: new Date(),
+      type: "palestra",
+    });
+    randomEvent = await fakeProjectsRepository.createEvent({
+      editionId,
+      endTime: new Date(),
+      name: "Test Event",
+      speakerId,
+      startTime: new Date(),
+      type: null,
     });
     participant = await fakeProjectsRepository.createParticipant({
       age: 1,
@@ -86,10 +113,26 @@ describe("CreateAttendance", () => {
     expect(attendance).toHaveProperty("id");
   });
 
-  it("should not be able to create an attendance without participating in the event", async () => {
+  it("should not be able to create an attendance without participating in a minicurso", async () => {
     await expect(
       service.execute({
-        eventId: event.id,
+        eventId: minicurso.id,
+        matricula: "20200015280",
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
+  });
+
+  it("should not need to create an attendance for random events or palestras", async () => {
+    await expect(
+      service.execute({
+        eventId: palestra.id,
+        matricula: "20200015280",
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
+
+    await expect(
+      service.execute({
+        eventId: randomEvent.id,
         matricula: "20200015280",
       }),
     ).rejects.toBeInstanceOf(HttpException);

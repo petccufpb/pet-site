@@ -14,6 +14,15 @@ export default class CreateAttendance {
     matricula,
     participantId,
   }: CreateAttendanceDTO): Promise<ProjectAttendance> {
+    const event = await this.projectsRepository.findEventById(eventId);
+    if (!event) {
+      throw new HttpException("Esse evento não existe", HttpStatus.NOT_FOUND);
+    }
+
+    if (!event.type || event.type === "palestra") {
+      throw new HttpException("Você não precisa marcar frequência nesse evento", HttpStatus.OK);
+    }
+
     if (participantId) {
       const foundParticipant = await this.projectsRepository.findParticipantById(participantId);
       if (!foundParticipant) {
@@ -39,17 +48,14 @@ export default class CreateAttendance {
       }
     }
 
-    const event = await this.projectsRepository.findEventById(eventId);
-    if (!event) {
-      throw new HttpException("Esse evento não existe", HttpStatus.NOT_FOUND);
-    }
-
-    const participation = await this.projectsRepository.findParticipation({ eventId, participantId });
-    if (!participation) {
-      throw new HttpException(
-        "Você deve estar participando em um evento para marcar frequência nele",
-        HttpStatus.FORBIDDEN,
-      );
+    if (event.type === "minicurso") {
+      const participation = await this.projectsRepository.findParticipation({ eventId, participantId });
+      if (!participation) {
+        throw new HttpException(
+          "Você deve estar participando em um evento para marcar frequência nele",
+          HttpStatus.FORBIDDEN,
+        );
+      }
     }
 
     const payload = {
@@ -62,8 +68,8 @@ export default class CreateAttendance {
       throw new HttpException("Você já marcou frequência", HttpStatus.CONFLICT);
     }
 
-    const Attendance = await this.projectsRepository.createAttendance(payload);
+    const attendance = await this.projectsRepository.createAttendance(payload);
 
-    return Attendance;
+    return attendance;
   }
 }

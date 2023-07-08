@@ -28,7 +28,7 @@ describe("CreateEventCertificates", () => {
       name: "Test Event",
       speakerId,
       startTime: new Date(),
-      type: "side",
+      type: "minicurso",
     });
     participant = await fakeProjectsRepository.createParticipant({
       age: 1,

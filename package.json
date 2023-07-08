@@ -13,6 +13,9 @@
     "**/*.(ts|tsx)": [
       "eslint --fix"
     ],
+    "backend/prisma/schema.prisma": [
+      "pnpm -F backend prisma:migrate-dev"
+    ],
     "backend/src/**/*.ts": [
       "pnpm -F backend test -- --bail --findRelatedTests"
     ]

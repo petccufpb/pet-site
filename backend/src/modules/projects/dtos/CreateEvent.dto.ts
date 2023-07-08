@@ -48,7 +48,8 @@ export default class CreateEventDTO implements Partial<ProjectEvent> {
   @IsDateString()
   startTime!: Date;
 
+  @IsOptional()
   @IsString()
-  @IsIn(["main", "side"])
-  type!: string;
+  @IsIn(["main", "minicurso", "palestra"])
+  type!: string | null;
 }
