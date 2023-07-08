@@ -11,9 +11,19 @@ export default class CreateParticipant {
   public async execute({
     email,
     matricula,
+    name,
     phoneNumber,
     ...data
   }: CreateParticipantDTO): Promise<ProjectParticipant> {
+    const existingParticipant = await this.projectsRepository.findExistingParticipant({
+      email,
+      matricula,
+      name,
+    });
+    if (existingParticipant) {
+      return existingParticipant;
+    }
+
     const sameEmail = await this.projectsRepository.findParticipantByEmail(email);
     if (sameEmail) {
       throw new HttpException("Já existe um aluno com esse email", HttpStatus.FORBIDDEN);
@@ -33,6 +43,7 @@ export default class CreateParticipant {
       ...data,
       email,
       matricula,
+      name,
       phoneNumber,
     });
 

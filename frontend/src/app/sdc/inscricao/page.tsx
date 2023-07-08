@@ -26,6 +26,8 @@ import {
   Steps,
 } from "./styles";
 
+import { useRouter } from "next/navigation";
+
 const sendFormSchema = z.object({
   name: z.string().nonempty("Preencha este campo"),
   email: z.string().nonempty("O email é obrigatório").email("Formato de email inválido"),
@@ -56,6 +58,7 @@ const sendFormSchema = z.object({
 type SendFormData = z.infer<typeof sendFormSchema>;
 
 export default function Inscricao() {
+  const router = useRouter();
   const options = [
     { value: "cdia", label: "Ciência de Dados" },
     { value: "cc", label: "Ciência da Computação" },
@@ -163,13 +166,12 @@ export default function Inscricao() {
       method: "POST",
       body: JSON.stringify({
         ...data,
-        name: name
-          .trim()
-          .split(" ")
-          .map(word => {
-            return word[0]?.toLocaleUpperCase().concat(word.substring(1));
-          })
-          .join(" "),
+        name: name.trim(),
+        //   .split(" ")
+        //   .map(word => {
+        //     return word[0]?.toLocaleUpperCase().concat(word.substring(1));
+        //   })
+        //   .join(" ")
         matricula: matricula.toString(),
         course: course.value,
       }),
@@ -181,6 +183,7 @@ export default function Inscricao() {
 
     if (res.status === 200) {
       toast.success("Inscrição realizada com sucesso!");
+      router.push("/");
     } else {
       toast.error(d.message || "Falha na inscrição", {
         position: "top-center",

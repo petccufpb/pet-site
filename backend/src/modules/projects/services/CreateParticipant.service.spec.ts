@@ -25,6 +25,29 @@ describe("CreateParticipant", () => {
     expect(participant).toHaveProperty("id");
   });
 
+  it("should recognize when a participant is being created more than 1 time", async () => {
+    await service.execute({
+      age: 1,
+      course: "Test Course",
+      email: "test@gmail.com",
+      matricula: "20200015280",
+      name: "Test",
+      phoneNumber: "+55 83 99999-9999",
+      university: "Test University",
+    });
+    const participant = await service.execute({
+      age: 1,
+      course: "Test Course",
+      email: "test@gmail.com",
+      matricula: "20200015280",
+      name: "Test",
+      phoneNumber: "+55 83 99999-9999",
+      university: "Test University",
+    });
+
+    expect(participant).toHaveProperty("id");
+  });
+
   it("should not be able to create a participant with same email", async () => {
     await service.execute({
       age: 1,

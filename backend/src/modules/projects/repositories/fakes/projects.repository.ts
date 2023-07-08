@@ -17,6 +17,7 @@ import CreateEventDTO from "@modules/projects/dtos/CreateEvent.dto";
 import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
 import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
+import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParticipant.dto";
 
 import ProjectsRepository, {
   CertificateInfo,
@@ -272,6 +273,20 @@ export default class FakeProjectsRepository implements ProjectsRepository {
       ) || null;
 
     return event;
+  }
+
+  public async findExistingParticipant({
+    email,
+    matricula,
+    name,
+  }: FindExistingParticipantDTO): Promise<ProjectParticipant | null> {
+    const participant =
+      this.participants.find(
+        participant =>
+          participant.email === email && participant.matricula === matricula && participant.name === name,
+      ) || null;
+
+    return participant;
   }
 
   public async findParticipantByEmail(email: string): Promise<ProjectParticipant | null> {
