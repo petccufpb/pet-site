@@ -2,6 +2,7 @@ import { QueryRequired } from "@hyoretsu/decorators";
 import { Body, Controller, Get, Post } from "@nestjs/common";
 import {
   Project,
+  ProjectAttendance,
   ProjectCertificate,
   ProjectEdition,
   ProjectEvent,
@@ -10,6 +11,7 @@ import {
   ProjectSpeaker,
 } from "@prisma/client";
 
+import CreateAttendanceDTO from "@modules/projects/dtos/CreateAttendance.dto";
 import CreateCertificateDTO from "@modules/projects/dtos/CreateCertificate.dto";
 import CreateCertificatesDTO from "@modules/projects/dtos/CreateCertificates.dto";
 import CreateEditionDTO from "@modules/projects/dtos/CreateEdition.dto";
@@ -20,6 +22,7 @@ import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import FindParticipantDTO from "@modules/projects/dtos/FindParticipant.dto";
 import ValidateCertificateDTO from "@modules/projects/dtos/ValidateCertificate.dto";
+import CreateAttendance from "@modules/projects/services/CreateAttendance.service";
 import CreateCertificate from "@modules/projects/services/CreateCertificate.service";
 import CreateEdition from "@modules/projects/services/CreateEdition.service";
 import CreateEditionCertificates from "@modules/projects/services/CreateEditionCertificates.service";
@@ -37,6 +40,7 @@ import ValidateCertificate from "@modules/projects/services/ValidateCertificate.
 @Controller("projects")
 export default class ProjectsController {
   constructor(
+    private createAttendance: CreateAttendance,
     private createCertificate: CreateCertificate,
     private createEdition: CreateEdition,
     private createEditionCertificates: CreateEditionCertificates,
@@ -57,6 +61,13 @@ export default class ProjectsController {
     const project = await this.createProject.execute(body);
 
     return project;
+  }
+
+  @Post("attendance")
+  async postProjectsAttendance(@Body() body: CreateAttendanceDTO): Promise<ProjectAttendance> {
+    const attendance = await this.createAttendance.execute(body);
+
+    return attendance;
   }
 
   @Post("certificates")
