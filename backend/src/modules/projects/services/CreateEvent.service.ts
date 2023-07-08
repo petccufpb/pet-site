@@ -21,7 +21,7 @@ export default class CreateEvent {
       throw new HttpException("Forneça uma localização para eventos presenciais", HttpStatus.BAD_REQUEST);
     }
 
-    if (isBefore(endTime, startTime)) {
+    if (isBefore(new Date(endTime), new Date(startTime))) {
       throw new HttpException("Horário de término é antes do horário de início", HttpStatus.BAD_REQUEST);
     }
 
@@ -30,7 +30,7 @@ export default class CreateEvent {
       throw new HttpException("Essa edição não existe", HttpStatus.NOT_FOUND);
     }
 
-    if (isBefore(startTime, edition.date)) {
+    if (isBefore(new Date(startTime), new Date(edition.date))) {
       throw new HttpException(
         "Horário de início do evento é antes da data de início da edição",
         HttpStatus.BAD_REQUEST,
