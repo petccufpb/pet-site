@@ -16,7 +16,6 @@ describe("CreateEvent", () => {
     const { id: projectId } = await fakeProjectsRepository.createProject({ title: "Test Project" });
     edition = await fakeProjectsRepository.createEdition({ date: new Date(), number: 1, projectId });
     speaker = await fakeProjectsRepository.createSpeaker({
-      email: "test@gmail.com",
       name: "Test Speaker",
       photoUrl: "http://test.com/photo.png",
     });

@@ -7,17 +7,17 @@
     "frontend"
   ],
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install && chmod ug+x ./.husky/*"
   },
   "lint-staged": {
-    "**/*.(ts|tsx)": [
-      "eslint --fix"
-    ],
     "backend/prisma/schema.prisma": [
       "pnpm -F backend prisma:migrate-dev"
     ],
     "backend/src/**/*.ts": [
       "pnpm -F backend test -- --bail --findRelatedTests"
+    ],
+    "**/*.(ts|tsx)": [
+      "eslint --fix"
     ]
   },
   "devDependencies": {
