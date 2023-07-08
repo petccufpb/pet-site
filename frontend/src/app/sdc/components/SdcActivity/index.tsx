@@ -27,7 +27,7 @@ export function SdcActivity({ data }: { data: SDCEventData }) {
     <SDCtr>
       <th>
         <SpeakerPhoto
-          src={"https://" + data.speaker.photoUrl}
+          src={data.speaker.photoUrl}
           alt={data.speaker.name}
           width={45}
           height={45}

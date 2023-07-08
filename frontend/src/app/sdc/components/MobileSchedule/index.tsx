@@ -60,12 +60,7 @@ export function MobileSchedule({ data }: { data: SDCScheduleData }) {
             aria-label="Realizar Inscrição"
             href={e.type === "main" ? "/sdc/inscricao" : `/sdc/minicurso/${e.id}`}
           >
-            <SpeakerPhoto
-              width={45}
-              height={45}
-              src={"https://" + e.speaker.photoUrl}
-              alt={e.speaker.name}
-            ></SpeakerPhoto>
+            <SpeakerPhoto width={45} height={45} src={e.speaker.photoUrl} alt={e.speaker.name}></SpeakerPhoto>
             <Event available={true}>
               <div>{e.speaker.name}</div>
               <div>{e.name}</div>
