@@ -144,7 +144,6 @@ model ProjectParticipant {
 model ProjectSpeaker {
     id        String         @id @default(uuid())
     name      String
-    email     String         @unique
     photoUrl  String
     events    ProjectEvent[]
     createdAt DateTime       @default(now())

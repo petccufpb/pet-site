@@ -84,5 +84,4 @@ export default abstract class ProjectsRepository {
   abstract findProjectById(id: string): Promise<Project | null>;
   abstract findProjectByTitle(title: string): Promise<Project | null>;
   abstract findSpeakerById(id: string): Promise<ProjectSpeaker | null>;
-  abstract findSpeakerByEmail(email: string): Promise<ProjectSpeaker | null>;
 }

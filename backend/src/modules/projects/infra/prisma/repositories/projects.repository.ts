@@ -259,14 +259,6 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     return project;
   }
 
-  public async findSpeakerByEmail(email: string): Promise<ProjectSpeaker | null> {
-    const speaker = await this.prisma.projectSpeaker.findFirst({
-      where: { email },
-    });
-
-    return speaker;
-  }
-
   public async findSpeakerById(id: string): Promise<ProjectSpeaker | null> {
     const speaker = await this.prisma.projectSpeaker.findFirst({
       where: { id },

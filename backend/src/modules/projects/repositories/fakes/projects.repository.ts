@@ -353,12 +353,6 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     return project;
   }
 
-  public async findSpeakerByEmail(email: string): Promise<ProjectSpeaker | null> {
-    const speaker = this.speakers.find(speaker => speaker.email === email) || null;
-
-    return speaker;
-  }
-
   public async findSpeakerById(id: string): Promise<ProjectSpeaker | null> {
     const speaker = this.speakers.find(speaker => speaker.id === id) || null;
 
