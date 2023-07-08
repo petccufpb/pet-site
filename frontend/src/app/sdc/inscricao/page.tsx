@@ -31,15 +31,21 @@ const sendFormSchema = z.object({
   email: z.string().nonempty("O email é obrigatório").email("Formato de email inválido"),
   celular: z.string().min(17, { message: "O número deve conter 9 dígitos" }),
   matricula: z
-    .number({
-      invalid_type_error: "A matrícula deve ser um número",
-    })
-    .min(10000000, { message: "Sua matrícula deve conter no mínimo 8 dígitos [Matrículas Antigas]" })
-    .max(99999999999, { message: "Sua matrícula deve conter 11 dígitos" }),
+    .string()
+    .transform(m => parseInt(m))
+    .pipe(
+      z
+        .number({
+          invalid_type_error: "A matrícula deve ser um número",
+          required_error: "A matrícula é obrigatória",
+        })
+        .min(10000000, { message: "Sua matrícula deve conter no mínimo 8 dígitos [Matrículas Antigas]" })
+        .max(99999999999, { message: "Sua matrícula deve conter 11 dígitos" }),
+    ),
   age: z
     .number({
-      invalid_type_error: "A Idade deve ser um número",
-      required_error: "A Idade é obrigatória",
+      invalid_type_error: "A idade deve ser um número",
+      required_error: "A idade é obrigatória",
     })
     .int({ message: "Sua idade deve ser um número inteiro" })
     .positive({ message: "Sua idade deve ser positiva" })
@@ -115,7 +121,7 @@ export default function Inscricao() {
           placeholder="20000115555 ou 11109999"
           mask="99999999999"
           maskChar={null}
-          {...register("matricula", { valueAsNumber: true })}
+          {...register("matricula")}
         />
         {errors.matricula && <span>{errors.matricula.message}</span>}
       </InputContainer>
