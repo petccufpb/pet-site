@@ -88,7 +88,7 @@ export default class CreateParticipation {
 
     const existingParticipation = await this.projectsRepository.findParticipation(payload);
     if (existingParticipation) {
-      throw new HttpException("Essa inscrição já existe", HttpStatus.FORBIDDEN);
+      throw new HttpException("Você já se inscreveu nesse evento", HttpStatus.FORBIDDEN);
     }
 
     const participation = await this.projectsRepository.createParticipation(payload);
