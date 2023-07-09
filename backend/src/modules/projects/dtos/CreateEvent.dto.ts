@@ -1,6 +1,6 @@
 import { IsOptional } from "@hyoretsu/decorators";
 import { ProjectEvent } from "@prisma/client";
-import { IsBoolean, IsDate, IsIn, IsNotEmpty, IsNumber, IsString, IsUUID, Min } from "class-validator";
+import { IsBoolean, IsDateString, IsIn, IsNotEmpty, IsNumber, IsString, IsUUID, Min } from "class-validator";
 
 export default class CreateEventDTO implements Partial<ProjectEvent> {
   @IsOptional()
@@ -14,7 +14,7 @@ export default class CreateEventDTO implements Partial<ProjectEvent> {
   editionId!: string;
 
   @IsNotEmpty()
-  @IsDate()
+  @IsDateString()
   endTime!: Date;
 
   @IsOptional()
@@ -35,7 +35,7 @@ export default class CreateEventDTO implements Partial<ProjectEvent> {
   speakerId!: string;
 
   @IsNotEmpty()
-  @IsDate()
+  @IsDateString()
   startTime!: Date;
 
   @IsOptional()

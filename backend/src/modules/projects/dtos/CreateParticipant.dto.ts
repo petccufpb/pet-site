@@ -1,9 +1,9 @@
 import { ProjectParticipant } from "@prisma/client";
-import { IsDate, IsNotEmpty, IsString, Min } from "class-validator";
+import { IsDateString, IsNotEmpty, IsString, Min } from "class-validator";
 
 export default class CreateParticipantDTO implements Partial<ProjectParticipant> {
   @IsNotEmpty()
-  @IsDate()
+  @IsDateString()
   birthDate!: Date;
 
   @IsNotEmpty()
