@@ -11,7 +11,8 @@
   },
   "lint-staged": {
     "backend/prisma/schema.prisma": [
-      "pnpm -F backend prisma:migrate-dev"
+      "pnpm -F backend prisma:migrate-dev",
+      "pnpm -F backend prisma:migrate-deploy"
     ],
     "backend/src/**/*.ts": [
       "pnpm -F backend test -- --bail --findRelatedTests"
