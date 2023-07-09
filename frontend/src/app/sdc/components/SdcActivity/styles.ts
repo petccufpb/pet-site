@@ -51,14 +51,13 @@ export const Subscribe = styled(SdcButton)`
     filter: ${({ availability }) => (availability ? "brightness(.8)" : "")};
   }
 
-  a {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    justify-content: center;
+  padding: 0.5rem 1rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
 
-    pointer-events: ${({ availability }) => (availability ? "auto" : "none")};
-  }
+  pointer-events: ${({ availability }) => (availability ? "auto" : "none")};
 `;
 
 export const SpeakerPhoto = styled(Image)`

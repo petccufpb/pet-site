@@ -3,8 +3,11 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   const params = await request.json();
 
+  const splitDate = params.birthDate.split("/");
+  const dt = new Date(parseInt(splitDate[2], 10), parseInt(splitDate[1], 10) - 1, parseInt(splitDate[0], 10));
+
   const d = {
-    age: params.age,
+    birthDate: dt,
     course: params.course,
     email: params.email,
     matricula: params.matricula,

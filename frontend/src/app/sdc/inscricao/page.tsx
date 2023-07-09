@@ -44,15 +44,17 @@ const sendFormSchema = z.object({
         .min(10000000, { message: "Sua matrícula deve conter no mínimo 8 dígitos [Matrículas Antigas]" })
         .max(99999999999, { message: "Sua matrícula deve conter 11 dígitos" }),
     ),
-  age: z
-    .number({
-      invalid_type_error: "A idade deve ser um número",
-      required_error: "A idade é obrigatória",
+  birthDate: z
+    .string({
+      invalid_type_error: "Data inválida",
+      required_error: "A data de nascimento é obrigatória",
     })
-    .int({ message: "Sua idade deve ser um número inteiro" })
-    .positive({ message: "Sua idade deve ser positiva" })
-    .min(1, { message: "Idade inválida" })
-    .max(120, { message: "Idade inválida" }),
+    .regex(
+      /(^(((0[1-9]|1[0-9]|2[0-8])[\/](0[1-9]|1[012]))|((29|30|31)[\/](0[13578]|1[02]))|((29|30)[\/](0[4,6,9]|11)))[\/](19|[2-9][0-9])\d\d$)|(^29[\/]02[\/](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)/,
+      {
+        message: "Data inválida",
+      },
+    ),
 });
 
 type SendFormData = z.infer<typeof sendFormSchema>;
@@ -87,7 +89,7 @@ export default function Inscricao() {
     return markers;
   }
 
-  const [emailValue, nameValue, ageValue] = watch(["email", "name", "age"]);
+  const [emailValue, nameValue, ageValue] = watch(["email", "name", "birthDate"]);
 
   fieldGroups = [
     <>
@@ -102,9 +104,9 @@ export default function Inscricao() {
         {errors.name && <span>{errors.name.message}</span>}
       </InputContainer>
       <InputContainer>
-        <div>Idade</div>
-        <input type="string" placeholder="18" {...register("age", { valueAsNumber: true })} />
-        {errors.age && <span>{errors.age.message}</span>}
+        <div>Data de nascimento</div>
+        <InputMask placeholder="01/01/2000" mask="99/99/9999" maskChar={null} {...register("birthDate")} />
+        {errors.birthDate && <span>{errors.birthDate.message}</span>}
       </InputContainer>
     </>,
     <>
@@ -162,16 +164,21 @@ export default function Inscricao() {
 
   async function sendForm({ matricula, name, ...data }: SendFormData) {
     const i = toast.info("Carregando...");
+
+    console.log(
+      JSON.stringify({
+        ...data,
+        name: name.trim(),
+        matricula: matricula.toString(),
+        course: course.value,
+      }),
+    );
+
     const res = await fetch("/api/subscribe/sdc", {
       method: "POST",
       body: JSON.stringify({
         ...data,
         name: name.trim(),
-        //   .split(" ")
-        //   .map(word => {
-        //     return word[0]?.toLocaleUpperCase().concat(word.substring(1));
-        //   })
-        //   .join(" ")
         matricula: matricula.toString(),
         course: course.value,
       }),
@@ -272,7 +279,7 @@ export default function Inscricao() {
                     disabled={
                       errors.email !== undefined ||
                       errors.name !== undefined ||
-                      errors.age !== undefined ||
+                      errors.birthDate !== undefined ||
                       emailValue?.length === 0 ||
                       nameValue?.length === 0 ||
                       ageValue === undefined ||

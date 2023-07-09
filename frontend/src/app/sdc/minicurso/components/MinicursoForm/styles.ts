@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import styled from "styled-components";
 
 export const FormContainer = styled.form<{ borderType: "static" | "gradient" }>`
@@ -69,7 +70,8 @@ export const ButtonContainer = styled.div<{ type: "normal" | "cancel" }>`
   justify-content: ${({ type }) => (type === "cancel" ? "flex-end" : "stretch")};
   gap: 2rem;
 
-  > button {
+  > button,
+  > a {
     width: ${({ type }) => (type === "cancel" ? "auto" : "100%")};
   }
 

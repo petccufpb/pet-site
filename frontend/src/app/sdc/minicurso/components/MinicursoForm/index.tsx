@@ -17,6 +17,8 @@ import {
   FormContainer,
 } from "./styles";
 
+import Link from "next/link";
+
 function DateOrNothing({ date }: { date?: { day: string; time: string } }) {
   if (date) {
     return (
@@ -38,7 +40,7 @@ function DateOrNothing({ date }: { date?: { day: string; time: string } }) {
 
 function CancelButtonOrNothing({ type }: { type: "normal" | "cancel" }) {
   if (type === "cancel") {
-    return <CancelButton>Cancelar</CancelButton>;
+    return <CancelButton href="/sdc">Cancelar</CancelButton>;
   } else {
     return <></>;
   }

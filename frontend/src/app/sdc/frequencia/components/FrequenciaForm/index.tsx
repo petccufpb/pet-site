@@ -21,6 +21,7 @@ import {
 
 import { useEffect, useState } from "react";
 import { differenceInMinutes } from "date-fns";
+import Link from "next/link";
 
 function DateOrNothing({ date }: { date?: { day: string; time: string } }) {
   if (date) {
@@ -43,7 +44,7 @@ function DateOrNothing({ date }: { date?: { day: string; time: string } }) {
 
 function CancelButtonOrNothing({ type }: { type: "normal" | "cancel" }) {
   if (type === "cancel") {
-    return <CancelButton>Cancelar</CancelButton>;
+    return <CancelButton href="/sdc">Cancelar</CancelButton>;
   } else {
     return <></>;
   }

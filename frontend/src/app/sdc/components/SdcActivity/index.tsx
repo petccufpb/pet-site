@@ -35,24 +35,32 @@ export function SdcActivity({ data }: { data: SDCEventData }) {
         <span>{data.speaker.name}</span>
       </th>
       <th>
-        <span>{data.name}</span>
+        <div>
+          {data.type && <b>{data.type === "minicurso" ? "Minicurso" : "Palestra"}</b>}
+          <span>
+            {data.type && " - "}
+            {data.name}
+          </span>
+        </div>
       </th>
       <th>Dia {day}</th>
       <th>{time}</th>
       <th>
-        <Availability availability={available}>
-          {available ? "DISPONÍVEL" : "ESGOTADO"}
-          {!available && <FaTimesCircle />}
-        </Availability>
+        {data.type === "minicurso" && (
+          <Availability availability={available}>
+            {available ? "DISPONÍVEL" : "ESGOTADO"}
+            {!available && <FaTimesCircle />}
+          </Availability>
+        )}
       </th>
       <th>
         {data.type === "minicurso" && (
-          <Subscribe availability={available}>
-            <Link aria-label="Realizar Inscrição" href={`/sdc/minicurso/${data.id}`}>
+          <Link aria-label="Realizar Inscrição" href={`/sdc/minicurso/${data.id}`}>
+            <Subscribe availability={available}>
               <span>FAZER INSCRIÇÃO</span>
               <HiArrowUpRight />
-            </Link>
-          </Subscribe>
+            </Subscribe>
+          </Link>
         )}
       </th>
     </SDCtr>
