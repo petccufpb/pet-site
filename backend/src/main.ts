@@ -17,7 +17,7 @@ const bootstrap = async () => {
   );
 
   await app.register(helmet);
-  app.enableCors();
+  app.enableCors({ origin: ["https://petccufpb.com.br", "https://website-sdc.vercel.app"] });
 
   const config = new DocumentBuilder()
     .setTitle("API do PET.CC (UFPB)")

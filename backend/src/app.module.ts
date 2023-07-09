@@ -18,7 +18,7 @@ import ProjectsModule from "@modules/projects/projects.module";
             host: process.env.REDIS_HOST,
             port: Number(process.env.REDIS_PORT),
           },
-          ttl: 1, // * 24 * 60 * 60 * 1000 //1 day
+          ttl: 1 * 24 * 60 * 60 * 1000, // 1 day
           username: process.env.REDIS_USER,
         }),
       }),
