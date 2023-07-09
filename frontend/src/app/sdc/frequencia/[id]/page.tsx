@@ -76,6 +76,7 @@ export default async function Frequencia({ params }: { params: { id: string } })
               }) + "h",
           }}
           endTime={new Date(event.endTime)}
+          isEventOnSite={event.onSite}
           confirmType="confirm"
         />
       </FormContainer>

@@ -70,6 +70,7 @@ type SendFormData = z.infer<typeof sendFormSchema>;
 export function FrequenciaForm({
   date,
   endTime,
+  isEventOnSite,
   sections,
   id,
   type = "normal",
@@ -84,6 +85,7 @@ export function FrequenciaForm({
     time: string;
   };
   endTime?: Date;
+  isEventOnSite?: boolean;
   sections?: { title: string; placeholder: string; id: "name" | "email" }[];
   id: string;
 }) {
@@ -121,7 +123,25 @@ export function FrequenciaForm({
       return;
     }
 
-    if (!userLocation) return;
+    if (isEventOnSite && !userLocation) {
+      toast.dismiss(i);
+      toast.error("Você precisa habilitar a localização para marcar a frequência.", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          textAlign: "center",
+          color: "#fgfgfg",
+        },
+      });
+
+      return;
+    }
 
     if (localStorage.getItem(id)) {
       toast.dismiss(i);
