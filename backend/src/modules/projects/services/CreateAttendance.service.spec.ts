@@ -24,7 +24,6 @@ describe("CreateAttendance", () => {
       projectId,
     });
     const { id: speakerId } = await fakeProjectsRepository.createSpeaker({
-      email: "test@gmail.com",
       name: "Test Speaker",
       photoUrl: "http://test.com/photo.png",
     });
