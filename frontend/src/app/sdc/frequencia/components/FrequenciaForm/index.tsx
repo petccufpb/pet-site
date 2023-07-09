@@ -20,6 +20,7 @@ import {
 } from "./styles";
 
 import { useEffect, useState } from "react";
+import { differenceInMinutes } from "date-fns";
 
 function DateOrNothing({ date }: { date?: { day: string; time: string } }) {
   if (date) {
@@ -68,6 +69,7 @@ type SendFormData = z.infer<typeof sendFormSchema>;
 
 export function FrequenciaForm({
   date,
+  endTime,
   sections,
   id,
   type = "normal",
@@ -81,6 +83,7 @@ export function FrequenciaForm({
     day: string;
     time: string;
   };
+  endTime?: Date;
   sections?: { title: string; placeholder: string; id: "name" | "email" }[];
   id: string;
 }) {
@@ -88,6 +91,35 @@ export function FrequenciaForm({
 
   async function sendForm(data: any) {
     const i = toast.info("Carregando...");
+
+    const eventEndTimeOffset = differenceInMinutes(new Date(), endTime as Date);
+
+    let frequenciaDisabled = "";
+    if (eventEndTimeOffset < -30) {
+      frequenciaDisabled = "Você só pode marcar frequência 30min antes do término do evento";
+    } else if (eventEndTimeOffset > 30) {
+      frequenciaDisabled = "Lamentamos, mas a frequência para esse evento já fechou";
+    }
+
+    if (frequenciaDisabled) {
+      toast.dismiss(i);
+      toast.error(frequenciaDisabled, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          textAlign: "center",
+          color: "#fgfgfg",
+        },
+      });
+
+      return;
+    }
 
     if (!userLocation) return;
 
@@ -107,6 +139,8 @@ export function FrequenciaForm({
           color: "#fgfgfg",
         },
       });
+
+      return;
     }
 
     if (
