@@ -35,10 +35,7 @@ export function SdcActivity({ data }: { data: SDCEventData }) {
         <span>{data.speaker.name}</span>
       </th>
       <th>
-        <span>
-          <b>{data.name.split(" ")[0]}</b>
-          <span>{" " + data.name.split(" ").slice(1).join(" ")}</span>
-        </span>
+        <span>{data.name}</span>
       </th>
       <th>Dia {day}</th>
       <th>{time}</th>
@@ -49,15 +46,14 @@ export function SdcActivity({ data }: { data: SDCEventData }) {
         </Availability>
       </th>
       <th>
-        <Subscribe availability={available}>
-          <Link
-            aria-label="Realizar Inscrição"
-            href={data.type === "main" ? "/sdc/inscricao" : `/sdc/minicurso/${data.id}`}
-          >
-            <span>FAZER INSCRIÇÃO</span>
-            <HiArrowUpRight />
-          </Link>
-        </Subscribe>
+        {data.type === "minicurso" && (
+          <Subscribe availability={available}>
+            <Link aria-label="Realizar Inscrição" href={`/sdc/minicurso/${data.id}`}>
+              <span>FAZER INSCRIÇÃO</span>
+              <HiArrowUpRight />
+            </Link>
+          </Subscribe>
+        )}
       </th>
     </SDCtr>
   );

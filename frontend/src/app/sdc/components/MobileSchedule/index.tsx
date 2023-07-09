@@ -1,7 +1,7 @@
 "use client";
 
 import { SectionTitle } from "@app/sdc/styles";
-import { MouseEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { HiArrowUpRight } from "react-icons/hi2";
 import { SDCScheduleData } from "sdc";
 
@@ -17,7 +17,7 @@ import {
 } from "./styles";
 
 export function MobileSchedule({ data }: { data: SDCScheduleData }) {
-  const [currentDay, setCurrentDay] = useState<number | null>(1);
+  const [currentDay, setCurrentDay] = useState<number | null>(new Date(data.events[0].startTime).getDate());
   const days: number[] = [...new Set(data.events.map(event => new Date(event.startTime).getDate()).sort())];
 
   const [dayEvents, setDayEvents] = useState(
@@ -64,10 +64,14 @@ export function MobileSchedule({ data }: { data: SDCScheduleData }) {
             <Event available={true}>
               <div>{e.speaker.name}</div>
               <div>{e.name}</div>
-              <Availability available={data.capacity ? data.participants.length < data.capacity : true}>
-                <span>Inscreva-se</span>
-                <HiArrowUpRight height="1em" />
-              </Availability>
+              {e.type === "minicurso" ? (
+                <Availability available={data.capacity ? data.participants.length < data.capacity : true}>
+                  <span>Inscreva-se</span>
+                  <HiArrowUpRight height="1em" />
+                </Availability>
+              ) : (
+                <div />
+              )}
               <div>
                 Dia {new Date(e.startTime).getDate()} -{" "}
                 {new Date(e.startTime).toLocaleTimeString([], {

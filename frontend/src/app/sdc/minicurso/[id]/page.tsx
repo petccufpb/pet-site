@@ -44,7 +44,12 @@ export default async function Minicurso({ params }: { params: { id: string } }) 
       </DescriptionContainer>
       <FormContainer>
         <SpeakerInfo>
-          <Image width={64} height={64} src={event.speaker.photoUrl} alt="Palestrante"></Image>
+          <Image
+            width={64}
+            height={64}
+            src={event.speaker.photoUrl}
+            alt={"Palestrante " + event.speaker.name}
+          ></Image>
           <h2>{event.speaker.name}</h2>
           <div>{event.name}</div>
         </SpeakerInfo>

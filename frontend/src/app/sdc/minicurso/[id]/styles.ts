@@ -80,6 +80,7 @@ export const SpeakerInfo = styled.div`
 
   img {
     border-radius: 100%;
+    object-fit: cover;
   }
 
   > div {

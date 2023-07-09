@@ -91,6 +91,24 @@ export function FrequenciaForm({
 
     if (!userLocation) return;
 
+    if (localStorage.getItem(id)) {
+      toast.dismiss(i);
+      toast.error("Você já cadastrou frequência para este evento.", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        style: {
+          textAlign: "center",
+          color: "#fgfgfg",
+        },
+      });
+    }
+
     if (
       distanceBetweenCoordinates(
         [userLocation.coords.latitude, userLocation.coords.longitude],
@@ -127,6 +145,7 @@ export function FrequenciaForm({
 
     if (res.status === 200) {
       toast.success("Frequência cadastrada com sucesso!");
+      localStorage.setItem(id, "true");
     } else {
       const d = await res.json();
 

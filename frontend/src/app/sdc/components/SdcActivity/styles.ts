@@ -63,6 +63,7 @@ export const Subscribe = styled(SdcButton)`
 
 export const SpeakerPhoto = styled(Image)`
   border-radius: 100%;
+  object-fit: cover;
 `;
 
 export const SDCtr = styled.tr`

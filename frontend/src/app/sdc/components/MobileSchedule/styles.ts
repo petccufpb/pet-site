@@ -96,6 +96,8 @@ export const Event = styled.div<{ available: boolean }>`
 
 export const SpeakerPhoto = styled(Image)`
   border-radius: 100%;
+  object-fit: cover;
+  aspect-ratio: 1/1;
 `;
 
 export const Availability = styled.div<{ available: boolean }>`

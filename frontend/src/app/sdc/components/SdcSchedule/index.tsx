@@ -16,7 +16,7 @@ export function SdcSchedule({ data }: { data: SDCScheduleData }) {
     ),
   ];
 
-  const [currentDay, setCurrentDay] = useState<number | null>(1);
+  const [currentDay, setCurrentDay] = useState<number | null>(new Date(data.events[0].startTime).getDate());
   const [dayEvents, setDayEvents] = useState(
     data.events.filter(event => new Date(event.startTime).getDate() === currentDay),
   );
