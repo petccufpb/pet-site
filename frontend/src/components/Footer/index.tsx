@@ -82,7 +82,7 @@ export function Footer() {
           <br />
           <div>Equipe</div>
           <br />
-          <div>Projeto Seletivo</div>
+          <div>Processo Seletivo</div>
         </div>
       </Content>
       <NextInfo>
