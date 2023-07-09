@@ -25,6 +25,14 @@ export const SectionTitle = styled(Title)`
   text-align: left;
 `;
 
+export const LastEditionText = styled.div`
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.65rem;
+  width: 100%;
+  text-align: right;
+  padding-right: 1rem;
+`;
+
 export const ComingSoon = styled.div`
   width: 100%;
   padding: 5rem 0;

@@ -11,8 +11,9 @@ export const LastEditionSection = styled(Section)`
   align-items: stretch;
 
   img {
-    width: min(100%, 360px);
+    width: min(100%, 300px);
     height: auto;
+    margin: 1rem auto 0 auto;
   }
 
   > div:last-child {
@@ -77,9 +78,6 @@ export const HeadContainer = styled.div`
       justify-content: center;
     }
 
-    // Fazer com que o container da útlima edição
-    // centralize seus filhos
-    // quando houver wrap na grid.
     > div:first-child > div {
       align-items: center;
     }
@@ -120,9 +118,10 @@ export const SubscribeCount = styled.div`
   display: flex;
   color: rgba(255, 255, 255, 0.6);
   align-items: center;
-  font-size: ${({ theme }) => theme.textSizes["text-regular-xs"]};
+  font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
   gap: 0.5rem;
   padding-bottom: 0.2rem;
+  font-weight: bold;
 `;
 
 export const JustifyBetween = styled.div`
