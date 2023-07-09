@@ -93,13 +93,19 @@ export default class CreateParticipation {
 
     const participation = await this.projectsRepository.createParticipation(payload);
 
-    await this.mailProvider.sendMail({
-      to: foundParticipant.email as string,
-      subject: `Confirmação de inscrição no(a) ${title}`,
-      body: `Olá estudante,\n\nSua inscrição n${
-        editionId ? "a" : "o minicurso"
-      } ${title} foi realizada com sucesso.\n\nAproveite!`,
-    });
+    if (eventId) {
+      await this.mailProvider.sendMail({
+        to: foundParticipant.email as string,
+        subject: `Confirmação de inscrição na ${title}`,
+        body: `Olá estudante,\n\nSua inscrição na ${title} foi realizada com sucesso.\n\nAproveite!`,
+      });
+    } else {
+      await this.mailProvider.sendMail({
+        to: foundParticipant.email as string,
+        subject: `Confirmação de inscrição em minicurso`,
+        body: `Olá estudante,\n\nSua inscrição no minicurso ${title} foi realizada com sucesso.\n\nAproveite!`,
+      });
+    }
 
     return participation;
   }
