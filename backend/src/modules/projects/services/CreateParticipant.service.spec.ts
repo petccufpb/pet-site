@@ -13,7 +13,7 @@ describe("CreateParticipant", () => {
 
   it("should be able to create a participant", async () => {
     const participant = await service.execute({
-      age: 1,
+      birthDate: new Date(),
       course: "Test Course",
       email: "test@gmail.com",
       matricula: "20200015280",
@@ -27,7 +27,7 @@ describe("CreateParticipant", () => {
 
   it("should recognize when a participant is being created more than 1 time", async () => {
     await service.execute({
-      age: 1,
+      birthDate: new Date(),
       course: "Test Course",
       email: "test@gmail.com",
       matricula: "20200015280",
@@ -36,7 +36,7 @@ describe("CreateParticipant", () => {
       university: "Test University",
     });
     const participant = await service.execute({
-      age: 1,
+      birthDate: new Date(),
       course: "Test Course",
       email: "test@gmail.com",
       matricula: "20200015280",
@@ -50,7 +50,7 @@ describe("CreateParticipant", () => {
 
   it("should not be able to create a participant with same email", async () => {
     await service.execute({
-      age: 1,
+      birthDate: new Date(),
       course: "Test Course",
       email: "test@gmail.com",
       matricula: "20200015280",
@@ -61,7 +61,7 @@ describe("CreateParticipant", () => {
 
     await expect(
       service.execute({
-        age: 1,
+        birthDate: new Date(),
         course: "Test Course",
         email: "test@gmail.com",
         matricula: "20200015281",
@@ -74,7 +74,7 @@ describe("CreateParticipant", () => {
 
   it("should not be able to create a participant with same matricula", async () => {
     await service.execute({
-      age: 1,
+      birthDate: new Date(),
       course: "Test Course",
       email: "test@gmail.com",
       matricula: "20200015280",
@@ -85,7 +85,7 @@ describe("CreateParticipant", () => {
 
     await expect(
       service.execute({
-        age: 1,
+        birthDate: new Date(),
         course: "Test Course",
         email: "test2@gmail.com",
         matricula: "20200015280",
@@ -98,7 +98,7 @@ describe("CreateParticipant", () => {
 
   it("should not be able to create a participant with same phone number", async () => {
     await service.execute({
-      age: 1,
+      birthDate: new Date(),
       course: "Test Course",
       email: "test@gmail.com",
       matricula: "20200015280",
@@ -109,7 +109,7 @@ describe("CreateParticipant", () => {
 
     await expect(
       service.execute({
-        age: 1,
+        birthDate: new Date(),
         course: "Test Course",
         email: "test2@gmail.com",
         matricula: "20200015281",

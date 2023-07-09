@@ -36,7 +36,7 @@ describe("CreateParticipation", () => {
       type: null,
     });
     participant = await fakeProjectsRepository.createParticipant({
-      age: 1,
+      birthDate: new Date(),
       course: "Test Course",
       email: "test@gmail.com",
       matricula: "20200015280",
