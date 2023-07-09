@@ -8,6 +8,7 @@ describe("CreateEditionCertificates", () => {
   let edition: ProjectEdition;
   let event: ProjectEvent;
   let fakeProjectsRepository: FakeProjectsRepository;
+  let minicurso: ProjectEvent;
   let participant: ProjectParticipant;
   let service: CreateEditionCertificates;
 
@@ -18,7 +19,6 @@ describe("CreateEditionCertificates", () => {
     const { id: projectId } = await fakeProjectsRepository.createProject({ title: "Test Project" });
     edition = await fakeProjectsRepository.createEdition({ date: new Date(), number: 1, projectId });
     const { id: speakerId } = await fakeProjectsRepository.createSpeaker({
-      email: "test@gmail.com",
       name: "Test Speaker",
       photoUrl: "http://test.com/photo.png",
     });
@@ -29,6 +29,22 @@ describe("CreateEditionCertificates", () => {
       speakerId,
       startTime: new Date(),
       type: "main",
+    });
+    minicurso = await fakeProjectsRepository.createEvent({
+      editionId: edition.id,
+      endTime: new Date(),
+      name: "Test Minicurso",
+      speakerId,
+      startTime: new Date(),
+      type: "minicurso",
+    });
+    await fakeProjectsRepository.createEvent({
+      editionId: edition.id,
+      endTime: new Date(),
+      name: "Test Minicurso 2",
+      speakerId,
+      startTime: new Date(),
+      type: "minicurso",
     });
     participant = await fakeProjectsRepository.createParticipant({
       age: 1,
@@ -49,9 +65,13 @@ describe("CreateEditionCertificates", () => {
     });
   });
 
-  it("should be able to create certificates for an edition", async () => {
+  it("should create certificates for an edition", async () => {
     await fakeProjectsRepository.createAttendance({
       eventId: event.id,
+      participantId: participant.id,
+    });
+    await fakeProjectsRepository.createAttendance({
+      eventId: minicurso.id,
       participantId: participant.id,
     });
 
@@ -60,13 +80,23 @@ describe("CreateEditionCertificates", () => {
     expect(certificates).toHaveLength(1);
   });
 
-  it("should not be able to create certificates for a participant that does not have attendance", async () => {
+  it("should not create certificates for a participant that does not have attendance", async () => {
     const certificates = await service.execute(edition.id);
 
     expect(certificates).toHaveLength(0);
   });
 
-  it("should not be able to create certificates for a non-existent edition", async () => {
+  it("should not create certificates for a participant that did not attend any minicursos", async () => {
+    await fakeProjectsRepository.createAttendance({
+      eventId: event.id,
+      participantId: participant.id,
+    });
+    const certificates = await service.execute(edition.id);
+
+    expect(certificates).toHaveLength(0);
+  });
+
+  it("should not create certificates for a non-existent edition", async () => {
     await expect(service.execute("fake-edition-id")).rejects.toBeInstanceOf(HttpException);
   });
 });
