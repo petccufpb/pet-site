@@ -12,7 +12,7 @@ module.exports = () => ({
     serverActions: true,
   },
   images: {
-    domains: ["avatars.githubusercontent.com", "drive.google.com", "github.com"],
+    domains: ["avatars.githubusercontent.com", "drive.google.com", "github.com", "lh3.googleusercontent.com"],
     remotePatterns: [
       {
         hostname: "**docs.googleusercontent.com",
