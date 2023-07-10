@@ -26,6 +26,11 @@ export const MoreInfo = styled.div`
   flex-wrap: wrap;
   margin-top: 1rem;
   justify-content: space-between;
+
+  > div:first-child {
+    flex: 1;
+    min-width: 150px;
+  }
 `;
 
 export const InstagramContainer = styled.a`
@@ -84,7 +89,7 @@ export const SubscribeButton = styled.button`
 
   background: ${({ theme }) => theme.colors["opacity-green"]};
   border-radius: 2rem;
-  margin: 0.5rem 0;
+  margin: 0.5rem auto;
 
   font-size: ${({ theme }) => theme.textSizes["text-regular-xs"]};
   transition: 450ms;
@@ -98,10 +103,6 @@ export const SubscribeButton = styled.button`
 
   &:hover {
     filter: brightness(0.8);
-  }
-
-  @media (max-width: 900px) {
-    margin: 0.5rem auto;
   }
 `;
 
@@ -127,7 +128,14 @@ export const ImgContainer = styled.div`
   display: flex;
   margin-bottom: -1rem;
 
+  img:first-child {
+    margin-top: -20%;
+    margin-left: -7%;
+    margin-right: -10%;
+  }
+
   img {
+    cursor: auto;
     width: min(100%, 300px);
     height: auto;
     margin: 1rem auto 0 auto;

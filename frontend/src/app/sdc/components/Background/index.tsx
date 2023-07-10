@@ -34,14 +34,14 @@ export function Background() {
             <g style={{ opacity: "80%" }}>
               <SdcEllipse fill="url(#gradient-red)" cx="0" cy="0" rx="500" ry="500" />
             </g>
-            <SdcEllipse cx="90%" cy="25%" rx="500" ry="500" />
+            <SdcEllipse cx="90%" cy="500px" rx="500" ry="500" />
             <g style={{ opacity: "80%" }}>
-              <SdcEllipse cx="15%" cy="48%" rx="500" ry="500" />
+              <SdcEllipse cx="15%" cy="1080px" rx="500" ry="500" />
             </g>
             <g style={{ opacity: "80%" }}>
-              <SdcEllipse fill="url(#gradient-red)" cx="60%" cy="75%" rx="400" ry="400" />
+              <SdcEllipse fill="url(#gradient-red)" cx="60%" cy="1600px" rx="400" ry="400" />
             </g>
-            <SdcEllipse cx="10%" cy="100%" rx="500" ry="500" />
+            <SdcEllipse cx="10%" cy="2300px" rx="500" ry="500" />
           </g>
         </SVGBackground>
       </BackgroundContainer>
