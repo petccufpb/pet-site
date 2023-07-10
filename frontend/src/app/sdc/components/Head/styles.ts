@@ -126,24 +126,48 @@ export const JustifyBetween = styled.div`
 
 export const ImgContainer = styled.div`
   display: flex;
-  margin-bottom: -1rem;
-
-  img:first-child {
-    margin-top: -20%;
-    margin-left: -7%;
-    margin-right: -10%;
-  }
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  overflow: hidden;
+  padding: 1rem;
+  gap: 1rem;
 
   img {
+    width: 100%;
     cursor: auto;
-    width: min(100%, 300px);
-    height: auto;
-    margin: 1rem auto 0 auto;
+    max-height: 20rem;
+    object-fit: contain;
   }
 
   @media (max-width: 900px) {
+    padding: 0;
+  }
+
+  margin-bottom: -2rem;
+
+  /* img:first-child {
+    margin-bottom: -120px;
+    margin-left: -20px;
+    margin-right: -20px;
+  } */
+
+  /* @media (max-width: 70rem) {
     img {
       width: min(100%, 200px);
     }
+  } */
+
+  /* img {
+    cursor: auto;
+    width: min(100%, 300px);
+    height: auto;
   }
+
+  @media (max-width: 70rem) {
+    img {
+      width: min(100%, 200px);
+    }
+  } */
 `;

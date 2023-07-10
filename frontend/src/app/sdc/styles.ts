@@ -31,6 +31,11 @@ export const LastEditionText = styled.div`
   width: 100%;
   text-align: right;
   padding-right: 1rem;
+
+  @media (max-width: 70rem) {
+    text-align: center;
+    padding: 0;
+  }
 `;
 
 export const ComingSoon = styled.div`

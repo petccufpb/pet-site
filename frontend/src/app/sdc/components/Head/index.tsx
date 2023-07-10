@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaInstagram } from "react-icons/fa";
 
-import PETVsoft from "@assets/images/pet-vsoft.svg";
+import PETVsoft from "@assets/images/pet-vsoft.png";
 import SDCLast from "@assets/images/sdc-xxx.svg";
 
 import { FireHexagon } from "../Hexagon";
