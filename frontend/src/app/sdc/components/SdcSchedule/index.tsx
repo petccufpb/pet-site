@@ -61,11 +61,7 @@ export function SdcSchedule({ data }: { data: SDCScheduleData }) {
             <th></th>
           </tr>
           {dayEvents.map(e => (
-            <SdcActivity
-              key={e.id}
-              data={e}
-              dayEvent={days.indexOf(currentDay || new Date(data.events[0].startTime).getDate()) + 1}
-            />
+            <SdcActivity key={e.id} data={e} dayEvent={days.indexOf(new Date(e.startTime).getDate()) + 1} />
           ))}
         </tbody>
       </Table>
