@@ -156,6 +156,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.1.0
         version: 3.1.0(react-hook-form@7.43.9)
+      '@hyoretsu/react-components':
+        specifier: ^1.0.7
+        version: 1.0.7(@babel/core@7.22.1)(react-dom@18.2.0)(react-is@18.2.0)
       '@hyoretsu/react-hooks':
         specifier: ^1.0.4
         version: 1.0.4(react@18.2.0)
@@ -3107,6 +3110,22 @@ packages:
     transitivePeerDependencies:
       - encoding
       - supports-color
+    dev: false
+
+  /@hyoretsu/react-components@1.0.7(@babel/core@7.22.1)(react-dom@18.2.0)(react-is@18.2.0):
+    resolution: {integrity: sha512-mz9f3FJo9opEXms2oDV6yyxz2YOGHdCMfuY9jeiqfpzMEIU9lYv9JUZz856O7BQN7fE9a/rOD5nEbILdclt+GQ==}
+    dependencies:
+      next: 13.4.9(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      styled-components: 5.3.9(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@opentelemetry/api'
+      - babel-plugin-macros
+      - fibers
+      - react-dom
+      - react-is
+      - sass
     dev: false
 
   /@hyoretsu/react-hooks@1.0.4(react@18.2.0):

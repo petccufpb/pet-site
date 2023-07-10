@@ -54,7 +54,7 @@ export function SdcSchedule({ data }: { data: SDCScheduleData }) {
         <tbody>
           <tr>
             <th>Ministrante</th>
-            <th>Tipo</th>
+            <th>Título</th>
             <th>Dia</th>
             <th>Hora</th>
             <th>Vagas</th>

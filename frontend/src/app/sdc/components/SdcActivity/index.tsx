@@ -1,4 +1,7 @@
+import { Modal } from "@hyoretsu/react-components";
+import { Info } from "@phosphor-icons/react";
 import Link from "next/link";
+import { useState } from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import { HiArrowUpRight } from "react-icons/hi2";
 import { SDCEventData } from "sdc";
@@ -16,6 +19,8 @@ type SdcActivityProps = {
 };
 
 export function SdcActivity({ data }: { data: SDCEventData }) {
+  const [modalVisible, showModal] = useState(false);
+
   const day = new Date(data.startTime).getDate();
   const time = new Date(data.startTime).toLocaleTimeString([], {
     hour: "2-digit",
@@ -24,46 +29,64 @@ export function SdcActivity({ data }: { data: SDCEventData }) {
   const available = data.capacity ? data.participants.length < data.capacity : true;
 
   return (
-    <SDCtr>
-      <th>
-        <SpeakerPhoto
-          src={data.speaker.photoUrl}
-          alt={data.speaker.name}
-          width={45}
-          height={45}
-          quality={100}
-        ></SpeakerPhoto>
-        <span>{data.speaker.name}</span>
-      </th>
-      <th>
-        <div>
-          {data.type && <b>{data.type === "minicurso" ? "Minicurso" : "Palestra"}</b>}
-          <span>
-            {data.type && " - "}
-            {data.name}
-          </span>
-        </div>
-      </th>
-      <th>Dia {day}</th>
-      <th>{time}</th>
-      <th>
-        {data.type === "minicurso" && (
-          <Availability availability={available}>
-            {available ? "DISPONÍVEL" : "ESGOTADO"}
-            {!available && <FaTimesCircle />}
-          </Availability>
-        )}
-      </th>
-      <th>
-        {data.type === "minicurso" && (
-          <Link aria-label="Realizar Inscrição" href={`/sdc/minicurso/${data.id}`}>
-            <Subscribe availability={available}>
-              <span>FAZER INSCRIÇÃO</span>
-              <HiArrowUpRight />
-            </Subscribe>
-          </Link>
-        )}
-      </th>
-    </SDCtr>
+    <>
+      <SDCtr>
+        <th>
+          <SpeakerPhoto
+            src={data.speaker.photoUrl}
+            alt={data.speaker.name}
+            width={45}
+            height={45}
+            quality={100}
+          ></SpeakerPhoto>
+          <span>{data.speaker.name}</span>
+        </th>
+        <th>
+          <div>
+            {data.type && <b>{data.type === "minicurso" ? "Minicurso" : "Palestra"}</b>}
+            <span>
+              {data.type && " - "}
+              {data.name}
+            </span>
+          </div>
+          {data.about && (
+            <button onClick={() => showModal(true)}>
+              <Info height={20} width={20} />
+            </button>
+          )}
+        </th>
+        <th>Dia {day}</th>
+        <th>{time}</th>
+        <th>
+          {data.type === "minicurso" && (
+            <Availability availability={available}>
+              {available ? "DISPONÍVEL" : "ESGOTADO"}
+              {!available && <FaTimesCircle />}
+            </Availability>
+          )}
+        </th>
+        <th>
+          {data.type === "minicurso" && (
+            <Link aria-label="Realizar Inscrição" href={`/sdc/minicurso/${data.id}`}>
+              <Subscribe availability={available}>
+                <span>FAZER INSCRIÇÃO</span>
+                <HiArrowUpRight />
+              </Subscribe>
+            </Link>
+          )}
+        </th>
+      </SDCtr>
+      {modalVisible && (
+        <Modal backgroundColor="#000205" textColor="#fff9" opacity={0.6} onConfirm={() => showModal(false)}>
+          {data.about!.split(/\\n/).map((paragraph, index) => {
+            if (paragraph === "") {
+              return <br key={index} />;
+            }
+
+            return <p key={index}>{paragraph}</p>;
+          })}
+        </Modal>
+      )}
+    </>
   );
 }

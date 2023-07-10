@@ -2,6 +2,7 @@ declare module "sdc" {
   export type SDCEventData = {
     id: string;
     name: string;
+    about: string | null;
     type: string;
     capacity: null | number;
     onSite: boolean;

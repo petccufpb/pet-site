@@ -78,8 +78,28 @@ export const Table = styled.table`
     justify-content: center;
     width: 100%;
     gap: 1rem;
+    position: relative;
 
     font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
+
+    div {
+      margin-right: 20px;
+    }
+
+    button {
+      position: absolute;
+      right: 0;
+
+      color: #fff9;
+
+      &:hover {
+        color: #fff;
+      }
+
+      &:active {
+        color: #fff6;
+      }
+    }
 
     // *PALESTRA*
     b {

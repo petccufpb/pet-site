@@ -38,6 +38,14 @@ export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
         overflow-x: hidden;
     }
 
+    button,
+    img,
+    svg {
+        cursor: pointer;
+        background: transparent;
+        border: none;
+    }
+
     button {
         cursor: pointer;
     }
