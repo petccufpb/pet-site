@@ -8,6 +8,7 @@ import CreateParticipation from "./CreateParticipation.service";
 describe("CreateParticipation", () => {
   let edition: ProjectEdition;
   let event: ProjectEvent;
+  let event2: ProjectEvent;
   let fakeProjectsRepository: FakeProjectsRepository;
   let participant: ProjectParticipant;
   let service: CreateParticipation;
@@ -29,6 +30,15 @@ describe("CreateParticipation", () => {
       photoUrl: "http://test.com/photo.png",
     });
     event = await fakeProjectsRepository.createEvent({
+      about: "",
+      editionId: edition.id,
+      endTime: new Date(),
+      name: "Test Event",
+      speakerId,
+      startTime: new Date(),
+      type: null,
+    });
+    event2 = await fakeProjectsRepository.createEvent({
       about: "",
       editionId: edition.id,
       endTime: new Date(),
@@ -177,6 +187,25 @@ describe("CreateParticipation", () => {
     await expect(
       service.execute({
         eventId: event.id,
+        email: participant.email,
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
+  });
+
+  it("should no allow creating participation in 2 different events in the same edition", async () => {
+    await service.execute({
+      editionId: edition.id,
+      matricula: participant.matricula,
+    });
+
+    await service.execute({
+      eventId: event.id,
+      email: participant.email,
+    });
+
+    await expect(
+      service.execute({
+        eventId: event2.id,
         email: participant.email,
       }),
     ).rejects.toBeInstanceOf(HttpException);

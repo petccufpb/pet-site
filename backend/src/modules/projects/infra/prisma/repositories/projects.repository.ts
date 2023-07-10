@@ -173,6 +173,28 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     return event;
   }
 
+  public async findEventParticipationsByEdition(editionId: string): Promise<ProjectParticipation[]> {
+    const completeEdition = await this.prisma.projectEdition.findFirst({
+      where: { id: editionId },
+      include: {
+        events: {
+          include: {
+            participants: true,
+          },
+        },
+      },
+    });
+
+    const participations: ProjectParticipation[] = [];
+    completeEdition?.events.forEach(event => {
+      event.participants.forEach(participation => {
+        participations.push(participation);
+      });
+    });
+
+    return participations;
+  }
+
   public async findExistingEvent(where: FindExistingEventDTO): Promise<ProjectEvent | null> {
     const event = await this.prisma.projectEvent.findFirst({
       where,

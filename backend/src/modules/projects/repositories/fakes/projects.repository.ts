@@ -258,6 +258,32 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     return event;
   }
 
+  public async findEventParticipationsByEdition(editionId: string): Promise<ProjectParticipation[]> {
+    const edition =
+      (this.editions.find(edition => edition.id === editionId) as CompleteProjectEdition) || null;
+
+    if (edition) {
+      edition.events = this.events.filter(event => event.editionId === editionId) as CompleteProjectEvent[];
+      edition.events.forEach((event, index) => {
+        const completeEvent = event;
+        completeEvent.participants = this.participations.filter(
+          participation => participation.eventId === event.id,
+        );
+
+        edition.events[index] = completeEvent;
+      });
+    }
+
+    const participations: ProjectParticipation[] = [];
+    edition?.events.forEach(event => {
+      event.participants.forEach(participation => {
+        participations.push(participation);
+      });
+    });
+
+    return participations;
+  }
+
   public async findExistingEvent({
     editionId,
     location,

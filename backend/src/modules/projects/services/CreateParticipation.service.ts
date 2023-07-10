@@ -53,10 +53,11 @@ export default class CreateParticipation {
         throw new HttpException("Esse evento não existe", HttpStatus.NOT_FOUND);
       }
 
+      ({ editionId } = event);
       title = event.name;
 
       const editionParticipation = await this.projectsRepository.findParticipation({
-        editionId: event.editionId,
+        editionId: editionId,
         participantId,
       });
       if (!editionParticipation) {
@@ -89,6 +90,17 @@ export default class CreateParticipation {
     const existingParticipation = await this.projectsRepository.findParticipation(payload);
     if (existingParticipation) {
       throw new HttpException("Você já se inscreveu nesse evento", HttpStatus.FORBIDDEN);
+    }
+
+    const allEventParticipations = await this.projectsRepository.findEventParticipationsByEdition(
+      editionId as string,
+    );
+
+    const participatingInEvent = allEventParticipations.find(
+      participation => participation.participantId === participantId,
+    );
+    if (participatingInEvent) {
+      throw new HttpException("Você só pode participar de um evento por edição", HttpStatus.FORBIDDEN);
     }
 
     const participation = await this.projectsRepository.createParticipation(payload);
