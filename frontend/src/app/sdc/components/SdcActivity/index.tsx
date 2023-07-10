@@ -31,6 +31,7 @@ export function SdcActivity({ data }: { data: SDCEventData }) {
           alt={data.speaker.name}
           width={45}
           height={45}
+          quality={100}
         ></SpeakerPhoto>
         <span>{data.speaker.name}</span>
       </th>
