@@ -1,8 +1,7 @@
-import { format } from "date-fns";
-import ptBrLocale from "date-fns/locale/pt";
+import { formatInTimeZone } from "date-fns-tz";
+import ptBR from "date-fns/locale/pt-BR";
 import { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { HiCheck } from "react-icons/hi2";
 import { SDCEventData, SDCScheduleData } from "sdc";
@@ -40,10 +39,10 @@ export default async function Minicurso({ params }: { params: { id: string } }) 
           <div>correeeeee!</div>
         </h1>
         <h3>Corre, que as vagas nesse minicurso estão se esgotando.</h3>
-        <Link aria-label="Verificar Programação" href="/sdc#programacao">
+        <button>
           <HiCheck />
           <span>Verificar Programação</span>
-        </Link>
+        </button>
       </DescriptionContainer>
       <FormContainer>
         <SpeakerInfo>
@@ -64,10 +63,12 @@ export default async function Minicurso({ params }: { params: { id: string } }) 
             { title: "E-mail cadastrado", placeholder: "seuemail@exemplo.com", id: "email" },
           ]}
           date={{
-            day: format(new Date(event.startTime), "dd MMMM yyyy", { locale: ptBrLocale })
+            day: formatInTimeZone(new Date(event.startTime), "America/Fortaleza", "dd MMMM yyyy", {
+              locale: ptBR,
+            })
               .split(" ")
               .join(" de "),
-            time: `${format(new Date(event.startTime), "HH:mm", { locale: ptBrLocale })}h`,
+            time: `${formatInTimeZone(new Date(event.startTime), "America/Fortaleza", "HH:mm")}h`,
           }}
           confirmType="confirm"
         />
