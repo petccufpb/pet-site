@@ -65,7 +65,9 @@ export function MobileSchedule({ data }: { data: SDCScheduleData }) {
               <div>{e.speaker.name}</div>
               <div>{e.name}</div>
               {e.type === "minicurso" ? (
-                <Availability available={data.capacity ? data.participants.length < data.capacity : true}>
+                <Availability
+                  available={e.capacity ? e.participants.length < e.capacity + e.extraCapacity : true}
+                >
                   <span>Inscreva-se</span>
                   <HiArrowUpRight height="1em" />
                 </Availability>

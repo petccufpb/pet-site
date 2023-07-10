@@ -4,7 +4,8 @@ declare module "sdc" {
     name: string;
     about: string | null;
     type: string;
-    capacity: null | number;
+    capacity?: number;
+    extraCapacity: number;
     onSite: boolean;
     location: string;
     startTime: string;

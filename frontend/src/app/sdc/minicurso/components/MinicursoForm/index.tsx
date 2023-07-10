@@ -68,6 +68,7 @@ export function MinicursoForm({
   date,
   sections,
   id,
+  extrasAvailable,
   /*   formAction,
    */ type = "normal",
   confirmType = "confirm",
@@ -76,6 +77,7 @@ export function MinicursoForm({
   type?: "normal" | "cancel";
   confirmType?: "next" | "confirm";
   borderType?: "static" | "gradient";
+  extrasAvailable?: boolean;
   date?: {
     day: string;
     time: string;
@@ -144,6 +146,12 @@ export function MinicursoForm({
         theme="dark"
       />
       <FormContainer borderType={borderType} onSubmit={handleSubmit(sendForm)}>
+        {extrasAvailable && (
+          <span>
+            Obs: Esse minicurso está com as vagas de computador cheio. Ao se inscrever, você se compromete em
+            levar seu próprio notebook.
+          </span>
+        )}
         <DateOrNothing date={date}></DateOrNothing>
         {sections &&
           sections.map(section => (

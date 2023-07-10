@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
 
-export const SdcButton = styled.div<{ availability: boolean }>`
+export const SdcButton = styled.div<{ availability: boolean; extrasAvailable?: boolean }>`
   font-family: inherit;
   color: white;
   margin: 0 auto;
@@ -27,9 +27,21 @@ export const SdcButton = styled.div<{ availability: boolean }>`
 export const Availability = styled(SdcButton)`
   max-width: 7.5rem;
   border: 1px solid
-    ${({ availability, theme }) => (availability ? theme.colors["base-green"] : theme.colors["fourth-red"])};
-  background: ${({ theme, availability }) =>
-    availability ? `${theme.colors["base-green"]}60` : "rgba(213, 35, 45, 0.6)"};
+    ${({ availability, extrasAvailable, theme }) => {
+      if (availability) {
+        if (extrasAvailable) {
+          return theme.colors["sixth-grey"];
+        }
+
+        return theme.colors["base-green"];
+      }
+
+      return theme.colors["fourth-red"];
+    }};
+  background: ${({ theme, availability, extrasAvailable }) =>
+    availability
+      ? `${extrasAvailable ? theme.colors["sixth-grey"] : theme.colors["base-green"]}60`
+      : "rgba(213, 35, 45, 0.6)"};
   font-weight: 700;
   font-size: ${({ theme }) => theme.textSizes["text-regular-xs"]};
   display: flex;

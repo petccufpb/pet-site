@@ -9,7 +9,7 @@ export default class CreateEventDTO implements Partial<ProjectEvent> {
 
   @IsOptional()
   @IsNumber()
-  @Min(0) // min será 1, 0 só para testes
+  @Min(1)
   capacity?: number;
 
   @IsNotEmpty()
@@ -20,6 +20,11 @@ export default class CreateEventDTO implements Partial<ProjectEvent> {
   @IsNotEmpty()
   @IsDateString()
   endTime!: Date;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(1)
+  extraCapacity?: number;
 
   @IsOptional()
   @IsString()

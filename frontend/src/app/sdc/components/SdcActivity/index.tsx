@@ -26,7 +26,8 @@ export function SdcActivity({ data, dayEvent }: { data: SDCEventData; dayEvent: 
     hour: "2-digit",
     minute: "2-digit",
   });
-  const available = data.capacity ? data.participants.length < data.capacity : true;
+  const available = data.capacity ? data.participants.length < data.capacity + data.extraCapacity : true;
+  const extrasAvailable = data.extraCapacity ? data.participants.length >= (data.capacity as number) : false;
 
   return (
     <>
@@ -59,7 +60,15 @@ export function SdcActivity({ data, dayEvent }: { data: SDCEventData; dayEvent: 
         <th>{time}</th>
         <th>
           {data.type === "minicurso" && (
-            <Availability availability={available}>
+            <Availability
+              availability={available}
+              extrasAvailable={extrasAvailable}
+              title={
+                extrasAvailable
+                  ? "Este minicurso está com as vagas de computadores esgotadas. Os alunos que se inscreverem nas vagas restantes terão que levar seus próprios notebooks."
+                  : ""
+              }
+            >
               {available ? "DISPONÍVEL" : "ESGOTADO"}
               {!available && <FaTimesCircle />}
             </Availability>

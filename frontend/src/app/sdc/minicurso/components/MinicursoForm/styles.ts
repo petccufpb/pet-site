@@ -36,6 +36,10 @@ export const FormContainer = styled.form<{ borderType: "static" | "gradient" }>`
     background: ${({ theme }) => theme.colors["fourth-black"]};
   }
 
+  > span {
+    color: ${({ theme }) => theme.colors["base-blue"]};
+  }
+
   input {
     width: 100%;
     background-color: ${({ theme }) => theme.colors["fifth-black"]};

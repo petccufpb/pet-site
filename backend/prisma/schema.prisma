@@ -97,6 +97,7 @@ model ProjectEvent {
     about               String?
     type                String?
     capacity            Int?
+    extraCapacity       Int                         @default(0)
     onSite              Boolean                     @default(true)
     location            String?
     startTime           DateTime

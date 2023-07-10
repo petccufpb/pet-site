@@ -8,7 +8,7 @@
     "dev": "nest start --watch",
     "prepare": "pnpm prisma:generate",
     "prisma:generate": "prisma generate --data-proxy",
-    "prisma:migrate-dev": "prisma migrate dev --create-only",
+    "prisma:migrate-dev": "prisma migrate dev --create-only && pnpm -F backend prisma:generate",
     "prisma:migrate-deploy": "prisma migrate deploy",
     "start": "nest start",
     "start:debug": "nest start --debug --watch",

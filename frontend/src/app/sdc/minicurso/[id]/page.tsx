@@ -58,6 +58,7 @@ export default async function Minicurso({ params }: { params: { id: string } }) 
         <MinicursoForm
           type="cancel"
           id={event.id}
+          extrasAvailable
           sections={[
             { title: "Seu nome", placeholder: "João da Silva", id: "name" },
             { title: "E-mail cadastrado", placeholder: "seuemail@exemplo.com", id: "email" },
