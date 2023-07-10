@@ -65,6 +65,7 @@ export default function Inscricao() {
     { value: "cdia", label: "Ciência de Dados" },
     { value: "cc", label: "Ciência da Computação" },
     { value: "ec", label: "Engenharia da Computação" },
+    { value: "outro", label: "Outro" },
   ];
 
   const [step, setStep] = useState(0);
