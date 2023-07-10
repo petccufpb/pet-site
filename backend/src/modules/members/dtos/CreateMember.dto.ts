@@ -1,6 +1,6 @@
+import { IsOptional } from "@hyoretsu/decorators";
 import { MemberContact } from "@prisma/client";
 import { IsArray, IsBoolean, IsIn, IsNotEmpty, IsString, IsUrl } from "class-validator";
-import { IsOptional } from "decorators/IsOptional";
 
 export class CreateMemberDTO {
   @IsNotEmpty()
