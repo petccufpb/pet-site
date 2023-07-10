@@ -157,8 +157,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0(react-hook-form@7.43.9)
       '@hyoretsu/react-components':
-        specifier: ^1.0.7
-        version: 1.0.7(@babel/core@7.22.1)(react-dom@18.2.0)(react-is@18.2.0)
+        specifier: ^1.0.9
+        version: 1.0.9(@babel/core@7.22.1)(react-dom@18.2.0)(react-is@18.2.0)
       '@hyoretsu/react-hooks':
         specifier: ^1.0.4
         version: 1.0.4(react@18.2.0)
@@ -3112,8 +3112,8 @@ packages:
       - supports-color
     dev: false
 
-  /@hyoretsu/react-components@1.0.7(@babel/core@7.22.1)(react-dom@18.2.0)(react-is@18.2.0):
-    resolution: {integrity: sha512-mz9f3FJo9opEXms2oDV6yyxz2YOGHdCMfuY9jeiqfpzMEIU9lYv9JUZz856O7BQN7fE9a/rOD5nEbILdclt+GQ==}
+  /@hyoretsu/react-components@1.0.9(@babel/core@7.22.1)(react-dom@18.2.0)(react-is@18.2.0):
+    resolution: {integrity: sha512-3mmWGMm1AnJho4HQ5/C1JKhl3BNJVXQmFLzQvVEd8x9maywZovT3dHrJlxusTWzKrlT3wAbXkpq2b76biXCUFA==}
     dependencies:
       next: 13.4.9(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0

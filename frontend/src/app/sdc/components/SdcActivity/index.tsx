@@ -77,7 +77,17 @@ export function SdcActivity({ data }: { data: SDCEventData }) {
         </th>
       </SDCtr>
       {modalVisible && (
-        <Modal backgroundColor="#000205" textColor="#fff9" opacity={0.6} onConfirm={() => showModal(false)}>
+        <Modal
+          backgroundColor="#000205"
+          buttonBackground="#04d36160"
+          buttonBorderColor="#04d361"
+          buttonBorderWidth={1}
+          buttonPadding={[0.3 * 16, 1.5 * 16]}
+          buttonText="Fechar"
+          onConfirm={() => showModal(false)}
+          opacity={0.6}
+          textColor="#fff9"
+        >
           {data.about!.split(/\\n/).map((paragraph, index) => {
             if (paragraph === "") {
               return <br key={index} />;
