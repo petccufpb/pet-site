@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { HiCheck } from "react-icons/hi2";
 import { SDCEventData, SDCScheduleData } from "sdc";
@@ -37,10 +38,10 @@ export default async function Minicurso({ params }: { params: { id: string } }) 
           <div>correeeeee!</div>
         </h1>
         <h3>Corre, que as vagas nesse minicurso estão se esgotando.</h3>
-        <button>
+        <Link aria-label="Verificar Programação" href="/sdc#programacao">
           <HiCheck />
           <span>Verificar Programação</span>
-        </button>
+        </Link>
       </DescriptionContainer>
       <FormContainer>
         <SpeakerInfo>

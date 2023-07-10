@@ -44,7 +44,7 @@ function DateOrNothing({ date }: { date?: { day: string; time: string } }) {
 
 function CancelButtonOrNothing({ type }: { type: "normal" | "cancel" }) {
   if (type === "cancel") {
-    return <CancelButton href="/sdc">Cancelar</CancelButton>;
+    return <CancelButton>Cancelar</CancelButton>;
   } else {
     return <></>;
   }

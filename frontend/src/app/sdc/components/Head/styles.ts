@@ -1,7 +1,6 @@
 "use client";
 
 import { Section } from "@app/sdc/styles";
-import Link from "next/link";
 import styled from "styled-components";
 
 export const LastEditionSection = styled(Section)`
@@ -9,12 +8,6 @@ export const LastEditionSection = styled(Section)`
   display: flex;
   flex-direction: column;
   align-items: stretch;
-
-  img {
-    width: min(100%, 300px);
-    height: auto;
-    margin: 1rem auto 0 auto;
-  }
 
   > div:last-child {
     display: flex;
@@ -128,4 +121,21 @@ export const JustifyBetween = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+`;
+
+export const ImgContainer = styled.div`
+  display: flex;
+  margin-bottom: -1rem;
+
+  img {
+    width: min(100%, 300px);
+    height: auto;
+    margin: 1rem auto 0 auto;
+  }
+
+  @media (max-width: 900px) {
+    img {
+      width: min(100%, 200px);
+    }
+  }
 `;

@@ -3,12 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaInstagram } from "react-icons/fa";
 
-import SDCLast from "@assets/images/sdc-xxx.png";
+import PETVsoft from "@assets/images/pet-vsoft.png";
+import SDCLast from "@assets/images/sdc-xxx.svg";
 
 import { FireHexagon } from "../Hexagon";
 import {
   Description,
   HeadContainer,
+  ImgContainer,
   InstagramContainer,
   JustifyBetween,
   LastEditionSection,
@@ -22,7 +24,10 @@ export function Head() {
     <HeadContainer>
       <LastEditionSection>
         <div>
-          <Image src={SDCLast} alt="Logo da SDC XXIX" priority={true} />
+          <ImgContainer>
+            <Image src={PETVsoft} alt="Logo do PET e da Vsoft" priority={true} />
+            <Image src={SDCLast} alt="Logo da SDC XXIX" priority={true} />
+          </ImgContainer>
           <div>
             <LastEditionText>ULTIMA EDIÇÃO</LastEditionText>
             <SubscribeCount>

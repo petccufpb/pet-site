@@ -42,11 +42,11 @@ export function SdcSchedule({ data }: { data: SDCScheduleData }) {
 
   return (
     <SdcScheduleContainer>
-      <SectionTitle>Clique e filtre todos os eventos de um dia específico</SectionTitle>
+      <SectionTitle id="programacao">Clique e filtre todos os eventos de um dia específico</SectionTitle>
       <DaySelector>
-        {days.map(day => (
+        {days.map((day, i) => (
           <Day key={day} selected={currentDay === day} onClick={() => changeSelectedDay(day)}>
-            Dia {day}
+            Dia {i + 1}
           </Day>
         ))}
       </DaySelector>
@@ -61,7 +61,11 @@ export function SdcSchedule({ data }: { data: SDCScheduleData }) {
             <th></th>
           </tr>
           {dayEvents.map(e => (
-            <SdcActivity key={e.id} data={e} />
+            <SdcActivity
+              key={e.id}
+              data={e}
+              dayEvent={days.indexOf(currentDay || new Date(data.events[0].startTime).getDate()) + 1}
+            />
           ))}
         </tbody>
       </Table>

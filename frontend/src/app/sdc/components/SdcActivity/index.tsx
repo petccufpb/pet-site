@@ -18,7 +18,7 @@ type SdcActivityProps = {
   type: string;
 };
 
-export function SdcActivity({ data }: { data: SDCEventData }) {
+export function SdcActivity({ data, dayEvent }: { data: SDCEventData; dayEvent: number }) {
   const [modalVisible, showModal] = useState(false);
 
   const day = new Date(data.startTime).getDate();
@@ -55,7 +55,7 @@ export function SdcActivity({ data }: { data: SDCEventData }) {
             </button>
           )}
         </th>
-        <th>Dia {day}</th>
+        <th>Dia {dayEvent}</th>
         <th>{time}</th>
         <th>
           {data.type === "minicurso" && (

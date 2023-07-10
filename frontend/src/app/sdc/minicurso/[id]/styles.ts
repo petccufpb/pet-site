@@ -38,7 +38,7 @@ export const DescriptionContainer = styled.div`
     transform: translateX(-1rem);
   }
 
-  button {
+  a {
     display: inline-block;
     color: white;
     font-family: inherit;

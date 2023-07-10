@@ -45,11 +45,11 @@ export function MobileSchedule({ data }: { data: SDCScheduleData }) {
 
   return (
     <SdcScheduleContainer>
-      <SectionTitle>Clique e filtre todos os eventos de um dia específico</SectionTitle>
+      <SectionTitle id="programacao">Clique e filtre todos os eventos de um dia específico</SectionTitle>
       <DaySelector>
-        {days.map(day => (
+        {days.map((day, i) => (
           <Day key={day} selected={currentDay === day} onClick={() => changeSelectedDay(day)}>
-            Dia {day}
+            Dia {i + 1}
           </Day>
         ))}
       </DaySelector>
@@ -73,7 +73,7 @@ export function MobileSchedule({ data }: { data: SDCScheduleData }) {
                 <div />
               )}
               <div>
-                Dia {new Date(e.startTime).getDate()} -{" "}
+                Dia {days.indexOf(new Date(e.startTime).getDate()) + 1} -{" "}
                 {new Date(e.startTime).toLocaleTimeString([], {
                   hour: "2-digit",
                   minute: "2-digit",

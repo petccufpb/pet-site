@@ -24,15 +24,22 @@ export function Background() {
               <stop offset="90%" stopColor="#0072ed20" />
               <stop offset="100%" stopColor="#00000000" />
             </radialGradient>
+            <radialGradient id="gradient-red">
+              <stop offset="0%" stopColor="#E32C4C" />
+              <stop offset="90%" stopColor="#2c0209" />
+              <stop offset="100%" stopColor="#00000000" />
+            </radialGradient>
           </defs>
           <g fill="url(#gradient)">
-            <SdcEllipse cx="0" cy="0" rx="500" ry="500" />
+            <g style={{ opacity: "80%" }}>
+              <SdcEllipse fill="url(#gradient-red)" cx="0" cy="0" rx="500" ry="500" />
+            </g>
             <SdcEllipse cx="90%" cy="25%" rx="500" ry="500" />
             <g style={{ opacity: "80%" }}>
               <SdcEllipse cx="15%" cy="48%" rx="500" ry="500" />
             </g>
             <g style={{ opacity: "80%" }}>
-              <SdcEllipse cx="60%" cy="75%" rx="500" ry="500" />
+              <SdcEllipse fill="url(#gradient-red)" cx="60%" cy="75%" rx="400" ry="400" />
             </g>
             <SdcEllipse cx="10%" cy="100%" rx="500" ry="500" />
           </g>
