@@ -41,7 +41,6 @@ export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
     button,
     img,
     svg {
-        cursor: pointer;
         background: transparent;
         border: none;
     }
