@@ -113,6 +113,8 @@ export function Header() {
         ],
       });
     }
+
+    setSdcRoutes(defaultSdcRoutes);
   }, [pathname]);
 
   useEffect(() => {
