@@ -11,6 +11,14 @@ module.exports = () => ({
     appDir: true,
     serverActions: true,
   },
+  images: {
+    domains: ["avatars.githubusercontent.com", "drive.google.com", "github.com"],
+    remotePatterns: [
+      {
+        hostname: "**docs.googleusercontent.com",
+      },
+    ],
+  },
   productionBrowserSourceMaps: true,
   reactStrictMode: true,
   swcMinify: true,
@@ -36,27 +44,5 @@ module.exports = () => ({
     });
 
     return config;
-  },
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "avatars.githubusercontent.com",
-        port: "",
-        pathname: "/u/**",
-      },
-      {
-        protocol: "https",
-        hostname: "drive.google.com",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "github.com",
-        port: "",
-        pathname: "/**",
-      },
-    ],
   },
 });
