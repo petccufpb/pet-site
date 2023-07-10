@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+import ptBrLocale from "date-fns/locale/pt";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -62,16 +64,10 @@ export default async function Minicurso({ params }: { params: { id: string } }) 
             { title: "E-mail cadastrado", placeholder: "seuemail@exemplo.com", id: "email" },
           ]}
           date={{
-            day: new Date(event.startTime).toLocaleDateString("pt-BR", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            }),
-            time:
-              new Date(event.startTime).toLocaleTimeString("pt-BR", {
-                hour: "2-digit",
-                minute: "2-digit",
-              }) + "h",
+            day: format(new Date(event.startTime), "dd MMMM yyyy", { locale: ptBrLocale })
+              .split(" ")
+              .join(" de "),
+            time: `${format(new Date(event.startTime), "HH:mm", { locale: ptBrLocale })}h`,
           }}
           confirmType="confirm"
         />
