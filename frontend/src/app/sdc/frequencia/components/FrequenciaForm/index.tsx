@@ -95,18 +95,9 @@ export function FrequenciaForm({
   async function sendForm(data: any) {
     const i = toast.info("Carregando...");
 
-    const eventEndTimeOffset = differenceInMinutes(new Date(), endTime as Date);
-
-    let frequenciaDisabled = "";
-    if (eventEndTimeOffset < -30) {
-      frequenciaDisabled = "Você só pode marcar frequência 30min antes do término do evento";
-    } else if (eventEndTimeOffset > 30) {
-      frequenciaDisabled = "Lamentamos, mas a frequência para esse evento já fechou";
-    }
-
-    if (frequenciaDisabled) {
+    if (isEventOnSite && !userLocation) {
       toast.dismiss(i);
-      toast.error(frequenciaDisabled, {
+      toast.error("Você precisa habilitar a localização para marcar a frequência.", {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -124,9 +115,18 @@ export function FrequenciaForm({
       return;
     }
 
-    if (isEventOnSite && !userLocation) {
+    const eventEndTimeOffset = differenceInMinutes(new Date(), endTime as Date);
+
+    let frequenciaDisabled = "";
+    if (eventEndTimeOffset < -30) {
+      frequenciaDisabled = "Você só pode marcar frequência 30min antes do término do evento";
+    } else if (eventEndTimeOffset > 30) {
+      frequenciaDisabled = "Lamentamos, mas a frequência para esse evento já fechou";
+    }
+
+    if (frequenciaDisabled) {
       toast.dismiss(i);
-      toast.error("Você precisa habilitar a localização para marcar a frequência.", {
+      toast.error(frequenciaDisabled, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,

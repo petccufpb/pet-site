@@ -1,3 +1,5 @@
+import { formatInTimeZone } from "date-fns-tz";
+import { ptBR } from "date-fns/locale";
 import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -64,16 +66,12 @@ export default async function Frequencia({ params }: { params: { id: string } })
             { title: "E-mail cadastrado", placeholder: "seuemail@exemplo.com", id: "email" },
           ]}
           date={{
-            day: new Date(event.startTime).toLocaleDateString("pt-BR", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            }),
-            time:
-              new Date(event.startTime).toLocaleTimeString("pt-BR", {
-                hour: "2-digit",
-                minute: "2-digit",
-              }) + "h",
+            day: formatInTimeZone(new Date(event.startTime), "America/Fortaleza", "dd MMMM yyyy", {
+              locale: ptBR,
+            })
+              .split(" ")
+              .join(" de "),
+            time: `${formatInTimeZone(new Date(event.startTime), "America/Fortaleza", "HH:mm")}h`,
           }}
           endTime={new Date(event.endTime)}
           isEventOnSite={event.onSite}
