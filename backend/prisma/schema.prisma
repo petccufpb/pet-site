@@ -94,6 +94,7 @@ model ProjectEdition {
 model ProjectEvent {
     id                  String                      @id @default(uuid())
     name                String
+    about               String?
     type                String?
     capacity            Int?
     onSite              Boolean                     @default(true)
@@ -144,6 +145,7 @@ model ProjectParticipant {
 model ProjectSpeaker {
     id        String         @id @default(uuid())
     name      String
+    about     String?
     photoUrl  String
     events    ProjectEvent[]
     createdAt DateTime       @default(now())
