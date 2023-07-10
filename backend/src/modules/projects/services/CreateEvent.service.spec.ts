@@ -16,6 +16,7 @@ describe("CreateEvent", () => {
     const { id: projectId } = await fakeProjectsRepository.createProject({ title: "Test Project" });
     edition = await fakeProjectsRepository.createEdition({ date: new Date(), number: 1, projectId });
     speaker = await fakeProjectsRepository.createSpeaker({
+      about: "",
       name: "Test Speaker",
       photoUrl: "http://test.com/photo.png",
     });
@@ -24,6 +25,7 @@ describe("CreateEvent", () => {
   it("should not be able to create an event without an edition", async () => {
     await expect(
       service.execute({
+        about: "",
         editionId: "fail-id",
         endTime: new Date(),
         location: "Test Room",
@@ -42,6 +44,7 @@ describe("CreateEvent", () => {
 
     await expect(
       service.execute({
+        about: "",
         editionId: edition.id,
         endTime: new Date(),
         location: "Test Room",
@@ -61,6 +64,7 @@ describe("CreateEvent", () => {
 
     await expect(
       service.execute({
+        about: "",
         editionId: edition.id,
         endTime,
         location: "Test Room",
@@ -75,6 +79,7 @@ describe("CreateEvent", () => {
 
   it("should be able to create an on-site event", async () => {
     const event = await service.execute({
+      about: "",
       capacity: 100,
       editionId: edition.id,
       endTime: new Date(),
@@ -91,6 +96,7 @@ describe("CreateEvent", () => {
 
   it("should be able to create an on-site event without capacity", async () => {
     const event = await service.execute({
+      about: "",
       editionId: edition.id,
       endTime: new Date(),
       location: "Test Room",
@@ -107,6 +113,7 @@ describe("CreateEvent", () => {
   it("should not be able to create an on-site event without location", async () => {
     await expect(
       service.execute({
+        about: "",
         editionId: edition.id,
         endTime: new Date(),
         name: "Test Event",
@@ -120,6 +127,7 @@ describe("CreateEvent", () => {
 
   it("should be able to create an online event", async () => {
     const event = await service.execute({
+      about: "",
       capacity: 50,
       editionId: edition.id,
       endTime: new Date(),
@@ -136,6 +144,7 @@ describe("CreateEvent", () => {
 
   it("should be able to create an online event without capacity", async () => {
     const event = await service.execute({
+      about: "",
       editionId: edition.id,
       endTime: new Date(),
       location: "https://meet.google.com/aaa-aaaa-aaa",
@@ -151,6 +160,7 @@ describe("CreateEvent", () => {
 
   it("should be able to create an online event without location and capacity", async () => {
     const event = await service.execute({
+      about: "",
       editionId: edition.id,
       endTime: new Date(),
       name: "Test Event",
@@ -165,6 +175,7 @@ describe("CreateEvent", () => {
 
   it("should not be able to create two events at the same time and location", async () => {
     await service.execute({
+      about: "",
       editionId: edition.id,
       endTime: new Date(),
       location: "Test Room",
@@ -177,6 +188,7 @@ describe("CreateEvent", () => {
 
     await expect(
       service.execute({
+        about: "",
         editionId: edition.id,
         endTime: new Date(),
         location: "Test Room",

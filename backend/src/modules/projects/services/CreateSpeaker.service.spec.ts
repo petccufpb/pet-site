@@ -11,6 +11,7 @@ describe("CreateSpeaker", () => {
 
   it("should be able to create a new speaker", async () => {
     const speaker = await service.execute({
+      about: "",
       name: "Test Speaker",
       photoUrl: "http://test.com/photo.png",
     });

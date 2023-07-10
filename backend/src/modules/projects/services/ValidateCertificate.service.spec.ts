@@ -20,10 +20,12 @@ describe("ValidateCertificate", () => {
       projectId,
     });
     const { id: speakerId } = await fakeProjectsRepository.createSpeaker({
+      about: "",
       name: "Test Speaker",
       photoUrl: "http://test.com/photo.png",
     });
     const { id: eventId } = await fakeProjectsRepository.createEvent({
+      about: "",
       editionId,
       endTime: new Date(),
       name: "Test Event",

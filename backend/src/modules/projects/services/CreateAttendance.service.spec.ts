@@ -24,10 +24,12 @@ describe("CreateAttendance", () => {
       projectId,
     });
     const { id: speakerId } = await fakeProjectsRepository.createSpeaker({
+      about: "",
       name: "Test Speaker",
       photoUrl: "http://test.com/photo.png",
     });
     event = await fakeProjectsRepository.createEvent({
+      about: "",
       editionId,
       endTime: new Date(),
       name: "Test Event",
@@ -36,6 +38,7 @@ describe("CreateAttendance", () => {
       type: "main",
     });
     minicurso = await fakeProjectsRepository.createEvent({
+      about: "",
       editionId,
       endTime: new Date(),
       name: "Test Event",
@@ -44,6 +47,7 @@ describe("CreateAttendance", () => {
       type: "minicurso",
     });
     palestra = await fakeProjectsRepository.createEvent({
+      about: "",
       editionId,
       endTime: new Date(),
       name: "Test Event",
@@ -52,6 +56,7 @@ describe("CreateAttendance", () => {
       type: "palestra",
     });
     randomEvent = await fakeProjectsRepository.createEvent({
+      about: "",
       editionId,
       endTime: new Date(),
       name: "Test Event",

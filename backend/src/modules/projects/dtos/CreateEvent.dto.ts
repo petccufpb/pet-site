@@ -5,7 +5,7 @@ import { IsBoolean, IsDateString, IsIn, IsNotEmpty, IsNumber, IsString, IsUUID, 
 export default class CreateEventDTO implements Partial<ProjectEvent> {
   @IsOptional()
   @IsString()
-  about?: string;
+  about!: string | null;
 
   @IsOptional()
   @IsNumber()

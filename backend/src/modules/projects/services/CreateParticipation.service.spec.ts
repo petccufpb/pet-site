@@ -24,10 +24,12 @@ describe("CreateParticipation", () => {
     const { id: projectId } = await fakeProjectsRepository.createProject({ title: "Test Project" });
     edition = await fakeProjectsRepository.createEdition({ date: new Date(), number: 1, projectId });
     const { id: speakerId } = await fakeProjectsRepository.createSpeaker({
+      about: "",
       name: "Test Speaker",
       photoUrl: "http://test.com/photo.png",
     });
     event = await fakeProjectsRepository.createEvent({
+      about: "",
       editionId: edition.id,
       endTime: new Date(),
       name: "Test Event",

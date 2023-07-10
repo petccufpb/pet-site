@@ -5,7 +5,7 @@ import { IsNotEmpty, IsString, IsUrl } from "class-validator";
 export default class CreateSpeakerDTO implements Partial<ProjectSpeaker> {
   @IsOptional()
   @IsString()
-  about?: string;
+  about!: string | null;
 
   @IsNotEmpty()
   @IsString()
