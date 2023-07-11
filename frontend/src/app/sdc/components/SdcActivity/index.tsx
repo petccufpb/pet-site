@@ -21,8 +21,7 @@ type SdcActivityProps = {
 export function SdcActivity({ data, dayEvent }: { data: SDCEventData; dayEvent: number }) {
   const [modalVisible, showModal] = useState(false);
 
-  const day = new Date(data.startTime).getDate();
-  const time = new Date(data.startTime).toLocaleTimeString([], {
+  const time = new Date(data.startTime).toLocaleTimeString("pt-BR", {
     hour: "2-digit",
     minute: "2-digit",
   });

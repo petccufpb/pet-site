@@ -37,7 +37,12 @@ export const FormContainer = styled.form<{ borderType: "static" | "gradient" }>`
   }
 
   > span {
-    color: ${({ theme }) => theme.colors["base-blue"]};
+    color: ${({ theme }) => theme.colors["base-red"]};
+
+    > svg {
+      margin: auto 0;
+      margin-right: 0.5rem;
+    }
   }
 
   input {

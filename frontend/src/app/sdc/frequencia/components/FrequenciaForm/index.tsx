@@ -63,7 +63,7 @@ const sendFormSchema = z.object({
         })
         .join(" ");
     }),
-  email: z.string().nonempty("O email é obrigatório").email("Formato de email inválido"),
+  email: z.string().trim().nonempty("O email é obrigatório").email("Formato de email inválido"),
 });
 
 type SendFormData = z.infer<typeof sendFormSchema>;

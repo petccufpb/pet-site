@@ -13,11 +13,11 @@ import {
   CancelButton,
   ConfirmButton,
   DateContainer,
-  InputContainer,
   FormContainer,
+  InputContainer,
 } from "./styles";
 
-import Link from "next/link";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 function DateOrNothing({ date }: { date?: { day: string; time: string } }) {
   if (date) {
@@ -59,7 +59,7 @@ const sendFormSchema = z.object({
         })
         .join(" ");
     }),
-  email: z.string().nonempty("O email é obrigatório").email("Formato de email inválido"),
+  email: z.string().trim().nonempty("O email é obrigatório").email("Formato de email inválido"),
 });
 
 type SendFormData = z.infer<typeof sendFormSchema>;
@@ -69,8 +69,7 @@ export function MinicursoForm({
   sections,
   id,
   extrasAvailable,
-  /*   formAction,
-   */ type = "normal",
+  type = "normal",
   confirmType = "confirm",
   borderType = "static",
 }: {
@@ -84,8 +83,6 @@ export function MinicursoForm({
   };
   sections?: { title: string; placeholder: string; id: "name" | "email" }[];
   id: string;
-  /*   formAction: () => void;
-   */
 }) {
   async function sendForm(data: any) {
     const i = toast.info("Carregando...");
@@ -146,13 +143,7 @@ export function MinicursoForm({
         theme="dark"
       />
       <FormContainer borderType={borderType} onSubmit={handleSubmit(sendForm)}>
-        {extrasAvailable && (
-          <span>
-            Obs: Esse minicurso está com as vagas de computador cheio. Ao se inscrever, você se compromete em
-            levar seu próprio notebook.
-          </span>
-        )}
-        <DateOrNothing date={date}></DateOrNothing>
+        <DateOrNothing date={date} />
         {sections &&
           sections.map(section => (
             <InputContainer key={section.title}>
@@ -161,6 +152,15 @@ export function MinicursoForm({
               {errors[section.id] && <span>{errors[section.id]?.message}</span>}
             </InputContainer>
           ))}
+        {extrasAvailable && (
+          <span>
+            <FaExclamationTriangle />
+            <span>
+              Esse minicurso está com as vagas de computador cheio. Ao se inscrever, você se compromete em
+              levar seu próprio notebook.
+            </span>
+          </span>
+        )}
         <ButtonContainer type={type}>
           <CancelButtonOrNothing type={type} />
           <ConfirmButton disabled={!isValid} type="submit">

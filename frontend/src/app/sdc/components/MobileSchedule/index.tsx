@@ -84,7 +84,7 @@ export function MobileSchedule({ data }: { data: SDCScheduleData }) {
                 )}
                 <div>
                   Dia {days.indexOf(new Date(e.startTime).getDate()) + 1} -{" "}
-                  {new Date(e.startTime).toLocaleTimeString([], {
+                  {new Date(e.startTime).toLocaleTimeString("pt-BR", {
                     hour: "2-digit",
                     minute: "2-digit",
                   })}

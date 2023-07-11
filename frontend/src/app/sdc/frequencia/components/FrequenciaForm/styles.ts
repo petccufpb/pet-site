@@ -106,7 +106,7 @@ export const CancelButton = styled(Link)`
   font-size: inherit;
   color: inherit;
   border: none;
-  display: inline-block;
+  display: flex;
   align-items: center;
 `;
 
