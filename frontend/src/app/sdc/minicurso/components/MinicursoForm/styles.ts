@@ -104,12 +104,14 @@ export const ConfirmButton = styled.button`
   }
 `;
 
-export const CancelButton = styled.button`
+export const CancelButton = styled(Link)`
   background: none;
   font-family: inherit;
   font-size: inherit;
   color: inherit;
   border: none;
+  display: flex;
+  align-items: center;
 `;
 
 export const DateContainer = styled.div`
