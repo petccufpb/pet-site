@@ -5,7 +5,7 @@ export default function middleware(request: NextRequest) {
   /* Redirecionar usuários para /SDC,
     IMPORTANTE: REMOVER ESSE CÓDIGO DEPOIS
     QUE O RESTO DO SITE ESTIVER PRONTO. */
-  if (!request.nextUrl.pathname.startsWith("/sdc")) {
+  if (!request.nextUrl.pathname.startsWith("/sdc") || request.nextUrl.pathname === "/sdc/admin") {
     return NextResponse.redirect(new URL("/sdc", request.url), {
       // IMPORTANTE: Se mantermos o default (301), os navegadores irão
       // cachear o redirecionamento e não irão atualizar o cache quando
