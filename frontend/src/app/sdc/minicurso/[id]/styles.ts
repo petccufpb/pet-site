@@ -78,6 +78,13 @@ export const SpeakerInfo = styled.div`
   width: 100%;
   gap: 0.5rem;
   text-align: center;
+  overflow-x: hidden;
+
+  h2 {
+    overflow-wrap: break-word;
+    overflow-x: hidden;
+    width: 100%;
+  }
 
   img {
     border-radius: 100%;
