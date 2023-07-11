@@ -54,36 +54,43 @@ export function MobileSchedule({ data }: { data: SDCScheduleData }) {
         ))}
       </DaySelector>
       <Table>
-        {dayEvents.map(e => (
-          <EventContainer
-            key={e.id}
-            aria-label="Realizar Inscrição"
-            href={e.type === "main" ? "/sdc/inscricao" : `/sdc/minicurso/${e.id}`}
-          >
-            <SpeakerPhoto width={45} height={45} src={e.speaker.photoUrl} alt={e.speaker.name}></SpeakerPhoto>
-            <Event available={true}>
-              <div>{e.speaker.name}</div>
-              <div>{e.name}</div>
-              {e.type === "minicurso" ? (
-                <Availability
-                  available={e.capacity ? e.participants.length < e.capacity + e.extraCapacity : true}
-                >
-                  <span>Inscreva-se</span>
-                  <HiArrowUpRight height="1em" />
-                </Availability>
-              ) : (
-                <div />
-              )}
-              <div>
-                Dia {days.indexOf(new Date(e.startTime).getDate()) + 1} -{" "}
-                {new Date(e.startTime).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </div>
-            </Event>
-          </EventContainer>
-        ))}
+        {dayEvents
+          .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())
+          .map(e => (
+            <EventContainer
+              key={e.id}
+              aria-label="Realizar Inscrição"
+              href={e.type === "main" ? "/sdc/inscricao" : `/sdc/minicurso/${e.id}`}
+            >
+              <SpeakerPhoto
+                width={45}
+                height={45}
+                src={e.speaker.photoUrl}
+                alt={e.speaker.name}
+              ></SpeakerPhoto>
+              <Event available={true}>
+                <div>{e.speaker.name}</div>
+                <div>{e.name}</div>
+                {e.type === "minicurso" ? (
+                  <Availability
+                    available={e.capacity ? e.participants.length < e.capacity + e.extraCapacity : true}
+                  >
+                    <span>Inscreva-se</span>
+                    <HiArrowUpRight height="1em" />
+                  </Availability>
+                ) : (
+                  <div />
+                )}
+                <div>
+                  Dia {days.indexOf(new Date(e.startTime).getDate()) + 1} -{" "}
+                  {new Date(e.startTime).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </div>
+              </Event>
+            </EventContainer>
+          ))}
       </Table>
     </SdcScheduleContainer>
   );
