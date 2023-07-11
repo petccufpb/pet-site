@@ -96,10 +96,17 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     return edition;
   }
 
-  public async createEvent({ capacity, location, onSite, ...data }: CreateEventDTO): Promise<ProjectEvent> {
+  public async createEvent({
+    capacity,
+    extraCapacity,
+    location,
+    onSite,
+    ...data
+  }: CreateEventDTO): Promise<ProjectEvent> {
     const event = {
       ...data,
       capacity: capacity || null,
+      extraCapacity: extraCapacity || 0,
       location: location || null,
       onSite: onSite || true,
       id: randomUUID(),
