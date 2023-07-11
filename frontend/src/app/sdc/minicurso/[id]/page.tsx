@@ -3,6 +3,7 @@ import ptBR from "date-fns/locale/pt-BR";
 import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { Router, useRouter } from "next/router";
 import { HiCheck } from "react-icons/hi2";
 import { SDCEventData, SDCScheduleData } from "sdc";
 
@@ -23,7 +24,7 @@ export default async function Minicurso({ params }: { params: { id: string } }) 
 
   const [event] = schedule.events.filter(({ id }: SDCEventData) => id === params.id);
 
-  if (!event) {
+  if (!event || event.type !== "minicurso") {
     notFound();
   }
 

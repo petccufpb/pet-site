@@ -190,8 +190,11 @@ export default function Inscricao() {
     toast.dismiss(i);
 
     if (res.status === 200) {
-      toast.success("Inscrição realizada com sucesso!");
-      router.push("/");
+      toast.success("Inscrição realizada com sucesso! Você será redirecionado em breve.");
+
+      setTimeout(() => {
+        router.push("/sdc");
+      }, 5000);
     } else {
       toast.error(d.message || "Falha na inscrição", {
         position: "top-center",

@@ -77,6 +77,7 @@ export const SpeakerInfo = styled.div`
   align-items: center;
   width: 100%;
   gap: 0.5rem;
+  text-align: center;
 
   img {
     border-radius: 100%;
