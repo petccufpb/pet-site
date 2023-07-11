@@ -8,9 +8,10 @@ import CreateParticipation from "./CreateParticipation.service";
 describe("CreateParticipation", () => {
   let edition: ProjectEdition;
   let event: ProjectEvent;
-  let event2: ProjectEvent;
   let fakeProjectsRepository: FakeProjectsRepository;
+  let minicurso: ProjectEvent;
   let participant: ProjectParticipant;
+  let randomEvent: ProjectEvent;
   let service: CreateParticipation;
 
   beforeEach(async () => {
@@ -36,13 +37,22 @@ describe("CreateParticipation", () => {
       name: "Test Event",
       speakerId,
       startTime: new Date(),
-      type: null,
+      type: "minicurso",
     });
-    event2 = await fakeProjectsRepository.createEvent({
+    minicurso = await fakeProjectsRepository.createEvent({
       about: "",
       editionId: edition.id,
       endTime: new Date(),
-      name: "Test Event",
+      name: "Test Minicurso",
+      speakerId,
+      startTime: new Date(),
+      type: "minicurso",
+    });
+    randomEvent = await fakeProjectsRepository.createEvent({
+      about: "",
+      editionId: edition.id,
+      endTime: new Date(),
+      name: "Test Event 2",
       speakerId,
       startTime: new Date(),
       type: null,
@@ -192,7 +202,21 @@ describe("CreateParticipation", () => {
     ).rejects.toBeInstanceOf(HttpException);
   });
 
-  it("should no allow creating participation in 2 different events in the same edition", async () => {
+  it("should not allow participating in a non-minicurso event", async () => {
+    await service.execute({
+      editionId: edition.id,
+      matricula: participant.matricula,
+    });
+
+    await expect(
+      service.execute({
+        eventId: randomEvent.id,
+        email: participant.email,
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
+  });
+
+  it("should not allow participating in 2 different events in the same edition", async () => {
     await service.execute({
       editionId: edition.id,
       matricula: participant.matricula,
@@ -205,7 +229,7 @@ describe("CreateParticipation", () => {
 
     await expect(
       service.execute({
-        eventId: event2.id,
+        eventId: minicurso.id,
         email: participant.email,
       }),
     ).rejects.toBeInstanceOf(HttpException);
