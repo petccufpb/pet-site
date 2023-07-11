@@ -57,6 +57,10 @@ export default class CreateParticipation {
         throw new HttpException("Você não precisa se inscrever nesse evento", HttpStatus.OK);
       }
 
+      if (event.capacity && event.participants.length >= event.capacity + event.extraCapacity) {
+        throw new HttpException("Infelizmente as vagas para este evento esgotaram", 400);
+      }
+
       ({ editionId } = event);
       title = event.name;
 
