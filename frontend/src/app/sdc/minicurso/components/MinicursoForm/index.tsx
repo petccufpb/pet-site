@@ -17,9 +17,15 @@ import {
   InputContainer,
 } from "./styles";
 
-import { FaExclamationTriangle } from "react-icons/fa";
+import { FaExclamationTriangle, FaUsers } from "react-icons/fa";
 
-function DateOrNothing({ date }: { date?: { day: string; time: string } }) {
+function DateOrNothing({
+  date,
+  slotsRemaining,
+}: {
+  date?: { day: string; time: string };
+  slotsRemaining: number | null;
+}) {
   if (date) {
     return (
       <DateContainer>
@@ -31,6 +37,12 @@ function DateOrNothing({ date }: { date?: { day: string; time: string } }) {
           <RiTimeLine />
           <span>{date.time}</span>
         </span>
+        {slotsRemaining && (
+          <span>
+            <FaUsers />
+            <span>{slotsRemaining} vagas</span>
+          </span>
+        )}
       </DateContainer>
     );
   } else {
@@ -69,6 +81,7 @@ export function MinicursoForm({
   sections,
   id,
   extrasAvailable,
+  slotsRemaining,
   type = "normal",
   confirmType = "confirm",
   borderType = "static",
@@ -83,6 +96,7 @@ export function MinicursoForm({
   };
   sections?: { title: string; placeholder: string; id: "name" | "email" }[];
   id: string;
+  slotsRemaining: number | null;
 }) {
   async function sendForm(data: any) {
     const i = toast.info("Carregando...");
@@ -143,7 +157,7 @@ export function MinicursoForm({
         theme="dark"
       />
       <FormContainer borderType={borderType} onSubmit={handleSubmit(sendForm)}>
-        <DateOrNothing date={date} />
+        <DateOrNothing date={date} slotsRemaining={slotsRemaining} />
         {sections &&
           sections.map(section => (
             <InputContainer key={section.title}>

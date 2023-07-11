@@ -123,6 +123,7 @@ export const DateContainer = styled.div`
   font-family: ${({ theme }) => theme.fonts.sdc};
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
   padding-bottom: 1.3rem;
   border-bottom: 1px solid #323238;
   font-size: ${({ theme }) => theme.textSizes["text-regular-m"]};
@@ -131,6 +132,10 @@ export const DateContainer = styled.div`
     display: flex;
     gap: 0.5rem;
     align-items: center;
+
+    &:nth-child(2) {
+      margin-right: auto;
+    }
   }
 
   svg {

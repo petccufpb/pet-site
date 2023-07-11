@@ -75,6 +75,9 @@ export default async function Minicurso({ params }: { params: { id: string } }) 
             time: `${formatInTimeZone(new Date(event.startTime), "America/Fortaleza", "HH:mm")}h`,
           }}
           confirmType="confirm"
+          slotsRemaining={
+            event.capacity ? event.capacity + event.extraCapacity - event.participants.length : null
+          }
         />
       </FormContainer>
     </MinicursoContainer>

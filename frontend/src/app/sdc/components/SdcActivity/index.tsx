@@ -8,16 +8,6 @@ import { SDCEventData } from "sdc";
 
 import { Availability, SDCtr, SpeakerPhoto, Subscribe } from "./styles";
 
-type SdcActivityProps = {
-  title: string;
-  speaker: string;
-  speakerPic: string;
-  day: number;
-  time: string;
-  available: boolean;
-  type: string;
-};
-
 export function SdcActivity({ data, dayEvent }: { data: SDCEventData; dayEvent: number }) {
   const [modalVisible, showModal] = useState(false);
 
