@@ -2,7 +2,7 @@
 
 import { SectionTitle } from "@app/sdc/styles";
 import { useEffect, useState } from "react";
-import { HiArrowUpRight } from "react-icons/hi2";
+import { HiArrowUpRight, HiXCircle, HiXMark } from "react-icons/hi2";
 import { SDCScheduleData } from "sdc";
 
 import {
@@ -56,42 +56,52 @@ export function MobileSchedule({ data }: { data: SDCScheduleData }) {
       <Table>
         {dayEvents
           .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())
-          .map(e => (
-            <EventContainer
-              key={e.id}
-              aria-label="Realizar Inscrição"
-              href={e.type === "minicurso" ? `/sdc/minicurso/${e.id}` : "/sdc/inscricao"}
-              disabled={e.type !== "minicurso"}
-            >
-              <SpeakerPhoto
-                width={45}
-                height={45}
-                src={e.speaker.photoUrl}
-                alt={e.speaker.name}
-              ></SpeakerPhoto>
-              <Event available={true}>
-                <div>{e.speaker.name}</div>
-                <div>{e.name}</div>
-                {e.type === "minicurso" ? (
-                  <Availability
-                    available={e.capacity ? e.participants.length < e.capacity + e.extraCapacity : true}
-                  >
-                    <span>Inscreva-se</span>
-                    <HiArrowUpRight height="1em" />
-                  </Availability>
-                ) : (
-                  <div />
-                )}
-                <div>
-                  Dia {days.indexOf(new Date(e.startTime).getDate()) + 1} -{" "}
-                  {new Date(e.startTime).toLocaleTimeString("pt-BR", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </div>
-              </Event>
-            </EventContainer>
-          ))}
+          .map(e => {
+            const available = e.capacity ? e.participants.length < e.capacity + e.extraCapacity : true;
+            return (
+              <EventContainer
+                key={e.id}
+                aria-label="Realizar Inscrição"
+                href={e.type === "minicurso" ? `/sdc/minicurso/${e.id}` : "/sdc/inscricao"}
+                disabled={e.type !== "minicurso" || !available}
+              >
+                <SpeakerPhoto
+                  width={45}
+                  height={45}
+                  src={e.speaker.photoUrl}
+                  alt={e.speaker.name}
+                ></SpeakerPhoto>
+                <Event available={true}>
+                  <div>{e.speaker.name}</div>
+                  <div>{e.name}</div>
+                  {e.type === "minicurso" ? (
+                    <Availability available={available}>
+                      {available ? (
+                        <>
+                          <span>Inscreva-se</span>
+                          <HiArrowUpRight height="1em" />
+                        </>
+                      ) : (
+                        <>
+                          <span>Esgotado</span>
+                          <HiXMark height="1em" />
+                        </>
+                      )}
+                    </Availability>
+                  ) : (
+                    <div />
+                  )}
+                  <div>
+                    Dia {days.indexOf(new Date(e.startTime).getDate()) + 1} -{" "}
+                    {new Date(e.startTime).toLocaleTimeString("pt-BR", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </div>
+                </Event>
+              </EventContainer>
+            );
+          })}
       </Table>
     </SdcScheduleContainer>
   );

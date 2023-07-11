@@ -83,3 +83,8 @@ export const SDCtr = styled.tr`
     white-space: break-spaces;
   }
 `;
+
+export const SubscribeLink = styled(Link)<{ disabled: boolean }>`
+  cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
+  pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
+`;

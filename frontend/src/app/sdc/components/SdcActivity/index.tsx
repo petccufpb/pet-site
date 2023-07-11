@@ -6,7 +6,7 @@ import { FaTimesCircle } from "react-icons/fa";
 import { HiArrowUpRight } from "react-icons/hi2";
 import { SDCEventData } from "sdc";
 
-import { Availability, SDCtr, SpeakerPhoto, Subscribe } from "./styles";
+import { Availability, SDCtr, SpeakerPhoto, Subscribe, SubscribeLink } from "./styles";
 
 export function SdcActivity({ data, dayEvent }: { data: SDCEventData; dayEvent: number }) {
   const [modalVisible, showModal] = useState(false);
@@ -65,12 +65,16 @@ export function SdcActivity({ data, dayEvent }: { data: SDCEventData; dayEvent: 
         </th>
         <th>
           {data.type === "minicurso" && (
-            <Link aria-label="Realizar Inscrição" href={`/sdc/minicurso/${data.id}`}>
+            <SubscribeLink
+              disabled={!available}
+              aria-label="Realizar Inscrição"
+              href={`/sdc/minicurso/${data.id}`}
+            >
               <Subscribe availability={available}>
                 <span>FAZER INSCRIÇÃO</span>
                 <HiArrowUpRight />
               </Subscribe>
-            </Link>
+            </SubscribeLink>
           )}
         </th>
       </SDCtr>
