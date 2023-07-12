@@ -167,8 +167,8 @@ export function FrequenciaForm({
     if (
       distanceBetweenCoordinates(
         [userLocation.coords.latitude, userLocation.coords.longitude],
-        [-7.162116870906208, -34.81715445965711],
-      ) > 1000
+        [-7.16252, -34.8173],
+      ) > 2000
     ) {
       toast.dismiss(i);
       toast.error("Você está fora da área do Centro de Informática.", {
