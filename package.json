@@ -7,7 +7,7 @@
     "frontend"
   ],
   "scripts": {
-    "prepare": "husky install && chmod ug+x ./.husky/*"
+    "prepare": "husky install"
   },
   "lint-staged": {
     "backend/prisma/schema.prisma": [
