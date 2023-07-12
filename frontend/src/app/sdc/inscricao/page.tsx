@@ -166,15 +166,6 @@ export default function Inscricao() {
   async function sendForm({ matricula, name, ...data }: SendFormData) {
     const i = toast.info("Carregando...");
 
-    console.log(
-      JSON.stringify({
-        ...data,
-        name: name.trim(),
-        matricula: matricula.toString(),
-        course: course.value,
-      }),
-    );
-
     const res = await fetch("/api/subscribe/sdc", {
       method: "POST",
       body: JSON.stringify({
@@ -238,10 +229,10 @@ export default function Inscricao() {
             Participe agora, da Semana da computação e garanta sua vaga em minicursos e palestras! Corre que
             ainda dá tempo.
           </p>
-          <Link aria-label="Verificar Programação" href="/sdc">
+          <a aria-label="Verificar Programação" href="/sdc">
             <Check width={16} />
             <span>Verificar Programação</span>
-          </Link>
+          </a>
         </FirstColumn>
         <SecondColumn>
           <div>

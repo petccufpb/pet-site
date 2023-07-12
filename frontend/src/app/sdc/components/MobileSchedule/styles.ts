@@ -50,7 +50,7 @@ export const Table = styled.div`
   }
 `;
 
-export const EventContainer = styled(Link)<{ disabled: boolean }>`
+export const EventContainer = styled.a<{ disabled: boolean }>`
   pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
   display: flex;
   gap: 0.5rem;

@@ -128,9 +128,9 @@ export function Header() {
 
   return (
     <PETHeader isSDC={isSDC}>
-      <Link href="/sdc" aria-label="Início">
+      <a href="/sdc" aria-label="Início">
         <Logo alt="Logo PET Computação" width={80} />
-      </Link>
+      </a>
       <nav>
         <RouteList>
           {routes.start.map((route, i) => (

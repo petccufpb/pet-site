@@ -51,7 +51,7 @@ export const Route = styled.div`
   color: ${({ theme }) => theme.colors["base-white"]};
 `;
 
-export const RouteLink = styled(Link)<{ tab: string }>`
+export const RouteLink = styled.a<{ tab: string }>`
   font-weight: ${({ tab, href }) => (tab === href.toString() ? "bold" : "normal")};
   color: ${({ theme }) => theme.colors["base-white"]};
   text-align: center;

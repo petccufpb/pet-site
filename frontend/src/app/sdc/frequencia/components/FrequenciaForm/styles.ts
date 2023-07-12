@@ -100,7 +100,7 @@ export const ConfirmButton = styled.button`
   }
 `;
 
-export const CancelButton = styled(Link)`
+export const CancelButton = styled.a`
   background: none;
   font-family: inherit;
   font-size: inherit;

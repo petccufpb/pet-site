@@ -56,7 +56,6 @@ const nameSchema = z.string().refine(val => {
   const allowedCharacters = " abcdefghijklmnopqrstuvwxyzãõáéíóúç";
 
   for (const l of val) {
-    console.log(l.toLowerCase());
     if (!allowedCharacters.includes(l.toLowerCase())) return false;
   }
 

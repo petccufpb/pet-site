@@ -20,9 +20,8 @@ import {
   InputContainer,
 } from "./styles";
 
-import { useEffect, useState } from "react";
 import { differenceInMinutes } from "date-fns";
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 
 function DateOrNothing({ date }: { date?: { day: string; time: string } }) {
@@ -76,6 +75,7 @@ export function FrequenciaForm({
   isEventOnSite,
   sections,
   id,
+  isFromUFPB,
   type = "normal",
   confirmType = "confirm",
   borderType = "static",
@@ -91,13 +91,14 @@ export function FrequenciaForm({
   isEventOnSite?: boolean;
   sections?: { title: string; placeholder: string; id: "name" | "email" }[];
   id: string;
+  isFromUFPB: boolean;
 }) {
   const [userLocation, setUserLocation] = useState<GeolocationPosition | null>(null);
 
   async function sendForm(data: any) {
     const i = toast.info("Carregando...");
 
-    if (isEventOnSite && !userLocation) {
+    if (isEventOnSite && !userLocation && !isFromUFPB) {
       toast.dismiss(i);
       toast.error("Você precisa habilitar a localização para marcar a frequência.", {
         position: "top-center",
@@ -232,13 +233,40 @@ export function FrequenciaForm({
     mode: "onChange",
   });
 
-  const error: PositionErrorCallback = () => {
+  const error: PositionErrorCallback = e => {
+    toast.error("Não foi possível obter sua localização.", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      style: {
+        textAlign: "center",
+        color: "#fgfgfg",
+      },
+    });
     setUserLocation(null);
   };
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(setUserLocation, error);
-  }
+  useEffect(() => {
+    if (navigator.geolocation && !userLocation) {
+      navigator.geolocation.getCurrentPosition(setUserLocation, error);
+
+      navigator.permissions.query({ name: "geolocation" }).then(permissionStatus => {
+        permissionStatus.onchange = () => {
+          if (permissionStatus.state === "granted") {
+            navigator.geolocation.getCurrentPosition(setUserLocation, error);
+            return;
+          }
+
+          setUserLocation(null);
+        };
+      });
+    }
+  }, [userLocation]);
 
   return (
     <>
@@ -264,20 +292,22 @@ export function FrequenciaForm({
               {errors[section.id] && <span>{errors[section.id]?.message}</span>}
             </InputContainer>
           ))}
-        <CheckboxContainer
-          onClick={async () => {
-            await navigator.permissions.query({ name: "geolocation" });
-            navigator.geolocation.getCurrentPosition(setUserLocation, error);
-          }}
-        >
-          <CheckBox enabled={userLocation ? true : false}>
-            <FaCheck size="0.7em" color="white"></FaCheck>
-          </CheckBox>
-          <span>Compartilhar localização</span>
-        </CheckboxContainer>
+        {!isFromUFPB && (
+          <CheckboxContainer
+            onClick={async () => {
+              await navigator.permissions.query({ name: "geolocation" });
+              navigator.geolocation.getCurrentPosition(setUserLocation, error);
+            }}
+          >
+            <CheckBox enabled={userLocation ? true : false}>
+              <FaCheck size="0.7em" color="white"></FaCheck>
+            </CheckBox>
+            <span>Compartilhar localização</span>
+          </CheckboxContainer>
+        )}
         <ButtonContainer type={type}>
           <CancelButtonOrNothing type={type} />
-          <ConfirmButton disabled={!userLocation || !isValid} type="submit">
+          <ConfirmButton disabled={!(userLocation || isFromUFPB) || !isValid} type="submit">
             <span>{confirmType === "next" ? "Próximo Passo" : "Confirmar"}</span>
             {confirmType === "next" && <HiArrowRight />}
           </ConfirmButton>

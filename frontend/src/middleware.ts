@@ -14,6 +14,25 @@ export default function middleware(request: NextRequest) {
     });
   }
 
+  if (request.nextUrl.pathname.startsWith("/sdc/frequencia")) {
+    const res = NextResponse.next();
+
+    let ip = request.ip ?? request.headers.get("x-real-ip");
+    const forwardedFor = request.headers.get("x-forwarded-for");
+
+    if (!ip && forwardedFor) {
+      ip = forwardedFor.split(",").at(0) ?? "Unknown";
+    }
+
+    console.log("ip", ip);
+
+    if (ip) {
+      res.headers.set("x-user-ip", ip);
+    }
+
+    return res;
+  }
+
   /* if (
     request.nextUrl.pathname === "/sdc/inscricao" ||
     request.nextUrl.pathname.startsWith("/sdc/minicurso") ||

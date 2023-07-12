@@ -1,6 +1,7 @@
 import { formatInTimeZone } from "date-fns-tz";
 import { ptBR } from "date-fns/locale";
 import { Metadata } from "next";
+import { headers } from "next/headers";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { FaShieldAlt } from "react-icons/fa";
@@ -76,6 +77,7 @@ export default async function Frequencia({ params }: { params: { id: string } })
           endTime={new Date(event.endTime)}
           isEventOnSite={event.onSite}
           confirmType="confirm"
+          isFromUFPB={headers().get("x-user-ip")?.startsWith("150.165.200") ? true : false}
         />
       </FormContainer>
     </FrequenciaContainer>

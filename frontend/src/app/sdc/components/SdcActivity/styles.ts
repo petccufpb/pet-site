@@ -84,7 +84,7 @@ export const SDCtr = styled.tr`
   }
 `;
 
-export const SubscribeLink = styled(Link)<{ disabled: boolean }>`
+export const SubscribeLink = styled.a<{ disabled: boolean }>`
   cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
   pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
 `;

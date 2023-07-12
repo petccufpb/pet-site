@@ -137,7 +137,7 @@ export const SocialMediaLinks = styled.div`
   }
 `;
 
-export const RouteLink = styled(Link)<{ tab: string }>`
+export const RouteLink = styled.a<{ tab: string }>`
   padding: 0.5rem 0;
   padding-left: 1rem;
   border-width: 1px;

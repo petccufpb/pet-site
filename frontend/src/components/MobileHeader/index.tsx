@@ -47,7 +47,9 @@ export function MobileHeader() {
 
   return (
     <HeaderContainer expand={expand}>
-      <Logo height={45} alt="Logo PET Computação UFPB" />
+      <a href="/">
+        <Logo height={45} alt="Logo PET Computação UFPB" />
+      </a>
       <ToggleButton expand={expand} onClick={() => setExpand(!expand)}>
         <div />
         <div />
