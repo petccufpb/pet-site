@@ -24,8 +24,6 @@ export default function middleware(request: NextRequest) {
       ip = forwardedFor.split(",").at(0) ?? "Unknown";
     }
 
-    console.log("ip", ip);
-
     if (ip) {
       res.headers.set("x-user-ip", ip);
     }

@@ -253,12 +253,12 @@ export function FrequenciaForm({
 
   useEffect(() => {
     if (navigator.geolocation && !userLocation) {
-      navigator.geolocation.getCurrentPosition(setUserLocation, error);
+      navigator.geolocation.getCurrentPosition(setUserLocation, null);
 
       navigator.permissions.query({ name: "geolocation" }).then(permissionStatus => {
-        permissionStatus.onchange = () => {
+        permissionStatus.onchange = e => {
           if (permissionStatus.state === "granted") {
-            navigator.geolocation.getCurrentPosition(setUserLocation, error);
+            navigator.geolocation.getCurrentPosition(setUserLocation, null);
             return;
           }
 
@@ -293,12 +293,7 @@ export function FrequenciaForm({
             </InputContainer>
           ))}
         {!isFromUFPB && (
-          <CheckboxContainer
-            onClick={async () => {
-              await navigator.permissions.query({ name: "geolocation" });
-              navigator.geolocation.getCurrentPosition(setUserLocation, error);
-            }}
-          >
+          <CheckboxContainer onClick={() => navigator.geolocation.getCurrentPosition(setUserLocation, error)}>
             <CheckBox enabled={userLocation ? true : false}>
               <FaCheck size="0.7em" color="white"></FaCheck>
             </CheckBox>
