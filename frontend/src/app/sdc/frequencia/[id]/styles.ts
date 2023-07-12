@@ -87,6 +87,8 @@ export const SpeakerInfo = styled.div`
   }
 
   img {
+    aspect-ratio: 1/1;
+    object-fit: cover;
     border-radius: 100%;
   }
 

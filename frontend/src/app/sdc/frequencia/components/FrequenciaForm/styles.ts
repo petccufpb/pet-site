@@ -134,3 +134,25 @@ export const Absolute = styled.div`
   top: 0;
   left: 0;
 `;
+
+export const CheckboxContainer = styled.div`
+  display: flex;
+  gap: 1em;
+  cursor: pointer;
+`;
+
+export const CheckBox = styled.div<{ enabled: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.2em;
+  border: 2px solid ${({ theme, enabled }) => (enabled ? theme.colors["base-green"] : "grey")};
+  width: 1rem;
+  height: 1rem;
+
+  background: ${({ enabled }) => (enabled ? "rgba(4, 211, 97, 0.2)" : "transparent")};
+
+  svg {
+    visibility: ${({ enabled }) => (enabled ? "visible" : "hidden")};
+  }
+`;

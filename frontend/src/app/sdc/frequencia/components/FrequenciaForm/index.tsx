@@ -9,10 +9,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { z } from "zod";
 
-import { GeolocationFinder } from "../GeolocationFinder";
 import {
   ButtonContainer,
   CancelButton,
+  CheckBox,
+  CheckboxContainer,
   ConfirmButton,
   DateContainer,
   FormContainer,
@@ -22,6 +23,7 @@ import {
 import { useEffect, useState } from "react";
 import { differenceInMinutes } from "date-fns";
 import Link from "next/link";
+import { FaCheck } from "react-icons/fa";
 
 function DateOrNothing({ date }: { date?: { day: string; time: string } }) {
   if (date) {
@@ -230,13 +232,16 @@ export function FrequenciaForm({
     mode: "onChange",
   });
 
-  useEffect(() => {
-    console.log(userLocation);
-  }, [userLocation]);
+  const error: PositionErrorCallback = () => {
+    setUserLocation(null);
+  };
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(setUserLocation, error);
+  }
 
   return (
     <>
-      <GeolocationFinder onLocationAccess={setUserLocation} />
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -259,6 +264,17 @@ export function FrequenciaForm({
               {errors[section.id] && <span>{errors[section.id]?.message}</span>}
             </InputContainer>
           ))}
+        <CheckboxContainer
+          onClick={async () => {
+            await navigator.permissions.query({ name: "geolocation" });
+            navigator.geolocation.getCurrentPosition(setUserLocation, error);
+          }}
+        >
+          <CheckBox enabled={userLocation ? true : false}>
+            <FaCheck size="0.7em" color="white"></FaCheck>
+          </CheckBox>
+          <span>Compartilhar localização</span>
+        </CheckboxContainer>
         <ButtonContainer type={type}>
           <CancelButtonOrNothing type={type} />
           <ConfirmButton disabled={!userLocation || !isValid} type="submit">
