@@ -79,6 +79,7 @@ export default abstract class ProjectsRepository {
   abstract findParticipantById(id: string): Promise<ProjectParticipant | null>;
   abstract findParticipantByMatricula(matricula: string): Promise<ProjectParticipant | null>;
   abstract findParticipantByPhone(phone: string): Promise<ProjectParticipant | null>;
+  abstract findParticipants(ids: string[]): Promise<ProjectParticipant[]>;
   abstract findParticipation(data: CreateRepoParticipation): Promise<ProjectParticipation | null>;
   abstract findParticipationsByEdition(editionId: string): Promise<ProjectParticipation[]>;
   abstract findParticipationsByEvent(eventId: string): Promise<ProjectParticipation[]>;

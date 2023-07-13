@@ -1,5 +1,5 @@
 import { QueryRequired } from "@hyoretsu/decorators";
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import {
   Project,
   ProjectAttendance,
@@ -35,6 +35,7 @@ import CreateSpeaker from "@modules/projects/services/CreateSpeaker.service";
 import FindLatestEdition from "@modules/projects/services/FindLatestEdition.service";
 import FindParticipant from "@modules/projects/services/FindParticipant.service";
 import ListEditions from "@modules/projects/services/ListEditions.service";
+import ListParticipants from "@modules/projects/services/ListParticipants.service";
 import ValidateCertificate from "@modules/projects/services/ValidateCertificate.service";
 
 @Controller("projects")
@@ -53,6 +54,7 @@ export default class ProjectsController {
     private findLatestEdition: FindLatestEdition,
     private findParticipant: FindParticipant,
     private listEditions: ListEditions,
+    private listParticipants: ListParticipants,
     private validateCertificate: ValidateCertificate,
   ) {}
 
@@ -127,6 +129,27 @@ export default class ProjectsController {
     const event = await this.createEvent.execute(body);
 
     return event;
+  }
+
+  @Get("participants")
+  async getProjectsParticipants(
+    @Query("course")
+    course: string,
+    @Query("editionId")
+    editionId: string,
+    @Query("eventId")
+    eventId: string,
+    @Query("university")
+    university: string,
+  ): Promise<ProjectParticipant[]> {
+    const participants = await this.listParticipants.execute({
+      course,
+      editionId,
+      eventId,
+      university,
+    });
+
+    return participants;
   }
 
   @Post("participants")

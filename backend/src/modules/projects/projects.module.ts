@@ -19,6 +19,7 @@ import CreateSpeaker from "./services/CreateSpeaker.service";
 import FindLatestEdition from "./services/FindLatestEdition.service";
 import FindParticipant from "./services/FindParticipant.service";
 import ListEditions from "./services/ListEditions.service";
+import ListParticipants from "./services/ListParticipants.service";
 import ValidateCertificate from "./services/ValidateCertificate.service";
 
 @Module({
@@ -47,6 +48,7 @@ import ValidateCertificate from "./services/ValidateCertificate.service";
       FindLatestEdition,
       FindParticipant,
       ListEditions,
+      ListParticipants,
       ValidateCertificate,
     ],
   ],

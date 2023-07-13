@@ -243,6 +243,16 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     return participant;
   }
 
+  public async findParticipants(ids: string[]): Promise<ProjectParticipant[]> {
+    const participants = await this.prisma.projectParticipant.findMany({
+      where: {
+        id: { in: ids },
+      },
+    });
+
+    return participants;
+  }
+
   public async findParticipation(where: CreateRepoParticipation): Promise<ProjectParticipation | null> {
     const participation = await this.prisma.projectParticipation.findFirst({ where });
 
