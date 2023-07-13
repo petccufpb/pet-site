@@ -1,7 +1,11 @@
 import { IsOptional } from "@hyoretsu/decorators";
-import { IsString, IsUUID } from "class-validator";
+import { IsNumber, IsString, IsUUID } from "class-validator";
 
 export default class ListParticipantsDTO {
+  @IsOptional()
+  @IsNumber()
+  birthYear?: number;
+
   @IsOptional()
   @IsString()
   course?: string;
@@ -15,6 +19,10 @@ export default class ListParticipantsDTO {
   @IsString()
   @IsUUID()
   eventId?: string;
+
+  @IsOptional()
+  @IsNumber()
+  periodoGeral?: number;
 
   @IsOptional()
   @IsString()

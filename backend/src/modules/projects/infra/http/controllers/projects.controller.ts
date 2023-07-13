@@ -133,19 +133,25 @@ export default class ProjectsController {
 
   @Get("participants")
   async getProjectsParticipants(
+    @Query("birthYear")
+    birthYear: string,
     @Query("course")
     course: string,
     @Query("editionId")
     editionId: string,
     @Query("eventId")
     eventId: string,
+    @Query("periodoGeral")
+    periodoGeral: string,
     @Query("university")
     university: string,
   ): Promise<ProjectParticipant[]> {
     const participants = await this.listParticipants.execute({
+      birthYear: Number(birthYear),
       course,
       editionId,
       eventId,
+      periodoGeral: Number(periodoGeral),
       university,
     });
 
