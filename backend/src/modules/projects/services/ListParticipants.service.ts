@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { ProjectParticipant, ProjectParticipation } from "@prisma/client";
+import { ProjectParticipant } from "@prisma/client";
 import { isSameYear } from "date-fns";
 
 import ListParticipantsDTO from "../dtos/ListParticipants.dto";
@@ -17,9 +17,9 @@ export default class ListParticipants {
     periodoGeral,
     university,
   }: ListParticipantsDTO): Promise<ProjectParticipant[]> {
-    let participations: ProjectParticipation[];
+    let participants: ProjectParticipant[];
     if (eventId) {
-      participations = await this.projectsRepository.findParticipationsByEvent(eventId);
+      participants = await this.projectsRepository.findParticipantsByEvent(eventId);
     } else {
       if (!editionId) {
         throw new HttpException(
@@ -28,12 +28,8 @@ export default class ListParticipants {
         );
       }
 
-      participations = await this.projectsRepository.findParticipationsByEdition(editionId);
+      participants = await this.projectsRepository.findParticipantsByEdition(editionId);
     }
-
-    let participants = await this.projectsRepository.findParticipants(
-      participations.map(participation => participation.participantId),
-    );
 
     if (birthYear) {
       participants = participants.filter(participant =>
