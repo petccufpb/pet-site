@@ -44,6 +44,10 @@ export interface FindExistingEventDTO {
   startTime: Date;
 }
 
+export type CompleteProjectAttendance = ProjectAttendance & {
+  event: ProjectEvent | null;
+};
+
 export type CompleteProjectEvent = ProjectEvent & {
   participants: ProjectParticipation[];
   speaker: ProjectSpeaker;
@@ -65,7 +69,9 @@ export default abstract class ProjectsRepository {
   abstract createProject(data: CreateProjectDTO): Promise<Project>;
   abstract createSpeaker(data: CreateSpeakerDTO): Promise<ProjectSpeaker>;
   abstract findAllEditions(projectId: string): Promise<CompleteProjectEdition[]>;
-  abstract findAttendance(data: CreateRepoAttendance): Promise<ProjectAttendance | null>;
+  abstract findAllEvents(): Promise<ProjectEvent[]>;
+  abstract findAttendance(data: CreateRepoAttendance): Promise<CompleteProjectAttendance | null>;
+  abstract findAttendancesByEvent(eventId: string): Promise<CompleteProjectAttendance[]>;
   abstract findCertificateById(id: string): Promise<ProjectCertificate | null>;
   abstract findCertificatesByEditionId(editionId: string): Promise<ProjectCertificate[]>;
   abstract findCertificatesByEventId(eventId: string): Promise<ProjectCertificate[]>;
@@ -73,6 +79,7 @@ export default abstract class ProjectsRepository {
   abstract findEditionByNumber(where: FindEditionDTO): Promise<ProjectEdition | null>;
   abstract findEventById(id: string): Promise<CompleteProjectEvent | null>;
   abstract findEventParticipationsByEdition(editionId: string): Promise<ProjectParticipation[]>;
+  abstract findEventsByEdition(editionId: string): Promise<ProjectEvent[]>;
   abstract findExistingEvent(data: FindExistingEventDTO): Promise<ProjectEvent | null>;
   abstract findExistingParticipant(data: FindExistingParticipantDTO): Promise<ProjectParticipant | null>;
   abstract findParticipantByEmail(email: string): Promise<ProjectParticipant | null>;

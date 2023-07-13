@@ -21,6 +21,7 @@ import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParti
 
 import ProjectsRepository, {
   CertificateInfo,
+  CompleteProjectAttendance,
   CompleteProjectEdition,
   CompleteProjectEvent,
   CreateRepoAttendance,
@@ -199,16 +200,36 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     return editions;
   }
 
+  public async findAllEvents(): Promise<ProjectEvent[]> {
+    return this.events;
+  }
+
   public async findAttendance({
     eventId,
     participantId,
-  }: CreateRepoAttendance): Promise<ProjectAttendance | null> {
+  }: CreateRepoAttendance): Promise<CompleteProjectAttendance | null> {
     const attendance =
-      this.attendances.find(
+      (this.attendances.find(
         attendance => attendance.participantId === participantId && attendance.eventId === eventId,
-      ) || null;
+      ) as CompleteProjectAttendance) || null;
+
+    if (attendance) {
+      attendance.event = this.events.find(event => event.id === eventId) as ProjectEvent;
+    }
 
     return attendance;
+  }
+
+  public async findAttendancesByEvent(eventId: string): Promise<CompleteProjectAttendance[]> {
+    const attendances = this.attendances.filter(
+      attendance => attendance.eventId === eventId,
+    ) as CompleteProjectAttendance[];
+
+    for (const attendance of attendances) {
+      attendance.event = this.events.find(event => event.id === eventId) as ProjectEvent;
+    }
+
+    return attendances;
   }
 
   public async findCertificateById(id: string): Promise<ProjectCertificate | null> {
@@ -289,6 +310,12 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     });
 
     return participations;
+  }
+
+  public async findEventsByEdition(editionId: string): Promise<ProjectEvent[]> {
+    const events = this.events.filter(event => event.editionId === editionId);
+
+    return events;
   }
 
   public async findExistingEvent({
