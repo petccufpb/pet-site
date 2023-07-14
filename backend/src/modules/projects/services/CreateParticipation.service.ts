@@ -1,6 +1,7 @@
 import { MailProvider } from "@hyoretsu/providers";
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { ProjectParticipant, ProjectParticipation } from "@prisma/client";
+import { isAfter } from "date-fns";
 
 import CreateParticipationDTO from "../dtos/CreateParticipation.dto";
 import ProjectsRepository from "../repositories/projects.repository";
@@ -59,6 +60,10 @@ export default class CreateParticipation {
 
       if (event.capacity && event.participants.length >= event.capacity + event.extraCapacity) {
         throw new HttpException("Infelizmente as vagas para este evento esgotaram", 400);
+      }
+
+      if (isAfter(new Date(), new Date(event.startTime))) {
+        throw new HttpException("Esse evento já começou/terminou", 400);
       }
 
       ({ editionId } = event);

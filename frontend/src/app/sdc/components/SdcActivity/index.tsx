@@ -1,5 +1,6 @@
 import { Modal } from "@hyoretsu/react-components";
 import { Info } from "@phosphor-icons/react";
+import { isAfter } from "date-fns";
 import Link from "next/link";
 import { useState } from "react";
 import { FaTimesCircle } from "react-icons/fa";
@@ -66,7 +67,7 @@ export function SdcActivity({ data, dayEvent }: { data: SDCEventData; dayEvent: 
         <th>
           {data.type === "minicurso" && (
             <SubscribeLink
-              disabled={!available}
+              disabled={!available || isAfter(new Date(), new Date(data.startTime))}
               aria-label="Realizar Inscrição"
               href={`/sdc/minicurso/${data.id}`}
             >

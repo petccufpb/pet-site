@@ -34,29 +34,29 @@ describe("CreateParticipation", () => {
     event = await fakeProjectsRepository.createEvent({
       about: "",
       editionId: edition.id,
-      endTime: new Date(),
+      endTime: new Date(9999, 1),
       name: "Test Event",
       speakerId,
-      startTime: new Date(),
+      startTime: new Date(9999, 0),
       type: "minicurso",
     });
     event2 = await fakeProjectsRepository.createEvent({
       about: "",
       capacity: 1,
       editionId: edition.id,
-      endTime: new Date(),
+      endTime: new Date(9999, 1),
       name: "Test Minicurso",
       speakerId,
-      startTime: new Date(),
+      startTime: new Date(9999, 0),
       type: "minicurso",
     });
     randomEvent = await fakeProjectsRepository.createEvent({
       about: "",
       editionId: edition.id,
-      endTime: new Date(),
+      endTime: new Date(9999, 1),
       name: "Test Event 2",
       speakerId,
-      startTime: new Date(),
+      startTime: new Date(9999, 0),
       type: null,
     });
     participant = await fakeProjectsRepository.createParticipant({
@@ -265,6 +265,22 @@ describe("CreateParticipation", () => {
       service.execute({
         eventId: event2.id,
         email: participant2.email,
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
+  });
+
+  it("should not allow participating in an event that's already already started", async () => {
+    await service.execute({
+      editionId: edition.id,
+      matricula: participant.matricula,
+    });
+
+    jest.useFakeTimers().setSystemTime(new Date(9999, 2));
+
+    await expect(
+      service.execute({
+        eventId: event.id,
+        email: participant.email,
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });
