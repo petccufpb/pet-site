@@ -280,6 +280,7 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     const event = (this.events.find(event => event.id === id) as CompleteProjectEvent) || null;
 
     if (event) {
+      event.participants = this.participations.filter(participation => participation.eventId === event.id);
       event.speaker = this.speakers.find(speaker => speaker.id === event.speakerId) as ProjectSpeaker;
     }
 
