@@ -71,7 +71,7 @@ export function SdcActivity({ data, dayEvent }: { data: SDCEventData; dayEvent: 
               aria-label="Realizar Inscrição"
               href={`/sdc/minicurso/${data.id}`}
             >
-              <Subscribe availability={available}>
+              <Subscribe availability={available && !isAfter(new Date(), new Date(data.startTime))}>
                 <span>FAZER INSCRIÇÃO</span>
                 <HiArrowUpRight />
               </Subscribe>
