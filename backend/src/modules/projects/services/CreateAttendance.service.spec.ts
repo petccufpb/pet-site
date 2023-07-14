@@ -1,3 +1,4 @@
+import { MailProvider } from "@hyoretsu/providers";
 import { HttpException } from "@nestjs/common";
 import { ProjectEvent, ProjectParticipant } from "@prisma/client";
 
@@ -15,7 +16,12 @@ describe("CreateAttendance", () => {
 
   beforeEach(async () => {
     fakeProjectsRepository = new FakeProjectsRepository();
-    service = new CreateAttendance(fakeProjectsRepository);
+    service = new CreateAttendance(
+      {
+        sendMail: async () => {},
+      } as MailProvider,
+      fakeProjectsRepository,
+    );
 
     const { id: projectId } = await fakeProjectsRepository.createProject({ title: "Test Project" });
     const { id: editionId } = await fakeProjectsRepository.createEdition({
@@ -80,13 +86,22 @@ describe("CreateAttendance", () => {
       eventId: event.id,
       participantId: participant.id,
     });
+    await fakeProjectsRepository.createParticipation({
+      eventId: minicurso.id,
+      participantId: participant.id,
+    });
 
     const attendance = await service.execute({
       eventId: event.id,
       participantId: participant.id,
     });
+    const attendance2 = await service.execute({
+      eventId: minicurso.id,
+      participantId: participant.id,
+    });
 
     expect(attendance).toHaveProperty("id");
+    expect(attendance2).toHaveProperty("id");
   });
 
   it("should be able to create an attendance using email", async () => {

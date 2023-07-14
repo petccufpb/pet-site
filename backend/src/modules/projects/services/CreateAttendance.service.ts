@@ -1,12 +1,13 @@
+import { MailProvider } from "@hyoretsu/providers";
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { ProjectAttendance } from "@prisma/client";
+import { ProjectAttendance, ProjectParticipant } from "@prisma/client";
 
 import CreateAttendanceDTO from "../dtos/CreateAttendance.dto";
 import ProjectsRepository from "../repositories/projects.repository";
 
 @Injectable()
 export default class CreateAttendance {
-  constructor(private projectsRepository: ProjectsRepository) {}
+  constructor(private mailProvider: MailProvider, private projectsRepository: ProjectsRepository) {}
 
   public async execute({
     email,
@@ -23,21 +24,23 @@ export default class CreateAttendance {
       throw new HttpException("Você não precisa marcar frequência nesse evento", HttpStatus.OK);
     }
 
+    let foundParticipant: ProjectParticipant | null;
+
     if (participantId) {
-      const foundParticipant = await this.projectsRepository.findParticipantById(participantId);
+      foundParticipant = await this.projectsRepository.findParticipantById(participantId);
       if (!foundParticipant) {
         throw new HttpException("Não existe um aluno com esse ID", HttpStatus.NOT_FOUND);
       }
     } else {
       if (email) {
-        const foundParticipant = await this.projectsRepository.findParticipantByEmail(email);
+        foundParticipant = await this.projectsRepository.findParticipantByEmail(email);
         if (!foundParticipant) {
           throw new HttpException("Não existe um aluno com esse email", HttpStatus.NOT_FOUND);
         }
 
         participantId = foundParticipant.id;
       } else if (matricula) {
-        const foundParticipant = await this.projectsRepository.findParticipantByMatricula(matricula);
+        foundParticipant = await this.projectsRepository.findParticipantByMatricula(matricula);
         if (!foundParticipant) {
           throw new HttpException("Não existe um aluno com essa matrícula", HttpStatus.NOT_FOUND);
         }
@@ -69,6 +72,19 @@ export default class CreateAttendance {
     }
 
     const attendance = await this.projectsRepository.createAttendance(payload);
+
+    const edition = await this.projectsRepository.findEditionById(event.editionId);
+    const project = await this.projectsRepository.findProjectById(edition!.projectId);
+
+    await this.mailProvider.sendMail({
+      to: foundParticipant!.email as string,
+      subject: `Confirmação de frequência`,
+      body: `Olá estudante!\n\nEstamos passando para avisar que sua frequência n${
+        event.type === "minicurso" ? "o minicurso" : "a palestra"
+      } ${event.name} foi realizada com sucesso.\n\nEspero que estejam gostando dessa edição d(a) ${
+        project!.title
+      }!`,
+    });
 
     return attendance;
   }
