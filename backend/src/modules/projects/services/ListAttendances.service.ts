@@ -3,6 +3,11 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import ListAttendancesDTO from "../dtos/ListAttendances.dto";
 import ProjectsRepository, { CompleteProjectAttendance } from "../repositories/projects.repository";
 
+export interface ListAttendancesResponse {
+  total: number;
+  attendances: CompleteProjectAttendance[];
+}
+
 @Injectable()
 export default class ListAttendances {
   constructor(private projectsRepository: ProjectsRepository) {}
@@ -11,7 +16,7 @@ export default class ListAttendances {
     editionId,
     eventId,
     participantId,
-  }: ListAttendancesDTO): Promise<CompleteProjectAttendance[]> {
+  }: ListAttendancesDTO): Promise<ListAttendancesResponse> {
     let attendances: CompleteProjectAttendance[] = [];
 
     if (editionId) {
@@ -48,6 +53,9 @@ export default class ListAttendances {
       );
     }
 
-    return attendances;
+    return {
+      total: attendances.length,
+      attendances,
+    };
   }
 }

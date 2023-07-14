@@ -35,7 +35,7 @@ import CreateProject from "@modules/projects/services/CreateProject.service";
 import CreateSpeaker from "@modules/projects/services/CreateSpeaker.service";
 import FindLatestEdition from "@modules/projects/services/FindLatestEdition.service";
 import FindParticipant from "@modules/projects/services/FindParticipant.service";
-import ListAttendances from "@modules/projects/services/ListAttendances.service";
+import ListAttendances, { ListAttendancesResponse } from "@modules/projects/services/ListAttendances.service";
 import ListEditions from "@modules/projects/services/ListEditions.service";
 import ListEvents from "@modules/projects/services/ListEvents.service";
 import ListParticipants from "@modules/projects/services/ListParticipants.service";
@@ -75,7 +75,7 @@ export default class ProjectsController {
     @Query("editionId") editionId: string,
     @Query("eventId") eventId: string,
     @Query("participantId") participantId?: string,
-  ): Promise<CompleteProjectAttendance[]> {
+  ): Promise<ListAttendancesResponse> {
     const attendances = await this.listAttendances.execute({ editionId, eventId, participantId });
 
     return attendances;

@@ -1,5 +1,5 @@
 import { IsOptional } from "@hyoretsu/decorators";
-import { IsString, IsUUID } from "class-validator";
+import { IsBoolean, IsString, IsUUID } from "class-validator";
 
 export default class ListAttendancesDTO {
   @IsOptional()
