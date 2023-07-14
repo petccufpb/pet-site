@@ -69,6 +69,7 @@ export function CertificadoForm() {
         progress: undefined,
         theme: "dark",
         style: {
+          position: "sticky",
           textAlign: "center",
           color: "#fgfgfg",
         },
