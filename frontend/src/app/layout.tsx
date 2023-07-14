@@ -51,7 +51,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
             <noscript>Você precisa ter Javascript habilitado para acessar esta página.</noscript>
           </head>
           <body>
-            {/* <NextTopLoader color="#0072ED" /> */}
+            <NextTopLoader color="#0072ED" />
             <ContainerForBackground>
               {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
               {pathname.split("/")[1] !== "sdc" && (

@@ -22,6 +22,7 @@ module.exports = () => ({
   productionBrowserSourceMaps: true,
   reactStrictMode: true,
   swcMinify: true,
+  transpilePackages: ["nextjs-toploader"],
   typescript: {
     ignoreBuildErrors: true,
   },
