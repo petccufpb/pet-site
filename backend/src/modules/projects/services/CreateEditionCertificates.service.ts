@@ -1,10 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { ProjectCertificate } from "@prisma/client";
 
-import ProjectsRepository, {
-  CertificateInfo,
-  CompleteProjectEdition,
-} from "../repositories/projects.repository";
+import ProjectsRepository, { CertificateInfo } from "../repositories/projects.repository";
 
 @Injectable()
 export default class CreateEditionCertificates {
@@ -16,7 +13,7 @@ export default class CreateEditionCertificates {
       throw new HttpException("Essa edição não existe", HttpStatus.NOT_FOUND);
     }
 
-    const { events } = (await this.projectsRepository.findEditionById(editionId)) as CompleteProjectEdition;
+    const { events } = existingEdition;
 
     const certificateInfo: CertificateInfo[] = [];
     const mainEvents = events.filter(event => event.type === "main");
@@ -38,10 +35,7 @@ export default class CreateEditionCertificates {
     outerLoop: for (const { participantId } of participations) {
       // Todas as palestras
       for (const event of mainEvents) {
-        const attendance = await this.projectsRepository.findAttendance({
-          eventId: event.id,
-          participantId,
-        });
+        const attendance = event.attendees.find(attendance => attendance.participantId === participantId);
 
         if (!attendance) {
           continue outerLoop;
@@ -50,10 +44,7 @@ export default class CreateEditionCertificates {
 
       // 1 minicurso por SDC
       for (const [index, minicurso] of minicursos.entries()) {
-        const attendance = await this.projectsRepository.findAttendance({
-          eventId: minicurso.id,
-          participantId,
-        });
+        const attendance = minicurso.attendees.find(attendance => attendance.participantId === participantId);
 
         if (attendance) {
           break;
@@ -67,10 +58,7 @@ export default class CreateEditionCertificates {
       // 1 minicurso por dia
       //   dayMinicursoLoop: for (const minicursosByDay of Object.values(sortedMinicursos)) {
       //     for (const minicurso of minicursosByDay) {
-      //       const attendance = await this.projectsRepository.findAttendance({
-      //         eventId: minicurso.id,
-      //         participantId,
-      //       });
+      //       const attendance = event.attendees.find(attendance => attendance.participantId === participantId);
 
       //       if (attendance) {
       //         continue dayMinicursoLoop;

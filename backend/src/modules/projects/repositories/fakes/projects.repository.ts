@@ -190,6 +190,7 @@ export default class FakeProjectsRepository implements ProjectsRepository {
         .filter(event => event.editionId === edition.id)
         .map(event => ({
           ...event,
+          attendees: this.attendances.filter(attendance => attendance.eventId === event.id),
           participants: this.participations.filter(participation => participation.eventId === event.id),
           speaker: this.speakers.find(speaker => speaker.id === event.speakerId) as ProjectSpeaker,
         }));
@@ -256,11 +257,11 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     const edition = (this.editions.find(edition => edition.id === id) as CompleteProjectEdition) || null;
 
     if (edition) {
-      // @ts-ignore
       edition.events = this.events
         .filter(event => event.editionId === id)
         .map(event => ({
           ...event,
+          attendees: this.attendances.filter(attendance => attendance.eventId === event.id),
           participants: this.participations.filter(participation => participation.eventId === event.id),
           speaker: this.speakers.find(speaker => speaker.id === event.speakerId) as ProjectSpeaker,
         }));
@@ -292,9 +293,11 @@ export default class FakeProjectsRepository implements ProjectsRepository {
       (this.editions.find(edition => edition.id === editionId) as CompleteProjectEdition) || null;
 
     if (edition) {
-      edition.events = this.events.filter(event => event.editionId === editionId) as CompleteProjectEvent[];
+      // @ts-ignore
+      edition.events = this.events.filter(event => event.editionId === editionId);
       edition.events.forEach((event, index) => {
         const completeEvent = event;
+        completeEvent.attendees = this.attendances.filter(attendance => attendance.eventId === event.id);
         completeEvent.participants = this.participations.filter(
           participation => participation.eventId === event.id,
         );

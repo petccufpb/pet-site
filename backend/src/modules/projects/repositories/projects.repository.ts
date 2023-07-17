@@ -55,7 +55,7 @@ export type CompleteProjectEvent = ProjectEvent & {
 
 export type CompleteProjectEdition = ProjectEdition & {
   certificateTemplate: ProjectCertificateTemplate | null;
-  events: CompleteProjectEvent[];
+  events: (CompleteProjectEvent & { attendees: ProjectAttendance[] })[];
 };
 
 export default abstract class ProjectsRepository {

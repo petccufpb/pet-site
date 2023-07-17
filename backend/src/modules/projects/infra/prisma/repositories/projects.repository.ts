@@ -91,6 +91,7 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
         certificateTemplate: true,
         events: {
           include: {
+            attendees: true,
             participants: true,
             speaker: true,
           },
@@ -162,6 +163,7 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
         certificateTemplate: true,
         events: {
           include: {
+            attendees: true,
             participants: true,
             speaker: true,
           },
