@@ -215,7 +215,9 @@ export default class FakeProjectsRepository implements ProjectsRepository {
       ) as CompleteProjectAttendance) || null;
 
     if (attendance) {
-      attendance.event = this.events.find(event => event.id === eventId) as ProjectEvent;
+      attendance.event = this.events.find(event => event.id === eventId) || null;
+      attendance.participant =
+        this.participants.find(participant => participant.id === participantId) || null;
     }
 
     return attendance;
@@ -227,7 +229,9 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     ) as CompleteProjectAttendance[];
 
     for (const attendance of attendances) {
-      attendance.event = this.events.find(event => event.id === eventId) as ProjectEvent;
+      attendance.event = this.events.find(event => event.id === eventId) || null;
+      attendance.participant =
+        this.participants.find(participant => participant.id === attendance.participantId) || null;
     }
 
     return attendances;

@@ -114,7 +114,10 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
   public async findAttendance(where: CreateRepoParticipation): Promise<CompleteProjectAttendance | null> {
     const attendance = await this.prisma.projectAttendance.findFirst({
       where,
-      include: { event: true },
+      include: {
+        event: true,
+        participant: true,
+      },
     });
 
     return attendance;
@@ -123,7 +126,10 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
   public async findAttendancesByEvent(eventId: string): Promise<CompleteProjectAttendance[]> {
     const attendances = await this.prisma.projectAttendance.findMany({
       where: { eventId },
-      include: { event: true },
+      include: {
+        event: true,
+        participant: true,
+      },
     });
 
     return attendances;

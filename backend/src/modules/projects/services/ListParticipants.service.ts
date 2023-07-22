@@ -5,6 +5,11 @@ import { isSameYear } from "date-fns";
 import ListParticipantsDTO from "../dtos/ListParticipants.dto";
 import ProjectsRepository from "../repositories/projects.repository";
 
+export interface ListParticipantsResponse {
+  total: number;
+  participants: ProjectParticipant[];
+}
+
 @Injectable()
 export default class ListParticipants {
   constructor(private projectsRepository: ProjectsRepository) {}
@@ -16,7 +21,7 @@ export default class ListParticipants {
     eventId,
     periodoGeral,
     university,
-  }: ListParticipantsDTO): Promise<ProjectParticipant[]> {
+  }: ListParticipantsDTO): Promise<ListParticipantsResponse> {
     let participants: ProjectParticipant[];
     if (eventId) {
       participants = await this.projectsRepository.findParticipantsByEvent(eventId);
@@ -48,6 +53,9 @@ export default class ListParticipants {
       participants = participants.filter(participant => participant.university === university);
     }
 
-    return participants;
+    return {
+      total: participants.length,
+      participants,
+    };
   }
 }

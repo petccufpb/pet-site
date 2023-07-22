@@ -46,6 +46,7 @@ export interface FindExistingEventDTO {
 
 export type CompleteProjectAttendance = ProjectAttendance & {
   event: ProjectEvent | null;
+  participant: ProjectParticipant | null;
 };
 
 export type CompleteProjectEvent = ProjectEvent & {

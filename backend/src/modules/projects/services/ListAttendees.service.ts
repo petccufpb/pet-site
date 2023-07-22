@@ -1,22 +1,25 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { ProjectParticipant } from "@prisma/client";
 
-import ListAttendancesDTO from "../dtos/ListAttendances.dto";
+import ListAttendeesDTO from "../dtos/ListAttendees.dto";
 import ProjectsRepository, { CompleteProjectAttendance } from "../repositories/projects.repository";
 
-export interface ListAttendancesResponse {
+export interface ListAttendeesResponse {
   total: number;
-  attendances: CompleteProjectAttendance[];
+  attendees?: (ProjectParticipant | null)[];
+  attendances?: CompleteProjectAttendance[];
 }
 
 @Injectable()
-export default class ListAttendances {
+export default class ListAttendees {
   constructor(private projectsRepository: ProjectsRepository) {}
 
   public async execute({
+    course,
     editionId,
     eventId,
     participantId,
-  }: ListAttendancesDTO): Promise<ListAttendancesResponse> {
+  }: ListAttendeesDTO): Promise<ListAttendeesResponse> {
     let attendances: CompleteProjectAttendance[] = [];
 
     if (editionId) {
@@ -53,9 +56,17 @@ export default class ListAttendances {
       );
     }
 
+    if (course) {
+      attendances = attendances.filter(attendance => attendance.participant!.course === course);
+    }
+
     return {
       total: attendances.length,
-      attendances,
+      ...(eventId
+        ? {
+            attendees: attendances.map(attendance => attendance.participant),
+          }
+        : { attendances }),
     };
   }
 }

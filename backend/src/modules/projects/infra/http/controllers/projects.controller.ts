@@ -22,7 +22,6 @@ import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import FindParticipantDTO from "@modules/projects/dtos/FindParticipant.dto";
 import ValidateCertificateDTO from "@modules/projects/dtos/ValidateCertificate.dto";
-import { CompleteProjectAttendance } from "@modules/projects/repositories/projects.repository";
 import CreateAttendance from "@modules/projects/services/CreateAttendance.service";
 import CreateCertificate from "@modules/projects/services/CreateCertificate.service";
 import CreateEdition from "@modules/projects/services/CreateEdition.service";
@@ -35,10 +34,12 @@ import CreateProject from "@modules/projects/services/CreateProject.service";
 import CreateSpeaker from "@modules/projects/services/CreateSpeaker.service";
 import FindLatestEdition from "@modules/projects/services/FindLatestEdition.service";
 import FindParticipant from "@modules/projects/services/FindParticipant.service";
-import ListAttendances, { ListAttendancesResponse } from "@modules/projects/services/ListAttendances.service";
+import ListAttendees, { ListAttendeesResponse } from "@modules/projects/services/ListAttendees.service";
 import ListEditions from "@modules/projects/services/ListEditions.service";
 import ListEvents from "@modules/projects/services/ListEvents.service";
-import ListParticipants from "@modules/projects/services/ListParticipants.service";
+import ListParticipants, {
+  ListParticipantsResponse,
+} from "@modules/projects/services/ListParticipants.service";
 import ValidateCertificate from "@modules/projects/services/ValidateCertificate.service";
 
 @Controller("projects")
@@ -56,7 +57,7 @@ export default class ProjectsController {
     private createSpeaker: CreateSpeaker,
     private findLatestEdition: FindLatestEdition,
     private findParticipant: FindParticipant,
-    private listAttendances: ListAttendances,
+    private listAttendees: ListAttendees,
     private listEditions: ListEditions,
     private listEvents: ListEvents,
     private listParticipants: ListParticipants,
@@ -72,11 +73,16 @@ export default class ProjectsController {
 
   @Get("attendance")
   async getProjectsAttendance(
-    @Query("editionId") editionId: string,
-    @Query("eventId") eventId: string,
-    @Query("participantId") participantId?: string,
-  ): Promise<ListAttendancesResponse> {
-    const attendances = await this.listAttendances.execute({ editionId, eventId, participantId });
+    @Query("course")
+    course: string,
+    @Query("editionId")
+    editionId: string,
+    @Query("eventId")
+    eventId: string,
+    @Query("participantId")
+    participantId?: string,
+  ): Promise<ListAttendeesResponse> {
+    const attendances = await this.listAttendees.execute({ course, editionId, eventId, participantId });
 
     return attendances;
   }
@@ -168,7 +174,7 @@ export default class ProjectsController {
     periodoGeral: string,
     @Query("university")
     university: string,
-  ): Promise<ProjectParticipant[]> {
+  ): Promise<ListParticipantsResponse> {
     const participants = await this.listParticipants.execute({
       birthYear: Number(birthYear),
       course,
