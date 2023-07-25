@@ -19,6 +19,7 @@ import CreateSpeaker from "./services/CreateSpeaker.service";
 import FindLatestEdition from "./services/FindLatestEdition.service";
 import FindParticipant from "./services/FindParticipant.service";
 import ListAttendees from "./services/ListAttendees.service";
+import ListCertificates from "./services/ListCertificates.service";
 import ListEditions from "./services/ListEditions.service";
 import ListEvents from "./services/ListEvents.service";
 import ListParticipants from "./services/ListParticipants.service";
@@ -50,6 +51,7 @@ import ValidateCertificate from "./services/ValidateCertificate.service";
       FindLatestEdition,
       FindParticipant,
       ListAttendees,
+      ListCertificates,
       ListEditions,
       ListEvents,
       ListParticipants,

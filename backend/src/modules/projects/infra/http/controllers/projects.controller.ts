@@ -22,6 +22,7 @@ import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import FindParticipantDTO from "@modules/projects/dtos/FindParticipant.dto";
 import ValidateCertificateDTO from "@modules/projects/dtos/ValidateCertificate.dto";
+import { CompleteProjectCertificate } from "@modules/projects/repositories/projects.repository";
 import CreateAttendance from "@modules/projects/services/CreateAttendance.service";
 import CreateCertificate from "@modules/projects/services/CreateCertificate.service";
 import CreateEdition from "@modules/projects/services/CreateEdition.service";
@@ -35,6 +36,7 @@ import CreateSpeaker from "@modules/projects/services/CreateSpeaker.service";
 import FindLatestEdition from "@modules/projects/services/FindLatestEdition.service";
 import FindParticipant from "@modules/projects/services/FindParticipant.service";
 import ListAttendees, { ListAttendeesResponse } from "@modules/projects/services/ListAttendees.service";
+import ListCertificates from "@modules/projects/services/ListCertificates.service";
 import ListEditions from "@modules/projects/services/ListEditions.service";
 import ListEvents from "@modules/projects/services/ListEvents.service";
 import ListParticipants, {
@@ -58,6 +60,7 @@ export default class ProjectsController {
     private findLatestEdition: FindLatestEdition,
     private findParticipant: FindParticipant,
     private listAttendees: ListAttendees,
+    private listCertificates: ListCertificates,
     private listEditions: ListEditions,
     private listEvents: ListEvents,
     private listParticipants: ListParticipants,
@@ -92,6 +95,21 @@ export default class ProjectsController {
     const attendance = await this.createAttendance.execute(body);
 
     return attendance;
+  }
+
+  @Get("certificates")
+  async getProjectsCertificates(
+    @Query("editionId")
+    editionId: string,
+    @Query("participantId")
+    participantId?: string,
+  ): Promise<CompleteProjectCertificate[]> {
+    const certificates = await this.listCertificates.execute({
+      editionId,
+      participantId,
+    });
+
+    return certificates;
   }
 
   @Post("certificates")

@@ -20,6 +20,7 @@ import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParti
 import ProjectsRepository, {
   CertificateInfo,
   CompleteProjectAttendance,
+  CompleteProjectCertificate,
   CompleteProjectEdition,
   CompleteProjectEvent,
   CreateRepoAttendance,
@@ -143,20 +144,40 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     return certificate;
   }
 
-  public async findCertificatesByEditionId(editionId: string): Promise<ProjectCertificate[]> {
+  public async findCertificatesByEditionId(editionId: string): Promise<CompleteProjectCertificate[]> {
     const certificates = await this.prisma.projectCertificate.findMany({
       where: {
         editionId,
         eventId: null,
+      },
+      include: {
+        edition: true,
+        event: true,
       },
     });
 
     return certificates;
   }
 
-  public async findCertificatesByEventId(eventId: string): Promise<ProjectCertificate[]> {
+  public async findCertificatesByEventId(eventId: string): Promise<CompleteProjectCertificate[]> {
     const certificates = await this.prisma.projectCertificate.findMany({
       where: { eventId },
+      include: {
+        edition: true,
+        event: true,
+      },
+    });
+
+    return certificates;
+  }
+
+  public async findCertificatesByParticipantId(participantId: string): Promise<CompleteProjectCertificate[]> {
+    const certificates = await this.prisma.projectCertificate.findMany({
+      where: { participantId },
+      include: {
+        edition: true,
+        event: true,
+      },
     });
 
     return certificates;

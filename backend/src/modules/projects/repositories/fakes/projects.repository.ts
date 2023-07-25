@@ -22,6 +22,7 @@ import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParti
 import ProjectsRepository, {
   CertificateInfo,
   CompleteProjectAttendance,
+  CompleteProjectCertificate,
   CompleteProjectEdition,
   CompleteProjectEvent,
   CreateRepoAttendance,
@@ -243,16 +244,26 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     return certificate;
   }
 
-  public async findCertificatesByEditionId(editionId: string): Promise<ProjectCertificate[]> {
+  public async findCertificatesByEditionId(editionId: string): Promise<CompleteProjectCertificate[]> {
     const certificates = this.certificates.filter(
       certificate => certificate.editionId === editionId && certificate.eventId === null,
-    );
+    ) as CompleteProjectCertificate[];
 
     return certificates;
   }
 
-  public async findCertificatesByEventId(eventId: string): Promise<ProjectCertificate[]> {
-    const certificates = this.certificates.filter(certificate => certificate.eventId === eventId);
+  public async findCertificatesByEventId(eventId: string): Promise<CompleteProjectCertificate[]> {
+    const certificates = this.certificates.filter(
+      certificate => certificate.eventId === eventId,
+    ) as CompleteProjectCertificate[];
+
+    return certificates;
+  }
+
+  public async findCertificatesByParticipantId(participantId: string): Promise<CompleteProjectCertificate[]> {
+    const certificates = this.certificates.filter(
+      certificate => certificate.participantId === participantId,
+    ) as CompleteProjectCertificate[];
 
     return certificates;
   }

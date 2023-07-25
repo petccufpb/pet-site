@@ -49,14 +49,19 @@ export type CompleteProjectAttendance = ProjectAttendance & {
   participant: ProjectParticipant | null;
 };
 
-export type CompleteProjectEvent = ProjectEvent & {
-  participants: ProjectParticipation[];
-  speaker: ProjectSpeaker;
+export type CompleteProjectCertificate = ProjectCertificate & {
+  edition: ProjectEdition | null;
+  event: ProjectEvent | null;
 };
 
 export type CompleteProjectEdition = ProjectEdition & {
   certificateTemplate: ProjectCertificateTemplate | null;
   events: (CompleteProjectEvent & { attendees: ProjectAttendance[] })[];
+};
+
+export type CompleteProjectEvent = ProjectEvent & {
+  participants: ProjectParticipation[];
+  speaker: ProjectSpeaker;
 };
 
 export default abstract class ProjectsRepository {
@@ -74,8 +79,9 @@ export default abstract class ProjectsRepository {
   abstract findAttendance(data: CreateRepoAttendance): Promise<CompleteProjectAttendance | null>;
   abstract findAttendancesByEvent(eventId: string): Promise<CompleteProjectAttendance[]>;
   abstract findCertificateById(id: string): Promise<ProjectCertificate | null>;
-  abstract findCertificatesByEditionId(editionId: string): Promise<ProjectCertificate[]>;
-  abstract findCertificatesByEventId(eventId: string): Promise<ProjectCertificate[]>;
+  abstract findCertificatesByEditionId(editionId: string): Promise<CompleteProjectCertificate[]>;
+  abstract findCertificatesByEventId(eventId: string): Promise<CompleteProjectCertificate[]>;
+  abstract findCertificatesByParticipantId(eventId: string): Promise<CompleteProjectCertificate[]>;
   abstract findEditionById(id: string): Promise<CompleteProjectEdition | null>;
   abstract findEditionByNumber(where: FindEditionDTO): Promise<ProjectEdition | null>;
   abstract findEventById(id: string): Promise<CompleteProjectEvent | null>;
