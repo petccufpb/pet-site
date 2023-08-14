@@ -95,7 +95,9 @@ export default function GerarCertificados({
   const [edition, setEdition] = useState<ProjectEdition>();
   const [event, setEvent] = useState<ProjectEvent>();
   const [participant, setParticipant] = useState<ProjectParticipant>();
-  const [template, setTemplate] = useState<ProjectCertificateTemplate>({} as ProjectCertificateTemplate);
+  const [template, setTemplate] = useState<ProjectCertificateTemplate>({
+    text: "",
+  } as ProjectCertificateTemplate);
 
   useEffect(() => {
     const execute = async () => {
