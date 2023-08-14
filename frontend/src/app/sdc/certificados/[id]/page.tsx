@@ -1,10 +1,10 @@
 "use client";
-import { Document, Image, PDFViewer, Page, StyleSheet, Text, View, usePDF } from "@react-pdf/renderer";
+import { BlobProvider, Document, Image, PDFViewer, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
 import { ProjectCertificateTemplate, ProjectEdition, ProjectEvent, ProjectParticipant } from "backend";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { notFound } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import api from "@api";
 
@@ -165,14 +165,6 @@ export default function GerarCertificados({
 
   const certificateTitle = `Certificado do(a) ${edition?.name || event?.name}`;
 
-  const [pdf] = usePDF({
-    document: CertificadoPDF({
-      certificateId,
-      template,
-      title: certificateTitle,
-    }),
-  });
-
   return (
     <Styling>
       {template.id && (
@@ -181,9 +173,17 @@ export default function GerarCertificados({
             <CertificadoPDF certificateId={certificateId} template={template} title={certificateTitle} />
           </PDFViewer>
 
-          <a href={pdf.url as string} download={certificateTitle}>
-            <span>Para baixar seu certificado, apenas clique aqui!</span>
-          </a>
+          <BlobProvider
+            document={
+              <CertificadoPDF certificateId={certificateId} template={template} title={certificateTitle} />
+            }
+          >
+            {({ url }) => (
+              <a href={url as string} download={certificateTitle}>
+                <span>Para baixar seu certificado, apenas clique aqui!</span>
+              </a>
+            )}
+          </BlobProvider>
         </>
       )}
     </Styling>
