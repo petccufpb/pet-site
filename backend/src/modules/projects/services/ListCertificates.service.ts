@@ -31,6 +31,10 @@ export default class ListCertificates {
       }
     } else if (eventId) {
       certificates = await this.projectsRepository.findCertificatesByEventId(eventId);
+
+      if (participantId) {
+        certificates = certificates.filter(certificate => certificate.participantId === participantId);
+      }
     } else if (participantId) {
       certificates = await this.projectsRepository.findCertificatesByParticipantId(participantId);
     } else {

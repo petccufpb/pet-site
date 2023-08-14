@@ -33,7 +33,7 @@ declare module "@hyoretsu/react-hooks" {
     "/projects/certificates/validate": boolean | APIError;
     "/projects/editions": ProjectEdition | ProjectEdition[] | APIError;
     "/projects/editions/latest": ProjectEdition | APIError;
-    "/projects/events": ProjectEvent | APIError;
+    "/projects/events": ProjectEvent | ProjectEvent[] | APIError;
     "/projects/participants": ProjectParticipant | APIError;
     "/projects/participants/find": ProjectParticipant | null;
     "/projects/participations": ProjectParticipation | APIError;

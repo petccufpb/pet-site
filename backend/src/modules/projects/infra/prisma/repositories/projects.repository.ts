@@ -112,7 +112,7 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     return events;
   }
 
-  public async findAttendance(where: CreateRepoParticipation): Promise<CompleteProjectAttendance | null> {
+  public async findAttendance(where: CreateRepoAttendance): Promise<CompleteProjectAttendance | null> {
     const attendance = await this.prisma.projectAttendance.findFirst({
       where,
       include: {
@@ -151,8 +151,13 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
         eventId: null,
       },
       include: {
-        edition: true,
-        event: true,
+        edition: {
+          include: { certificateTemplate: true },
+        },
+        participant: true,
+        event: {
+          include: { certificateTemplate: true },
+        },
       },
     });
 
@@ -163,8 +168,13 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     const certificates = await this.prisma.projectCertificate.findMany({
       where: { eventId },
       include: {
-        edition: true,
-        event: true,
+        edition: {
+          include: { certificateTemplate: true },
+        },
+        participant: true,
+        event: {
+          include: { certificateTemplate: true },
+        },
       },
     });
 
@@ -175,8 +185,13 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     const certificates = await this.prisma.projectCertificate.findMany({
       where: { participantId },
       include: {
-        edition: true,
-        event: true,
+        edition: {
+          include: { certificateTemplate: true },
+        },
+        participant: true,
+        event: {
+          include: { certificateTemplate: true },
+        },
       },
     });
 
@@ -246,6 +261,9 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
   public async findEventsByEdition(editionId: string): Promise<ProjectEvent[]> {
     const events = await this.prisma.projectEvent.findMany({
       where: { editionId },
+      orderBy: {
+        startTime: "asc",
+      },
     });
 
     return events;

@@ -1,8 +1,7 @@
 import { IsOptional } from "@hyoretsu/decorators";
-import { ProjectCertificate } from "@prisma/client";
 import { IsString, IsUUID } from "class-validator";
 
-export default class CreateCertificatesDTO implements Partial<ProjectCertificate> {
+export default class ListEventsDTO {
   @IsOptional()
   @IsString()
   @IsUUID()

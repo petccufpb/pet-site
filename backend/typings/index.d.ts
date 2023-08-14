@@ -2,14 +2,15 @@ export {
   MemberContact,
   Project,
   ProjectAttendance,
-  ProjectCertificate,
+  ProjectCertificateTemplate,
   ProjectParticipant,
   ProjectParticipation,
   ProjectSpeaker,
 } from "@prisma/client";
 
-export { CompleteMember as Member } from "@modules/members/repositories/MembersRepository";
+export { CompleteMember as Member } from "../src/modules/members/repositories/MembersRepository";
 export {
+  CompleteProjectCertificate as ProjectCertificate,
   CompleteProjectEdition as ProjectEdition,
   CompleteProjectEvent as ProjectEvent,
-} from "@modules/projects/repositories/projects.repository";
+} from "../src/modules/projects/repositories/projects.repository";

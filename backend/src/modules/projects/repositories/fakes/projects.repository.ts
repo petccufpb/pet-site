@@ -55,9 +55,14 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     return attendance;
   }
 
-  public async createCertificate({ eventId, ...data }: CertificateInfo): Promise<ProjectCertificate> {
+  public async createCertificate({
+    editionId,
+    eventId,
+    ...data
+  }: CertificateInfo): Promise<ProjectCertificate> {
     const certificate = {
       ...data,
+      editionId: editionId || null,
       eventId: eventId || null,
       id: randomUUID(),
       createdAt: new Date(),
@@ -70,9 +75,10 @@ export default class FakeProjectsRepository implements ProjectsRepository {
   }
 
   public async createCertificates(data: CertificateInfo[]): Promise<void> {
-    data.forEach(({ eventId, ...info }) => {
+    data.forEach(({ editionId, eventId, ...info }) => {
       const certificate = {
         ...info,
+        editionId: editionId || null,
         eventId: eventId || null,
         id: randomUUID(),
         createdAt: new Date(),
@@ -217,8 +223,9 @@ export default class FakeProjectsRepository implements ProjectsRepository {
 
     if (attendance) {
       attendance.event = this.events.find(event => event.id === eventId) || null;
-      attendance.participant =
-        this.participants.find(participant => participant.id === participantId) || null;
+      attendance.participant = this.participants.find(
+        participant => participant.id === participantId,
+      ) as ProjectParticipant;
     }
 
     return attendance;
@@ -231,8 +238,9 @@ export default class FakeProjectsRepository implements ProjectsRepository {
 
     for (const attendance of attendances) {
       attendance.event = this.events.find(event => event.id === eventId) || null;
-      attendance.participant =
-        this.participants.find(participant => participant.id === attendance.participantId) || null;
+      attendance.participant = this.participants.find(
+        participant => participant.id === attendance.participantId,
+      ) as ProjectParticipant;
     }
 
     return attendances;

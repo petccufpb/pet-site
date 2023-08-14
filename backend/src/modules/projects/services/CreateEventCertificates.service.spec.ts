@@ -1,11 +1,11 @@
+import { MailProvider } from "@hyoretsu/providers";
 import { HttpException } from "@nestjs/common";
-import { ProjectEdition, ProjectEvent, ProjectParticipant } from "@prisma/client";
+import { ProjectEvent, ProjectParticipant } from "@prisma/client";
 
 import FakeProjectsRepository from "../repositories/fakes/projects.repository";
 import CreateEventCertificates from "./CreateEventCertificates.service";
 
 describe("CreateEventCertificates", () => {
-  let edition: ProjectEdition;
   let event: ProjectEvent;
   let fakeProjectsRepository: FakeProjectsRepository;
   let participant: ProjectParticipant;
@@ -13,10 +13,15 @@ describe("CreateEventCertificates", () => {
 
   beforeEach(async () => {
     fakeProjectsRepository = new FakeProjectsRepository();
-    service = new CreateEventCertificates(fakeProjectsRepository);
+    service = new CreateEventCertificates(
+      {
+        sendMail: async () => {},
+      } as MailProvider,
+      fakeProjectsRepository,
+    );
 
     const { id: projectId } = await fakeProjectsRepository.createProject({ title: "Test Project" });
-    edition = await fakeProjectsRepository.createEdition({ date: new Date(), number: 1, projectId });
+    const edition = await fakeProjectsRepository.createEdition({ date: new Date(), number: 1, projectId });
     const { id: speakerId } = await fakeProjectsRepository.createSpeaker({
       about: "",
       name: "Test Speaker",
@@ -56,29 +61,18 @@ describe("CreateEventCertificates", () => {
       participantId: participant.id,
     });
 
-    const certificates = await service.execute({
-      editionId: edition.id,
-      eventId: event.id,
-    });
+    const certificates = await service.execute(event.id);
 
     expect(certificates).toHaveLength(1);
   });
 
   it("should not be able to create certificates for a participant that does not have attendance", async () => {
-    const certificates = await service.execute({
-      editionId: edition.id,
-      eventId: event.id,
-    });
+    const certificates = await service.execute(event.id);
 
     expect(certificates).toHaveLength(0);
   });
 
   it("should not be able to create certificates for a non-existent event", async () => {
-    await expect(
-      service.execute({
-        editionId: edition.id,
-        eventId: "fake-event-id",
-      }),
-    ).rejects.toBeInstanceOf(HttpException);
+    await expect(service.execute("fake-event-id")).rejects.toBeInstanceOf(HttpException);
   });
 });

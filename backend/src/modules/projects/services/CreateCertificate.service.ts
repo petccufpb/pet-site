@@ -40,6 +40,16 @@ export default class CreateCertificate {
       }
     }
 
+    const existingCertificate = (
+      await this.projectsRepository.findCertificatesByParticipantId(participantId)
+    ).filter(certificate =>
+      editionId ? certificate.editionId === editionId : certificate.eventId === eventId,
+    );
+
+    if (existingCertificate.length > 0) {
+      throw new HttpException("Esse certificado já existe", HttpStatus.FORBIDDEN);
+    }
+
     if (editionId) {
       const edition = await this.projectsRepository.findEditionById(editionId);
       if (!edition) {

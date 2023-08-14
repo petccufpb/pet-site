@@ -1,8 +1,14 @@
-import { IsNotEmpty, IsString, IsUUID } from "class-validator";
+import { IsOptional } from "@hyoretsu/decorators";
+import { IsString, IsUUID } from "class-validator";
 
 export default class ListEditionsDTO {
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @IsUUID()
-  projectId!: string;
+  editionId?: string;
+
+  @IsOptional()
+  @IsString()
+  @IsUUID()
+  projectId?: string;
 }

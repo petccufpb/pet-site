@@ -1,11 +1,12 @@
+import { MailProvider } from "@hyoretsu/providers";
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { ProjectCertificate } from "@prisma/client";
+import { Project, ProjectCertificate, ProjectParticipant } from "@prisma/client";
 
 import ProjectsRepository, { CertificateInfo } from "../repositories/projects.repository";
 
 @Injectable()
 export default class CreateEditionCertificates {
-  constructor(private projectsRepository: ProjectsRepository) {}
+  constructor(private mailProvider: MailProvider, private projectsRepository: ProjectsRepository) {}
 
   public async execute(editionId: string): Promise<ProjectCertificate[]> {
     const existingEdition = await this.projectsRepository.findEditionById(editionId);
@@ -77,6 +78,26 @@ export default class CreateEditionCertificates {
     await this.projectsRepository.createCertificates(certificateInfo);
 
     const certificates = await this.projectsRepository.findCertificatesByEditionId(editionId);
+
+    for (const { participantId } of certificates) {
+      const participant = (await this.projectsRepository.findParticipantById(
+        participantId,
+      )) as ProjectParticipant;
+
+      let project: Project;
+      if (!existingEdition.name) {
+        project = (await this.projectsRepository.findProjectById(existingEdition.projectId)) as Project;
+      }
+
+      const certificateTitle =
+        existingEdition.name || `${existingEdition.number}ª edição do(a) ${project!.title}`;
+
+      await this.mailProvider.sendMail({
+        to: participant.email,
+        subject: `Certificado do(a) ${certificateTitle}`,
+        body: `Olá!<br/><br/>Estamos passando para informar que seu certificado do(a) ${certificateTitle} já está disponível.<br/><br/>Você pode acessá-lo em: ${process.env.WEB_URL}/sdc/certificados/${editionId}?participantId=${participantId}`,
+      });
+    }
 
     return certificates;
   }

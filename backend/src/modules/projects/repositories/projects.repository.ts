@@ -1,8 +1,8 @@
 import {
+  Prisma,
   Project,
   ProjectAttendance,
   ProjectCertificate,
-  ProjectCertificateTemplate,
   ProjectEdition,
   ProjectEvent,
   ProjectParticipant,
@@ -20,7 +20,7 @@ import CreateSpeakerDTO from "../dtos/CreateSpeaker.dto";
 import FindExistingParticipantDTO from "../dtos/FindExistingParticipant.dto";
 
 export interface CertificateInfo {
-  editionId: string;
+  editionId?: string;
   eventId?: string;
   participantId: string;
 }
@@ -44,25 +44,39 @@ export interface FindExistingEventDTO {
   startTime: Date;
 }
 
-export type CompleteProjectAttendance = ProjectAttendance & {
-  event: ProjectEvent | null;
-  participant: ProjectParticipant | null;
-};
+export type CompleteProjectAttendance = Prisma.ProjectAttendanceGetPayload<{
+  include: {
+    event: true;
+    participant: true;
+  };
+}>;
 
-export type CompleteProjectCertificate = ProjectCertificate & {
-  edition: ProjectEdition | null;
-  event: ProjectEvent | null;
-};
+export type CompleteProjectCertificate = Prisma.ProjectCertificateGetPayload<{
+  include: {
+    edition: {
+      include: {
+        certificateTemplate: true;
+      };
+    };
+    event: {
+      include: {
+        certificateTemplate: true;
+      };
+    };
+    participant: true;
+  };
+}>;
 
 export type CompleteProjectEdition = ProjectEdition & {
-  certificateTemplate: ProjectCertificateTemplate | null;
   events: (CompleteProjectEvent & { attendees: ProjectAttendance[] })[];
 };
 
-export type CompleteProjectEvent = ProjectEvent & {
-  participants: ProjectParticipation[];
-  speaker: ProjectSpeaker;
-};
+export type CompleteProjectEvent = Prisma.ProjectEventGetPayload<{
+  include: {
+    participants: true;
+    speaker: true;
+  };
+}>;
 
 export default abstract class ProjectsRepository {
   abstract createAttendance(data: CreateRepoAttendance): Promise<ProjectAttendance>;

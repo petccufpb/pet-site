@@ -1,5 +1,5 @@
 import { QueryRequired } from "@hyoretsu/decorators";
-import { Body, Controller, Get, Post, Query } from "@nestjs/common";
+import { Body, Controller, Get, HttpException, HttpStatus, Post, Query } from "@nestjs/common";
 import {
   Project,
   ProjectAttendance,
@@ -100,12 +100,15 @@ export default class ProjectsController {
   @Get("certificates")
   async getProjectsCertificates(
     @Query("editionId")
-    editionId: string,
+    editionId?: string,
+    @Query("eventId")
+    eventId?: string,
     @Query("participantId")
     participantId?: string,
   ): Promise<CompleteProjectCertificate[]> {
     const certificates = await this.listCertificates.execute({
       editionId,
+      eventId,
       participantId,
     });
 
@@ -119,9 +122,14 @@ export default class ProjectsController {
     let certificates: ProjectCertificate[];
 
     if (eventId) {
-      certificates = await this.createEventCertificates.execute({ editionId, eventId });
-    } else {
+      certificates = await this.createEventCertificates.execute(eventId);
+    } else if (editionId) {
       certificates = await this.createEditionCertificates.execute(editionId);
+    } else {
+      throw new HttpException(
+        "Você deve enviar uma edição ou evento para gerar certificados",
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     return certificates;
@@ -142,8 +150,11 @@ export default class ProjectsController {
   }
 
   @Get("editions")
-  async getProjectsEditions(@QueryRequired("projectId") projectId: string): Promise<ProjectEdition[]> {
-    const editions = await this.listEditions.execute({ projectId });
+  async getProjectsEditions(
+    @Query("id") editionId?: string,
+    @Query("projectId") projectId?: string,
+  ): Promise<ProjectEdition[]> {
+    const editions = await this.listEditions.execute({ editionId, projectId });
 
     return editions;
   }
@@ -165,8 +176,11 @@ export default class ProjectsController {
   }
 
   @Get("events")
-  async getProjectsEvents(@Query("editionId") editionId?: string): Promise<ProjectEvent[]> {
-    const events = await this.listEvents.execute(editionId);
+  async getProjectsEvents(
+    @Query("editionId") editionId?: string,
+    @Query("id") eventId?: string,
+  ): Promise<ProjectEvent[]> {
+    const events = await this.listEvents.execute({ editionId, eventId });
 
     return events;
   }

@@ -50,7 +50,7 @@ describe("CreateCertificate", () => {
     });
   });
 
-  it("should be able to create a certificate using ID", async () => {
+  it("should create a certificate using ID", async () => {
     const editionCertificate = await service.execute({
       editionId: edition.id,
       participantId: participant.id,
@@ -65,7 +65,7 @@ describe("CreateCertificate", () => {
     expect(eventCertificate).toHaveProperty("id");
   });
 
-  it("should be able to create a certificate using email", async () => {
+  it("should create a certificate using email", async () => {
     const editionCertificate = await service.execute({
       editionId: edition.id,
       email: participant.email,
@@ -80,7 +80,7 @@ describe("CreateCertificate", () => {
     expect(eventCertificate).toHaveProperty("id");
   });
 
-  it("should be able to create a certificate using matricula", async () => {
+  it("should create a certificate using matricula", async () => {
     const editionCertificate = await service.execute({
       editionId: edition.id,
       matricula: participant.matricula,
@@ -95,7 +95,21 @@ describe("CreateCertificate", () => {
     expect(eventCertificate).toHaveProperty("id");
   });
 
-  it("should not be able to create a certificate using non-registered email/ID/matricula", async () => {
+  it("should not allow creating the same certificate twice", async () => {
+    await service.execute({
+      editionId: edition.id,
+      matricula: participant.matricula,
+    });
+
+    await expect(
+      service.execute({
+        editionId: edition.id,
+        matricula: participant.matricula,
+      }),
+    ).rejects.toBeInstanceOf(HttpException);
+  });
+
+  it("should not create a certificate using non-registered email/ID/matricula", async () => {
     await expect(
       service.execute({
         editionId: edition.id,
@@ -118,7 +132,7 @@ describe("CreateCertificate", () => {
     ).rejects.toBeInstanceOf(HttpException);
   });
 
-  it("should not be able to create a certificate for a non-existent edition/event", async () => {
+  it("should not create a certificate for a non-existent edition/event", async () => {
     await expect(
       service.execute({
         editionId: "fake-edition-id",
@@ -134,7 +148,7 @@ describe("CreateCertificate", () => {
     ).rejects.toBeInstanceOf(HttpException);
   });
 
-  it("should not be able to create a certificate without email/ID/matricula", async () => {
+  it("should not create a certificate without email/ID/matricula", async () => {
     await expect(
       service.execute({
         eventId: event.id,
