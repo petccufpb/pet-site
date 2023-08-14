@@ -19,7 +19,7 @@ const bootstrap = async () => {
   await app.register(helmet);
   app.enableCors(
     process.env.RAILWAY_ENVIRONMENT === "production"
-      ? { origin: ["https://petccufpb.com.br", "https://website-sdc.vercel.app"] }
+      ? { origin: [process.env.WEB_URL as string, "https://website-sdc.vercel.app"] }
       : {},
   );
 
