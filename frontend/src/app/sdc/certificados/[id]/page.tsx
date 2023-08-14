@@ -127,6 +127,7 @@ export default function GerarCertificados({
 
         setEdition(certificate.edition);
       }
+
       setCertificateId(certificate.id);
     };
 
@@ -174,7 +175,7 @@ export default function GerarCertificados({
 
   return (
     <Styling>
-      {Object.entries(template).length > 0 && (
+      {template.id && (
         <>
           <PDFViewer width={1000} height={600} style={{ border: "none", marginBottom: "3vh" }}>
             <CertificadoPDF certificateId={certificateId} template={template} title={certificateTitle} />
