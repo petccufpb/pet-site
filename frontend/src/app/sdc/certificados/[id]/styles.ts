@@ -16,6 +16,7 @@ export const Styling = styled.div`
 
   > a {
     text-align: center;
+    margin-top: 3.5vh;
 
     @media (max-width: 500px) {
       margin-top: 36vh;

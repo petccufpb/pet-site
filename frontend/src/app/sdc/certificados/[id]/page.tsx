@@ -169,7 +169,7 @@ export default function GerarCertificados({
     <Styling>
       {certificateId && (
         <>
-          <PDFViewer width={1000} height={600} style={{ border: "none", marginBottom: "3vh" }}>
+          <PDFViewer width={1000} height={600} style={{ border: "none" }}>
             <CertificadoPDF certificateId={certificateId} template={template} title={certificateTitle} />
           </PDFViewer>
 
@@ -180,7 +180,7 @@ export default function GerarCertificados({
           >
             {({ url }) => (
               <a href={url as string} download={certificateTitle}>
-                <span>Para baixar seu certificado, apenas clique aqui!</span>
+                <span>Para baixar seu certificado, clique aqui!</span>
               </a>
             )}
           </BlobProvider>
