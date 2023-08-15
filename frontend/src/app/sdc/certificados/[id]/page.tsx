@@ -167,7 +167,7 @@ export default function GerarCertificados({
 
   return (
     <Styling>
-      {template.id && (
+      {certificateId && (
         <>
           <PDFViewer width={1000} height={600} style={{ border: "none", marginBottom: "3vh" }}>
             <CertificadoPDF certificateId={certificateId} template={template} title={certificateTitle} />

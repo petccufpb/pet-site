@@ -7,4 +7,18 @@ export const Styling = styled.div`
   align-items: center;
 
   margin: 0 auto;
+
+  iframe {
+    @media (max-width: 500px) {
+      display: none;
+    }
+  }
+
+  > a {
+    text-align: center;
+
+    @media (max-width: 500px) {
+      margin-top: 36vh;
+    }
+  }
 `;
