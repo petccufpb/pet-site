@@ -2,6 +2,8 @@
 
 "use client";
 
+import "@fontsource-variable/inter";
+import "@fontsource-variable/lexend";
 import "@fontsource/bai-jamjuree";
 import "@fontsource/bai-jamjuree/200.css";
 import "@fontsource/bai-jamjuree/300.css";
@@ -9,12 +11,9 @@ import "@fontsource/bai-jamjuree/400.css";
 import "@fontsource/bai-jamjuree/500.css";
 import "@fontsource/bai-jamjuree/600.css";
 import "@fontsource/bai-jamjuree/700.css";
-import "@fontsource-variable/inter";
-import "@fontsource-variable/lexend";
 
 import Head from "next/head";
 import { usePathname } from "next/navigation";
-import NextTopLoader from "nextjs-toploader";
 import { PropsWithChildren } from "react";
 import { ThemeProvider } from "styled-components";
 

@@ -1,16 +1,28 @@
 "use client";
 
-import FotoTime from "../../assets/foto-time.jpg";
+import FotoTime from "@assets/images/foto-time.jpg";
+import PetrucioFoto from "@assets/images/petrucio-time.png";
 
 import { MemberList } from "./components/MemberList";
 import { PhotoBubble } from "./components/PhotoBubble";
-import { Content, DescriptionContainer, PETDescription, PhotoContainer, TeamPhoto } from "./styles";
+import {
+  Content,
+  DescriptionContainer,
+  ImgContainer,
+  PETDescription,
+  Petrucio,
+  PhotoContainer,
+  TeamPhoto,
+} from "./styles";
 
 export default function Time() {
   return (
     <Content>
       <PhotoContainer>
-        <TeamPhoto src={FotoTime} alt="Grupo PET Computação" />
+        <ImgContainer>
+          <Petrucio src={PetrucioFoto} alt="Petrucio"></Petrucio>
+          <TeamPhoto src={FotoTime} alt="Grupo PET Computação" />
+        </ImgContainer>
         <DescriptionContainer>
           <PETDescription>
             <h2>Grupo PET Computação</h2>

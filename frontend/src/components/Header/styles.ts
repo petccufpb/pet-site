@@ -52,7 +52,8 @@ export const Route = styled.div`
 `;
 
 export const RouteLink = styled.a<{ tab: string }>`
-  font-weight: ${({ tab, href }) => (tab === href.toString() ? "bold" : "normal")};
+  font-weight: ${({ tab, href }) =>
+    (href === "/" ? tab === href?.toString() : tab.startsWith(href.toString())) ? "bold" : "normal"};
   color: ${({ theme }) => theme.colors["base-white"]};
   text-align: center;
   text-decoration: none;
@@ -63,7 +64,8 @@ export const RouteLink = styled.a<{ tab: string }>`
 
   ::after {
     content: "";
-    display: ${({ tab, href }) => (tab === href.toString() ? "block" : "none")};
+    display: ${({ tab, href }) =>
+      (href === "/" ? tab === href?.toString() : tab.startsWith(href.toString())) ? "block" : "none"};
     position: absolute;
     width: 1rem;
     bottom: -0.5rem;
@@ -74,6 +76,9 @@ export const RouteLink = styled.a<{ tab: string }>`
   }
 
   &:hover {
-    filter: ${({ tab, href }) => (tab === href.toString() ? "none" : "brightness(0.8)")};
+    filter: ${({ tab, href }) =>
+      (href === "/" ? tab === href?.toString() : tab.startsWith(href.toString()))
+        ? "none"
+        : "brightness(0.8)"};
   }
 `;

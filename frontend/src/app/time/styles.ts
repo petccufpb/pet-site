@@ -44,3 +44,14 @@ export const PETDescription = styled(AbsoluteDiv)`
 export const Content = styled.div`
   padding-bottom: 3rem;
 `;
+
+export const ImgContainer = styled.div`
+  position: relative;
+  overflow-y: hidden;
+`;
+
+export const Petrucio = styled(Image)`
+  position: absolute;
+  top: 2%;
+  right: 0;
+`;
