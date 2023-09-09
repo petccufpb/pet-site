@@ -199,14 +199,8 @@ export function SelecaoForm() {
         <FileInput type="historico" filesToUpload={filesToUpload} onFileUpload={onFileUpload} />
       </FormSection>
       <SendButton canSend={canSend} onClick={() => send()}>
-        {isSending ? (
-          <LoadingIcon />
-        ) : (
-          <>
-            <FaPaperPlane />
-            ENVIAR
-          </>
-        )}
+        {isSending ? <LoadingIcon /> : <FaPaperPlane />}
+        ENVIAR
       </SendButton>
     </Content>
   );

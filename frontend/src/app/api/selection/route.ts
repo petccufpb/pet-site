@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     const matriculaBuffer = Buffer.from(await (matricula as File).arrayBuffer());
     const historicoBuffer = Buffer.from(await (historico as File).arrayBuffer());
 
-    transporter.sendMail({
+    await transporter.sendMail({
       from: process.env.NEXT_EMAIL_USER,
       to: process.env.NEXT_EMAIL_USER,
       subject: `Formulário de Seleção - ${name}`,
