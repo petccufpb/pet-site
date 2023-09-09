@@ -5,6 +5,7 @@ import { redisStore } from "cache-manager-redis-yet";
 import type { RedisClientOptions } from "redis";
 
 import { MembersModule } from "@modules/members/members.module";
+import NewsModule from "@modules/news/news.module";
 import ProjectsModule from "@modules/projects/projects.module";
 
 @Module({
@@ -32,8 +33,7 @@ import ProjectsModule from "@modules/projects/projects.module";
           : [".env.development.local", ".env.development"]),
       ],
     }),
-    MembersModule,
-    ProjectsModule,
+    ...[MembersModule, NewsModule, ProjectsModule],
   ],
   controllers: [],
   providers: [

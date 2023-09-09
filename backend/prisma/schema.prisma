@@ -17,7 +17,6 @@ model Member {
     isActive    Boolean         @default(true)
     contactInfo MemberContact[]
     createdAt   DateTime        @default(now())
-    // Só tem default pq eu esqueci de botar quando criei a tabela
     updatedAt   DateTime        @updatedAt @default(now())
 }
 
@@ -28,8 +27,17 @@ model MemberContact {
     memberId  String
     member    Member   @relation(fields: [memberId], references: [id])
     createdAt DateTime @default(now())
-    // Só tem default pq eu esqueci de botar quando criei a tabela
     updatedAt DateTime @updatedAt @default(now())
+}
+
+model News {
+    id            String   @id @default(uuid())
+    title         String
+    body          String
+    category      String?
+    backgroundUrl String?
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt @default(now())
 }
 
 model Project {
