@@ -1,7 +1,6 @@
 "use client";
 
 import { DataStatus, FileUploadEvent, FilesToUpload } from "@app/selecao/types";
-import { fork } from "child_process";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FaExclamationCircle, FaIdCard, FaPaperPlane, FaUser } from "react-icons/fa";
 import { z } from "zod";
@@ -26,7 +25,7 @@ const cpfSchema = z.string().refine(val => {
   if (cpf.length !== 11) return false;
 
   // Os CPFs "111.111.111-11", "222.222.222-22"... todos passam o teste dos últimos dígitos.
-  // Todavia, são CPFs que não pertencem à ninguém - inválidos.
+  // Todavia, são CPFs que não pertencem a ninguém - inválidos.
   // Essa linha irá checar se todos os dígitos do CPF são iguais e, caso verdadeiro,
   // o marcando como inválido.
   if (cpf.split("").filter(d => d === cpf[0]).length === 11) return false;
@@ -67,6 +66,8 @@ const nameSchema = z.string().refine(val => {
 export function SelecaoForm() {
   const [cpfStatus, setCpfStatus] = useState<DataStatus>("incomplete");
   const [nameStatus, setNameStatus] = useState<DataStatus>("incomplete");
+  const [name, setName] = useState<string>("");
+  const [cpf, setCpf] = useState<string>("");
 
   const [filesToUpload, setFilesToUpload] = useState<FilesToUpload>({
     cv: undefined,
@@ -81,6 +82,7 @@ export function SelecaoForm() {
 
     if (cpf.length === 14) {
       setCpfStatus(cpfSchema.safeParse(cpf).success ? "valid" : "invalid");
+      setCpf(cpf);
       return;
     }
 
@@ -95,6 +97,7 @@ export function SelecaoForm() {
       return;
     }
 
+    setName(name);
     setNameStatus(nameSchema.safeParse(name).success ? "valid" : "invalid");
   }
 
@@ -110,6 +113,31 @@ export function SelecaoForm() {
         setFilesToUpload({ ...filesToUpload, historico: e.file });
         break;
     }
+  }
+
+  async function send() {
+    if (!(canSend && filesToUpload.cv && filesToUpload.matricula && filesToUpload.historico)) return;
+
+    const formData = new FormData();
+
+    // send the files
+    formData.append("cv", filesToUpload.cv, "cv.pdf");
+    formData.append("matricula", filesToUpload.matricula, "matricula.pdf");
+    formData.append("historico", filesToUpload.historico, "historico.pdf");
+    formData.append("name", name);
+    formData.append("cpf", cpf);
+
+    const response = await fetch("/api/selection", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (response.status === 200) {
+      alert("Formulário enviado com sucesso!");
+      return;
+    }
+
+    alert("Erro ao enviar o formulário.");
   }
 
   // Sempre que algum dos campos tiver uma mudança no valor,
@@ -163,7 +191,7 @@ export function SelecaoForm() {
         <FileInput type="matricula" filesToUpload={filesToUpload} onFileUpload={onFileUpload} />
         <FileInput type="historico" filesToUpload={filesToUpload} onFileUpload={onFileUpload} />
       </FormSection>
-      <SendButton canSend={canSend}>
+      <SendButton canSend={canSend} onClick={() => send()}>
         <FaPaperPlane />
         ENVIAR
       </SendButton>

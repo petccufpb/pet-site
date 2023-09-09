@@ -4,6 +4,7 @@ import { FaEnvelope, FaGithubAlt, FaInstagram, FaQuestionCircle } from "react-ic
 import defaultTheme from "@styles/theme/default";
 
 import { MemberType } from "../MemberType";
+import { SocialMediaLink } from "../SocialMediaLink";
 import {
   Content,
   Divider,
@@ -84,10 +85,10 @@ export function MemberElement({
             membros, o que está sendo atualmente serve apenas para decoração, já que mostra os ícones de
             todas as redes sociais, até as que não se tem informação sobre.
           */}
-          {/* {member.contactInfo?.map(c => (
+          {member.contactInfo?.map(c => (
             <SocialMediaLink contactInfo={c} key={c.id} />
-          ))} */}
-          <a href="">
+          ))}
+          {/* <a href="">
             <FaGithubAlt size={20} />
           </a>
           <a href="">
@@ -95,7 +96,7 @@ export function MemberElement({
           </a>
           <a href="">
             <FaInstagram size={20} />
-          </a>
+          </a> */}
         </SocialMediaIcons>
       </MemberInfo>
     </Content>

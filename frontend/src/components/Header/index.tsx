@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -14,10 +13,10 @@ const defaultRoutes = {
       name: "Início",
       path: "/",
     },
-    {
+    /* {
       name: "História",
       path: "/historia",
-    },
+    }, */
     {
       name: "Time",
       path: "/time",
@@ -128,7 +127,7 @@ export function Header() {
 
   return (
     <PETHeader isSDC={isSDC}>
-      <a href="/sdc" aria-label="Início">
+      <a href="/" aria-label="Início">
         <Logo alt="Logo PET Computação" width={80} />
       </a>
       <nav>

@@ -1,6 +1,3 @@
-"use client";
-
-import FotoTime from "@assets/images/foto-time.jpg";
 import PetrucioFoto from "@assets/images/petrucio-time.png";
 
 import { MemberList } from "./components/MemberList";
@@ -15,13 +12,18 @@ import {
   TeamPhoto,
 } from "./styles";
 
-export default function Time() {
+export default async function Time() {
+  const membersData = await fetch(process.env.NEXT_PUBLIC_API_URL + "/team/members");
+  const tutorsData = await fetch(process.env.NEXT_PUBLIC_API_URL + "/team/tutors");
+
   return (
     <Content>
       <PhotoContainer>
         <ImgContainer>
-          <Petrucio src={PetrucioFoto} alt="Petrucio"></Petrucio>
-          <TeamPhoto src={FotoTime} alt="Grupo PET Computação" />
+          <Petrucio src={PetrucioFoto} alt="Petrucio" />
+          <div>
+            <TeamPhoto />
+          </div>
         </ImgContainer>
         <DescriptionContainer>
           <PETDescription>
@@ -32,8 +34,8 @@ export default function Time() {
         </DescriptionContainer>
       </PhotoContainer>
       <div>
-        <MemberList type="tutor" />
-        <MemberList type="members" />
+        <MemberList type="tutor" data={await tutorsData.json()} />
+        <MemberList type="members" data={await membersData.json()} />
       </div>
     </Content>
   );

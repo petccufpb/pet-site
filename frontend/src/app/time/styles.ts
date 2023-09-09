@@ -5,17 +5,34 @@ import styled from "styled-components";
 
 export const PhotoContainer = styled.div`
   border-radius: 1rem 1rem 0 0;
-  overflow: hidden;
+  /* overflow: hidden; */
   width: 100%;
   aspect-ratio: auto 1440 / 450;
   margin-top: 1rem;
   position: relative;
 `;
 
-export const TeamPhoto = styled(Image)`
-  max-width: 100%;
-  object-fit: contain;
-  object-position: 0 -8%;
+export const BGExtender = styled.div`
+  position: absolute;
+  left: calc((100vw - 70rem) / -2);
+  top: 0;
+  width: 100vw;
+  height: 100%;
+  background-color: #182240;
+  z-index: -1;
+`;
+
+export const TeamPhoto = styled.div`
+  position: absolute;
+  left: calc((100vw - 70rem) / -2);
+  top: 0;
+  width: 100vw;
+  height: 100%;
+  background-image: url("/images/foto-time.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% calc(50% + 100px);
+  border-radius: 2.5rem 2.5rem 0 0;
 `;
 
 export const AbsoluteDiv = styled.div`
@@ -23,9 +40,10 @@ export const AbsoluteDiv = styled.div`
 `;
 
 export const DescriptionContainer = styled(AbsoluteDiv)`
+  position: absolute;
+  left: calc((100vw - 70rem) / -2);
   height: 45%;
   bottom: 0;
-  left: 0;
 `;
 
 export const PETDescription = styled(AbsoluteDiv)`
@@ -47,11 +65,12 @@ export const Content = styled.div`
 
 export const ImgContainer = styled.div`
   position: relative;
-  overflow-y: hidden;
+  height: 25rem;
 `;
 
 export const Petrucio = styled(Image)`
   position: absolute;
-  top: 2%;
-  right: 0;
+  bottom: 0;
+  right: -20%;
+  z-index: 99;
 `;

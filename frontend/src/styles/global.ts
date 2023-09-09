@@ -35,7 +35,6 @@ export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
         font-family: ${({ theme }) => theme.fonts.regular};
         font-weight: 400;
         font-size: 1rem;
-        overflow-x: hidden;
     }
 
     button,
@@ -59,8 +58,12 @@ export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
     }
 
     main {
-        overflow-x: hidden;
         word-wrap: break-word;
+        height: 100%;
+    }
+
+    body > div {
+        overflow-x: hidden;
     }
 
     input, button {
