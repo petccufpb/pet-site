@@ -7,6 +7,7 @@ import NewsController from "./infra/http/news.controller";
 import PrismaNewsRepository from "./infra/prisma/news.repository";
 import NewsRepository from "./repositories/news.repository";
 import CreateNews from "./services/CreateNews.service";
+import ListNews from "./services/ListNews.service";
 
 @Module({
   controllers: [NewsController],
@@ -16,7 +17,7 @@ import CreateNews from "./services/CreateNews.service";
       provide: NewsRepository,
       useClass: PrismaNewsRepository,
     },
-    ...[CreateNews],
+    ...[CreateNews, ListNews],
   ],
 })
 export default class NewsModule {}

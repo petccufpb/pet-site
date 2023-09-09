@@ -14,4 +14,20 @@ export default class PrismaNewsRepository implements NewsRepository {
 
     return news;
   }
+
+  public async findAllNews(): Promise<News[]> {
+    const news = await this.prisma.news.findMany();
+
+    return news;
+  }
+
+  public async findById(id: string): Promise<News | null> {
+    const news = await this.prisma.news.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return news;
+  }
 }
