@@ -3,6 +3,7 @@
 import { DataStatus, FileUploadEvent, FilesToUpload } from "@app/selecao/types";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FaExclamationCircle, FaIdCard, FaPaperPlane, FaUser } from "react-icons/fa";
+import { toast } from "react-toastify";
 import { z } from "zod";
 
 import { FileInput } from "../FileInput";
@@ -11,6 +12,7 @@ import {
   FormInput,
   FormSection,
   InputContainer,
+  LoadingIcon,
   MaskedFormInput,
   SendButton,
   UploadTitle,
@@ -68,6 +70,7 @@ export function SelecaoForm() {
   const [nameStatus, setNameStatus] = useState<DataStatus>("incomplete");
   const [name, setName] = useState<string>("");
   const [cpf, setCpf] = useState<string>("");
+  const [isSending, setIsSending] = useState<boolean>(false);
 
   const [filesToUpload, setFilesToUpload] = useState<FilesToUpload>({
     cv: undefined,
@@ -127,17 +130,21 @@ export function SelecaoForm() {
     formData.append("name", name);
     formData.append("cpf", cpf);
 
+    setIsSending(true);
+
     const response = await fetch("/api/selection", {
       method: "POST",
       body: formData,
     });
 
+    setIsSending(false);
+
     if (response.status === 200) {
-      alert("Formulário enviado com sucesso!");
+      toast.success("Formulário enviado com sucesso!");
       return;
     }
 
-    alert("Erro ao enviar o formulário.");
+    toast.error("Erro ao enviar o formulário.");
   }
 
   // Sempre que algum dos campos tiver uma mudança no valor,
@@ -192,8 +199,14 @@ export function SelecaoForm() {
         <FileInput type="historico" filesToUpload={filesToUpload} onFileUpload={onFileUpload} />
       </FormSection>
       <SendButton canSend={canSend} onClick={() => send()}>
-        <FaPaperPlane />
-        ENVIAR
+        {isSending ? (
+          <LoadingIcon />
+        ) : (
+          <>
+            <FaPaperPlane />
+            ENVIAR
+          </>
+        )}
       </SendButton>
     </Content>
   );

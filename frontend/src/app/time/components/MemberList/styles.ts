@@ -1,6 +1,6 @@
 "use client";
 
-import { FaSpinner } from "react-icons/fa";
+import { FaCircleNotch } from "react-icons/fa6";
 import styled from "styled-components";
 
 export const Members = styled.div`
@@ -30,7 +30,7 @@ export const LoadingIconContainer = styled.div`
   padding: 2rem;
 `;
 
-export const LoadingIcon = styled(FaSpinner)`
+export const LoadingIcon = styled(FaCircleNotch)`
   @keyframes spin {
     from {
       transform: rotate(0deg);

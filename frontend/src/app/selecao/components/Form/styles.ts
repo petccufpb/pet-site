@@ -1,7 +1,8 @@
 "use client";
 
+import { FaCircleNotch } from "react-icons/fa6";
 import InputMask from "react-input-mask";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const Content = styled.div`
   border-radius: 1rem;
@@ -142,4 +143,17 @@ export const SendButton = styled.button<{ canSend: boolean }>`
 export const FormSection = styled.div`
   display: grid;
   gap: 1.5rem;
+`;
+
+const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+export const LoadingIcon = styled(FaCircleNotch)`
+  animation: ${spin} 1s linear infinite;
 `;
