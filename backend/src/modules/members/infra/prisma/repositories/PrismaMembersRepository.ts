@@ -38,9 +38,16 @@ export class PrismaMembersRepository implements MembersRepository {
   async findMembers(): Promise<CompleteMember[]> {
     const members = await this.prisma.member.findMany({
       where: {
-        type: {
-          notIn: ["founder", "tutor"],
-        },
+        OR: [
+          {
+            type: null,
+          },
+          {
+            type: {
+              notIn: ["founder", "tutor"],
+            },
+          },
+        ],
       },
       orderBy: { name: "asc" },
       include: {

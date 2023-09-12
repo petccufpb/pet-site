@@ -12,16 +12,18 @@ export class CreateMemberDTO {
 
   @IsOptional()
   @IsString()
+  @IsNotEmpty()
   about?: string;
 
   @IsOptional()
   @IsString()
+  @IsNotEmpty()
   @IsUrl()
   photoUrl?: string;
 
   @IsOptional()
   @IsString()
-  @IsIn(["", "decano", "founder", "tutor"])
+  @IsIn(["decano", "founder", "tutor"])
   type?: string;
 
   @IsOptional()
