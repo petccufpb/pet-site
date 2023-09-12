@@ -89,6 +89,9 @@ export function MobileHeader() {
           <RouteLink tab={pathname} href="/selecao">
             Seleção
           </RouteLink>
+          <RouteLink tab={pathname} href="/podcast">
+            Podcast
+          </RouteLink>
         </Links>
         <SocialMediaLinks>
           <a href="https://www.instagram.com/petccufpb/">

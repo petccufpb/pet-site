@@ -204,6 +204,9 @@ importers:
       react-select:
         specifier: ^5.7.3
         version: 5.7.3(@types/react@18.0.31)(react-dom@18.2.0)(react@18.2.0)
+      react-spotify-embed:
+        specifier: ^2.0.3
+        version: 2.0.3
       styled-components:
         specifier: ^5.3.9
         version: 5.3.11(@babel/core@7.22.10)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
@@ -10118,6 +10121,14 @@ packages:
       use-isomorphic-layout-effect: 1.1.2(@types/react@18.0.31)(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /react-spotify-embed@2.0.3:
+    resolution: {integrity: sha512-buiiaaPrGTyOlciJFJiHz1o2a4iSJMuH9ewi2KaIjVGcedz6szM8plz7Y6HtcDxApxCv2Rwx38xS1z8Zs3M/ZA==}
+    engines: {node: '>=14'}
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react-syntax-highlighter@15.5.0(react@18.2.0):

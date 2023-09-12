@@ -26,6 +26,10 @@ const defaultRoutes = {
       path: "/projetos",
     },
     {
+      name: "Podcast",
+      path: "/podcast",
+    },
+    {
       name: "SDC",
       path: "/sdc",
     },

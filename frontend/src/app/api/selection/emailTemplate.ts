@@ -22,7 +22,7 @@ export function buildEmail({ name, cpf }: { name: string; cpf: string }): string
             </tr>
         </table>
         <hr />
-        <div style="padding: 1.5rem 5rem; box-sizing: border-box; background-color: #010027; border-radius: 0.5rem;">
+        <div style="padding: 1.5rem 5rem; box-sizing: border-box;">
           <h2 style="font-family: 'Inter', sans-serif;">Nome do Candidato:</h2>
           <div style="margin-bottom: 1rem; padding: 0.3rem 1rem; font-style: italic;">${name}</div>
           <h2 style="font-family: 'Inter', sans-serif;">CPF do Candidato:</h2>
