@@ -1,6 +1,9 @@
 import { IsOptional } from "@hyoretsu/decorators";
 import { MemberContact } from "@prisma/client";
-import { IsArray, IsBoolean, IsIn, IsNotEmpty, IsString, IsUrl } from "class-validator";
+import { Type } from "class-transformer";
+import { IsArray, IsBoolean, IsIn, IsNotEmpty, IsString, IsUrl, ValidateNested } from "class-validator";
+
+import { CreateMemberContactDTO } from "./CreateMemberContact.dto";
 
 export class CreateMemberDTO {
   @IsNotEmpty()
@@ -27,5 +30,7 @@ export class CreateMemberDTO {
 
   @IsOptional()
   @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateMemberContactDTO)
   contactInfo?: MemberContact[];
 }
