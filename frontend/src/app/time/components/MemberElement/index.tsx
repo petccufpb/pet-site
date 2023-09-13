@@ -72,10 +72,12 @@ export function MemberElement({
           <h3>{member.name}</h3>
           <MemberTypeContainer>
             <MemberType member={member} />
-            <QuestionMark>
-              <FaQuestionCircle />
-              <small>{member.about}</small>
-            </QuestionMark>
+            {member.about && (
+              <QuestionMark>
+                <FaQuestionCircle />
+                <small>{member.about}</small>
+              </QuestionMark>
+            )}
           </MemberTypeContainer>
         </MemberDescription>
         <Divider colorTheme={colorTheme} />

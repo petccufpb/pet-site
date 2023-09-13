@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import { FaPlay, FaShare, FaShareNodes } from "react-icons/fa6";
-import { Spotify } from "react-spotify-embed";
+import { FaPlay, FaShareNodes } from "react-icons/fa6";
 
+import SharePodcast from "./components/SharePodcast";
 import { Episode, EpisodeInfo, Episodes, Playback, PodcastContainer } from "./styles";
 
 export const metadata: Metadata = {
@@ -9,15 +9,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Podcast() {
-  // fetch spotify for podcast data
-  const body = {
-    redirect_uri: "https://www.petccufpb.com.br/redirect",
-    grant_type: "authorization_code",
-  };
-
   const id = process.env.NEXT_SPOTIFY_ID;
   const secret = process.env.NEXT_SPOTIFY_SECRET;
-  const podcastId = "7yyTumVntw0JcKO33uP5fX";
 
   const authOptions = {
     method: "POST",
@@ -44,6 +37,17 @@ export default async function Podcast() {
     ).json()
   ).items;
 
+  function shareLink(url: string) {
+    if (navigator.share) {
+      navigator.share({
+        title: "Além do Ponto e Vírgula",
+        url,
+      });
+    } else {
+      alert("Compartilhe o link do episódio: " + url);
+    }
+  }
+
   return (
     <PodcastContainer>
       <div>Além do Ponto e Vírgula</div>
@@ -52,13 +56,13 @@ export default async function Podcast() {
         {episodes.map(e => {
           return (
             <Episode key={e.uri}>
-              <img src={e.images[0].url} width="180" height="180" />
+              <img src={e.images[0].url} width="150" height="150" />
               <EpisodeInfo>
                 <h2>{e.name}</h2>
                 <div>{e.description}</div>
               </EpisodeInfo>
               <Playback>
-                <FaShareNodes />
+                <SharePodcast podcastLink={e.external_urls.spotify} />
                 <a href={e.external_urls.spotify} target="_blank">
                   <FaPlay />
                 </a>

@@ -23,6 +23,7 @@ export const MemberImage = styled(Image)`
   border-radius: 100%;
   outline: 2px solid ${({ theme }) => theme.colors["second-blue"]};
   margin: 4px;
+  object-fit: cover;
 `;
 
 export const Content = styled.div`

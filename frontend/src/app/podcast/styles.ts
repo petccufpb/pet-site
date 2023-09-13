@@ -22,7 +22,30 @@ export const Episodes = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  border-radius: 1rem;
+  gap: 0.2rem;
+
+  // first child
+  > div:first-child {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+  }
+
+  // last child
+  > div:last-child {
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+  }
+
+  // every other child
+  > div:nth-child(even) {
+    background-color: #040422;
+  }
+
+  // every other child
+  > div:nth-child(odd) {
+    background-color: #05052e;
+  }
 `;
 
 export const Episode = styled.div`
@@ -30,9 +53,7 @@ export const Episode = styled.div`
   overflow: hidden;
   display: flex;
   gap: 0.4rem;
-  background: linear-gradient(to right, #04042298, #040422);
   padding: 1rem;
-  border-radius: 1rem;
 
   > img {
     margin: auto;
@@ -50,14 +71,13 @@ export const EpisodeInfo = styled.div`
 
   > h2 {
     font-weight: 800;
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   > div {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #d1d5db;
     max-height: 100%;
-    overflow: hidden;
   }
 `;
 

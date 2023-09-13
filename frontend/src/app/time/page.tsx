@@ -1,3 +1,5 @@
+import { BGExtender } from "@app/components/ConhecaNos/styles";
+
 import PetrucioFoto from "@assets/images/petrucio-time.png";
 
 import { MemberList } from "./components/MemberList";

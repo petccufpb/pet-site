@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 export const PhotoContainer = styled.div`
   border-radius: 1rem 1rem 0 0;
-  /* overflow: hidden; */
   width: 100%;
   aspect-ratio: auto 1440 / 450;
   margin-top: 1rem;
