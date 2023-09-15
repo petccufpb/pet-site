@@ -9,8 +9,8 @@ import { SearchInput } from "./components/SearchInput";
 import { Spinner } from "./components/Spinner";
 import { ArticleContainer, PostsListContainer } from "./styles";
 
-export const username = "abraaodev";
-export const repoName = "artigosPET";
+export const username = "ufpbpetcc";
+export const repoName = "articles";
 
 export interface IPost {
   title: string;
