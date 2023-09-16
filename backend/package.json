@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@fastify/helmet": "^10.1.0",
-    "@fastify/static": "^6.10.0",
+    "@fastify/static": "6.11.0",
     "@hyoretsu/decorators": "^1.1.2",
     "@hyoretsu/providers": "^1.0.5",
     "@nestjs/common": "^9.3.12",
