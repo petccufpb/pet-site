@@ -23,6 +23,9 @@ export const Card = styled.div`
   padding: 2rem 2.5rem;
   border-radius: 1rem;
   position: relative;
+  height: 23rem;
+  display: flex;
+  flex-direction: column;
 
   &::after {
     content: "";
@@ -55,10 +58,13 @@ export const Title = styled.div`
 `;
 
 export const Description = styled.div`
-  margin: 2rem 0;
   color: #a8a8b3;
   font-family: "Inter Variable", sans-serif;
   text-align: center;
+  margin: auto 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
 `;
 
 export const PageTitle = styled.div`
