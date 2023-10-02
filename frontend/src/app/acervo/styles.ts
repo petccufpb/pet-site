@@ -149,3 +149,12 @@ export const Comment = styled.section`
     color: #ffffff80;
   }
 `;
+
+export const Description = styled.div`
+  margin-top: 2vh;
+
+  > div {
+    padding: 2vh 1vw;
+    margin-top: 1vh;
+  }
+`;

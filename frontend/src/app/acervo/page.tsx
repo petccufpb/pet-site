@@ -9,7 +9,7 @@ import { IoSend } from "react-icons/io5";
 import defaultTheme from "@styles/theme/default";
 
 import Title from "./components/Title";
-import { Comment, Comments, Content, Makers, VideoComments, Window } from "./styles";
+import { Comment, Comments, Content, Description, Makers, VideoComments, Window } from "./styles";
 
 const makers: Member[] = [
   {
@@ -299,7 +299,7 @@ export default function Acervo() {
             </Comments>
           </aside>
         </VideoComments>
-        <div>
+        <Description>
           <h5>Descrição:</h5>
 
           <Window
@@ -308,9 +308,8 @@ export default function Acervo() {
               __html:
                 "Instalação GO:<br /><br />*Linux: https://www.youtube.com/watch?v=nQPdj4Z25Js<br /><br />*Windows: https://www.youtube.com/watch?v=kxD8p-aPYzM<br /><br />*Mac: https://www.youtube.com/watch?v=fPjcp48dpPM<br /><br />Usar GO no VS Code:<br /><br />https://www.youtube.com/watch?v=pvfESSAbbts&t=4s<br /><br />Introdução ao Replit:<br /><br />https://www.youtube.com/watch?v=D4f7_lPwXtE<br /><br />00:00  Introdução<br />00:43 Estrutura do curso<br />2:30 Módulo 0<br />3:52 Módulo 1<br />4:51 Módulo 2<br />6:23 Referências<br />6:56 Instalação do GO<br />7:33 IDE",
             }}
-            style={{ padding: "2vh 1vw" }}
           />
-        </div>
+        </Description>
       </Content>
     </div>
   );
