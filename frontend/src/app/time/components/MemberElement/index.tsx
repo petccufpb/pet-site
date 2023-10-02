@@ -5,12 +5,11 @@ import defaultTheme from "@styles/theme/default";
 
 import { MemberType } from "../MemberType";
 import { SocialMediaLink } from "../SocialMediaLink";
+import MemberPhoto from "./components/MemberPhoto";
 import {
   Content,
   Divider,
   MemberDescription,
-  MemberImage,
-  MemberImageBorder,
   MemberInfo,
   MemberTypeContainer,
   QuestionMark,
@@ -58,14 +57,7 @@ export function MemberElement({
   return (
     <Content key={member.id}>
       <div>
-        <MemberImageBorder colorTheme={colorTheme}>
-          <MemberImage
-            src={member.photoUrl || "/no-profile-picture.svg"}
-            width={80}
-            height={80}
-            alt={member.name}
-          />
-        </MemberImageBorder>
+        <MemberPhoto colorTheme={colorTheme} name={member.name} src={member.photoUrl as string} />
       </div>
       <MemberInfo>
         <MemberDescription>

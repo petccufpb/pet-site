@@ -13,6 +13,10 @@ const defaultRoutes = {
       name: "Início",
       path: "/",
     },
+    {
+      name: "Acervo",
+      path: "/acervo",
+    },
     /* {
       name: "História",
       path: "/historia",

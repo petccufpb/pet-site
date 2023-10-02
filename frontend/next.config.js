@@ -21,6 +21,7 @@ module.exports = () => ({
       "0.academia-photos.com",
       "i1.rgstatic.net",
       "instagram.fjpa11-1.fna.fbcdn.net",
+      "yt3.ggpht.com",
     ],
     remotePatterns: [
       {

@@ -1,30 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import styled from "styled-components";
 
 import { MemberColorTheme } from ".";
-
-export const MemberImageBorder = styled.div<{ colorTheme: MemberColorTheme }>`
-  position: relative;
-  border: double 2px transparent;
-  border-radius: 100%;
-  background-image: ${({ colorTheme }) => colorTheme.gradient};
-  background-origin: border-box;
-  background-clip: content-box, border-box;
-  margin-right: 1rem;
-  display: grid;
-  place-items: center;
-  margin-top: auto;
-  margin-bottom: auto;
-`;
-
-export const MemberImage = styled(Image)`
-  border-radius: 100%;
-  outline: 2px solid ${({ theme }) => theme.colors["second-blue"]};
-  margin: 4px;
-  object-fit: cover;
-`;
 
 export const Content = styled.div`
   display: flex;
@@ -41,6 +19,7 @@ export const MemberInfo = styled.div`
   width: 100%;
   align-items: center;
   padding: 0.2rem 0 0.2rem 0;
+  margin-left: 1rem;
 `;
 
 export const Divider = styled.div<{ colorTheme: MemberColorTheme }>`
