@@ -20,6 +20,7 @@
     "@fastify/static": "6.11.0",
     "@hyoretsu/decorators": "^1.1.2",
     "@hyoretsu/providers": "^1.0.5",
+    "@nestjs/cache-manager": "^2.1.0",
     "@nestjs/common": "^9.3.12",
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.3.12",

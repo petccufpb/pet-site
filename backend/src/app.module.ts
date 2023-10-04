@@ -1,4 +1,5 @@
-import { CacheModule, CacheInterceptor, Module } from "@nestjs/common";
+import { CacheModule, CacheInterceptor } from "@nestjs/cache-manager";
+import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { APP_INTERCEPTOR } from "@nestjs/core";
 import { redisStore } from "cache-manager-redis-yet";
@@ -7,6 +8,8 @@ import type { RedisClientOptions } from "redis";
 import { MembersModule } from "@modules/members/members.module";
 import NewsModule from "@modules/news/news.module";
 import ProjectsModule from "@modules/projects/projects.module";
+
+import { MiscController } from "./controllers/misc.controller";
 
 @Module({
   imports: [
@@ -39,7 +42,7 @@ import ProjectsModule from "@modules/projects/projects.module";
     }),
     ...[MembersModule, NewsModule, ProjectsModule],
   ],
-  controllers: [],
+  controllers: [MiscController],
   providers: [
     ...(process.env.RAILWAY_ENVIRONMENT === "development"
       ? []
