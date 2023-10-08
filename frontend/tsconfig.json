@@ -28,7 +28,8 @@
       "@public/*": ["../public/*"],
       "@services/*": ["services/*"],
       "@styles/*": ["styles/*"],
-      "@theme": ["styles/theme/default.ts"]
+      "@theme": ["styles/theme/default.ts"],
+      "@utils/*": ["utils/*"]
     },
     "plugins": [
       {

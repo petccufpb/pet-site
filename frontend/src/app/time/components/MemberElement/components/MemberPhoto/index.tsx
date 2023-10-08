@@ -16,7 +16,7 @@ const MemberPhoto: React.FC<MemberPhotoParams> = ({ colorTheme, name, size, src 
   return (
     <Border colorTheme={colorTheme}>
       <MemberImage
-        src={src || "/no-profile-picture.svg"}
+        src={src || "/images/no-profile-picture.svg"}
         title={name}
         width={size}
         height={size}

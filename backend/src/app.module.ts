@@ -13,24 +13,20 @@ import { MiscController } from "./controllers/misc.controller";
 
 @Module({
   imports: [
-    ...(process.env.RAILWAY_ENVIRONMENT === "development"
-      ? []
-      : [
-          CacheModule.registerAsync<RedisClientOptions>({
-            // @ts-ignore
-            useFactory: async () => ({
-              store: await redisStore({
-                password: process.env.REDIS_PASS,
-                socket: {
-                  host: process.env.REDIS_HOST,
-                  port: Number(process.env.REDIS_PORT),
-                },
-                ttl: 1 * 1 * 5 * 60 * 1000, // 5 minutes
-                username: process.env.REDIS_USER,
-              }),
-            }),
-          }),
-        ]),
+    CacheModule.registerAsync<RedisClientOptions>({
+      // @ts-ignore
+      useFactory: async () => ({
+        store: await redisStore({
+          password: process.env.REDIS_PASS,
+          socket: {
+            host: process.env.REDIS_HOST,
+            port: Number(process.env.REDIS_PORT),
+          },
+          ttl: 1 * 1 * 5 * 60 * 1000, // 5 minutes
+          username: process.env.REDIS_USER,
+        }),
+      }),
+    }),
     ConfigModule.forRoot({
       envFilePath: [
         ".env.local",
