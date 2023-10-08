@@ -52,11 +52,7 @@ export default function Acervo({ params: { playlistId } }: PlaylistProps) {
     <Styling>
       {videos.map(video => (
         <div key={video.id}>
-          <Link
-            href={`/acervo/video/${video.id}?playlistId=${playlistId}&description=${encodeURI(
-              video.description,
-            )}`}
-          >
+          <Link href={`/acervo/video/${video.id}?playlistId=${playlistId}`}>
             <Image src={video.thumbnail} alt="" width={480} height={360} />
           </Link>
 

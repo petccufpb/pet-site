@@ -115,15 +115,12 @@ interface VideoProps {
     videoId: string;
   };
   searchParams: {
-    description: string;
     playlistId: string;
   };
 }
 
-export default function Acervo({
-  params: { videoId },
-  searchParams: { description, playlistId },
-}: VideoProps) {
+export default function Acervo({ params: { videoId }, searchParams: { playlistId } }: VideoProps) {
+  const [video, setVideo] = useState<Video>();
   const [videos, setVideos] = useState<Video[]>([]);
 
   const [comment, setComment] = useState("");
@@ -166,6 +163,10 @@ export default function Acervo({
 
     execute();
   }, [playlistId, videoId]);
+
+  useEffect(() => {
+    setVideo(videos.find(video => video.id === videoId));
+  }, [videoId, videos]);
 
   return (
     <div style={{ margin: "4vh 0" }}>
@@ -297,7 +298,7 @@ export default function Acervo({
             <div>
               <span
                 dangerouslySetInnerHTML={{
-                  __html: decodeURI(description).replaceAll("\n", "<br/>"),
+                  __html: video?.description.replaceAll("\n", "<br/>") || "",
                 }}
               />
             </div>
@@ -307,14 +308,7 @@ export default function Acervo({
         <Videos>
           {videos.slice(videoIndex + 1, videoIndex + 6).map(video => (
             <div key={video.id}>
-              <Link
-                href={{
-                  pathname: `/acervo/video/${video.id}`,
-                  query: {
-                    description: encodeURI(video.description),
-                  },
-                }}
-              >
+              <Link href={`/acervo/video/${video.id}?playlistId=${playlistId}`}>
                 <Image src={video.thumbnail} alt="" width={480} height={360} />
               </Link>
 
