@@ -16,10 +16,9 @@ export class MiscController {
 
     const url = `https://youtube.googleapis.com/youtube/v3/${route}?key=${
       process.env.GOOGLE_API_KEY
-    }&maxResults=${route === "commentThreads" ? 100 : 50}&order=date&part=snippet${paramsArr.reduce(
-      (str, [param, value]) => `${str}&${param}=${value}`,
-      "",
-    )}`;
+    }&maxResults=${route === "commentThreads" ? 100 : 50}${
+      route !== "commentThreads" ? "&order=date" : ""
+    }&part=snippet${paramsArr.reduce((str, [param, value]) => `${str}&${param}=${value}`, "")}`;
 
     const res = await fetch(url);
 
