@@ -143,7 +143,7 @@ export default function Acervo({ params: { videoId }, searchParams: { playlistId
             ({
               snippet: {
                 // @ts-ignore
-                topLevelComment: { id, ...snippet },
+                topLevelComment: { id, snippet },
               },
             }) => {
               return {
