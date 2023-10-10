@@ -182,7 +182,7 @@ export default function Acervo({ params: { videoId }, searchParams: { playlistId
               ></iframe>
             </Window>
 
-            <h2>Aula 0 - Introdução à Estrutura de Dados</h2>
+            <h2>{video?.title}</h2>
           </div>
           <aside>
             <Makers>
