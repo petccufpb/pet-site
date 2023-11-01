@@ -35,6 +35,7 @@ export const Styling = styled.div`
     > div {
       display: flex;
       flex-direction: column;
+      flex: 1;
 
       margin-left: 2rem;
 

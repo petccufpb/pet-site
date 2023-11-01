@@ -27,14 +27,13 @@ export default async function Acervo({ params: { playlistId } }: PlaylistProps) 
     `/youtube?route=playlistItems&playlistId=${playlistId}`,
   );
 
-  const videos =
-    items?.map(({ snippet: item }) => ({
-      date: item?.publishedAt,
-      description: item?.description || "",
-      id: item?.resourceId?.videoId,
-      thumbnail: item?.thumbnails?.high?.url || "",
-      title: item?.title,
-    })) || [];
+  const videos = items?.map(({ snippet: item }) => ({
+    date: item?.publishedAt,
+    description: item?.description,
+    id: item?.resourceId?.videoId,
+    thumbnail: item?.thumbnails?.high?.url,
+    title: item?.title,
+  })) as Video[];
 
   return (
     <Styling>

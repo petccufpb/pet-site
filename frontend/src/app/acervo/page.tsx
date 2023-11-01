@@ -22,16 +22,13 @@ export default async function Acervo() {
     "/youtube?route=playlists&channelId=UCiWvbXdPvthDcEVTKVpfqqQ",
   );
 
-  const playlists =
-    items?.map(({ id, snippet: item }) => ({
-      date: item?.publishedAt,
-      description:
-        item?.description ||
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut nisi dui. Duis sodales quis ligula id ornare. Nam a pretium metus, in ullamcorper turpis. Fusce pretium lobortis nunc eget dapibus. Sed a cursus sapien, at vehicula lacus.",
-      id,
-      thumbnail: item?.thumbnails?.high?.url || "",
-      title: item?.title,
-    })) || [];
+  const playlists = items?.map(({ id, snippet: item }) => ({
+    date: item?.publishedAt,
+    description: item?.description,
+    id,
+    thumbnail: item?.thumbnails?.high?.url,
+    title: item?.title,
+  })) as Playlist[];
 
   return (
     <Styling>
