@@ -1,27 +1,78 @@
 "use client";
+import Link from "next/link";
 import styled from "styled-components";
 
 export const Styling = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 5vw;
-  row-gap: 5vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 
-  > div {
+  section {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 1rem 2rem 1rem 2rem;
+    position: relative;
+
+    &:first-child {
+      border-radius: 1rem 1rem 0 0;
+    }
+
+    &:last-child {
+      border-radius: 0 0 1rem 1rem;
+    }
+
+    &:nth-child(even) {
+      background-color: #040422;
+    }
+
+    &:nth-child(odd) {
+      background-color: #05052e;
+    }
 
     img {
-      border: 2px solid #3bbbdc;
-      border-radius: 25px;
+      border-radius: 2rem;
     }
 
-    h1 {
-      max-width: 80%;
+    > div {
+      display: flex;
+      flex-direction: column;
 
-      font-size: 1.4em;
-      text-align: center;
+      margin-left: 2rem;
+
+      > div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        flex: 1;
+
+        h1 {
+          font-size: 1.4em;
+        }
+
+        div {
+          max-height: 6rem;
+          overflow: hidden;
+
+          p {
+            margin-top: 1rem;
+            margin-right: 2rem;
+          }
+        }
+      }
     }
+  }
+`;
+
+export const GoToPlaylistVideo = styled(Link)`
+  display: flex;
+  align-self: flex-end;
+
+  span {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  svg {
+    margin-left: 0.5rem;
   }
 `;

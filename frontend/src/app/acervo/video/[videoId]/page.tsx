@@ -21,8 +21,7 @@ const makers: Member[] = [
     id: "711b683e-e4af-4d8d-b277-12973ec280a1",
     name: "Aran Leite de Gusmão",
     about: null,
-    photoUrl:
-      "https://lh3.googleusercontent.com/drive-viewer/AITFw-zR8e8F-xjnHo2cZ8fK3SrnbuHLJSIIa4t3uBe4v6SAvVl6FormLHSPREh1R3AuJPGhePEDWY5cdkAq6luxS1AbQkiJyA=s2560",
+    photoUrl: "https://drive.google.com/uc?id=1PV8wnYibWo43fk8OFpWidZgXIdQDTOa8",
     type: null,
     isActive: true,
     createdAt: new Date("2023-04-07T23:41:47.876Z"),
@@ -58,8 +57,7 @@ const makers: Member[] = [
     id: "c73daaea-6d19-4595-94ff-7ad687832942",
     name: "Vitória Cristhyna dos Santos Camelo",
     about: null,
-    photoUrl:
-      "https://lh3.googleusercontent.com/drive-viewer/AITFw-x1Wiv1HnOqnWY00Ctj-CPyHzW6_VqzxkAye0X1KWwTRlWZQAJoaEBNEVwFK4o5SrRnDjBH-XRaB5r-KcrGIW9KRhimFg=s1600",
+    photoUrl: "https://drive.google.com/uc?id=1lmGpV8znG1MofbowLqtALTY6u5YL2qY8",
     type: null,
     isActive: true,
     createdAt: new Date("2023-09-12T20:19:39.856Z"),
@@ -70,8 +68,7 @@ const makers: Member[] = [
     id: "fe8862ab-ebbc-4c8b-a2ef-d18d45abf5fb",
     name: "Breno Henrique de Souza Lima",
     about: null,
-    photoUrl:
-      "https://lh3.googleusercontent.com/drive-viewer/AITFw-xVW77tpdRgacI_baUEE8Yf_9JVlu8hTCRzOXmYqQs2FyCpF5eORGKQOewrHvVOvM61jwFmO8Jd8n4wXJemO56bRBqT=s1600",
+    photoUrl: "https://drive.google.com/uc?id=1odQ6A9QUtcYVFJPnlSbwUsMjn4EGLSKw",
     type: null,
     isActive: true,
     createdAt: new Date("2023-04-08T02:41:47.876Z"),
@@ -91,8 +88,7 @@ const makers: Member[] = [
     id: "6c2fc27d-61a0-4f5a-b0b1-6441195c0658",
     name: "Samantha Dantas Medeiros",
     about: null,
-    photoUrl:
-      "https://lh3.googleusercontent.com/drive-viewer/AITFw-yFL0oxDtXLbdiYFETydAMe0gv39gP__G0RuDAbl1y8IQdQUlD0dBcBMNlqyKSnoZ8uC_k37biHe81aIvUoyH5nflXZ=s1600",
+    photoUrl: "https://drive.google.com/uc?id=19kSfP0KS4kEOnGRO6H3ExNshpouvHEI4",
     type: null,
     isActive: true,
     createdAt: new Date("2023-09-12T20:18:47.018Z"),
@@ -158,13 +154,28 @@ export default function Acervo({ params: { videoId }, searchParams: { playlistId
           ) || [],
       );
 
-      await getVideosFromPlaylist(playlistId, setVideos);
+      const {
+        data: { items: playlistItems },
+      } = await api.get<youtube_v3.Schema$PlaylistItemListResponse>(
+        `/youtube?route=playlistItems&playlistId=${playlistId}`,
+      );
+
+      setVideos(
+        playlistItems?.map(({ snippet: item }) => ({
+          date: item?.publishedAt,
+          description: item?.description || "",
+          id: item?.resourceId?.videoId,
+          thumbnail: item?.thumbnails?.high?.url || "",
+          title: item?.title,
+        })) || [],
+      );
     };
 
     execute();
   }, [playlistId, videoId]);
 
   useEffect(() => {
+    console.log(videos);
     setVideo(videos.find(video => video.id === videoId));
   }, [videoId, videos]);
 

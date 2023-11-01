@@ -1,12 +1,10 @@
-"use client";
+import { GoToPlaylistVideo, Styling } from "@app/acervo/styles";
 import { youtube_v3 } from "@googleapis/youtube";
 import { Link } from "@hyoretsu/react-components";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { FaShare } from "react-icons/fa6";
 
 import api from "@api";
-
-import { Styling } from "../../styles";
 
 export interface Video {
   date?: string | null;
@@ -22,42 +20,46 @@ interface PlaylistProps {
   };
 }
 
-// @ts-ignore
-export const getVideosFromPlaylist = async (playlistId: string, func: (arr: Video[]) => void) => {
+export default async function Acervo({ params: { playlistId } }: PlaylistProps) {
   const {
     data: { items },
   } = await api.get<youtube_v3.Schema$PlaylistItemListResponse>(
     `/youtube?route=playlistItems&playlistId=${playlistId}`,
   );
 
-  func(
+  const videos =
     items?.map(({ snippet: item }) => ({
       date: item?.publishedAt,
       description: item?.description || "",
       id: item?.resourceId?.videoId,
       thumbnail: item?.thumbnails?.high?.url || "",
       title: item?.title,
-    })) || [],
-  );
-};
-
-export default function Acervo({ params: { playlistId } }: PlaylistProps) {
-  const [videos, setVideos] = useState<Video[]>([]);
-
-  useEffect(() => {
-    getVideosFromPlaylist(playlistId, setVideos);
-  }, [playlistId, setVideos]);
+    })) || [];
 
   return (
     <Styling>
       {videos.map(video => (
-        <div key={video.id}>
-          <Link href={`/acervo/video/${video.id}?playlistId=${playlistId}`}>
-            <Image src={video.thumbnail} alt="" width={480} height={360} />
+        <section key={video.id}>
+          <Link href={`/acervo/video/${video.id}`}>
+            <Image src={video.thumbnail} alt="" title="Thumbnail" width={360} height={270} />
           </Link>
 
-          <h1>{video.title}</h1>
-        </div>
+          <div>
+            <div>
+              <h1>{video.title}</h1>
+
+              <div>
+                <p dangerouslySetInnerHTML={{ __html: video.description }} />
+              </div>
+            </div>
+
+            <GoToPlaylistVideo href={`/acervo/video/${video.id}?playlistId=${playlistId}`}>
+              <span>Ir para o vídeo</span>
+
+              <FaShare size={20} />
+            </GoToPlaylistVideo>
+          </div>
+        </section>
       ))}
     </Styling>
   );
