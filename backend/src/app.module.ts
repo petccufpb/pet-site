@@ -17,13 +17,8 @@ import { MiscController } from "./controllers/misc.controller";
       // @ts-ignore
       useFactory: async () => ({
         store: await redisStore({
-          password: process.env.REDIS_PASS,
-          socket: {
-            host: process.env.REDIS_HOST,
-            port: Number(process.env.REDIS_PORT),
-          },
+          url: process.env.REDIS_URL,
           ttl: 1 * 1 * 5 * 60 * 1000, // 5 minutes
-          username: process.env.REDIS_USER,
         }),
       }),
     }),
