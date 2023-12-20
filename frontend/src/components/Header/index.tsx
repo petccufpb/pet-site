@@ -14,24 +14,28 @@ const defaultRoutes = {
       path: "/",
     },
     {
-      name: "Acervo",
-      path: "/acervo",
-    },
-    /* {
-      name: "História",
-      path: "/historia",
-    }, */
-    {
       name: "Time",
       path: "/time",
     },
+    // {
+    //   name: "História",
+    //   path: "/historia",
+    // },
+    // {
+    //   name: "Acervo",
+    //   path: "/acervo",
+    // },
+    // {
+    //   name: "Projetos",
+    //   path: "/projetos",
+    // },
+    // {
+    //   name: "Podcast",
+    //   path: "/podcast",
+    // },
     {
-      name: "Projetos",
-      path: "/projetos",
-    },
-    {
-      name: "Podcast",
-      path: "/podcast",
+      name: "Artigos",
+      path: "/artigos",
     },
     {
       name: "SDC",
@@ -42,10 +46,6 @@ const defaultRoutes = {
     {
       name: "Seleção",
       path: "/selecao",
-    },
-    {
-      name: "Artigos",
-      path: "/artigos",
     },
   ],
 };
