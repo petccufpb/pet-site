@@ -156,6 +156,9 @@ importers:
       '@fontsource-variable/inter':
         specifier: ^5.0.2
         version: 5.0.5
+      '@fontsource/roboto':
+        specifier: ^5.0.8
+        version: 5.0.8
       '@googleapis/youtube':
         specifier: ^11.0.1
         version: 11.0.1
@@ -207,6 +210,9 @@ importers:
       react-hook-form:
         specifier: ^7.43.9
         version: 7.45.1(react@18.2.0)
+      react-icons:
+        specifier: ^4.12.0
+        version: 4.12.0(react@18.2.0)
       react-select:
         specifier: ^5.7.3
         version: 5.7.3(@types/react@18.0.31)(react-dom@18.2.0)(react@18.2.0)
@@ -286,9 +292,6 @@ importers:
       react-dropzone:
         specifier: ^14.2.3
         version: 14.2.3(react@18.2.0)
-      react-icons:
-        specifier: ^4.8.0
-        version: 4.10.1(react@18.2.0)
       react-input-mask:
         specifier: ^2.0.4
         version: 2.0.4(react-dom@18.2.0)(react@18.2.0)
@@ -3109,6 +3112,10 @@ packages:
   /@fontsource/bai-jamjuree@5.0.5:
     resolution: {integrity: sha512-5VYmUeZkDw9mqyb9i0itsfl1ROCKHBeLqM0/BzelY7RGdfb9cfMFKoCp49OkgD7ppR8G0kYtDKlhzS8AQzpY4g==}
     dev: true
+
+  /@fontsource/roboto@5.0.8:
+    resolution: {integrity: sha512-XxPltXs5R31D6UZeLIV1td3wTXU3jzd3f2DLsXI8tytMGBkIsGcc9sIyiupRtA8y73HAhuSCeweOoBqf6DbWCA==}
+    dev: false
 
   /@googleapis/youtube@11.0.1:
     resolution: {integrity: sha512-xbA9u6ig0T4KWsWp3k9gNFZiIdtMewSK5AhofV2lMCLTl+fCdgJNpkaLsZTpdGwe7eg4r05qvhuCISXk5Ql3Hw==}
@@ -10674,13 +10681,13 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-icons@4.10.1(react@18.2.0):
-    resolution: {integrity: sha512-/ngzDP/77tlCfqthiiGNZeYFACw85fUjZtLbedmJ5DTlNDIwETxhwBzdOJ21zj4iJdvc0J3y7yOsX3PpxAJzrw==}
+  /react-icons@4.12.0(react@18.2.0):
+    resolution: {integrity: sha512-IBaDuHiShdZqmfc/TwHu6+d6k2ltNCf3AszxNmjJc1KUfXdEeRJOKyNvLmAHaarhzGmTSVygNdyu8/opXv2gaw==}
     peerDependencies:
       react: '*'
     dependencies:
       react: 18.2.0
-    dev: true
+    dev: false
 
   /react-input-mask@2.0.4(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-1hwzMr/aO9tXfiroiVCx5EtKohKwLk/NT8QlJXHQ4N+yJJFyUuMT+zfTpLBwX/lK3PkuMlievIffncpMZ3HGRQ==}

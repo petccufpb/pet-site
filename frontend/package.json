@@ -15,6 +15,7 @@
   ],
   "dependencies": {
     "@fontsource-variable/inter": "^5.0.2",
+    "@fontsource/roboto": "^5.0.8",
     "@googleapis/youtube": "^11.0.1",
     "@hookform/resolvers": "^3.1.0",
     "@hyoretsu/react-components": "^1.2.9",
@@ -32,6 +33,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
+    "react-icons": "^4.12.0",
     "react-select": "^5.7.3",
     "react-spotify-embed": "^2.0.3",
     "styled-components": "^5.3.9"
@@ -60,7 +62,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "next-sitemap": "^4.0.6",
     "react-dropzone": "^14.2.3",
-    "react-icons": "^4.8.0",
     "react-input-mask": "^2.0.4",
     "react-markdown": "^8.0.7",
     "react-syntax-highlighter": "^15.5.0",

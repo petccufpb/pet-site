@@ -11,6 +11,7 @@ import "@fontsource/bai-jamjuree/400.css";
 import "@fontsource/bai-jamjuree/500.css";
 import "@fontsource/bai-jamjuree/600.css";
 import "@fontsource/bai-jamjuree/700.css";
+import "@fontsource/roboto";
 
 import Head from "next/head";
 import { usePathname } from "next/navigation";

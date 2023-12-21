@@ -1,4 +1,4 @@
-export type DataStatus = "valid" | "invalid" | "incomplete";
+export type DataStatus = "valid" | "invalid" | "";
 export type FilesToUpload = {
   [key in FileInputSection]: File | undefined;
 };

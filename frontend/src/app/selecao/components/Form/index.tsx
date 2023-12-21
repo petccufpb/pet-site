@@ -1,23 +1,16 @@
 "use client";
 
 import { DataStatus, FileUploadEvent, FilesToUpload } from "@app/selecao/types";
-import { ChangeEvent, useEffect, useState } from "react";
-import { FaExclamationCircle, FaIdCard, FaPaperPlane, FaUser } from "react-icons/fa";
+import { ChangeEvent, useState } from "react";
 import { toast } from "react-toastify";
 import { z } from "zod";
 
-import { FileInput } from "../FileInput";
-import {
-  Content,
-  FormInput,
-  FormSection,
-  InputContainer,
-  LoadingIcon,
-  MaskedFormInput,
-  SendButton,
-  UploadTitle,
-  Warning,
-} from "./styles";
+import ArrowRight from "@assets/images/arrow_right.svg?svgr";
+import WarningIcon from "@assets/images/warning.svg?svgr";
+
+import { FileInput } from "./components/FileInput";
+import RequiredIcon from "./components/RequiredIcon";
+import { Attachments, Container, Content, LoadingIcon, MaskedFormInput, SendButton, Warning } from "./styles";
 
 // Função que checa se o CPF é válido através
 // dos últimos 2 dígitos de validação.
@@ -66,11 +59,18 @@ const nameSchema = z.string().refine(val => {
 });
 
 export function SelecaoForm() {
-  const [cpfStatus, setCpfStatus] = useState<DataStatus>("incomplete");
-  const [nameStatus, setNameStatus] = useState<DataStatus>("incomplete");
+  const [cpfStatus, setCpfStatus] = useState<DataStatus>("");
+  const [nameStatus, setNameStatus] = useState<DataStatus>("");
   const [name, setName] = useState<string>("");
   const [cpf, setCpf] = useState<string>("");
   const [isSending, setIsSending] = useState<boolean>(false);
+  const [errors, setErrors] = useState({
+    cpf: false,
+    cv: false,
+    historico: false,
+    matricula: false,
+    name: false,
+  });
 
   const [filesToUpload, setFilesToUpload] = useState<FilesToUpload>({
     cv: undefined,
@@ -78,55 +78,52 @@ export function SelecaoForm() {
     matricula: undefined,
   });
 
-  const [canSend, setCanSend] = useState<boolean>(false);
-
   async function validateCpf(e: ChangeEvent<HTMLInputElement>) {
     const cpf = e.currentTarget.value;
 
-    if (cpf.length === 14) {
-      setCpfStatus(cpfSchema.safeParse(cpf).success ? "valid" : "invalid");
-      setCpf(cpf);
-      return;
-    }
-
-    setCpfStatus("incomplete");
+    setCpf(cpf);
+    setCpfStatus(!cpf ? "" : cpfSchema.safeParse(cpf).success ? "valid" : "invalid");
   }
 
   async function validateName(e: ChangeEvent<HTMLInputElement>) {
     const name = e.currentTarget.value;
 
-    if (name.length === 0) {
-      setNameStatus("incomplete");
-      return;
-    }
-
     setName(name);
-    setNameStatus(nameSchema.safeParse(name).success ? "valid" : "invalid");
+    setNameStatus(!name ? "" : nameSchema.safeParse(name).success ? "valid" : "invalid");
   }
 
-  async function onFileUpload(e: FileUploadEvent) {
-    switch (e.origin) {
-      case "cv":
-        setFilesToUpload({ ...filesToUpload, cv: e.file });
-        break;
-      case "matricula":
-        setFilesToUpload({ ...filesToUpload, matricula: e.file });
-        break;
-      case "historico":
-        setFilesToUpload({ ...filesToUpload, historico: e.file });
-        break;
-    }
+  async function onFileUpload({ origin: field, file }: FileUploadEvent) {
+    setFilesToUpload({ ...filesToUpload, [field]: file });
+    setErrors(old => ({ ...old, [field]: false }));
   }
 
   async function send() {
-    if (!(canSend && filesToUpload.cv && filesToUpload.matricula && filesToUpload.historico)) return;
+    const newErrors = { ...errors };
+
+    // Check for missing fields
+    for (const field of Object.keys(errors)) {
+      if (field === "name" && nameStatus !== "valid") {
+        Object.assign(newErrors, { name: true });
+      }
+      if (field === "cpf" && cpfStatus !== "valid") {
+        Object.assign(newErrors, { cpf: true });
+      }
+      // @ts-ignore
+      if (!filesToUpload[field]) {
+        Object.assign(newErrors, { [field]: true });
+      }
+    }
+    if (Object.values(newErrors).find(error => error)) {
+      setErrors(newErrors);
+      return;
+    }
 
     const formData = new FormData();
 
     // send the files
-    formData.append("cv", filesToUpload.cv, "cv.pdf");
-    formData.append("matricula", filesToUpload.matricula, "matricula.pdf");
-    formData.append("historico", filesToUpload.historico, "historico.pdf");
+    formData.append("cv", filesToUpload.cv as File, "cv.pdf");
+    formData.append("matricula", filesToUpload.matricula as File, "matricula.pdf");
+    formData.append("historico", filesToUpload.historico as File, "historico.pdf");
     formData.append("name", name);
     formData.append("cpf", cpf);
 
@@ -147,61 +144,83 @@ export function SelecaoForm() {
     toast.error("Erro ao enviar o formulário.");
   }
 
-  // Sempre que algum dos campos tiver uma mudança no valor,
-  // checar se TODOS são válidos e, por fim, se estiverem,
-  // permitir o envio do form.
-  useEffect(() => {
-    for (const file of Object.values(filesToUpload)) {
-      if (!file) {
-        setCanSend(false);
-        return;
-      }
-    }
-
-    if (cpfStatus !== "valid" || nameStatus !== "valid") {
-      setCanSend(false);
-      return;
-    }
-
-    setCanSend(true);
-  }, [filesToUpload, nameStatus, cpfStatus]);
-
   return (
-    <Content>
-      <FormSection>
-        <InputContainer className={nameStatus}>
-          <FaUser size={18} />
-          <FormInput type="text" placeholder="Nome Completo" onChange={validateName} />
-        </InputContainer>
-        <InputContainer className={cpfStatus}>
-          <FaIdCard size={18} />
+    <Container>
+      <div>
+        <h4>Bem-vindo ao PET Computação!</h4>
+
+        <p>
+          Essas informações são necessárias para efetuar sua inscrição e validar seus dados para a seleção.
+        </p>
+      </div>
+
+      <Content>
+        <div>
+          <label htmlFor="name">
+            Nome Completo <RequiredIcon />
+          </label>
           <MaskedFormInput
+            name="name"
+            className={nameStatus}
+            placeholder="Petrúcio"
             type="text"
-            placeholder="CPF"
+            mask=""
+            onChange={validateName}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="cpf">
+            CPF <RequiredIcon />
+          </label>
+          <MaskedFormInput
+            name="cpf"
+            className={cpfStatus}
+            placeholder="000.000.000-00"
+            type="text"
             mask="999.999.999-99"
             maskChar={null}
             onChange={validateCpf}
           />
-        </InputContainer>
-      </FormSection>
-      <FormSection>
-        <UploadTitle>Upload</UploadTitle>
-        <FileInput type="cv" filesToUpload={filesToUpload} onFileUpload={onFileUpload} />
-        <Warning>
-          <FaExclamationCircle size={20} />
-          <div>
-            Enviar também a documentação comprobatória de eventuais cursos/formações presentes no currículo.
-          </div>
-        </Warning>
-      </FormSection>
-      <FormSection>
-        <FileInput type="matricula" filesToUpload={filesToUpload} onFileUpload={onFileUpload} />
-        <FileInput type="historico" filesToUpload={filesToUpload} onFileUpload={onFileUpload} />
-      </FormSection>
-      <SendButton canSend={canSend} onClick={() => send()}>
-        {isSending ? <LoadingIcon /> : <FaPaperPlane />}
-        ENVIAR
-      </SendButton>
-    </Content>
+        </div>
+
+        <Attachments>
+          <label htmlFor="attachments">Anexos</label>
+
+          <FileInput
+            type="cv"
+            isErrored={errors.cv}
+            filesToUpload={filesToUpload}
+            onFileUpload={onFileUpload}
+          />
+          <Warning>
+            <WarningIcon size={20} color="#0072ed" />
+
+            <p>
+              Enviar também a documentação comprobatória de eventuais cursos/formações presentes no currículo.
+            </p>
+          </Warning>
+
+          <FileInput
+            type="matricula"
+            isErrored={errors.matricula}
+            filesToUpload={filesToUpload}
+            onFileUpload={onFileUpload}
+          />
+
+          <FileInput
+            type="historico"
+            isErrored={errors.historico}
+            filesToUpload={filesToUpload}
+            onFileUpload={onFileUpload}
+            style={{ marginTop: "1rem" }}
+          />
+        </Attachments>
+
+        <SendButton canSend={Object.values(errors).filter(error => error).length === 0} onClick={send}>
+          Enviar <ArrowRight />
+        </SendButton>
+      </Content>
+    </Container>
   );
 }

@@ -69,4 +69,8 @@ export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
     input, button {
         font-family: inherit;
     }
+
+    label{
+        cursor: text;
+    }
 `;
