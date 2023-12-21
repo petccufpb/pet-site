@@ -26,6 +26,8 @@ export const FormDescription = styled.section`
   display: grid;
   gap: 0.5rem;
 
+  margin-top: 5.75rem;
+
   div {
     display: flex;
     align-items: center;
