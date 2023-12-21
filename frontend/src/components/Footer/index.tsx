@@ -1,27 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaChevronUp, FaGithubAlt, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
+import { FaChevronUp } from "react-icons/fa";
+import { RiGithubFill, RiInstagramFill, RiLinkedinFill, RiYoutubeFill } from "react-icons/ri";
 
-import { Developers } from "@components/Developers";
+import PetSince from "@assets/images/pet_since.svg?svgr";
 
-import Petrucio from "@assets/images/petrucio.svg?svgr";
-
-import {
-  Content,
-  ContentContainer,
-  Divider,
-  Flex,
-  NameContainer,
-  NextInfo,
-  NextLogoContainer,
-  PETBranding,
-  ScrollToTop,
-  SocialMediaIconContainer,
-  SocialMediaInfo,
-  StyledLink,
-} from "./styles";
+import { Container, ScrollToTop, SocialMediaIconContainer } from "./styles";
 
 export function Footer() {
   const pathname = usePathname();
@@ -34,93 +19,46 @@ export function Footer() {
   }
 
   return (
-    <ContentContainer pathname={pathname}>
-      <Content>
-        <PETBranding>
-          <Flex>
-            <a aria-label="Surpresa..." href="https://youtu.be/dQw4w9WgXcQ" target="_blank">
-              <Petrucio width={130} height={130} />
-            </a>
-            <NameContainer>
-              <h1>PET</h1>
-              <h1>Computação</h1>
-            </NameContainer>
-          </Flex>
+    <Container pathname={pathname}>
+      <div>
+        <ScrollToTop onClick={() => handleScrollTop()}>
+          <FaChevronUp size={16} color="#ffffff" />
+        </ScrollToTop>
+
+        <PetSince />
+
+        <div>
           <span>PET Computação 2023</span>
-          <span>Todos os direitos reservados.</span>
-        </PETBranding>
-        <div>
-          <div>
-            <b>Projetos</b>
-          </div>
-          <br />
-          <div>Pesquisa</div>
-          <br />
-          <div>Ensino</div>
-          <br />
-          <div>Extensão</div>
+          <p>Todos os direitos reservados.</p>
         </div>
-        <div>
-          <div>
-            <b>Contato</b>
-          </div>
-          <br />
-          <div>R. dos Escoteiros, s/n - Mangabeira, João Pessoa - PB, 58055-000</div>
-          <br />
-          <div>
-            <StyledLink aria-label="Email do PET Computação" href="mailto:petcc@ci.ufpb.br">
-              petcc@ci.ufpb.br
-            </StyledLink>
-          </div>
-        </div>
-        <div>
-          <div>
-            <b>Sobre</b>
-          </div>
-          <br />
-          <div>O PET Computação</div>
-          <br />
-          <div>Equipe</div>
-          <br />
-          <div>Processo Seletivo</div>
-        </div>
-      </Content>
-      <NextInfo>
-        <NextLogoContainer>
-          <svg viewBox="0 0 128 128" fill="white">
-            <path d="M30.2 45.9h24.1v1.9H32.4v14.4H53v1.9H32.4v15.8h22.2v1.9H30.2V45.9zm26.3 0h2.6l11.4 15.8L82 45.9l15.8-20-26 37.5 13.4 18.4h-2.7L70.4 65 58.2 81.8h-2.6l13.5-18.4-12.6-17.5zm29.7 1.9v-1.9h27.5v1.9H101v34h-2.2v-34H86.2zM0 45.9h2.7l38.2 56.8-15.8-20.9L2.3 48.6l-.1 33.2H0zm113.5 33.4c.5 0 .8-.3.8-.8s-.3-.8-.8-.8-.8.3-.8.8.4.8.8.8zm2.2-2.1c0 1.3 1 2.2 2.4 2.2 1.5 0 2.4-.9 2.4-2.5v-5.5h-1.2v5.5c0 .9-.4 1.3-1.2 1.3-.7 0-1.2-.4-1.2-1.1h-1.2zm6.3-.1c.1 1.4 1.2 2.3 3 2.3s3-.9 3-2.4c0-1.2-.7-1.8-2.2-2.2l-.9-.2c-1-.2-1.4-.6-1.4-1.1 0-.7.6-1.2 1.6-1.2.9 0 1.5.4 1.6 1.2h1.2c-.1-1.3-1.2-2.2-2.8-2.2-1.7 0-2.8.9-2.8 2.3 0 1.1.6 1.8 2 2.1l1 .2c1 .2 1.5.6 1.5 1.2 0 .7-.7 1.2-1.7 1.2s-1.8-.5-1.9-1.2H122z"></path>
-          </svg>
-          <div>Projeto Realizado em Next.js</div>
-        </NextLogoContainer>
-        <Developers />
-      </NextInfo>
-      <Divider pathname={pathname} />
-      <SocialMediaInfo>
-        <SocialMediaIconContainer
-          aria-label="Linkedin do PET Computação"
-          href="https://www.linkedin.com/company/petccufpb/"
-        >
-          <FaLinkedinIn size={24} />
-        </SocialMediaIconContainer>
-        <SocialMediaIconContainer aria-label="Github do PET Computação" href="https://github.com/petccufpb">
-          <FaGithubAlt size={24} />
-        </SocialMediaIconContainer>
+      </div>
+
+      <div>
         <SocialMediaIconContainer
           aria-label="Instagram do PET Computação"
           href="https://www.instagram.com/petccufpb/"
         >
-          <FaInstagram size={24} />
+          <RiInstagramFill size={24} />
         </SocialMediaIconContainer>
+
+        <SocialMediaIconContainer aria-label="Github do PET Computação" href="https://github.com/petccufpb">
+          <RiGithubFill size={24} />
+        </SocialMediaIconContainer>
+
+        <SocialMediaIconContainer
+          aria-label="Linkedin do PET Computação"
+          href="https://www.linkedin.com/company/petccufpb/"
+        >
+          <RiLinkedinFill size={24} />
+        </SocialMediaIconContainer>
+
         <SocialMediaIconContainer
           aria-label="Youtube do PET Computação"
           href="https://www.youtube.com/@PETComputacaoUFPB"
         >
-          <FaYoutube size={24} />
+          <RiYoutubeFill size={24} />
         </SocialMediaIconContainer>
-        <ScrollToTop onClick={() => handleScrollTop()}>
-          <FaChevronUp size={18} />
-        </ScrollToTop>
-      </SocialMediaInfo>
-    </ContentContainer>
+      </div>
+    </Container>
   );
 }

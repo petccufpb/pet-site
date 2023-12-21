@@ -2,156 +2,68 @@
 
 import styled from "styled-components";
 
-export const ContentContainer = styled.div<{ pathname: string }>`
-  z-index: 1;
-  background-color: ${({ theme, pathname }) =>
-    pathname.split("/")[1] === "sdc" ? "transparent" : theme.colors["second-black"]};
-  font-family: ${({ theme }) => theme.fonts.alt};
-`;
-
-export const Content = styled.div`
-  max-width: 70rem;
-  margin-right: auto;
-  margin-left: auto;
+export const Container = styled.div<{ pathname: string }>`
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding-top: 4rem;
-  font-size: 0.9em;
+  z-index: 1;
 
-  overflow-x: hidden;
-  > div {
-    word-break: break-word;
-    /* width: 100%; */
-  }
-
-  @media (max-width: 70rem) {
-    padding: 4rem 1rem 0 1rem;
-    /* justify-content: start; */
-    gap: 2.5rem;
-  }
-
-  a {
-    color: ${({ theme }) => theme.colors["base-white"]};
-  }
-`;
-
-export const PETBranding = styled.div`
-  display: flex;
-  /* justify-content: center; */
-  flex-direction: column;
-  /* margin-left: auto;
-  margin-right: auto; */
-
-  @media (max-width: 978px) {
-    width: 100%;
-  }
-`;
-
-export const Flex = styled.div`
-  box-sizing: border-box;
-  align-items: center;
-  display: flex;
-  margin-bottom: 0.4rem;
-`;
-
-export const NameContainer = styled.div`
-  margin-top: auto;
-  margin-bottom: auto;
-  padding-left: 1rem;
-`;
-
-export const Divider = styled.hr<{ pathname: string }>`
-  border: 1px solid
-    ${({ theme, pathname }) =>
-      pathname.split("/")[1] === "sdc" ? theme.colors["sixth-blue"] : theme.colors["second-blue"]};
-`;
-
-export const SocialMediaInfo = styled.div`
+  font-family: ${({ theme }) => theme.fonts.alt};
   max-width: 70rem;
-  margin-right: auto;
-  margin-left: auto;
-  display: flex;
-  padding: 1rem 0;
 
-  @media (max-width: 70rem) {
-    padding: 1rem;
+  border-top: 1px solid #afafaf;
+  padding: 3rem 0;
+  margin: 0 auto;
+
+  > div {
+    display: flex;
+    align-items: center;
   }
-`;
 
-export const SocialMediaIconContainer = styled.a`
-  padding: 0.65rem;
-  display: grid;
-  place-items: center;
-  border-radius: 0.4rem;
-  background-color: ${({ theme }) => theme.colors["second-blue"]};
-  margin-right: 0.5rem;
+  > div:first-child {
+    > svg {
+      margin-left: 3.75rem;
+    }
 
-  > svg {
-    color: ${({ theme }) => theme.colors["base-blue"]};
+    div:last-child {
+      font-family: Bai Jamjuree;
+      font-weight: 500;
+      font-size: 1rem;
+
+      margin-left: 3rem;
+    }
   }
 `;
 
 export const ScrollToTop = styled.div`
-  padding: 0.65rem;
-  display: grid;
-  place-items: center;
-  border-radius: 0.4rem;
-  background-color: ${({ theme }) => theme.colors["second-blue"]};
-  margin-right: 0.5rem;
-
-  > svg {
-    color: ${({ theme }) => theme.colors["base-white"]};
-  }
-
-  margin-left: auto;
-  cursor: pointer;
-`;
-
-export const NextInfo = styled(Flex)`
-  display: grid;
-  grid-template-columns: auto 1fr;
-  max-width: 70rem;
-  margin: 0 auto;
-  width: 100%;
-  font-size: 0.9em;
-
-  align-items: center;
-
-  @media (max-width: 71rem) {
-    padding: 1rem;
-    padding-bottom: 0;
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-export const NextLogoContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 1rem;
-  gap: 0.5rem;
-  height: 100%;
+  justify-content: center;
+  cursor: pointer;
 
-  svg {
-    width: 3.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+`;
+
+export const SocialMediaIconContainer = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: #afafaf33;
+
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+
+  & + & {
+    margin-left: 0.5rem;
   }
-`;
 
-export const VerticalCenterDiv = styled.div`
-  margin-top: auto;
-  margin-bottom: auto;
-`;
-
-// export const NoMobile = styled.div`
-//   @media (max-width: 768px) {
-//     display: none;
-//   }
-// `;
-
-export const StyledLink = styled.a`
-  border-bottom: 1px solid ${({ theme }) => theme.colors["base-white"]};
+  > svg {
+    color: #ffffff;
+  }
 `;
