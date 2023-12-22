@@ -8,8 +8,11 @@ import ProjectsRepository from "../repositories/projects.repository";
 export default class CreateSpeaker {
   constructor(private projectsRepository: ProjectsRepository) {}
 
-  public async execute(data: CreateSpeakerDTO): Promise<ProjectSpeaker> {
-    const speaker = await this.projectsRepository.createSpeaker(data);
+  public async execute({ photoUrl, ...data }: CreateSpeakerDTO): Promise<ProjectSpeaker> {
+    const speaker = await this.projectsRepository.createSpeaker({
+      ...data,
+      photoUrl: photoUrl.replace(/file\/d\/(.+?)\/view.*/g, "uc?id=$1"),
+    });
 
     return speaker;
   }

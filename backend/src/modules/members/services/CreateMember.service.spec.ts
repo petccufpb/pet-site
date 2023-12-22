@@ -11,15 +11,16 @@ describe("CreateMember", () => {
     service = new CreateMember(fakeMembersRepository);
   });
 
-  it("should be able to create a member", async () => {
+  it("should create a member", async () => {
     const user = await service.execute({
       name: "John Doe",
+      photoUrl: "",
     });
 
     expect(user).toHaveProperty("id");
   });
 
-  it("should not be able to create a second decano/tutor", async () => {
+  it("should not create a second decano/tutor", async () => {
     await service.execute({
       name: "John Doe",
       type: "founder",
