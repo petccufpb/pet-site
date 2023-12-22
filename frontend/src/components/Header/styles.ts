@@ -1,29 +1,37 @@
 "use client";
-import Link from "next/link";
 import styled from "styled-components";
 
 export const VerticalLine = styled.span`
   border-left: 1px solid ${({ theme }) => theme.colors["base-white"]};
-  margin: 0 auto 0 auto;
 `;
 
 export const PETHeader = styled.header<{ isSDC: boolean }>`
-  font-family: ${({ theme, isSDC }) => (isSDC ? theme.fonts.sdc : theme.fonts.alt)};
-  padding: 2rem 0 2rem 0;
-  display: flex;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  width: 100%;
-
+  position: absolute;
   overflow-x: hidden;
+  z-index: 1;
 
-  > nav {
-    width: 100%;
-  }
+  width: 100%;
+  font-family: ${({ theme, isSDC }) => (isSDC ? theme.fonts.sdc : theme.fonts.alt)};
+  background-color: #000205e6;
 
-  > svg {
-    width: 90px;
-    opacity: 0.99;
+  padding: 2rem 0 2rem 0;
+
+  > div {
+    display: flex;
+    align-items: center;
+
+    max-width: 70rem;
+
+    margin: 0 auto;
+
+    > nav {
+      width: 100%;
+    }
+
+    > svg {
+      width: 90px;
+      opacity: 0.99;
+    }
   }
 
   @media (max-width: 768px) {
@@ -67,9 +75,9 @@ export const RouteLink = styled.a<{ tab: string }>`
     display: ${({ tab, href }) =>
       (href === "/" ? tab === href?.toString() : tab.startsWith(href.toString())) ? "block" : "none"};
     position: absolute;
-    width: 1rem;
     bottom: -0.5rem;
-    height: 4px;
+    width: 0.25rem;
+    height: 0.25rem;
     border-radius: 3rem;
     background: ${({ theme, tab }) =>
       tab.startsWith("/sdc") ? theme.colors["fifth-blue"] : theme.colors["base-blue"]};

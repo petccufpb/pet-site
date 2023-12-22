@@ -53,16 +53,18 @@ export default function RootLayout({ children }: PropsWithChildren) {
           <body>
             {/* <NextTopLoader color="#0072ED" /> */}
             <ContainerForBackground>
+              <Header />
+              <MobileHeader />
+
               {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
               {pathname.split("/")[1] !== "sdc" && (
                 <Background>
                   <Fishes />
                 </Background>
               )}
+
               <LayoutContainer>
                 <GlobalStyle pathname={pathname} />
-                <Header />
-                <MobileHeader />
                 <main>{children}</main>
               </LayoutContainer>
             </ContainerForBackground>
