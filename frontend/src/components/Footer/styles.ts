@@ -12,7 +12,7 @@ export const Container = styled.div<{ pathname: string }>`
 
   border-top: 1px solid #afafaf;
   padding: 3rem 0;
-  margin: 0 auto;
+  margin: 8.625rem auto 0;
 
   > div {
     display: flex;

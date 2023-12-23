@@ -7,7 +7,7 @@ export const Content = styled.div`
   align-items: flex-start;
   gap: 5rem;
 
-  margin: 13rem 0;
+  margin-top: 13rem;
 
   @media (max-width: 35rem) {
     padding: 2rem 0;

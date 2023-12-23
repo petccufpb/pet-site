@@ -8,5 +8,4 @@ export const Styling = styled.div`
   flex-direction: column;
 
   padding-top: ${groupPhotoHeight};
-  margin-bottom: 43rem;
 `;
