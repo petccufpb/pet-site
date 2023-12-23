@@ -1,59 +1,103 @@
-import { APIError, Tutor } from "@types/hooks";
+import { Link } from "@hyoretsu/react-components";
 import { Member } from "backend";
+import Image from "next/image";
+import { CSSProperties } from "react";
+import { FaGithubAlt, FaInstagram, FaLinkedin } from "react-icons/fa";
 
-import { MemberElement } from "../MemberElement";
-import { Members, SectionTitle } from "./styles";
+import { MemberDiv, Styling } from "./styles";
 
-export function MemberList({
-  type,
-  data,
-}: {
-  type: "members" | "tutor" | "founder";
-  data: Member | Member[] | APIError | Tutor[];
-}) {
-  const titles = type === "members" ? ["Membros Ativos", "Membros Inativos"] : ["Fundador", "Tutor"];
+interface MemberListProps {
+  data: Member[];
+  style?: CSSProperties;
+  type: "members" | "tutors";
+}
 
-  const members = data as Member[];
+const snsList = ["GitHub", "Instagram", "LinkedIn"];
 
-  if (type === "members") {
-    const activeMembers = members.filter(m => m.isActive);
-    const inactiveMembers = members.filter(m => !m.isActive);
+export function MemberList({ data, style, type }: MemberListProps) {
+  const titles = type === "members" ? ["Membros Ativos", "Membros Antigos"] : ["Tutores"];
 
-    return (
-      <div>
-        <SectionTitle>{titles[0]}</SectionTitle>
-        <Members>
-          {activeMembers.map((member: Member) => (
-            <MemberElement member={member} tutor={false} key={member.id} />
-          ))}
-        </Members>
-        <SectionTitle>{titles[1]}</SectionTitle>
-        <Members>
-          {inactiveMembers.map((member: Member) => (
-            <MemberElement member={member} tutor={false} key={member.id} />
-          ))}
-        </Members>
-      </div>
-    );
-  } else {
-    const founder = members.filter(m => m.type === "founder");
-    const tutor = members.filter(m => m.type === "tutor");
+  const activeMembers: Member[] = [];
+  const inactiveMembers: Member[] = [];
 
-    return (
-      <div>
-        <SectionTitle>{titles[1]}</SectionTitle>
-        <Members>
-          {tutor.map((member: Member) => (
-            <MemberElement member={member} tutor={true} key={member.id} />
-          ))}
-        </Members>
-        <SectionTitle>{titles[0]}</SectionTitle>
-        <Members>
-          {founder.map((member: Member) => (
-            <MemberElement member={member} founder={true} key={member.id} />
-          ))}
-        </Members>
-      </div>
-    );
+  for (const member of data) {
+    if (type === "members") {
+      if (member.isActive) {
+        activeMembers.push(member);
+      } else {
+        inactiveMembers.push(member);
+      }
+    }
   }
+
+  return (
+    <Styling id={type === "tutors" ? "tutores" : "membros"} style={style}>
+      {titles.map((title, index) => (
+        <section key={title}>
+          <h2>{title}</h2>
+
+          <div style={{ columnGap: type === "tutors" ? "6rem" : "8rem" }}>
+            {(type === "members" ? (index === 0 ? activeMembers : inactiveMembers) : data).map(member => (
+              <MemberDiv key={member.id}>
+                <Image src={member.photoUrl || ""} alt={`Foto de ${member.name}`} fill />
+
+                <div>
+                  <div>
+                    <span>{member.name.split(" ")[0]}</span>
+
+                    {/* <span>Novo!</span> */}
+                  </div>
+
+                  <p>
+                    {member.type === "founder"
+                      ? "Fundador do PET.CC"
+                      : member.type === "tutor"
+                      ? "Tutor do PET.CC"
+                      : member.isActive
+                      ? "Membro Ativo"
+                      : "Membro Antigo"}
+                  </p>
+
+                  <div>
+                    {snsList.map(sns => {
+                      let icon = null;
+                      let url = "";
+
+                      const memberSns = member.contactInfo.find(info => info.name === sns);
+
+                      const snsId = memberSns?.snsId;
+                      const color = snsId ? "#a8a8b3" : "#a8a8b35e";
+
+                      if (sns === "GitHub") {
+                        icon = <FaGithubAlt size={24} color={color} />;
+                        url = `https://github.com/${snsId}`;
+                      } else if (sns === "Instagram") {
+                        icon = <FaInstagram size={24} color={color} />;
+                        url = `https://instagram.com/${snsId}`;
+                      } else if (sns === "LinkedIn") {
+                        icon = <FaLinkedin size={24} color={color} />;
+                        url = `https://linkedin.com/in/${snsId}`;
+                      }
+
+                      if (!memberSns) {
+                        url = "";
+                      }
+
+                      return memberSns ? (
+                        <Link key={sns} href={url}>
+                          {icon}
+                        </Link>
+                      ) : (
+                        icon
+                      );
+                    })}
+                  </div>
+                </div>
+              </MemberDiv>
+            ))}
+          </div>
+        </section>
+      ))}
+    </Styling>
+  );
 }

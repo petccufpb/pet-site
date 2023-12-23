@@ -1,6 +1,6 @@
 "use client";
 import Window from "@app/acervo/components/Window";
-import MemberPhoto from "@app/time/components/MemberElement/components/MemberPhoto";
+import MemberPhoto from "@app/time/components/MemberList/components/MemberElement/components/MemberPhoto";
 import { youtube_v3 } from "@googleapis/youtube";
 import { Link } from "@hyoretsu/react-components";
 import { Member } from "backend";
