@@ -27,7 +27,7 @@
     "date-fns-tz": "^2.0.0",
     "form-data-encoder": "^3.0.0",
     "formdata-node": "^5.0.1",
-    "next": "13.4.9",
+    "next": "14.0.4",
     "nextjs-toploader": "^1.4.2",
     "nodemailer": "^6.9.5",
     "react": "18.2.0",
