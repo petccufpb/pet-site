@@ -85,6 +85,7 @@
           }
         ],
         "jsx-a11y/label-has-associated-control": ["error", { "controlComponents": ["input", "Input"] }],
+        "react/display-name": "off",
         "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
         "react/jsx-indent": "off",
         "react/jsx-indent-props": "off",

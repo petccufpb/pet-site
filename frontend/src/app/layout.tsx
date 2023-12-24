@@ -18,6 +18,7 @@ import { usePathname } from "next/navigation";
 import { PropsWithChildren } from "react";
 import { ThemeProvider } from "styled-components";
 
+import { MobileFooter } from "@components/Footer/mobile";
 import { Header } from "@components/Header";
 import { MobileHeader } from "@components/MobileHeader";
 import StyledComponentsRegistry from "@components/registry";
@@ -53,8 +54,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
           <body>
             {/* <NextTopLoader color="#0072ED" /> */}
             <ContainerForBackground>
-              <Header />
-              <MobileHeader />
+              {window.innerWidth <= 768 ? <MobileHeader /> : <Header />}
 
               {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
               {pathname.split("/")[1] !== "sdc" && (
@@ -68,7 +68,8 @@ export default function RootLayout({ children }: PropsWithChildren) {
                 <main>{children}</main>
               </LayoutContainer>
             </ContainerForBackground>
-            <Footer />
+
+            {window.innerWidth <= 768 ? <MobileFooter /> : <Footer />}
           </body>
         </html>
       </ThemeProvider>

@@ -33,10 +33,6 @@ export const PETHeader = styled.header<{ isSDC: boolean }>`
       opacity: 0.99;
     }
   }
-
-  @media (max-width: 768px) {
-    display: none;
-  }
 `;
 
 export const RouteList = styled.div`

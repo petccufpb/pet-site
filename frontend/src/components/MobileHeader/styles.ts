@@ -1,21 +1,15 @@
 "use client";
-
-import Link from "next/link";
 import styled from "styled-components";
 
 export const HeaderContainer = styled.div<{ expand: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: start;
-  padding-top: 2rem;
+  padding: 2rem;
   overflow: hidden;
 
   > img {
     z-index: -1;
-  }
-
-  @media (min-width: 768px) {
-    display: none;
   }
 `;
 

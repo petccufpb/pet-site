@@ -1,5 +1,4 @@
 "use client";
-
 import styled from "styled-components";
 
 export const Container = styled.div<{ pathname: string }>`
@@ -32,6 +31,26 @@ export const Container = styled.div<{ pathname: string }>`
       margin-left: 3rem;
     }
   }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+    padding: 3rem;
+
+    > div:first-child {
+      justify-content: space-between;
+
+      div:last-child {
+        margin: 0;
+      }
+
+      + div {
+        gap: 1rem;
+
+        margin: 2rem auto 0;
+      }
+    }
+  }
 `;
 
 export const ScrollToTop = styled.div`
@@ -45,25 +64,4 @@ export const ScrollToTop = styled.div`
 
   border: 1px solid #ffffff;
   border-radius: 6px;
-`;
-
-export const SocialMediaIconContainer = styled.a`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 2.5rem;
-  height: 2.5rem;
-  background-color: #afafaf33;
-
-  border: 1px solid #ffffff;
-  border-radius: 6px;
-
-  & + & {
-    margin-left: 0.5rem;
-  }
-
-  > svg {
-    color: #ffffff;
-  }
 `;
