@@ -67,6 +67,12 @@ export function MobileHeader() {
           <RouteLink tab={pathname} href="/">
             Início
           </RouteLink>
+          <RouteLink tab={pathname} href="/time">
+            Time
+          </RouteLink>
+          <RouteLink tab={pathname} href="/artigos">
+            Artigos
+          </RouteLink>
           <RouteLink tab={pathname} href="/sdc">
             SDC
           </RouteLink>
@@ -80,17 +86,8 @@ export function MobileHeader() {
               </RouteLink>
             </>
           )}
-          <RouteLink tab={pathname} href="/artigos">
-            Artigos
-          </RouteLink>
-          <RouteLink tab={pathname} href="/time">
-            Time
-          </RouteLink>
           <RouteLink tab={pathname} href="/selecao">
             Seleção
-          </RouteLink>
-          <RouteLink tab={pathname} href="/podcast">
-            Podcast
           </RouteLink>
         </Links>
         <SocialMediaLinks>

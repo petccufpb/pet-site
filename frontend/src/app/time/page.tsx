@@ -1,44 +1,28 @@
-import { BGExtender } from "@app/components/ConhecaNos/styles";
+import { Member } from "backend";
 
-import PetrucioFoto from "@assets/images/petrucio-time.png";
-
+import GroupPhoto from "./components/GroupPhoto";
 import { MemberList } from "./components/MemberList";
-import { PhotoBubble } from "./components/PhotoBubble";
-import {
-  Content,
-  DescriptionContainer,
-  ImgContainer,
-  PETDescription,
-  Petrucio,
-  PhotoContainer,
-  TeamPhoto,
-} from "./styles";
+import { Styling } from "./styles";
+
+export const metadata = {
+  title: "Time | PET Computação",
+  description: "Time do PET Computação",
+};
 
 export default async function Time() {
-  const membersData = await fetch(process.env.NEXT_PUBLIC_API_URL + "/team/members");
-  const tutorsData = await fetch(process.env.NEXT_PUBLIC_API_URL + "/team/tutors");
+  const membersRes = await fetch(process.env.NEXT_PUBLIC_API_URL + "/team/members");
+  const members = await membersRes.json();
+
+  const tutorsRes = await fetch(process.env.NEXT_PUBLIC_API_URL + "/team/tutors");
+  const tutors = await tutorsRes.json();
 
   return (
-    <Content>
-      <PhotoContainer>
-        <ImgContainer>
-          <Petrucio src={PetrucioFoto} alt="Petrucio" />
-          <div>
-            <TeamPhoto />
-          </div>
-        </ImgContainer>
-        <DescriptionContainer>
-          <PETDescription>
-            <h2>Grupo PET Computação</h2>
-            <div>Mais que um grupo, uma família</div>
-          </PETDescription>
-          <PhotoBubble />
-        </DescriptionContainer>
-      </PhotoContainer>
-      <div>
-        <MemberList type="tutor" data={await tutorsData.json()} />
-        <MemberList type="members" data={await membersData.json()} />
-      </div>
-    </Content>
+    <Styling>
+      <GroupPhoto />
+
+      <MemberList type="tutors" data={tutors as Member[]} />
+
+      <MemberList type="members" data={members as Member[]} />
+    </Styling>
   );
 }

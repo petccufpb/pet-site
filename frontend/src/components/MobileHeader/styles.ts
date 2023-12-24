@@ -1,21 +1,15 @@
 "use client";
-
-import Link from "next/link";
 import styled from "styled-components";
 
 export const HeaderContainer = styled.div<{ expand: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: start;
-  padding-top: 2rem;
+  padding: 2rem;
   overflow: hidden;
 
   > img {
     z-index: -1;
-  }
-
-  @media (min-width: 768px) {
-    display: none;
   }
 `;
 
@@ -30,7 +24,7 @@ export const ToggleButton = styled.div<{ expand: boolean }>`
   justify-content: center;
   z-index: 101;
 
-  right: ${({ expand }) => (expand ? "1rem" : 0)};
+  right: ${({ expand }) => (expand ? "2rem" : 0)};
 
   > div {
     position: absolute;
@@ -60,7 +54,7 @@ export const ExpandMenu = styled.div<{ expand: boolean; display: string; docHeig
   left: 0;
   height: ${({ docHeight }) => (docHeight ? docHeight + "px" : "100vh")};
   width: 100vw;
-  padding: 2rem 1rem;
+  padding: 2rem;
   z-index: 100;
 
   background: white;

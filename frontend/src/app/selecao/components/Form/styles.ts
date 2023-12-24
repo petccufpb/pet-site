@@ -1,10 +1,8 @@
 "use client";
-
-import { FaCircleNotch } from "react-icons/fa6";
 import InputMask from "react-input-mask";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
-export const Container = styled.section`
+export const Styling = styled.section`
   > div:first-of-type {
     h4,
     p {
@@ -59,42 +57,6 @@ export const Content = styled.div`
   > div {
     display: flex;
     flex-direction: column;
-  }
-`;
-
-export const InputContainer = styled.div`
-  display: grid;
-  align-items: center;
-  grid-template-columns: auto 1fr;
-  gap: 1.5rem;
-  background-color: ${({ theme }) => theme.colors["third-black"]};
-  border-radius: 0.3rem;
-  padding: 0 1.2rem;
-  border: solid 2px transparent;
-  color: ${({ theme }) => theme.colors["base-grey"]};
-  transition-property: all;
-  transition-duration: 200ms;
-  transition-timing-function: ease-in-out;
-
-  :has(input:focus) {
-    color: ${({ theme }) => theme.colors["base-blue"]};
-    border-color: ${({ theme }) => theme.colors["base-blue"]};
-
-    &.valid {
-      border-color: ${({ theme }) => theme.colors["base-green"]} !important;
-    }
-
-    &.invalid {
-      border-color: ${({ theme }) => theme.colors["base-red"]} !important;
-    }
-  }
-
-  &.valid {
-    color: ${({ theme }) => theme.colors["base-green"]} !important;
-  }
-
-  &.invalid {
-    color: ${({ theme }) => theme.colors["base-red"]} !important;
   }
 `;
 
@@ -161,17 +123,4 @@ export const SendButton = styled.button<{ canSend: boolean }>`
   padding: 0.75rem 0;
   border-radius: 0.3rem;
   border: 1px solid ${({ theme }) => theme.colors["base-green"]};
-`;
-
-const spin = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-export const LoadingIcon = styled(FaCircleNotch)`
-  animation: ${spin} 1s linear infinite;
 `;

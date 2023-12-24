@@ -1,47 +1,125 @@
 "use client";
-
-import { FaCircleNotch } from "react-icons/fa6";
 import styled from "styled-components";
 
-export const Members = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+export const Styling = styled.div`
+  padding-top: 4rem;
 
-  @media (max-width: 70rem) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 50rem) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-export const SectionTitle = styled.h1`
-  margin-top: 2rem;
-`;
-
-export const LoadingIconContainer = styled.div`
-  width: 100%;
-  display: grid;
-  place-items: center;
-  padding: 2rem;
-`;
-
-export const LoadingIcon = styled(FaCircleNotch)`
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
+  section {
+    h2 {
+      color: #ffffff;
+      font-size: 3.25rem;
+      font-weight: 600;
     }
-    to {
-      transform: rotate(360deg);
+
+    > div {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      column-gap: ${({ id }) => (id === "tutores" ? "6rem" : "8rem")};
+      row-gap: 2.5rem;
+
+      margin-top: 3rem;
+    }
+
+    + section {
+      margin-top: 4rem;
     }
   }
 
-  animation-name: spin;
-  animation-duration: 1500ms;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
+  @media (max-width: 480px) {
+    section {
+      h2 {
+        font-size: 2.5rem;
+      }
+
+      > div {
+        justify-content: space-evenly;
+        grid-template-columns: repeat(2, auto);
+        column-gap: 0;
+
+        margin-left: -1rem;
+      }
+    }
+  }
+`;
+
+const photoSize = "6rem";
+export const MemberDiv = styled.div`
+  display: flex;
+  position: relative;
+
+  height: ${photoSize};
+
+  img {
+    position: relative !important;
+
+    width: ${photoSize} !important;
+    height: ${photoSize} !important;
+
+    border-radius: 50%;
+  }
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25rem;
+
+    height: 100%;
+
+    margin-left: 1rem;
+
+    > div {
+      display: flex;
+      align-items: center;
+
+      span {
+        color: #e1e1e6;
+        font-family: Bai Jamjuree;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      span + span {
+        background-color: ${({ theme }) => theme.colors["fifth-blue"]};
+        color: #ffffff;
+        font-family: Bai Jamjuree;
+        font-size: 0.875rem;
+        font-weight: bold;
+        line-height: 160%;
+
+        padding: 0 1rem;
+        margin-left: 0.75rem;
+        border-radius: 1.25rem;
+      }
+    }
+
+    > p {
+      color: ${({ theme }) => theme.colors["second-white"]};
+      font-family: Roboto;
+    }
+
+    p + div {
+      display: flex;
+      gap: 1.25rem;
+    }
+  }
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 8rem;
+    height: auto;
+
+    > div {
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+
+      text-align: center;
+
+      margin-left: 0;
+      margin-top: 1rem;
+    }
+  }
 `;

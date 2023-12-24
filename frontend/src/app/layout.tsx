@@ -18,6 +18,7 @@ import { usePathname } from "next/navigation";
 import { PropsWithChildren } from "react";
 import { ThemeProvider } from "styled-components";
 
+import { MobileFooter } from "@components/Footer/mobile";
 import { Header } from "@components/Header";
 import { MobileHeader } from "@components/MobileHeader";
 import StyledComponentsRegistry from "@components/registry";
@@ -57,33 +58,31 @@ export default function RootLayout({ children }: PropsWithChildren) {
             <noscript>Você precisa ter Javascript habilitado para acessar esta página.</noscript>
           </head>
           <body>
-            <ReactLenis
+          <ReactLenis
               root
               options={{
                 duration: 1.2,
                 easing: easeOutCubic,
               }}
             >
-              <WavesContainer>
-                <Waves />
-                <WavesBackgroundMasker />
-              </WavesContainer>
-              <ContainerForBackground>
-                {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
-                {pathname.split("/")[1] !== "sdc" && (
-                  <Background limited={pathname.split("/").length === 2}>
-                    <Fishes />
-                  </Background>
-                )}
-                <LayoutContainer>
-                  <GlobalStyle pathname={pathname} />
-                  <Header />
-                  <MobileHeader />
-                  <main>{children}</main>
-                </LayoutContainer>
-              </ContainerForBackground>
-              <Footer />
-            </ReactLenis>
+            <ContainerForBackground>
+              {window.innerWidth <= 768 ? <MobileHeader /> : <Header />}
+
+              {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
+              {pathname.split("/")[1] !== "sdc" && (
+                <Background>
+                  <Fishes />
+                </Background>
+              )}
+
+              <LayoutContainer>
+                <GlobalStyle pathname={pathname} />
+                <main>{children}</main>
+              </LayoutContainer>
+            </ContainerForBackground>
+
+            {window.innerWidth <= 768 ? <MobileFooter /> : <Footer />}
+          </ReactLenis>
           </body>
         </html>
       </ThemeProvider>

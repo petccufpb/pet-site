@@ -135,28 +135,31 @@ export function Header() {
 
   return (
     <PETHeader isSDC={isSDC}>
-      <a href="/" aria-label="Início">
-        <Logo alt="Logo PET Computação" width={80} />
-      </a>
-      <nav>
-        <RouteList>
-          {routes.start.map((route, i) => (
-            <ListItem key={i}>
-              <RouteLink href={route.path} tab={pathname}>
-                {route.name}
-              </RouteLink>
-            </ListItem>
-          ))}
-          <VerticalLine />
-          {routes.end.map((route, i) => (
-            <ListItem key={i}>
-              <RouteLink href={route.path} tab={pathname}>
-                {route.name}
-              </RouteLink>
-            </ListItem>
-          ))}
-        </RouteList>
-      </nav>
+      <div>
+        <a href="/" aria-label="Início">
+          <Logo alt="Logo PET Computação" width={80} />
+        </a>
+
+        <nav>
+          <RouteList>
+            {routes.start.map((route, i) => (
+              <ListItem key={i}>
+                <RouteLink href={route.path} tab={pathname}>
+                  {route.name}
+                </RouteLink>
+              </ListItem>
+            ))}
+            <VerticalLine />
+            {routes.end.map((route, i) => (
+              <ListItem key={i}>
+                <RouteLink href={route.path} tab={pathname}>
+                  {route.name}
+                </RouteLink>
+              </ListItem>
+            ))}
+          </RouteList>
+        </nav>
+      </div>
     </PETHeader>
   );
 }
