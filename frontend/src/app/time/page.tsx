@@ -4,6 +4,11 @@ import GroupPhoto from "./components/GroupPhoto";
 import { MemberList } from "./components/MemberList";
 import { Styling } from "./styles";
 
+export const metadata = {
+  title: "Time | PET Computação",
+  description: "Time do PET Computação",
+};
+
 export default async function Time() {
   const membersRes = await fetch(process.env.NEXT_PUBLIC_API_URL + "/team/members");
   const members = await membersRes.json();

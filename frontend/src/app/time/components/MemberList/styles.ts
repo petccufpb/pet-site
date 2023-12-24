@@ -2,7 +2,7 @@
 import styled from "styled-components";
 
 export const Styling = styled.div`
-  margin-top: 4rem;
+  padding-top: 4rem;
 
   section {
     h2 {
@@ -13,7 +13,8 @@ export const Styling = styled.div`
 
     > div {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, auto);
+      column-gap: ${({ id }) => (id === "tutores" ? "6rem" : "8rem")};
       row-gap: 2.5rem;
 
       margin-top: 3rem;
@@ -23,17 +24,34 @@ export const Styling = styled.div`
       margin-top: 4rem;
     }
   }
+
+  @media (max-width: 480px) {
+    section {
+      h2 {
+        font-size: 2.5rem;
+      }
+
+      > div {
+        justify-content: space-evenly;
+        grid-template-columns: repeat(2, auto);
+        column-gap: 0;
+
+        margin-left: -1rem;
+      }
+    }
+  }
 `;
 
 const photoSize = "6rem";
 export const MemberDiv = styled.div`
+  display: flex;
   position: relative;
 
   height: ${photoSize};
 
-  padding-left: ${photoSize};
-
   img {
+    position: relative !important;
+
     width: ${photoSize} !important;
     height: ${photoSize} !important;
 
@@ -83,6 +101,25 @@ export const MemberDiv = styled.div`
     p + div {
       display: flex;
       gap: 1.25rem;
+    }
+  }
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 8rem;
+    height: auto;
+
+    > div {
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+
+      text-align: center;
+
+      margin-left: 0;
+      margin-top: 1rem;
     }
   }
 `;

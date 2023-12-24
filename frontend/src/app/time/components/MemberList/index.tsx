@@ -36,7 +36,7 @@ export function MemberList({ data, style, type }: MemberListProps) {
         <section key={title}>
           <h2>{title}</h2>
 
-          <div style={{ columnGap: type === "tutors" ? "6rem" : "8rem" }}>
+          <div>
             {(type === "members" ? (index === 0 ? activeMembers : inactiveMembers) : data).map(member => (
               <MemberDiv key={member.id}>
                 <Image src={member.photoUrl || ""} alt={`Foto de ${member.name}`} fill />

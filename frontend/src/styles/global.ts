@@ -62,9 +62,9 @@ export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
         height: 100%;
     }
 
-    body > div {
+    /* body > div {
         overflow-x: hidden;
-    }
+    } */
 
     input, button {
         font-family: inherit;
