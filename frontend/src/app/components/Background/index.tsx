@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 
 import GridSDC from "@assets/images/grid.svg?svgr";
 
-import { BackgroundContainer, Grid, SVGBackground, SdcEllipse } from "./styles";
+import { BackgroundContainer, Grid, SVGBackground, GlowEllipse } from "./styles";
 
 export function Background() {
   const pathname = usePathname();
@@ -32,16 +32,16 @@ export function Background() {
           </defs>
           <g fill="url(#gradient)">
             <g style={{ opacity: "80%" }}>
-              <SdcEllipse fill="url(#gradient-red)" cx="0" cy="0" rx="500" ry="500" />
+              <GlowEllipse fill="url(#gradient-red)" cx="0" cy="0" rx="500" ry="500" />
             </g>
-            <SdcEllipse cx="90%" cy="500px" rx="500" ry="500" />
+            <GlowEllipse cx="90%" cy="500px" rx="500" ry="500" />
             <g style={{ opacity: "80%" }}>
-              <SdcEllipse cx="15%" cy="1080px" rx="500" ry="500" />
+              <GlowEllipse cx="15%" cy="1080px" rx="500" ry="500" />
             </g>
             <g style={{ opacity: "80%" }}>
-              <SdcEllipse fill="url(#gradient-red)" cx="60%" cy="1600px" rx="400" ry="400" />
+              <GlowEllipse fill="url(#gradient-red)" cx="60%" cy="1600px" rx="400" ry="400" />
             </g>
-            <SdcEllipse cx="10%" cy="2300px" rx="500" ry="500" />
+            <GlowEllipse cx="10%" cy="2300px" rx="500" ry="500" />
           </g>
         </SVGBackground>
       </BackgroundContainer>

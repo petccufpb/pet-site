@@ -17,20 +17,22 @@ export const LayoutContainer = styled.div`
   }
 `;
 
-export const Background = styled.div`
+export const Background = styled.div<{ limited?: boolean }>`
   width: 100vw;
-  height: 100%;
+  height: ${({ limited }) => (limited ? "100vh" : "100%")};
   position: absolute;
   z-index: -1;
   left: 0;
-  bottom: 0;
+  ${({ limited }) => (limited ? "top: 0" : "bottom: 0")}
 
   overflow: hidden;
 
   svg {
     position: absolute;
-    top: -20rem;
     left: 50%;
+
+    ${({ limited }) => limited && "height: 100vh"};
+    ${({ limited }) => (limited ? "top: 0" : "top: -20rem")};
 
     transform: translateX(-50%);
   }

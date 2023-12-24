@@ -1,9 +1,8 @@
-/*deploy 222*/
-
 "use client";
 
 import "@fontsource-variable/inter";
 import "@fontsource-variable/lexend";
+import "@fontsource-variable/roboto-flex";
 import "@fontsource/bai-jamjuree";
 import "@fontsource/bai-jamjuree/200.css";
 import "@fontsource/bai-jamjuree/300.css";
@@ -11,8 +10,9 @@ import "@fontsource/bai-jamjuree/400.css";
 import "@fontsource/bai-jamjuree/500.css";
 import "@fontsource/bai-jamjuree/600.css";
 import "@fontsource/bai-jamjuree/700.css";
-import "@fontsource/roboto";
+import "@fontsource/bai-jamjuree/700-italic.css";
 
+import { ReactLenis } from "@studio-freight/react-lenis";
 import Head from "next/head";
 import { usePathname } from "next/navigation";
 import { PropsWithChildren } from "react";
@@ -24,12 +24,18 @@ import { MobileHeader } from "@components/MobileHeader";
 import StyledComponentsRegistry from "@components/registry";
 
 import Fishes from "@assets/images/fish.svg?svgr";
+import Waves from "@assets/images/waves.svg?svgr";
 
 import { GlobalStyle } from "@styles/global";
 import { Background, ContainerForBackground, LayoutContainer } from "@styles/layout";
 import defaultTheme from "@styles/theme/default";
 
 import { Footer } from "../components/Footer";
+import { WavesBackgroundMasker, WavesContainer } from "./styles";
+
+function easeOutCubic(x: number) {
+  return 1 - Math.pow(1 - x, 3);
+}
 
 export default function RootLayout({ children }: PropsWithChildren) {
   const pathname = usePathname();
@@ -52,7 +58,13 @@ export default function RootLayout({ children }: PropsWithChildren) {
             <noscript>Você precisa ter Javascript habilitado para acessar esta página.</noscript>
           </head>
           <body>
-            {/* <NextTopLoader color="#0072ED" /> */}
+          <ReactLenis
+              root
+              options={{
+                duration: 1.2,
+                easing: easeOutCubic,
+              }}
+            >
             <ContainerForBackground>
               {window.innerWidth <= 768 ? <MobileHeader /> : <Header />}
 
@@ -70,6 +82,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
             </ContainerForBackground>
 
             {window.innerWidth <= 768 ? <MobileFooter /> : <Footer />}
+          </ReactLenis>
           </body>
         </html>
       </ThemeProvider>
