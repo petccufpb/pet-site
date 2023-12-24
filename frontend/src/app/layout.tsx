@@ -13,6 +13,7 @@ import "@fontsource/bai-jamjuree/700.css";
 import "@fontsource/bai-jamjuree/700-italic.css";
 
 import { ReactLenis } from "@studio-freight/react-lenis";
+import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Head from "next/head";
 import { usePathname } from "next/navigation";
@@ -79,7 +80,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
                 <LayoutContainer>
                   <GlobalStyle pathname={pathname} />
                   <main>{children}</main>
+
                   <SpeedInsights />
+                  <Analytics />
                 </LayoutContainer>
               </ContainerForBackground>
 
