@@ -9,15 +9,23 @@ export const Content = styled.div`
 
   margin-top: 13rem;
 
-  @media (max-width: 35rem) {
-    padding: 2rem 0;
-  }
-
   > section {
     width: 45%;
 
     + section {
       width: 55%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+
+    text-align: center;
+
+    margin-top: 3rem;
+
+    section {
+      width: 100% !important;
     }
   }
 `;
@@ -43,5 +51,13 @@ export const FormDescription = styled.section`
   p {
     color: ${({ theme }) => theme.colors["sixth-grey"]};
     line-height: 140%;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 0;
+
+    svg {
+      display: none;
+    }
   }
 `;

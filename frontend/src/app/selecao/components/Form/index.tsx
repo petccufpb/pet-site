@@ -10,7 +10,7 @@ import WarningIcon from "@assets/images/warning.svg?svgr";
 
 import { FileInput } from "./components/FileInput";
 import RequiredIcon from "./components/RequiredIcon";
-import { Attachments, Container, Content, LoadingIcon, MaskedFormInput, SendButton, Warning } from "./styles";
+import { Attachments, Content, MaskedFormInput, SendButton, Styling, Warning } from "./styles";
 
 // Função que checa se o CPF é válido através
 // dos últimos 2 dígitos de validação.
@@ -145,7 +145,7 @@ export function SelecaoForm() {
   }
 
   return (
-    <Container>
+    <Styling>
       <div>
         <h4>Bem-vindo ao PET Computação!</h4>
 
@@ -221,6 +221,6 @@ export function SelecaoForm() {
           Enviar <ArrowRight />
         </SendButton>
       </Content>
-    </Container>
+    </Styling>
   );
 }
