@@ -13,6 +13,7 @@ import "@fontsource/bai-jamjuree/700.css";
 import "@fontsource/bai-jamjuree/700-italic.css";
 
 import { ReactLenis } from "@studio-freight/react-lenis";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import Head from "next/head";
 import { usePathname } from "next/navigation";
 import { PropsWithChildren } from "react";
@@ -58,31 +59,32 @@ export default function RootLayout({ children }: PropsWithChildren) {
             <noscript>Você precisa ter Javascript habilitado para acessar esta página.</noscript>
           </head>
           <body>
-          <ReactLenis
+            <ReactLenis
               root
               options={{
                 duration: 1.2,
                 easing: easeOutCubic,
               }}
             >
-            <ContainerForBackground>
-              {window.innerWidth <= 768 ? <MobileHeader /> : <Header />}
+              <ContainerForBackground>
+                {window && window.innerWidth <= 768 ? <MobileHeader /> : <Header />}
 
-              {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
-              {pathname.split("/")[1] !== "sdc" && (
-                <Background>
-                  <Fishes />
-                </Background>
-              )}
+                {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
+                {pathname.split("/")[1] !== "sdc" && (
+                  <Background>
+                    <Fishes />
+                  </Background>
+                )}
 
-              <LayoutContainer>
-                <GlobalStyle pathname={pathname} />
-                <main>{children}</main>
-              </LayoutContainer>
-            </ContainerForBackground>
+                <LayoutContainer>
+                  <GlobalStyle pathname={pathname} />
+                  <main>{children}</main>
+                  <SpeedInsights />
+                </LayoutContainer>
+              </ContainerForBackground>
 
-            {window.innerWidth <= 768 ? <MobileFooter /> : <Footer />}
-          </ReactLenis>
+              {window && window.innerWidth <= 768 ? <MobileFooter /> : <Footer />}
+            </ReactLenis>
           </body>
         </html>
       </ThemeProvider>
