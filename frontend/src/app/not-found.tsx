@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Head from "next/head";
 
-import { Background as SDCBackground } from "./sdc/components/Background";
+import { Background as SDCBackground } from "./components/Background";
 import ErrorPage from "./sdc/components/ErrorPage";
 
 export default function NotFound() {

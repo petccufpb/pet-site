@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { PropsWithChildren } from "react";
 
-import { Background } from "./components/Background";
+import { Background } from "../components/Background";
 
 export const metadata: Metadata = {
   title: "Plataforma | SDC - Início",

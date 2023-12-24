@@ -41,7 +41,7 @@ export const Content = styled.div`
   margin-top: 1.5rem;
 
   color: #e1e1e6;
-  font-family: Roboto;
+  font-family: "Roboto Flex Variable", sans-serif;
   line-height: 160%;
 
   ::before {

@@ -31,7 +31,7 @@ export const Container = styled.div<{
   }
 
   span {
-    font-family: Roboto;
+    font-family: "Roboto Flex Variable", sans-serif;
 
     margin-left: 0.5rem;
   }

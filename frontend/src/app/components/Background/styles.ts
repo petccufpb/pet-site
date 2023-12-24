@@ -38,7 +38,7 @@ export const SVGBackground = styled.svg`
   overflow-x: visible;
 `;
 
-export const SdcEllipse = styled.ellipse`
+export const GlowEllipse = styled.ellipse`
   @media (max-width: 1050px) {
     rx: 400;
     ry: 400;
