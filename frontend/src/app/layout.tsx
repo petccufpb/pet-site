@@ -68,7 +68,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
               }}
             >
               <ContainerForBackground>
-                {window && window.innerWidth <= 768 ? <MobileHeader /> : <Header />}
+                {typeof window !== "undefined" && window.innerWidth <= 768 ? <MobileHeader /> : <Header />}
 
                 {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
                 {pathname.split("/")[1] !== "sdc" && (
@@ -86,7 +86,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
                 </LayoutContainer>
               </ContainerForBackground>
 
-              {window && window.innerWidth <= 768 ? <MobileFooter /> : <Footer />}
+              {typeof window !== "undefined" && window.innerWidth <= 768 ? <MobileFooter /> : <Footer />}
             </ReactLenis>
           </body>
         </html>

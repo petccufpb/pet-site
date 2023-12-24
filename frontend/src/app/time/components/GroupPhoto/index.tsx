@@ -10,10 +10,10 @@ const GroupPhoto: React.FC = () => {
       <Styling>
         <Image src="/images/foto-time.jpg" alt="Foto do grupo" width={1440} height={756} />
 
-        {window.innerWidth > 480 && <WhoWeAre />}
+        {typeof window !== "undefined" && window.innerWidth > 480 && <WhoWeAre />}
       </Styling>
 
-      {window.innerWidth <= 480 && <WhoWeAre />}
+      {typeof window !== "undefined" && window.innerWidth <= 480 && <WhoWeAre />}
     </div>
   );
 };

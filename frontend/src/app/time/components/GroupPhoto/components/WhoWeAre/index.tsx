@@ -18,7 +18,7 @@ const WhoWeAre: React.FC = () => {
 
       <p>Nós somos o PET Computação!</p>
 
-      {window.innerWidth > 480 && <EllipseBlur />}
+      {typeof window !== "undefined" && window.innerWidth > 480 && <EllipseBlur />}
     </Styling>
   );
 };
