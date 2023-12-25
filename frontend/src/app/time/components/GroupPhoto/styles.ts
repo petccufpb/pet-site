@@ -1,7 +1,12 @@
 "use client";
 import styled from "styled-components";
 
-export const groupPhotoHeight = window.innerWidth <= 468 ? "20rem" : "55rem";
+let innerWidth = 1920;
+if (typeof window !== "undefined") {
+  ({ innerWidth } = window);
+}
+
+export const groupPhotoHeight = innerWidth ? "20rem" : "55rem";
 
 export const Styling = styled.div`
   position: absolute;
