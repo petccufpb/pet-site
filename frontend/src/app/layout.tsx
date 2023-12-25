@@ -25,6 +25,8 @@ import { Header } from "@components/Header";
 import { MobileHeader } from "@components/MobileHeader";
 import StyledComponentsRegistry from "@components/registry";
 
+import { useWindow } from "@hooks/useWindow";
+
 import Fishes from "@assets/images/fish.svg?svgr";
 import Waves from "@assets/images/waves.svg?svgr";
 
@@ -40,6 +42,7 @@ function easeOutCubic(x: number) {
 }
 
 export default function RootLayout({ children }: PropsWithChildren) {
+  const window = useWindow();
   const pathname = usePathname();
 
   return (
@@ -68,7 +71,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
               }}
             >
               <ContainerForBackground>
-                {typeof window !== "undefined" && window.innerWidth <= 768 ? <MobileHeader /> : <Header />}
+                {(window?.innerWidth || 1920) <= 768 ? <MobileHeader /> : <Header />}
 
                 {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
                 {pathname.split("/")[1] !== "sdc" && (
@@ -86,7 +89,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
                 </LayoutContainer>
               </ContainerForBackground>
 
-              {typeof window !== "undefined" && window.innerWidth <= 768 ? <MobileFooter /> : <Footer />}
+              {(window?.innerWidth || 1920) <= 768 ? <MobileFooter /> : <Footer />}
             </ReactLenis>
           </body>
         </html>
