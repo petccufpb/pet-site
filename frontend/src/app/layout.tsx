@@ -42,7 +42,7 @@ function easeOutCubic(x: number) {
 }
 
 export default function RootLayout({ children }: PropsWithChildren) {
-  const window = useWindow();
+  const { innerWidth } = useWindow();
   const pathname = usePathname();
 
   return (
@@ -71,7 +71,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
               }}
             >
               <ContainerForBackground>
-                {(window?.innerWidth || 1920) <= 768 ? <MobileHeader /> : <Header />}
+                {innerWidth <= 768 ? <MobileHeader /> : <Header />}
 
                 {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
                 {pathname.split("/")[1] !== "sdc" && (
@@ -89,7 +89,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
                 </LayoutContainer>
               </ContainerForBackground>
 
-              {(window?.innerWidth || 1920) <= 768 ? <MobileFooter /> : <Footer />}
+              {innerWidth <= 768 ? <MobileFooter /> : <Footer />}
             </ReactLenis>
           </body>
         </html>
