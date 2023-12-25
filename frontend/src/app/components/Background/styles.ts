@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const BackgroundContainer = styled.div`
   position: absolute !important;
-  z-index: -100;
+  z-index: -1;
   top: 0;
   left: 0;
   width: 100%;

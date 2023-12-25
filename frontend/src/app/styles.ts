@@ -22,6 +22,7 @@ export const GenericDiv = styled.div<{
   margin?: string;
   square?: boolean;
   right?: string;
+  inline?: boolean;
 }>`
   ${({ w }) => w && `width: ${w}`};
   ${({ maxw }) => maxw && `max-width: ${maxw}`};
@@ -43,6 +44,7 @@ export const GenericDiv = styled.div<{
   ${({ margin }) => margin && `margin: ${margin}`};
   ${({ square }) => square && `aspect-ratio: 1`};
   ${({ right }) => right && `right: ${right}`};
+  ${({ inline }) => inline && `display: inline`};
 
   z-index: 10;
 
@@ -64,9 +66,14 @@ export const Text = styled(GenericDiv)<{
   loose?: boolean;
   tight?: boolean;
   italic?: boolean;
+  up?: boolean;
+  space?: boolean;
+  inter?: boolean;
 }>`
-  font-size: ${({ size }) => size || "1rem"};
-  font-family: ${({ alt }) => `${alt ? "Bai Jamjuree" : "'Roboto Flex Variable'"}, sans-serif`};
+  ${({ size }) => size && `font-size: ${size}`};
+  font-family: ${({ alt, inter }) => `
+    ${inter ? "Inter Variable" : alt ? "Bai Jamjuree" : "'Roboto Flex Variable'"}, sans-serif
+  `};
   color: ${({ color }) => color || "#a8a8b3"};
 
   ${({ nw }) => nw && `white-space: nowrap`};
@@ -76,6 +83,8 @@ export const Text = styled(GenericDiv)<{
   ${({ loose }) => loose && `line-height: 1.65em`};
   ${({ tight }) => tight && `line-height: 1em`};
   ${({ italic }) => italic && `font-style: italic`};
+  ${({ up }) => up && `vertical-allign: top`};
+  ${({ space }) => space && `white-space: pre-wrap;`};
 `;
 
 export const Title = styled.h1<{ level?: number; maxw?: string; w?: string; center?: boolean }>`
@@ -127,7 +136,13 @@ export const CarouselFlex = styled(Flex)`
   animation: ${CarouselAnimation} 25s linear infinite;
 `;
 
-export const Button = styled.button<{ maxw?: string; flex?: boolean; alt?: boolean }>`
+export const Button = styled.button<{
+  maxw?: string;
+  flex?: boolean;
+  alt?: boolean;
+  gapanim?: boolean;
+  ml?: string;
+}>`
   background: ${({ alt }) => (alt ? "#0072ed33" : "#04d36133")};
   border: 1px solid ${({ alt }) => (alt ? "#0072ed" : "#04d361")};
   border-radius: 6px;
@@ -135,10 +150,12 @@ export const Button = styled.button<{ maxw?: string; flex?: boolean; alt?: boole
   font-family: "Roboto Flex Variable", sans-serif;
   font-variation-settings: "wght" 500;
   cursor: pointer;
+  z-index: 90;
 
   padding: 1rem;
 
   ${({ maxw }) => maxw && `max-width: ${maxw}`};
+  ${({ ml }) => ml && `margin-left: ${ml}`};
   width: 100%;
 
   display: ${({ flex }) => (flex ? "flex" : "block")};
@@ -151,23 +168,23 @@ export const Button = styled.button<{ maxw?: string; flex?: boolean; alt?: boole
   &:hover {
     background: ${({ alt }) => (alt ? "#0072ed44" : "#04d36144")};
     box-shadow: 0 0 50px 2px ${({ alt }) => (alt ? "#0072ed59" : "#04d36149")};
+    gap: ${({ gapanim }) => (gapanim ? "1rem" : "0.5rem")};
   }
 `;
 
-export const IgnorePageWidth = styled.div<{ w?: string }>`
+export const IgnorePageWidth = styled.div<{ w?: string; top?: string }>`
   position: absolute;
   left: 0;
+  ${({ top }) => top && `top: ${top};`}
 
   width: ${({ w }) => w || "100%"};
 `;
 
 export const HR = styled.div<{ w?: string }>`
-  width: 100%;
   height: 1px;
   background: #ffffff4d;
-  margin: 1rem 0;
 
-  ${({ w }) => w && `width: ${w}`};
+  ${({ w }) => (w ? `width: ${w}` : "flex-grow: 1")};
 `;
 
 export const Card = styled(Flex)<{ index: number; highlighted: boolean; zIndex: number }>`
@@ -182,6 +199,7 @@ export const Card = styled(Flex)<{ index: number; highlighted: boolean; zIndex: 
   transition-property: transform background color;
   transition-timing-function: ease-out;
   z-index: ${({ zIndex, highlighted }) => (highlighted ? 100 : zIndex)};
+  ${({ highlighted }) => highlighted && "border: 1px solid #0000004d;"}
 
   &:hover {
     transform: scale(1.035);
@@ -239,5 +257,9 @@ export const WavesBackgroundMasker = styled.div`
   width: 100%;
   height: 100%;
 
-  background: linear-gradient(to bottom, #0000009b, #00000000);
+  background: linear-gradient(to bottom, #000000 30%, #00000000);
+`;
+
+export const Bold = styled.span`
+  color: black;
 `;

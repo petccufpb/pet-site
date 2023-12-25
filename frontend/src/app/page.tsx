@@ -4,8 +4,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { AiFillThunderbolt } from "react-icons/ai";
 import { FaBolt } from "react-icons/fa6";
-import { IoSync } from "react-icons/io5";
-import { PiShieldCheckBold } from "react-icons/pi";
 import {
   RiArrowRightLine,
   RiBook2Line,
@@ -14,6 +12,8 @@ import {
   RiSearch2Line,
 } from "react-icons/ri";
 
+import Apoio from "@assets/icons/apoio.svg?svgr";
+import Recompensas from "@assets/icons/recompensas.svg?svgr";
 import Grid from "@assets/images/grid.svg?svgr";
 import HangLoose from "@assets/images/hangloose.svg?svgr";
 import PetStamp from "@assets/images/pet-stamp.svg?svgr";
@@ -46,17 +46,17 @@ import {
 
 type CardProps = {
   title: string;
-  description: string;
+  description: string[];
   icon: React.ReactNode;
   bottomText: string;
 };
 
 function Divider({ text }: { text?: string }) {
   return (
-    <IgnorePageWidth w="100vw">
+    <IgnorePageWidth w="100vw" top="85vh">
       {text ? (
-        <Flex gap="1rem" align="center">
-          <HR w="calc((100vw - 70rem) / 2)" />
+        <Flex gap="1rem" align="center" style={{ transform: "translateY(-50%)" }}>
+          <HR w="calc(50vw - 36rem)" />
           <Text nw weight={500} color="#ffffff99">
             {text}
           </Text>
@@ -87,9 +87,26 @@ function Cards({ items }: { items: CardProps[] }) {
             <CardTitle>{item.title}</CardTitle>
           </CardHeader>
           <Flex h="100%" justify="space-between" vertical padding="2rem 2.5rem">
-            <Text weight="500" size="1.125rem" color="#4d4d4d">
-              {item.description}
-            </Text>
+            <div>
+              {item.description.map((text, i) =>
+                i % 2 === 0 ? (
+                  <Text inline key={i} weight="500" size="1.125rem" color="#4d4d4d">
+                    {text}
+                  </Text>
+                ) : (
+                  <Text
+                    inline
+                    color={highlighted === index ? "black" : "white"}
+                    weight="700"
+                    size="1.125rem"
+                    key={i}
+                    space
+                  >
+                    {text}
+                  </Text>
+                ),
+              )}
+            </div>
             <Flex
               mr="auto"
               rounded="1rem"
@@ -133,25 +150,44 @@ function CarouselItem() {
   );
 }
 
-const cards = [
+const cardContents = [
   {
     title: "Extensão",
-    description:
-      "São ações desenvolvidas com o objetivo de fomentar as atividades de pesquisa dentro das universidades. Geralmente acontecem através da monografia, no Trabalho de Conclusão de Curso (TCC), ou Iniciação Científica.",
+    description: [
+      "Vamos além das salas de aula! A extensão é o ",
+      " coração ",
+      "do PET Computação, onde",
+      " convergimos ",
+      "tecnologia e sociedade. Nossos programas de extensão são projetados para criar impacto real, abordando desafios contemporâneos e",
+      " promovendo ",
+      "a inclusão digital.",
+    ],
     icon: <RiMegaphoneLine />,
-    bottomText: "+45 pesquisas",
+    bottomText: "+ 10 cursos",
   },
   {
     title: "Ensino",
-    description:
-      "São ações desenvolvidas com o objetivo de fomentar as atividades de pesquisa dentro das universidades. Geralmente acontecem através da monografia, no Trabalho de Conclusão de Curso (TCC), ou Iniciação Científica.",
+    description: [
+      "No PET Computação, o ensino vai além da transmissão de conhecimento. Estamos comprometidos em",
+      " cultivar mentes inquisitivas e criativas ",
+      "Nossas atividades de ensino visam inspirar a próxima geração de profissionais de computação,",
+      " proporcionando ",
+      "experiências práticas e mentorias personalizadas.",
+    ],
     icon: <RiBook2Line />,
-    bottomText: "+45 pesquisas",
+    bottomText: "+1200 pessoas",
   },
   {
     title: "Pesquisa",
-    description:
-      "São ações desenvolvidas com o objetivo de fomentar as atividades de pesquisa dentro das universidades. Geralmente acontecem através da monografia, no Trabalho de Conclusão de Curso (TCC), ou Iniciação Científica.",
+    description: [
+      "Mergulhamos nas águas da",
+      " inovação ",
+      "por meio da pesquisa. Com projetos que desafiam limites e exploram",
+      " novas fronteiras digitais ",
+      "nossos membros estão dedicados a",
+      " impulsionar ",
+      "o conhecimento na área da computação.",
+    ],
     icon: <RiSearch2Line />,
     bottomText: "+45 pesquisas",
   },
@@ -182,18 +218,18 @@ export default function Home() {
           </g>
         </SVGBackground>
       </BackgroundContainer>
-      <Flex margin="20vh 0 5vh 0" h="40vh" align="start">
+      <Flex margin="30vh 0 5vh 0" h="40vh" align="start">
         <Flex w="100%" vertical gap="1.5rem">
           <Text>Universidade Federal da Paraíba</Text>
           <Title level={3}>Bem-vindo ao Universo do PET</Title>
           <Text>Aqui você fica por dentro de tudo, e conhece mais um pouco de tudo que acontece no PET!</Text>
-          <Button maxw="300px" flex>
+          <Button maxw="300px" flex gapanim>
             <span>Conheca-nos</span>
             <RiArrowRightLine />
           </Button>
         </Flex>
         <Flex h="100%" align="center" w="100%">
-          <Petrucio style={{ transform: "translateX(5rem)" }} />
+          <Petrucio height="400" style={{ transform: "translateX(5rem)" }} />
         </Flex>
       </Flex>
       <Flex w="100%" h="12.5rem" align="center">
@@ -211,8 +247,8 @@ export default function Home() {
         </Text>
       </Flex>
       <Flex w="100%" justify="space-between" relative padding="5rem 0 0 0" reverse>
-        <PetStamp style={{ position: "absolute", left: "-25%", top: "5%" }} />
-        <Cards items={cards} />
+        <PetStamp opacity="0.25" style={{ position: "absolute", left: "-17.25%", top: "12.5%" }} />
+        <Cards items={cardContents} />
         <Flex gap="0.5rem" maxw="470px" w="100%" vertical justify="center" align="end">
           <Text w="100%" alt color="#0072ed99" weight="700" size="1rem">
             Pesquisa, Ensino e Extensão
@@ -266,10 +302,10 @@ export default function Home() {
         <Flex stretch vertical gap="2rem" align="center" justify="center" padding="3rem" br="1px solid white">
           <Flex
             margin="2rem 0 0.5rem 0"
-            rounded="1rem"
+            rounded="1.5rem"
             gap="1rem"
             bg="#1A1A1A"
-            padding="0.5rem 1.5rem"
+            padding="0.75rem 1.5rem"
             align="center"
           >
             <FaBolt color="#0072ED" />
@@ -285,7 +321,7 @@ export default function Home() {
             contribuição, pois compreendemos que é através desses esforços coletivos que alcançamos a
             excelência
           </Text>
-          <Button flex maxw="300px" alt>
+          <Button flex maxw="300px" alt gapanim>
             <span>Fazer Contribuição</span>
             <RiArrowRightLine />
           </Button>
@@ -304,14 +340,14 @@ export default function Home() {
         </Flex>
         <Flex vertical w="350px">
           <Flex padding="3rem" bb="1px solid white" h="100%" vertical gap="1rem" w="100%" justify="center">
-            <PiShieldCheckBold size="1.65rem" />
+            <Apoio />
             <Text color="white" alt weight="700" size="1.25rem">
               Seu apoio
             </Text>
             <Text>A sua contribuição nos ajuda a manter o nosso laboratório e máquinas.</Text>
           </Flex>
           <Flex h="100%" padding="3rem" vertical gap="1rem" w="100%" justify="center">
-            <IoSync size="1.65rem" />
+            <Recompensas />
             <Text color="white" alt weight="700" size="1.25rem">
               Recompensas
             </Text>

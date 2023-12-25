@@ -27,7 +27,7 @@ import Fishes from "@assets/images/fish.svg?svgr";
 import Waves from "@assets/images/waves.svg?svgr";
 
 import { GlobalStyle } from "@styles/global";
-import { Background, ContainerForBackground, LayoutContainer } from "@styles/layout";
+import { Background, ContainerForBackground, FishesHider, LayoutContainer } from "@styles/layout";
 import defaultTheme from "@styles/theme/default";
 
 import { Footer } from "../components/Footer";
@@ -58,20 +58,24 @@ export default function RootLayout({ children }: PropsWithChildren) {
             <noscript>Você precisa ter Javascript habilitado para acessar esta página.</noscript>
           </head>
           <body>
-          <ReactLenis
+            <ReactLenis
               root
               options={{
                 duration: 1.2,
                 easing: easeOutCubic,
               }}
             >
-            <ContainerForBackground>
               {window.innerWidth <= 768 ? <MobileHeader /> : <Header />}
 
+              <WavesContainer>
+                <Waves />
+                <WavesBackgroundMasker />
+              </WavesContainer>
               {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
               {pathname.split("/")[1] !== "sdc" && (
-                <Background>
+                <Background limited={pathname === "/"}>
                   <Fishes />
+                  {pathname !== "/" && <FishesHider />}
                 </Background>
               )}
 
@@ -79,10 +83,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
                 <GlobalStyle pathname={pathname} />
                 <main>{children}</main>
               </LayoutContainer>
-            </ContainerForBackground>
 
-            {window.innerWidth <= 768 ? <MobileFooter /> : <Footer />}
-          </ReactLenis>
+              {window.innerWidth <= 768 ? <MobileFooter /> : <Footer />}
+            </ReactLenis>
           </body>
         </html>
       </ThemeProvider>

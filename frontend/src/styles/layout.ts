@@ -19,11 +19,11 @@ export const LayoutContainer = styled.div`
 
 export const Background = styled.div<{ limited?: boolean }>`
   width: 100vw;
-  height: ${({ limited }) => (limited ? "100vh" : "100%")};
+  height: ${({ limited }) => (limited ? "85vh" : "100%")};
   position: absolute;
   z-index: -1;
   left: 0;
-  ${({ limited }) => (limited ? "top: 0" : "bottom: 0")}
+  /* ${({ limited }) => (limited ? "top: 0" : "bottom: 0")} */
 
   overflow: hidden;
 
@@ -31,8 +31,7 @@ export const Background = styled.div<{ limited?: boolean }>`
     position: absolute;
     left: 50%;
 
-    ${({ limited }) => limited && "height: 100vh"};
-    ${({ limited }) => (limited ? "top: 0" : "top: -20rem")};
+    ${({ limited }) => (limited ? "top: -50%" : "top: -20rem")};
 
     transform: translateX(-50%);
   }
@@ -41,4 +40,13 @@ export const Background = styled.div<{ limited?: boolean }>`
 export const ContainerForBackground = styled.div`
   width: 100%;
   height: 100%;
+`;
+
+export const FishesHider = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to top, #000000, #00000000);
 `;

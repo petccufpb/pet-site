@@ -5,14 +5,14 @@ export const VerticalLine = styled.span`
   border-left: 1px solid ${({ theme }) => theme.colors["base-white"]};
 `;
 
-export const PETHeader = styled.header<{ isSDC: boolean }>`
+export const PETHeader = styled.header<{ isSDC: boolean; black?: boolean }>`
   position: absolute;
   overflow-x: hidden;
   z-index: 1;
 
   width: 100%;
   font-family: ${({ theme, isSDC }) => (isSDC ? theme.fonts.sdc : theme.fonts.alt)};
-  background-color: #000205e6;
+  ${({ black }) => black && "background-color: #000205e6;"}
 
   padding: 2rem 0 2rem 0;
 

@@ -12,23 +12,27 @@ export const SearchContainer = styled.form`
     margin-bottom: 0.75rem;
 
     h3 {
-      font-size: ${({ theme }) => theme.textSizes.articles["title-title-s"]};
+      font-size: ${({ theme }) => theme.textSizes.articles["title-title-m"]};
       color: ${({ theme }) => theme.colors.articles["base-title"]};
+      font-weight: 600;
     }
     span {
       font-size: ${({ theme }) => theme.textSizes.articles["text-text-s"]};
       color: ${({ theme }) => theme.colors.articles["base-span"]};
+      font-family: "Inter Variable", sans-serif;
     }
   }
 
   input {
     width: 100%;
-    padding: 0.75rem 1rem;
-    border-radius: 6px;
+    padding: 1rem 2rem;
+    border-radius: 0.625rem;
     background: ${({ theme }) => theme.colors.articles["base-input"]};
     border: 1px solid ${({ theme }) => theme.colors.articles["base-border"]};
     color: ${({ theme }) => theme.colors.articles["base-text"]};
     transition: 0.4s;
+    font-family: "Inter Variable", sans-serif;
+    font-size: 0.875rem;
 
     &:focus {
       border-color: ${({ theme }) => theme.colors.articles["brand-hover"]};

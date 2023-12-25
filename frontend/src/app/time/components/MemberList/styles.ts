@@ -95,7 +95,7 @@ export const MemberDiv = styled.div`
 
     > p {
       color: ${({ theme }) => theme.colors["second-white"]};
-      font-family: Roboto;
+      font-family: Roboto Flex Variable;
     }
 
     p + div {

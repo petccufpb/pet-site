@@ -4,7 +4,11 @@ import styled from "styled-components";
 export const Container = styled.div<{ pathname: string }>`
   display: flex;
   justify-content: space-between;
-  z-index: 1;
+  z-index: 110;
+
+  * {
+    z-index: 110;
+  }
 
   font-family: ${({ theme }) => theme.fonts.alt};
   max-width: 70rem;
