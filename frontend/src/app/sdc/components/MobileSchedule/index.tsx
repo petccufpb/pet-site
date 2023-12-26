@@ -17,7 +17,9 @@ import {
 } from "./styles";
 
 export function MobileSchedule({ data }: { data: SDCScheduleData }) {
-  const [currentDay, setCurrentDay] = useState<number | null>(new Date(data.events[0].startTime).getDate());
+  const [currentDay, setCurrentDay] = useState<number | null>(
+    new Date(data.events[0]?.startTime || "").getDate(),
+  );
   const days: number[] = [...new Set(data.events.map(event => new Date(event.startTime).getDate()).sort())];
 
   const [dayEvents, setDayEvents] = useState(
