@@ -31,7 +31,7 @@ import Fishes from "@assets/images/fish.svg?svgr";
 import Waves from "@assets/images/waves.svg?svgr";
 
 import { GlobalStyle } from "@styles/global";
-import { Background, ContainerForBackground, LayoutContainer } from "@styles/layout";
+import { Background, ContainerForBackground, FishesHider, LayoutContainer } from "@styles/layout";
 import defaultTheme from "@styles/theme/default";
 
 import { Footer } from "../components/Footer";
@@ -73,10 +73,15 @@ export default function RootLayout({ children }: PropsWithChildren) {
               <ContainerForBackground>
                 {innerWidth <= 768 ? <MobileHeader /> : <Header />}
 
+                <WavesContainer>
+                  <Waves />
+                  <WavesBackgroundMasker />
+                </WavesContainer>
                 {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
                 {pathname.split("/")[1] !== "sdc" && (
-                  <Background>
+                  <Background limited={pathname === "/"}>
                     <Fishes />
+                    {pathname !== "/" && <FishesHider />}
                   </Background>
                 )}
 

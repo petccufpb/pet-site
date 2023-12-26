@@ -1,7 +1,10 @@
 "use client";
 
+import { BackgroundContainer, GlowEllipse, SVGBackground } from "@app/components/Background/styles";
+import { Button, Flex } from "@app/styles";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
+import { RiArrowLeftLine, RiArrowRightLine } from "react-icons/ri";
 
 import { Post } from "./components/Post";
 import { Profile } from "./components/Profile";
@@ -31,6 +34,7 @@ export const api = axios.create({
 export default function Artigos() {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const getPosts = useCallback(async (query = "") => {
     try {
@@ -38,7 +42,7 @@ export default function Artigos() {
       const response = await api.get(`/search/issues?q=${query}%20repo:${username}/${repoName}`);
       setPosts(response.data.items);
     } finally {
-      //caso a internet esteja processando muito rápido os pacotes de deploy, ficará inviável a vizu
+      // caso a internet esteja processando muito rápido os pacotes de deploy, ficará inviável a vizu
       // do spinner, logo para vê à animação é só comentar a linha abaixo
       setIsLoading(false);
     }
@@ -49,20 +53,76 @@ export default function Artigos() {
   }, [getPosts]);
 
   return (
-    <ArticleContainer>
-      <Profile />
-      <SearchInput postsLenght={posts.length} getPosts={getPosts} />
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <>
+    <>
+      <BackgroundContainer>
+        <SVGBackground xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="gradient">
+              <stop offset="0%" stopColor="#0072ed" />
+              <stop offset="90%" stopColor="#0072ed20" />
+              <stop offset="100%" stopColor="#00000000" />
+            </radialGradient>
+          </defs>
+          <g fill="url(#gradient)">
+            <GlowEllipse fill="url(#gradient)" cx="0" cy="0" rx="650" ry="650" />
+            <GlowEllipse opacity="0.9" fill="url(#gradient)" cx="95%" cy="600px" rx="650" ry="650" />
+            <GlowEllipse fill="url(#gradient)" cx="60%" cy="100%" rx="900" ry="700" />
+          </g>
+        </SVGBackground>
+      </BackgroundContainer>
+      <ArticleContainer>
+        <Profile />
+        <SearchInput postsLenght={posts.length} getPosts={getPosts} />
+        {isLoading ? (
           <PostsListContainer>
-            {posts.map(post => (
-              <Post key={post.number} post={post} />
+            {/* empty 9 posts */}
+            {[...Array(9)].map((_, index) => (
+              <Post key={index} />
             ))}
           </PostsListContainer>
-        </>
-      )}
-    </ArticleContainer>
+        ) : (
+          <>
+            <PostsListContainer>
+              {posts.slice((currentPage - 1) * 9, currentPage * 9).map(post => (
+                <Post key={post.number} post={post} />
+              ))}
+            </PostsListContainer>
+            <Flex justify="space-between">
+              {currentPage > 1 && (
+                <Button
+                  flex
+                  alt
+                  maxw="300px"
+                  gapanim
+                  onClick={() => {
+                    setCurrentPage(currentPage - 1);
+                  }}
+                >
+                  <RiArrowLeftLine /> Artigos Anteriores
+                </Button>
+              )}
+              {currentPage < Math.ceil(posts.length / 9) && (
+                <Button
+                  flex
+                  alt
+                  maxw="300px"
+                  ml="auto"
+                  gapanim
+                  onClick={() => {
+                    setCurrentPage(currentPage + 1);
+                    if (currentPage >= Math.ceil(posts.length / 9)) {
+                      setCurrentPage(1);
+                    }
+                  }}
+                >
+                  Próximos Artigos
+                  <RiArrowRightLine />
+                </Button>
+              )}
+            </Flex>
+          </>
+        )}
+      </ArticleContainer>
+    </>
   );
 }

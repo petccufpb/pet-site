@@ -95,7 +95,13 @@
         "react/prop-types": "off",
         "react/react-in-jsx-scope": "off",
         "react-hooks/exhaustive-deps": "error",
-        "react-hooks/rules-of-hooks": "error"
+        "react-hooks/rules-of-hooks": "error",
+        "prettier/prettier": [
+          "error",
+          {
+            "endOfLine": "auto"
+          }
+        ]
       },
       "settings": {
         "import/resolver": {
