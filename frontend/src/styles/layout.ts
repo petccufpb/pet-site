@@ -10,7 +10,7 @@ export const LayoutContainer = styled.div`
   display: grid;
   grid-template-rows: auto 1fr;
 
-  font-family: "Inter Variable" sans-serif;
+  font-family: "Inter Variable", sans-serif;
 
   @media (max-width: 70rem) {
     padding: 0 1rem;
@@ -23,7 +23,7 @@ export const Background = styled.div<{ limited?: boolean }>`
   position: absolute;
   z-index: -1;
   left: 0;
-  ${({ limited }) => (limited ? "top: 0" : "bottom: 0")}
+  ${({ limited }) => (limited ? "top" : "bottom")}: 0;
 
   overflow: hidden;
 

@@ -134,7 +134,12 @@ export function Header() {
   }, [isSDC, sdcRoutes]);
 
   return (
-    <PETHeader isSDC={isSDC}>
+    <PETHeader
+      isSDC={isSDC}
+      style={{
+        backgroundColor: pathname === "/time" ? "#000205e6" : "",
+      }}
+    >
       <div>
         <a href="/" aria-label="Início">
           <Logo alt="Logo PET Computação" width={80} />

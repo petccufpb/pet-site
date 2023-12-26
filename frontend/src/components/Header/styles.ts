@@ -11,8 +11,7 @@ export const PETHeader = styled.header<{ isSDC: boolean }>`
   z-index: 1;
 
   width: 100%;
-  font-family: ${({ theme, isSDC }) => (isSDC ? theme.fonts.sdc : theme.fonts.alt)};
-  background-color: #000205e6;
+  font-family: Bai Jamjuree;
 
   padding: 2rem 0 2rem 0;
 

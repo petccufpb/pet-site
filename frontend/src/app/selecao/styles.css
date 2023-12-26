@@ -1,0 +1,6 @@
+@media (max-width: 480px) {
+  #glow3 {
+    left: -50% !important;
+    bottom: -30% !important;
+  }
+}

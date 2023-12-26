@@ -1,12 +1,17 @@
-import { Metadata } from "next";
 import { PropsWithChildren } from "react";
 
-export const metadata: Metadata = {
+import { Background } from "../components/Background";
+
+export const metadata = {
   title: "PET Computação - Seleção",
   description: "Formulário de Inscrição para o PET Computação",
 };
-export const revalidate = 0;
 
-export default function ArtigosLayout({ children }: PropsWithChildren) {
-  return <>{children}</>;
+export default function SDCLayout({ children }: PropsWithChildren) {
+  return (
+    <>
+      {children}
+      <Background />
+    </>
+  );
 }

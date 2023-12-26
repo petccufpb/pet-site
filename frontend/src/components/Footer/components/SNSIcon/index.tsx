@@ -14,22 +14,22 @@ export function SNSIcon({ link, sns }: SNSIconProps) {
 
   switch (sns) {
     case "GitHub":
-      Icon = () => <RiGithubFill />;
+      Icon = () => <RiGithubFill size={20} />;
       break;
     case "Instagram":
-      Icon = () => <RiInstagramFill />;
+      Icon = () => <RiInstagramFill size={20} />;
       break;
     case "LinkedIn":
-      Icon = () => <RiLinkedinFill />;
+      Icon = () => <RiLinkedinFill size={20} />;
       break;
     case "YouTube":
-      Icon = () => <RiYoutubeFill />;
+      Icon = () => <RiYoutubeFill size={20} />;
       break;
   }
 
   return (
     <Styling href={link}>
-      <Icon size={24} />
+      <Icon />
     </Styling>
   );
 }

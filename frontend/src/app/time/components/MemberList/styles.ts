@@ -2,18 +2,17 @@
 import styled from "styled-components";
 
 export const Styling = styled.div`
-  padding-top: 4rem;
-
   section {
     h2 {
       color: #ffffff;
+      font-family: Bai Jamjuree;
       font-size: 3.25rem;
       font-weight: 600;
     }
 
     > div {
       display: grid;
-      grid-template-columns: repeat(3, auto);
+      grid-template-columns: repeat(3, 1fr);
       column-gap: ${({ id }) => (id === "tutores" ? "6rem" : "8rem")};
       row-gap: 2.5rem;
 
@@ -21,7 +20,7 @@ export const Styling = styled.div`
     }
 
     + section {
-      margin-top: 4rem;
+      margin-top: 5rem;
     }
   }
 
@@ -95,12 +94,22 @@ export const MemberDiv = styled.div`
 
     > p {
       color: ${({ theme }) => theme.colors["second-white"]};
-      font-family: Roboto;
+      font-family: Roboto Flex Variable;
     }
 
     p + div {
       display: flex;
       gap: 1.25rem;
+
+      svg {
+        cursor: pointer;
+
+        color: #a8a8b35e;
+
+        :hover {
+          color: #a8a8b3;
+        }
+      }
     }
   }
   @media (max-width: 480px) {
