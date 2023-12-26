@@ -246,6 +246,7 @@ export const WavesContainer = styled.div`
   /* left: 50%; */
   width: 150vw;
   opacity: 0.05;
+  z-index: -1;
   transform: translateX(0%);
 `;
 

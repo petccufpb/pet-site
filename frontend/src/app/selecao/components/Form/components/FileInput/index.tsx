@@ -1,6 +1,6 @@
 "use client";
 
-import { FileInputSection, FileUploadEvent, FilesToUpload } from "@app/selecao/types";
+import { FileInputSection } from "@app/selecao/types";
 import { CSSProperties, PropsWithoutRef } from "react";
 import Dropzone from "react-dropzone";
 import { IoCloseSharp } from "react-icons/io5";
@@ -22,26 +22,16 @@ const errors = {
 };
 
 export interface FileInputProps {
-  filesToUpload: FilesToUpload;
+  file: File | null;
   isErrored: boolean;
-  onFileUpload: (e: FileUploadEvent) => void;
+  onFileUpload: (e: File) => void;
   style?: CSSProperties;
   type: FileInputSection;
 }
 
-export function FileInput({
-  isErrored,
-  type,
-  filesToUpload,
-  onFileUpload,
-  style,
-}: PropsWithoutRef<FileInputProps>) {
+export function FileInput({ file, isErrored, type, onFileUpload, style }: PropsWithoutRef<FileInputProps>) {
   return (
-    <Dropzone
-      accept={{ "application/pdf": [".pdf"] }}
-      noClick
-      onDropAccepted={f => onFileUpload({ origin: type, file: f[0] })}
-    >
+    <Dropzone accept={{ "application/pdf": [".pdf"] }} noClick onDropAccepted={f => onFileUpload(f[0])}>
       {({ getRootProps, getInputProps, isDragAccept, isDragActive, isDragReject, fileRejections, open }) => (
         <Container
           {...getRootProps()}
@@ -49,15 +39,9 @@ export function FileInput({
           isDragActive={isDragActive}
           isDragAccept={isDragAccept}
           isDragReject={isDragReject}
-          hasUpload={filesToUpload[type] !== undefined}
+          hasUpload={!!file}
           className={fileRejections ? "rejected" : ""}
-          onClick={() => {
-            if (filesToUpload[type]) {
-              onFileUpload({ origin: type, file: undefined as unknown as File });
-            } else {
-              open();
-            }
-          }}
+          onClick={() => (file ? onFileUpload(null as unknown as File) : open())}
           style={style}
         >
           <input {...getInputProps()} />
@@ -65,9 +49,9 @@ export function FileInput({
           <div>
             <UploadIcon />
 
-            <span>{isErrored ? errors[type] : filesToUpload[type]?.name.slice(0, 60) || titles[type]}</span>
+            <span>{isErrored ? errors[type] : file?.name.slice(0, 60) || titles[type]}</span>
 
-            {filesToUpload[type] && <IoCloseSharp />}
+            {!!file && <IoCloseSharp />}
           </div>
         </Container>
       )}

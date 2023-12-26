@@ -9,7 +9,7 @@ interface BlurGroupProps {
 }
 
 export default function BlurGroup({ children, relativeTo }: BlurGroupProps) {
-  const [blurHeight, setBlurHeight] = useState(0);
+  const [blurHeight, setBlurHeight] = useState<string | number>("100vh");
   const [heightOffset, setHeightOffset] = useState(0);
 
   useEffect(

@@ -298,7 +298,7 @@ export default function Home() {
           </Flex>
         </IgnorePageWidth>
       </Flex>
-      <Flex w="100%" bg="#0072ed1a" marginTop="2rem">
+      <Flex w="100%" bg="#0072ed1a" margin="2rem 0 0">
         <Flex stretch vertical gap="2rem" align="center" justify="center" padding="3rem" br="1px solid white">
           <Flex
             margin="2rem 0 0.5rem 0"

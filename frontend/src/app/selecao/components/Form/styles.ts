@@ -24,7 +24,7 @@ export const Styling = styled.section`
   }
 `;
 
-export const Content = styled.div`
+export const Content = styled.form`
   border-radius: 6px;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), transparent 70%);
   display: grid;
@@ -60,14 +60,19 @@ export const Content = styled.div`
   }
 `;
 
-export const MaskedFormInput = styled(InputMask)`
+interface FormInputProps {
+  isErrored: boolean;
+}
+
+export const FormInput = styled(InputMask)<FormInputProps>`
   display: block;
   background-color: ${({ theme }) => theme.colors["fifth-black"]};
   font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
   font-family: ${({ theme }) => theme.fonts.alt};
   color: #ffffff;
 
-  border: solid 2px transparent;
+  border: solid 2px
+    ${({ isErrored, theme }) => (isErrored ? `${theme.colors["base-red"]} !important` : "transparent")};
   border-radius: 6px;
   padding: calc(1rem - 2px) 1rem;
   margin-top: 0.5rem;
@@ -78,10 +83,6 @@ export const MaskedFormInput = styled(InputMask)`
 
   :focus {
     border-color: ${({ theme }) => theme.colors["base-blue"]};
-  }
-
-  &.invalid {
-    border-color: ${({ theme }) => theme.colors["base-red"]} !important;
   }
 `;
 
@@ -107,17 +108,17 @@ export const Warning = styled.div`
   }
 `;
 
-export const SendButton = styled.button<{ canSend: boolean }>`
+export const SendButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
   transition: color 200ms ease-in-out;
 
   color: #ffffff;
-  background-color: ${({ theme, canSend }) => `${theme.colors["base-green"]}${canSend ? "99" : "33"}`};
+  background-color: ${({ disabled, theme }) => `${theme.colors["base-green"]}${!disabled ? "99" : "33"}`};
   font-family: ${({ theme }) => theme.fonts.alt};
   font-weight: 600;
-  cursor: ${({ canSend }) => (canSend ? "pointer" : "default")};
+  cursor: ${({ disabled }) => (!disabled ? "pointer" : "default")};
 
   gap: 0.5rem;
   padding: 0.75rem 0;
