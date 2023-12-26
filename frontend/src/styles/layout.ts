@@ -10,7 +10,7 @@ export const LayoutContainer = styled.div`
   display: grid;
   grid-template-rows: auto 1fr;
 
-  font-family: "Inter Variable" sans-serif;
+  font-family: "Inter Variable", sans-serif;
 
   @media (max-width: 70rem) {
     padding: 0 1rem;

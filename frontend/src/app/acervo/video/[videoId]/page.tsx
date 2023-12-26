@@ -15,6 +15,7 @@ import Title from "../../components/Title";
 import { Video } from "../../playlist/[playlistId]/page";
 import MemberPhoto from "./components/MemberPhoto";
 import { Comment, Comments, Content, Description, Makers, VideoComments, Videos } from "./styles";
+import MemberPhoto from "./components/MemberPhoto";
 
 const makers: Member[] = [
   {
