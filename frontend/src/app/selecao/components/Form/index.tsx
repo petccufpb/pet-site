@@ -165,6 +165,7 @@ export function SelecaoForm({ id }: SelecaoFormProps) {
         </div>
 
         <Attachments>
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label>Anexos</label>
 
           <FileInput

@@ -115,13 +115,18 @@ export const SendButton = styled.button`
   transition: color 200ms ease-in-out;
 
   color: #ffffff;
-  background-color: ${({ disabled, theme }) => `${theme.colors["base-green"]}${!disabled ? "99" : "33"}`};
+  background-color: ${({ theme }) => `${theme.colors["base-green"]}33`};
   font-family: ${({ theme }) => theme.fonts.alt};
   font-weight: 600;
-  cursor: ${({ disabled }) => (!disabled ? "pointer" : "default")};
+  cursor: default;
 
   gap: 0.5rem;
   padding: 0.75rem 0;
   border-radius: 0.3rem;
   border: 1px solid ${({ theme }) => theme.colors["base-green"]};
+
+  :hover {
+    cursor: pointer;
+    background-color: ${({ theme }) => `${theme.colors["base-green"]}99`};
+  }
 `;
