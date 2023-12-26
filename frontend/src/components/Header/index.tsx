@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -15,16 +14,28 @@ const defaultRoutes = {
       path: "/",
     },
     {
-      name: "História",
-      path: "/historia",
-    },
-    {
       name: "Time",
       path: "/time",
     },
+    // {
+    //   name: "História",
+    //   path: "/historia",
+    // },
+    // {
+    //   name: "Acervo",
+    //   path: "/acervo",
+    // },
+    // {
+    //   name: "Projetos",
+    //   path: "/projetos",
+    // },
+    // {
+    //   name: "Podcast",
+    //   path: "/podcast",
+    // },
     {
-      name: "Projetos",
-      path: "/projetos",
+      name: "Artigos",
+      path: "/artigos",
     },
     {
       name: "SDC",
@@ -35,10 +46,6 @@ const defaultRoutes = {
     {
       name: "Seleção",
       path: "/selecao",
-    },
-    {
-      name: "Artigos",
-      path: "/artigos",
     },
   ],
 };
@@ -127,29 +134,38 @@ export function Header() {
   }, [isSDC, sdcRoutes]);
 
   return (
-    <PETHeader isSDC={isSDC}>
-      <a href="/sdc" aria-label="Início">
-        <Logo alt="Logo PET Computação" width={80} />
-      </a>
-      <nav>
-        <RouteList>
-          {routes.start.map((route, i) => (
-            <ListItem key={i}>
-              <RouteLink href={route.path} tab={pathname}>
-                {route.name}
-              </RouteLink>
-            </ListItem>
-          ))}
-          <VerticalLine />
-          {routes.end.map((route, i) => (
-            <ListItem key={i}>
-              <RouteLink href={route.path} tab={pathname}>
-                {route.name}
-              </RouteLink>
-            </ListItem>
-          ))}
-        </RouteList>
-      </nav>
+    <PETHeader isSDC={isSDC} black={pathname.startsWith("/time")}>
+      <div>
+        <a href="/" aria-label="Início">
+          <Logo alt="Logo PET Computação" width={80} />
+        </a>
+
+        <nav>
+          <RouteList>
+            {routes.start.map(({ name, path: href }, i) => (
+              <ListItem key={i}>
+                <RouteLink
+                  href={href}
+                  active={href === "/" || href === "/sdc" ? pathname === href : pathname.startsWith(href)}
+                >
+                  {name}
+                </RouteLink>
+              </ListItem>
+            ))}
+            <VerticalLine />
+            {routes.end.map(({ name, path: href }, i) => (
+              <ListItem key={i}>
+                <RouteLink
+                  href={href}
+                  active={href === "/" || href === "/sdc" ? pathname === href : pathname.startsWith(href)}
+                >
+                  {name}
+                </RouteLink>
+              </ListItem>
+            ))}
+          </RouteList>
+        </nav>
+      </div>
     </PETHeader>
   );
 }

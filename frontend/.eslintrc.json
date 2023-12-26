@@ -73,6 +73,7 @@
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/no-use-before-define": ["error"],
         "import/extensions": [
@@ -84,6 +85,7 @@
           }
         ],
         "jsx-a11y/label-has-associated-control": ["error", { "controlComponents": ["input", "Input"] }],
+        "react/display-name": "off",
         "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
         "react/jsx-indent": "off",
         "react/jsx-indent-props": "off",
@@ -93,7 +95,13 @@
         "react/prop-types": "off",
         "react/react-in-jsx-scope": "off",
         "react-hooks/exhaustive-deps": "error",
-        "react-hooks/rules-of-hooks": "error"
+        "react-hooks/rules-of-hooks": "error",
+        "prettier/prettier": [
+          "error",
+          {
+            "endOfLine": "auto"
+          }
+        ]
       },
       "settings": {
         "import/resolver": {

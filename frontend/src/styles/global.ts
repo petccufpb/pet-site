@@ -24,18 +24,19 @@ export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
     body {
         background: black;
         background: ${({ theme, pathname }) =>
-          pathname.split("/")[1] === "sdc" ? theme.colors.sdc["background"] : theme.colors["second-blue"]};
+          pathname.split("/")[1] === "sdc" ? theme.colors.sdc["background"] : "black"};
         color: white;
         color: ${({ theme }) => theme.colors["base-white"]};
         position: relative;
         font-family: ${({ theme }) => theme.fonts.regular};
+
+        min-height: 100vh;
     }
 
     body, input, textarea, button {
         font-family: ${({ theme }) => theme.fonts.regular};
         font-weight: 400;
         font-size: 1rem;
-        overflow-x: hidden;
     }
 
     button,
@@ -59,11 +60,19 @@ export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
     }
 
     main {
-        overflow-x: hidden;
         word-wrap: break-word;
+        height: 100%;
     }
+
+    /* body > div {
+        overflow-x: hidden;
+    } */
 
     input, button {
         font-family: inherit;
+    }
+
+    label{
+        cursor: text;
     }
 `;

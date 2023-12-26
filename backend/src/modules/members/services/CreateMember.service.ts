@@ -8,7 +8,7 @@ import MembersRepository from "../repositories/MembersRepository";
 export class CreateMember {
   constructor(private membersRepository: MembersRepository) {}
 
-  async execute({ type, ...data }: CreateMemberDTO): Promise<Member> {
+  async execute({ photoUrl, type, ...data }: CreateMemberDTO): Promise<Member> {
     if (type === "decano" || type === "founder") {
       const existingUser = await this.membersRepository.findByType(type);
 
@@ -17,7 +17,11 @@ export class CreateMember {
       }
     }
 
-    const user = await this.membersRepository.create({ ...data, type });
+    const user = await this.membersRepository.create({
+      ...data,
+      photoUrl: photoUrl?.replace(/file\/d\/(.+?)\/view.*/g, "uc?id=$1"),
+      type,
+    });
 
     return user;
   }

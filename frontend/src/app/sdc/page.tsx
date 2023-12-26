@@ -1,5 +1,3 @@
-// "use client";
-
 import { SDCScheduleData } from "sdc";
 
 import { Countdown } from "./components/Countdown";

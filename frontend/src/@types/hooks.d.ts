@@ -38,7 +38,7 @@ declare module "@hyoretsu/react-hooks" {
     "/projects/participants/find": ProjectParticipant | null;
     "/projects/participations": ProjectParticipation | APIError;
     "/projects/speakers": ProjectSpeaker | APIError;
-    "/team/members": Member | Member[] | APIError;
-    "/team/tutors": Tutor[] | APIError;
+    "/team/members": Member | Member[];
+    "/team/tutors": Tutor[];
   }
 }

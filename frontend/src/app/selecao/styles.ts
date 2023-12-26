@@ -3,27 +3,62 @@
 import styled from "styled-components";
 
 export const Content = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(31rem, 1fr));
-  width: 100%;
-  height: 100%;
-  padding: 2rem;
-  gap: 4rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 5rem;
 
-  @media (max-width: 35rem) {
-    padding: 2rem 0;
+  margin-top: 6rem;
+
+  > section {
+    width: 45%;
+
+    + section {
+      width: 55%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+
+    text-align: center;
+
+    margin-top: 3rem;
+
+    section {
+      width: 100% !important;
+    }
   }
 `;
 
-export const FormDescription = styled.div`
+export const FormDescription = styled.section`
   display: grid;
-  width: 100%;
-  margin: auto 0;
   gap: 0.5rem;
 
-  span {
+  margin-top: 5.75rem;
+
+  div {
     display: flex;
-    margin-bottom: 0.5rem;
     align-items: center;
+  }
+
+  h1 {
+    color: #ffffff;
+    font-family: Bai Jamjuree;
+    font-size: 3.5rem;
+    line-height: 120%;
+  }
+
+  p {
+    color: ${({ theme }) => theme.colors["sixth-grey"]};
+    font-size: 1rem;
+    line-height: 140%;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 0;
+
+    svg {
+      display: none;
+    }
   }
 `;

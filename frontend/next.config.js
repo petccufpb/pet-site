@@ -7,12 +7,19 @@ module.exports = () => ({
   eslint: {
     ignoreDuringBuilds: true,
   },
-  experimental: {
-    appDir: true,
-    serverActions: true,
-  },
   images: {
-    domains: ["avatars.githubusercontent.com", "drive.google.com", "github.com", "lh3.googleusercontent.com"],
+    domains: [
+      "avatars.githubusercontent.com",
+      "drive.google.com",
+      "github.com",
+      "lh3.googleusercontent.com",
+      "pbs.twimg.com",
+      "0.academia-photos.com",
+      "i1.rgstatic.net",
+      "instagram.fjpa11-1.fna.fbcdn.net",
+      "i.ytimg.com",
+      "yt3.ggpht.com",
+    ],
     remotePatterns: [
       {
         hostname: "**docs.googleusercontent.com",

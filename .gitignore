@@ -1,5 +1,6 @@
 **/dist
 **/node_modules
+**/static
 **/tmp
 **/.vscode
 !/.vscode/launch.json

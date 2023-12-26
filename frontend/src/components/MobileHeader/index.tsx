@@ -17,6 +17,7 @@ export function MobileHeader() {
   const [menuDisplay, setMenuDisplay] = useState<"grid" | "none">("none");
   const [docHeight, setDocHeight] = useState<number>();
   const pathname = usePathname();
+  const isSDC = pathname.startsWith("/sdc");
 
   const documentHeight = () => {
     const doc = document.documentElement;
@@ -63,14 +64,30 @@ export function MobileHeader() {
       >
         <div>MENU</div>
         <Links onClick={() => closeHeader()}>
-          <RouteLink tab={pathname} href="/sdc">
+          <RouteLink tab={pathname} href="/">
             Início
           </RouteLink>
-          <RouteLink tab={pathname} href="/sdc/inscricao">
-            Inscrição
+          <RouteLink tab={pathname} href="/time">
+            Time
           </RouteLink>
-          <RouteLink tab={pathname} href="/sdc/certificados">
-            Certificados
+          <RouteLink tab={pathname} href="/artigos">
+            Artigos
+          </RouteLink>
+          <RouteLink tab={pathname} href="/sdc">
+            SDC
+          </RouteLink>
+          {isSDC && (
+            <>
+              <RouteLink tab={pathname} href="/sdc/inscricao">
+                SDC: Inscrição
+              </RouteLink>
+              <RouteLink tab={pathname} href="/sdc/certificados">
+                SDC: Certificados
+              </RouteLink>
+            </>
+          )}
+          <RouteLink tab={pathname} href="/selecao">
+            Seleção
           </RouteLink>
         </Links>
         <SocialMediaLinks>

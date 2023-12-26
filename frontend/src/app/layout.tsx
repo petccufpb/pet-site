@@ -1,7 +1,8 @@
-/*deploy 222*/
-
 "use client";
 
+import "@fontsource-variable/inter";
+import "@fontsource-variable/lexend";
+import "@fontsource-variable/roboto-flex";
 import "@fontsource/bai-jamjuree";
 import "@fontsource/bai-jamjuree/200.css";
 import "@fontsource/bai-jamjuree/300.css";
@@ -9,28 +10,39 @@ import "@fontsource/bai-jamjuree/400.css";
 import "@fontsource/bai-jamjuree/500.css";
 import "@fontsource/bai-jamjuree/600.css";
 import "@fontsource/bai-jamjuree/700.css";
-import "@fontsource-variable/inter";
-import "@fontsource-variable/lexend";
+import "@fontsource/bai-jamjuree/700-italic.css";
 
+import { ReactLenis } from "@studio-freight/react-lenis";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import Head from "next/head";
 import { usePathname } from "next/navigation";
-import NextTopLoader from "nextjs-toploader";
 import { PropsWithChildren } from "react";
 import { ThemeProvider } from "styled-components";
 
+import { MobileFooter } from "@components/Footer/mobile";
 import { Header } from "@components/Header";
 import { MobileHeader } from "@components/MobileHeader";
 import StyledComponentsRegistry from "@components/registry";
 
+import { useWindow } from "@hooks/useWindow";
+
 import Fishes from "@assets/images/fish.svg?svgr";
+import Waves from "@assets/images/waves.svg?svgr";
 
 import { GlobalStyle } from "@styles/global";
-import { Background, ContainerForBackground, LayoutContainer } from "@styles/layout";
+import { Background, ContainerForBackground, FishesHider, LayoutContainer } from "@styles/layout";
 import defaultTheme from "@styles/theme/default";
 
 import { Footer } from "../components/Footer";
+import { WavesBackgroundMasker, WavesContainer } from "./styles";
+
+function easeOutCubic(x: number) {
+  return 1 - Math.pow(1 - x, 3);
+}
 
 export default function RootLayout({ children }: PropsWithChildren) {
+  const { innerWidth } = useWindow();
   const pathname = usePathname();
 
   return (
@@ -51,22 +63,39 @@ export default function RootLayout({ children }: PropsWithChildren) {
             <noscript>Você precisa ter Javascript habilitado para acessar esta página.</noscript>
           </head>
           <body>
-            {/* <NextTopLoader color="#0072ED" /> */}
-            <ContainerForBackground>
-              {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
-              {pathname.split("/")[1] !== "sdc" && (
-                <Background>
-                  <Fishes />
-                </Background>
-              )}
-              <LayoutContainer>
-                <GlobalStyle pathname={pathname} />
-                <Header />
-                <MobileHeader />
-                <main>{children}</main>
-              </LayoutContainer>
-            </ContainerForBackground>
-            <Footer />
+            <ReactLenis
+              root
+              options={{
+                duration: 1.2,
+                easing: easeOutCubic,
+              }}
+            >
+              <ContainerForBackground>
+                {innerWidth <= 768 ? <MobileHeader /> : <Header />}
+
+                <WavesContainer>
+                  <Waves />
+                  <WavesBackgroundMasker />
+                </WavesContainer>
+                {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
+                {pathname.split("/")[1] !== "sdc" && (
+                  <Background limited={pathname === "/"}>
+                    <Fishes />
+                    {pathname !== "/" && <FishesHider />}
+                  </Background>
+                )}
+
+                <LayoutContainer id="main">
+                  <GlobalStyle pathname={pathname} />
+                  <main>{children}</main>
+
+                  <SpeedInsights />
+                  <Analytics />
+                </LayoutContainer>
+
+                {innerWidth <= 768 ? <MobileFooter /> : <Footer />}
+              </ContainerForBackground>
+            </ReactLenis>
           </body>
         </html>
       </ThemeProvider>

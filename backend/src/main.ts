@@ -19,7 +19,13 @@ const bootstrap = async () => {
   await app.register(helmet);
   app.enableCors(
     process.env.RAILWAY_ENVIRONMENT === "production"
-      ? { origin: [process.env.WEB_URL as string, "https://website-sdc.vercel.app"] }
+      ? {
+          origin: [
+            process.env.WEB_URL as string,
+            "https://website-frontend-git-development-plataforma-sdc.vercel.app",
+            "https://website-sdc.vercel.app",
+          ],
+        }
       : {},
   );
 

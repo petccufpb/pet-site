@@ -28,7 +28,8 @@
       "@public/*": ["../public/*"],
       "@services/*": ["services/*"],
       "@styles/*": ["styles/*"],
-      "@theme": ["styles/theme/default.ts"]
+      "@theme": ["styles/theme/default.ts"],
+      "@utils/*": ["utils/*"]
     },
     "plugins": [
       {
@@ -45,6 +46,6 @@
     "target": "es6",
     "typeRoots": ["./node_modules/@types", "./src/@types"]
   },
-  "include": [".next/types/**/*.ts", "src/**/*.ts", "src/**/*.tsx"],
+  "include": [".next/types/**/*.ts", "src/**/*.ts", "src/**/*.tsx", "src/app/page.tsx.old"],
   "exclude": ["node_modules"]
 }
