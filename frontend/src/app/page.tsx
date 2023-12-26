@@ -223,8 +223,18 @@ export default function Home() {
           <Text>Universidade Federal da Paraíba</Text>
           <Title level={3}>Bem-vindo ao Universo do PET</Title>
           <Text>Aqui você fica por dentro de tudo, e conhece mais um pouco de tudo que acontece no PET!</Text>
-          <Button maxw="300px" flex gapanim>
-            <span>Conheca-nos</span>
+          <Button
+            maxw="300px"
+            flex
+            gapanim
+            onClick={() =>
+              window?.scrollTo({
+                behavior: "smooth",
+                top: document.getElementById("sobre")?.offsetTop,
+              })
+            }
+          >
+            <span>Conheça-nos</span>
             <RiArrowRightLine />
           </Button>
         </Flex>
@@ -264,7 +274,7 @@ export default function Home() {
           </Text>
         </Flex>
       </Flex>
-      <Flex w="100%" justify="space-between" wrap>
+      <Flex id="sobre" w="100%" justify="space-between" wrap>
         <Flex gap="0.5rem" maxw="470px" w="100%" vertical justify="center" align="end">
           <Text w="100%" alt color="#0072ed99" weight="700" size="1rem">
             Mas, o que seria o PET ?

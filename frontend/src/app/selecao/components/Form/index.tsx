@@ -122,7 +122,6 @@ export function SelecaoForm({ id }: SelecaoFormProps) {
 
     toast.error("Erro ao enviar o formulário.");
   };
-  console.log(errors);
 
   return (
     <Styling id={id}>

@@ -121,9 +121,10 @@ export const SendButton = styled.button`
   cursor: default;
 
   gap: 0.5rem;
-  padding: 0.75rem 0;
+  padding: 1rem 0;
   border-radius: 0.3rem;
   border: 1px solid ${({ theme }) => theme.colors["base-green"]};
+  transition: 0.4s;
 
   :hover {
     cursor: pointer;
