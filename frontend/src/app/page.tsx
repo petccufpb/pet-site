@@ -218,7 +218,7 @@ export default function Home() {
           </g>
         </SVGBackground>
       </BackgroundContainer>
-      <Flex margin="30vh 0 5vh 0" h="40vh" align="start">
+      <Flex margin="8.5rem 0 5vh 0" h="40vh" align="start">
         <Flex w="100%" vertical gap="1.5rem">
           <Text>Universidade Federal da Paraíba</Text>
           <Title level={3}>Bem-vindo ao Universo do PET</Title>
@@ -298,7 +298,7 @@ export default function Home() {
           </Flex>
         </IgnorePageWidth>
       </Flex>
-      <Flex w="100%" bg="#0072ed1a" margin="2rem 0 10rem 0">
+      <Flex w="100%" bg="#0072ed1a" marginTop="2rem">
         <Flex stretch vertical gap="2rem" align="center" justify="center" padding="3rem" br="1px solid white">
           <Flex
             margin="2rem 0 0.5rem 0"

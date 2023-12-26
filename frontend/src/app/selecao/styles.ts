@@ -7,7 +7,7 @@ export const Content = styled.div`
   align-items: flex-start;
   gap: 5rem;
 
-  margin-top: 13rem;
+  margin-top: 6rem;
 
   > section {
     width: 45%;

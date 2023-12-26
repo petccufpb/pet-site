@@ -55,9 +55,12 @@ export const Route = styled.div`
   color: ${({ theme }) => theme.colors["base-white"]};
 `;
 
-export const RouteLink = styled.a<{ tab: string }>`
-  font-weight: ${({ tab, href }) =>
-    (href === "/" ? tab === href?.toString() : tab.startsWith(href.toString())) ? "bold" : "normal"};
+interface RouteLinkProps {
+  active: boolean;
+}
+
+export const RouteLink = styled.a<RouteLinkProps>`
+  font-weight: ${({ active }) => (active ? "bold" : "normal")};
   color: ${({ theme }) => theme.colors["base-white"]};
   text-align: center;
   text-decoration: none;
@@ -68,21 +71,17 @@ export const RouteLink = styled.a<{ tab: string }>`
 
   ::after {
     content: "";
-    display: ${({ tab, href }) =>
-      (href === "/" ? tab === href?.toString() : tab.startsWith(href.toString())) ? "block" : "none"};
+    display: ${({ active }) => (active ? "block" : "none")};
     position: absolute;
     bottom: -0.5rem;
     width: 0.25rem;
     height: 0.25rem;
     border-radius: 3rem;
-    background: ${({ theme, tab }) =>
-      tab.startsWith("/sdc") ? theme.colors["fifth-blue"] : theme.colors["base-blue"]};
+    background: ${({ href, theme }) =>
+      href?.startsWith("/sdc") ? theme.colors["fifth-blue"] : theme.colors["base-blue"]};
   }
 
   &:hover {
-    filter: ${({ tab, href }) =>
-      (href === "/" ? tab === href?.toString() : tab.startsWith(href.toString()))
-        ? "none"
-        : "brightness(0.8)"};
+    filter: ${({ active }) => (active ? "none" : "brightness(0.8)")};
   }
 `;

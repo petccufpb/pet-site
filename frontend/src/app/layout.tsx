@@ -85,16 +85,16 @@ export default function RootLayout({ children }: PropsWithChildren) {
                   </Background>
                 )}
 
-                <LayoutContainer>
+                <LayoutContainer id="main">
                   <GlobalStyle pathname={pathname} />
                   <main>{children}</main>
 
                   <SpeedInsights />
                   <Analytics />
                 </LayoutContainer>
-              </ContainerForBackground>
 
-              {innerWidth <= 768 ? <MobileFooter /> : <Footer />}
+                {innerWidth <= 768 ? <MobileFooter /> : <Footer />}
+              </ContainerForBackground>
             </ReactLenis>
           </body>
         </html>

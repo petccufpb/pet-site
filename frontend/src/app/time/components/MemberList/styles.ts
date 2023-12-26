@@ -105,6 +105,7 @@ export const MemberDiv = styled.div`
         cursor: pointer;
 
         color: #a8a8b35e;
+        transition: 0.4s;
 
         :hover {
           color: #a8a8b3;

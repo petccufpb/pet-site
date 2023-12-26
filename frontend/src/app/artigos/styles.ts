@@ -10,7 +10,7 @@ export const PostsListContainer = styled.section`
 `;
 
 export const ArticleContainer = styled.div`
-  padding-top: 5rem;
+  padding-top: 3rem;
   width: 100%;
   margin: 0 auto;
   margin-bottom: 7rem;

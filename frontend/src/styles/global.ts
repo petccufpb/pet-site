@@ -29,6 +29,8 @@ export const GlobalStyle = createGlobalStyle<{ pathname: string }>`
         color: ${({ theme }) => theme.colors["base-white"]};
         position: relative;
         font-family: ${({ theme }) => theme.fonts.regular};
+
+        min-height: 100vh;
     }
 
     body, input, textarea, button {

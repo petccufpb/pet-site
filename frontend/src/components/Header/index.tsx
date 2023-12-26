@@ -142,18 +142,24 @@ export function Header() {
 
         <nav>
           <RouteList>
-            {routes.start.map((route, i) => (
+            {routes.start.map(({ name, path: href }, i) => (
               <ListItem key={i}>
-                <RouteLink href={route.path} tab={pathname}>
-                  {route.name}
+                <RouteLink
+                  href={href}
+                  active={href === "/" || href === "/sdc" ? pathname === href : pathname.startsWith(href)}
+                >
+                  {name}
                 </RouteLink>
               </ListItem>
             ))}
             <VerticalLine />
-            {routes.end.map((route, i) => (
+            {routes.end.map(({ name, path: href }, i) => (
               <ListItem key={i}>
-                <RouteLink href={route.path} tab={pathname}>
-                  {route.name}
+                <RouteLink
+                  href={href}
+                  active={href === "/" || href === "/sdc" ? pathname === href : pathname.startsWith(href)}
+                >
+                  {name}
                 </RouteLink>
               </ListItem>
             ))}

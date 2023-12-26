@@ -3,6 +3,8 @@
 import styled from "styled-components";
 
 export const LayoutContainer = styled.div`
+  flex: 1;
+
   width: 100%;
   max-width: 70rem;
   margin-right: auto;
@@ -11,6 +13,8 @@ export const LayoutContainer = styled.div`
   grid-template-rows: auto 1fr;
 
   font-family: "Inter Variable", sans-serif;
+
+  padding-top: 7rem;
 
   @media (max-width: 70rem) {
     padding: 0 1rem;
@@ -38,8 +42,12 @@ export const Background = styled.div<{ limited?: boolean }>`
 `;
 
 export const ContainerForBackground = styled.div`
+  display: flex;
+  flex-direction: column;
+
   width: 100%;
   height: 100%;
+  min-height: 100vh;
 `;
 
 export const FishesHider = styled.div`

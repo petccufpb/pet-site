@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const ProfileContainer = styled.section`
-  margin-top: 5rem;
   width: 100%;
   min-height: 13.25rem;
   background: linear-gradient(90deg, #010530, #010530) padding-box,

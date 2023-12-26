@@ -22,7 +22,7 @@ export const Styling = styled.div`
   @media (max-width: 468px) {
     top: 7rem;
 
-    height: 20rem;
+    height: 13rem;
     text-align: center;
   }
 `;

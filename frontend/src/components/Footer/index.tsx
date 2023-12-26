@@ -21,7 +21,7 @@ export function Footer() {
             })
           }
         >
-          <FaChevronUp size={24} color="#ffffff" />
+          <FaChevronUp size={18} color="#ffffff" />
         </ScrollToTop>
 
         <PetSince />

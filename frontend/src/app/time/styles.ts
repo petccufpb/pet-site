@@ -5,9 +5,9 @@ export const Styling = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding-top: 55rem;
+  padding-top: calc(55rem - 7rem);
 
   @media (max-width: 480px) {
-    padding-top: 20rem;
+    padding-top: 13rem;
   }
 `;
