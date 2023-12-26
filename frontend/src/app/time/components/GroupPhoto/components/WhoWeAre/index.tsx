@@ -1,13 +1,17 @@
 import { RiArrowDownLine } from "react-icons/ri";
 
+import { useWindow } from "@hooks/useWindow";
+
 import { EllipseBlur, Styling } from "./styles";
 
 const WhoWeAre: React.FC = () => {
+  const { innerWidth } = useWindow();
+
   return (
     <Styling>
       <div
         onClick={() => {
-          window.scrollTo({
+          window?.scrollTo({
             behavior: "smooth",
             top: document.getElementById("tutores")?.offsetTop,
           });
@@ -18,7 +22,7 @@ const WhoWeAre: React.FC = () => {
 
       <p>Nós somos o PET Computação!</p>
 
-      {window.innerWidth > 480 && <EllipseBlur />}
+      {innerWidth > 480 && <EllipseBlur />}
     </Styling>
   );
 };

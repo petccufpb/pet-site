@@ -68,4 +68,8 @@ export const ScrollToTop = styled.div`
 
   border: 1px solid #ffffff;
   border-radius: 6px;
+
+  @media (max-width: 768px) {
+    background-color: #afafaf33;
+  }
 `;

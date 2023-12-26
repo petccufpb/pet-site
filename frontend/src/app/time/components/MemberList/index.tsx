@@ -66,16 +66,15 @@ export function MemberList({ data, style, type }: MemberListProps) {
                       const memberSns = member.contactInfo.find(info => info.name === sns);
 
                       const snsId = memberSns?.snsId;
-                      const color = snsId ? "#a8a8b3" : "#a8a8b35e";
 
                       if (sns === "GitHub") {
-                        icon = <FaGithubAlt size={24} color={color} />;
+                        icon = <FaGithubAlt size={24} />;
                         url = `https://github.com/${snsId}`;
                       } else if (sns === "Instagram") {
-                        icon = <FaInstagram size={24} color={color} />;
+                        icon = <FaInstagram size={24} />;
                         url = `https://instagram.com/${snsId}`;
                       } else if (sns === "LinkedIn") {
-                        icon = <FaLinkedin size={24} color={color} />;
+                        icon = <FaLinkedin size={24} />;
                         url = `https://linkedin.com/in/${snsId}`;
                       }
 

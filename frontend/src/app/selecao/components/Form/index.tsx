@@ -58,7 +58,11 @@ const nameSchema = z.string().refine(val => {
   return split.length > 1 && split[0].length > 0 && split[1].length > 0;
 });
 
-export function SelecaoForm() {
+interface SelecaoFormProps {
+  id?: string;
+}
+
+export function SelecaoForm({ id }: SelecaoFormProps) {
   const [cpfStatus, setCpfStatus] = useState<DataStatus>("");
   const [nameStatus, setNameStatus] = useState<DataStatus>("");
   const [name, setName] = useState<string>("");
@@ -145,7 +149,7 @@ export function SelecaoForm() {
   }
 
   return (
-    <Styling>
+    <Styling id={id}>
       <div>
         <h4>Bem-vindo ao PET Computação!</h4>
 

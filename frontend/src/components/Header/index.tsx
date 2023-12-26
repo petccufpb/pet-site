@@ -134,7 +134,7 @@ export function Header() {
   }, [isSDC, sdcRoutes]);
 
   return (
-    <PETHeader isSDC={isSDC} black={pathname.split("/")[1].startsWith("time")}>
+    <PETHeader isSDC={isSDC} black={pathname.startsWith("/time")}>
       <div>
         <a href="/" aria-label="Início">
           <Logo alt="Logo PET Computação" width={80} />

@@ -1,6 +1,5 @@
 "use client";
 import Window from "@app/acervo/components/Window";
-import MemberPhoto from "@app/time/components/MemberList/components/MemberElement/components/MemberPhoto";
 import { youtube_v3 } from "@googleapis/youtube";
 import { Link } from "@hyoretsu/react-components";
 import { Member } from "backend";
@@ -14,6 +13,7 @@ import defaultTheme from "@styles/theme/default";
 
 import Title from "../../components/Title";
 import { Video } from "../../playlist/[playlistId]/page";
+import MemberPhoto from "./components/MemberPhoto";
 import { Comment, Comments, Content, Description, Makers, VideoComments, Videos } from "./styles";
 
 const makers: Member[] = [

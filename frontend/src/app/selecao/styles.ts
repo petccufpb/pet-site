@@ -50,6 +50,7 @@ export const FormDescription = styled.section`
 
   p {
     color: ${({ theme }) => theme.colors["sixth-grey"]};
+    font-size: 1rem;
     line-height: 140%;
   }
 

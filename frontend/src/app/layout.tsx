@@ -13,6 +13,8 @@ import "@fontsource/bai-jamjuree/700.css";
 import "@fontsource/bai-jamjuree/700-italic.css";
 
 import { ReactLenis } from "@studio-freight/react-lenis";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import Head from "next/head";
 import { usePathname } from "next/navigation";
 import { PropsWithChildren } from "react";
@@ -22,6 +24,8 @@ import { MobileFooter } from "@components/Footer/mobile";
 import { Header } from "@components/Header";
 import { MobileHeader } from "@components/MobileHeader";
 import StyledComponentsRegistry from "@components/registry";
+
+import { useWindow } from "@hooks/useWindow";
 
 import Fishes from "@assets/images/fish.svg?svgr";
 import Waves from "@assets/images/waves.svg?svgr";
@@ -38,6 +42,7 @@ function easeOutCubic(x: number) {
 }
 
 export default function RootLayout({ children }: PropsWithChildren) {
+  const { innerWidth } = useWindow();
   const pathname = usePathname();
 
   return (
@@ -65,26 +70,31 @@ export default function RootLayout({ children }: PropsWithChildren) {
                 easing: easeOutCubic,
               }}
             >
-              {window.innerWidth <= 768 ? <MobileHeader /> : <Header />}
+              <ContainerForBackground>
+                {innerWidth <= 768 ? <MobileHeader /> : <Header />}
 
-              <WavesContainer>
-                <Waves />
-                <WavesBackgroundMasker />
-              </WavesContainer>
-              {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
-              {pathname.split("/")[1] !== "sdc" && (
-                <Background limited={pathname === "/"}>
-                  <Fishes />
-                  {pathname !== "/" && <FishesHider />}
-                </Background>
-              )}
+                <WavesContainer>
+                  <Waves />
+                  <WavesBackgroundMasker />
+                </WavesContainer>
+                {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
+                {pathname.split("/")[1] !== "sdc" && (
+                  <Background limited={pathname === "/"}>
+                    <Fishes />
+                    {pathname !== "/" && <FishesHider />}
+                  </Background>
+                )}
 
-              <LayoutContainer>
-                <GlobalStyle pathname={pathname} />
-                <main>{children}</main>
-              </LayoutContainer>
+                <LayoutContainer>
+                  <GlobalStyle pathname={pathname} />
+                  <main>{children}</main>
 
-              {window.innerWidth <= 768 ? <MobileFooter /> : <Footer />}
+                  <SpeedInsights />
+                  <Analytics />
+                </LayoutContainer>
+              </ContainerForBackground>
+
+              {innerWidth <= 768 ? <MobileFooter /> : <Footer />}
             </ReactLenis>
           </body>
         </html>

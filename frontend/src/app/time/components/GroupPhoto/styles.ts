@@ -1,8 +1,6 @@
 "use client";
 import styled from "styled-components";
 
-export const groupPhotoHeight = window.innerWidth <= 468 ? "20rem" : "55rem";
-
 export const Styling = styled.div`
   position: absolute;
   top: 0;
@@ -10,7 +8,7 @@ export const Styling = styled.div`
   overflow: hidden;
 
   width: 100%;
-  height: ${groupPhotoHeight};
+  height: 55rem;
 
   img {
     position: absolute;
@@ -18,12 +16,13 @@ export const Styling = styled.div`
     top: 0;
 
     width: 116%;
-    height: ${groupPhotoHeight};
+    height: 55rem;
   }
 
   @media (max-width: 468px) {
-    text-align: center;
-
     top: 7rem;
+
+    height: 20rem;
+    text-align: center;
   }
 `;
