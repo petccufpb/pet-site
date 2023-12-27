@@ -53,10 +53,7 @@ export default function Layout({ children }: PropsWithChildren) {
           </WavesContainer>
           {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
           {pathname.split("/")[1] !== "sdc" && (
-            <Background limited={pathname === "/"}>
-              <FishesHider />
-              {pathname !== "/" && <FishesHider />}
-            </Background>
+            <Background limited={pathname === "/"}>{pathname !== "/" && <FishesHider />}</Background>
           )}
 
           <LayoutContainer id="main">
