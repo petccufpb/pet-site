@@ -13,6 +13,7 @@ import { MobileHeader } from "@components/MobileHeader";
 
 import { useWindow } from "@hooks/useWindow";
 
+import Fishes from "@assets/images/fish.svg?svgr";
 import Waves from "@assets/images/waves.svg?svgr";
 
 import { GlobalStyle } from "@styles/global";
@@ -53,7 +54,10 @@ export default function Layout({ children }: PropsWithChildren) {
           </WavesContainer>
           {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
           {pathname.split("/")[1] !== "sdc" && (
-            <Background limited={pathname === "/"}>{pathname !== "/" && <FishesHider />}</Background>
+            <Background limited={pathname === "/"}>
+              <Fishes />
+              {pathname !== "/" && <FishesHider />}
+            </Background>
           )}
 
           <LayoutContainer id="main">
