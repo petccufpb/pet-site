@@ -4,7 +4,7 @@ import { CertificadoForm } from "./components/CertificadoForm";
 import { Container, Description } from "./styles";
 
 export const metadata: Metadata = {
-  title: "Plataforma | SDC - Certificados",
+  title: "Certificados",
 };
 
 export default function Certificados() {

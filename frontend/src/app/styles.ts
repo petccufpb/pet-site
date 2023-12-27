@@ -187,78 +187,10 @@ export const HR = styled.div<{ w?: string }>`
   ${({ w }) => (w ? `width: ${w}` : "flex-grow: 1")};
 `;
 
-export const Card = styled(Flex)<{ index: number; highlighted: boolean; zIndex: number }>`
-  flex-direction: column;
-  width: 390px;
-  height: 450px;
-  position: absolute;
-  left: ${({ index }) => index * 90}px;
-  background: ${({ highlighted }) => (highlighted ? "#e1e1e6" : "black")};
-  color: ${({ highlighted }) => (highlighted ? "black" : "#e1e1e6")};
-  transition: 0.2s;
-  transition-property: transform background color;
-  transition-timing-function: ease-out;
-  z-index: ${({ zIndex, highlighted }) => (highlighted ? 100 : zIndex)};
-  ${({ highlighted }) => highlighted && "border: 1px solid #0000004d;"}
-
-  &:hover {
-    transform: scale(1.035);
-    z-index: 10;
-  }
-`;
-
-export const CardHeader = styled.div`
-  height: 90px;
-  width: 100%;
-  border-bottom: 1px solid #0000004d;
-  font-family: "Bai Jamjuree", sans-serif;
-  display: flex;
-`;
-
-export const CardTitle = styled.h1`
-  padding: 1.5rem;
-  font-weight: bold;
-  color: black;
-  font-size: 1.5rem;
-  margin: auto 0;
-`;
-
-export const CardIndex = styled.div`
-  width: 90px;
-  height: 90px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 2rem;
-  border-right: 1px solid #0000004d;
-`;
-
 export const VL = styled.div`
   height: 100%;
   width: 1px;
   background: #afafaf;
-`;
-
-export const WavesContainer = styled.div`
-  position: absolute;
-  bottom: 0;
-  /* left: 50%; */
-  width: 150vw;
-  opacity: 0.05;
-  z-index: -1;
-  transform: translateX(0%);
-`;
-
-export const WavesBackgroundMasker = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  background: linear-gradient(to bottom, #000000 30%, #00000000);
 `;
 
 export const Bold = styled.span`

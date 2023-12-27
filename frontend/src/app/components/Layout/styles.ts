@@ -1,5 +1,3 @@
-"use client";
-
 import styled from "styled-components";
 
 export const LayoutContainer = styled.div`
@@ -57,4 +55,25 @@ export const FishesHider = styled.div`
   top: 0;
   left: 0;
   background: linear-gradient(to top, #000000, #00000000);
+`;
+
+export const WavesContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  /* left: 50%; */
+  width: 150vw;
+  opacity: 0.05;
+  z-index: -1;
+  transform: translateX(0%);
+`;
+
+export const WavesBackgroundMasker = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: linear-gradient(to bottom, #000000 30%, #00000000);
 `;

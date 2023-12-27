@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { PropsWithChildren } from "react";
 
 export const metadata: Metadata = {
-  title: "Plataforma | SDC - Inscrição",
+  title: "Inscrição",
 };
 
 export default function InscricaoLayout({ children }: PropsWithChildren) {

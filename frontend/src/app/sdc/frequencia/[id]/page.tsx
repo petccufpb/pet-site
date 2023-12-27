@@ -20,7 +20,7 @@ import {
 } from "./styles";
 
 export const metadata: Metadata = {
-  title: "Plataforma | SDC - Frequência",
+  title: "Frequência",
 };
 
 export default async function Frequencia({ params }: { params: { id: string } }) {

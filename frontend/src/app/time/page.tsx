@@ -8,7 +8,7 @@ import { MemberList } from "./components/MemberList";
 import { Styling } from "./styles";
 
 export const metadata = {
-  title: "Time | PET Computação",
+  title: "Time",
   description: "Time do PET Computação",
 };
 

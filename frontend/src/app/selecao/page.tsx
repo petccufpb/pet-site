@@ -1,3 +1,4 @@
+import { Background } from "@app/components/Background";
 import { GlowingBlur } from "@hyoretsu/react-components";
 import { ToastContainer } from "react-toastify";
 
@@ -12,9 +13,16 @@ import { Content, FormDescription } from "./styles";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles.css";
 
+export const metadata = {
+  title: "Seleção",
+  description: "Formulário de inscrição para o PET Computação",
+};
+
 export default function Selecao() {
   return (
     <>
+      <Background />
+
       <BlurGroup>
         <GlowingBlur color="#0072ed" radius="30rem" position={["-15%", "-35%"]} opacity={0.4} />
 

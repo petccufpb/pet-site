@@ -1,7 +1,4 @@
-"use client";
-
 import Image from "next/image";
-import { useState } from "react";
 import { AiFillThunderbolt } from "react-icons/ai";
 import { FaBolt } from "react-icons/fa6";
 import {
@@ -18,7 +15,6 @@ import Grid from "@assets/images/grid.svg?svgr";
 import HangLoose from "@assets/images/hangloose.svg?svgr";
 import PetStamp from "@assets/images/pet-stamp.svg?svgr";
 import PetrucioDuvidoso from "@assets/images/petrucio-duvidoso.svg?svgr";
-import Petrucio from "@assets/images/petrucio.svg?svgr";
 import PIX from "@assets/images/pix.svg?svgr";
 // @ts-expect-error
 import Avaty from "@assets/images/sponsors/avaty.png";
@@ -29,27 +25,9 @@ import TNS from "@assets/images/sponsors/tns.png";
 import VSoft from "@assets/images/sponsors/vsoft.new.svg?svgr";
 
 import { BackgroundContainer, GlowEllipse, SVGBackground } from "./components/Background/styles";
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardIndex,
-  CardTitle,
-  CarouselFlex,
-  Flex,
-  HR,
-  IgnorePageWidth,
-  Text,
-  Title,
-  VL,
-} from "./styles";
-
-type CardProps = {
-  title: string;
-  description: string[];
-  icon: React.ReactNode;
-  bottomText: string;
-};
+import Cards from "./components/Cards";
+import { Landing } from "./components/Landing";
+import { Button, CarouselFlex, Flex, HR, IgnorePageWidth, Text, Title, VL } from "./styles";
 
 function Divider({ text }: { text?: string }) {
   return (
@@ -66,65 +44,6 @@ function Divider({ text }: { text?: string }) {
         <HR />
       )}
     </IgnorePageWidth>
-  );
-}
-
-function Cards({ items }: { items: CardProps[] }) {
-  const [highlighted, setHighlighted] = useState(2);
-
-  return (
-    <Flex relative minw="570px" h="800px" align="center">
-      {items.map((item, index) => (
-        <Card
-          highlighted={highlighted === index}
-          index={index}
-          key={index}
-          onMouseEnter={() => setHighlighted(index)}
-          zIndex={highlighted === 0 ? 2 - index : index}
-        >
-          <CardHeader>
-            <CardIndex>0{3 - index}</CardIndex>
-            <CardTitle>{item.title}</CardTitle>
-          </CardHeader>
-          <Flex h="100%" justify="space-between" vertical padding="2rem 2.5rem">
-            <div>
-              {item.description.map((text, i) =>
-                i % 2 === 0 ? (
-                  <Text inline key={i} weight="500" size="1.125rem" color="#4d4d4d">
-                    {text}
-                  </Text>
-                ) : (
-                  <Text
-                    inline
-                    color={highlighted === index ? "black" : "white"}
-                    weight="700"
-                    size="1.125rem"
-                    key={i}
-                    space
-                  >
-                    {text}
-                  </Text>
-                ),
-              )}
-            </div>
-            <Flex
-              mr="auto"
-              rounded="1rem"
-              bg={highlighted === index ? "white" : "black"}
-              gap="1rem"
-              padding="0.5rem 1.5rem"
-              align="center"
-              color={highlighted === index ? "black" : "white"}
-            >
-              {item.icon}
-              <Text alt weight="600" color={highlighted === index ? "black" : "white"}>
-                {item.bottomText}
-              </Text>
-            </Flex>
-          </Flex>
-        </Card>
-      ))}
-    </Flex>
   );
 }
 
@@ -193,6 +112,11 @@ const cardContents = [
   },
 ];
 
+export const metadata = {
+  description:
+    "O Programa de Educação Tutorial (PET) Ciência da Computação da Universidade Federal da Paraíba é um grupo que tem como pilares: Ensino, Pesquisa e Extensão.",
+};
+
 export default function Home() {
   return (
     <>
@@ -218,30 +142,9 @@ export default function Home() {
           </g>
         </SVGBackground>
       </BackgroundContainer>
-      <Flex margin="8.5rem 0 5vh 0" h="40vh" align="start">
-        <Flex w="100%" vertical gap="1.5rem">
-          <Text>Universidade Federal da Paraíba</Text>
-          <Title level={3}>Bem-vindo ao Universo do PET</Title>
-          <Text>Aqui você fica por dentro de tudo, e conhece mais um pouco de tudo que acontece no PET!</Text>
-          <Button
-            maxw="300px"
-            flex
-            gapanim
-            onClick={() =>
-              window?.scrollTo({
-                behavior: "smooth",
-                top: document.getElementById("sobre")?.offsetTop,
-              })
-            }
-          >
-            <span>Conheça-nos</span>
-            <RiArrowRightLine />
-          </Button>
-        </Flex>
-        <Flex h="100%" align="center" w="100%">
-          <Petrucio height="400" style={{ transform: "translateX(5rem)" }} />
-        </Flex>
-      </Flex>
+
+      <Landing />
+
       <Flex w="100%" h="12.5rem" align="center">
         <Divider text="Parcerias Consolidadas" />
       </Flex>

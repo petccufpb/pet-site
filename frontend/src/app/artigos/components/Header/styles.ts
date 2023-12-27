@@ -1,3 +1,4 @@
+"use client";
 import styled, { keyframes } from "styled-components";
 
 import headerBg from "@assets/images/headerBg.svg";

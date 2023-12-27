@@ -14,7 +14,7 @@ import { MinicursoForm } from "../components/MinicursoForm";
 import { DescriptionContainer, FormContainer, MinicursoContainer, SpeakerInfo } from "./styles";
 
 export const metadata: Metadata = {
-  title: "Plataforma | SDC - Minicurso",
+  title: "Minicurso",
 };
 
 export default async function Minicurso({ params }: { params: { id: string } }) {

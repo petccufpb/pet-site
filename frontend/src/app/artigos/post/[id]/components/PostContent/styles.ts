@@ -1,4 +1,5 @@
-import styled, { ThemeConsumer } from "styled-components";
+"use client";
+import styled from "styled-components";
 
 export const PostContentContainer = styled.section`
   display: flex;
