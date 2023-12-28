@@ -277,15 +277,7 @@ export default function Home() {
             </Text>
             <Text>A sua contribuição nos ajuda a manter o nosso laboratório e máquinas.</Text>
           </Flex>
-          <Flex
-            h="100%"
-            padding="3rem"
-            vertical
-            gap="1rem"
-            w="100%"
-            justify="center"
-            mobile={{ bt: "1px solid white" }}
-          >
+          <Flex h="100%" padding="3rem" vertical gap="1rem" w="100%" mobile={{ bt: "1px solid white" }}>
             <Recompensas />
             <Text color="white" alt weight="700" size="1.25rem">
               Recompensas

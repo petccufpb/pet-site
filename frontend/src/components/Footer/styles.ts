@@ -11,7 +11,8 @@ export const Container = styled.div<{ pathname: string }>`
   }
 
   font-family: ${({ theme }) => theme.fonts.alt};
-  width: 70rem;
+  width: 100%;
+  max-width: 70rem;
 
   border-top: 1px solid #afafaf;
   padding: 3rem 0;
