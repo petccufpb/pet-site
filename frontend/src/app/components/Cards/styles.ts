@@ -20,20 +20,25 @@ export const Card = styled(Flex)<{ index: number; highlighted: boolean; zIndex: 
     transform: scale(1.035);
     z-index: 10;
   }
+
+  @media (max-width: 1100px) {
+    left: 0;
+    top: ${({ index }) => 85 + index * 90}px;
+  }
 `;
 
-export const CardHeader = styled.div`
+export const CardHeader = styled.div<{ highlighted?: boolean }>`
   height: 90px;
   width: 100%;
-  border-bottom: 1px solid #0000004d;
+  border-bottom: 1px solid ${({ highlighted }) => (highlighted ? "#0000004d" : "#e1e1e6")};
   font-family: "Bai Jamjuree", sans-serif;
   display: flex;
+  color: ${({ highlighted }) => (highlighted ? "black" : "#e1e1e6")};
 `;
 
 export const CardTitle = styled.h1`
   padding: 1.5rem;
   font-weight: bold;
-  color: black;
   font-size: 1.5rem;
   margin: auto 0;
 `;
