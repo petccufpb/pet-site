@@ -148,8 +148,8 @@ export default function Home() {
       <Flex w="100%" h="12.5rem" align="center">
         <Divider text="Parcerias Consolidadas" />
       </Flex>
-      <Flex vertical gap="3rem" align="center">
-        <Flex w="100%" maxw="600px" wrap align="center" justify="space-between" center>
+      <Flex vertical gap="3rem" align="center" w="min(100%,95vw)">
+        <Flex w="100%" gap="1rem" maxw="600px" wrap align="center" justify="space-evenly" center>
           <VSoft />
           <Image unoptimized src={Synchro} alt="Synchro" />
           <Image unoptimized src={TNS} alt="TNS" />
@@ -159,7 +159,7 @@ export default function Home() {
           Esses são os responsáveis por dar assistência, introduzindo os estudantes no mercado!
         </Text>
       </Flex>
-      <Flex w="100%" justify="space-between" relative padding="5rem 0 0 0" reverse>
+      <Flex w="min(100%,95vw)" justify="space-between" relative padding="5rem 0 0 0" reverse>
         <PetStamp opacity="0.25" style={{ position: "absolute", left: "-17.25%", top: "12.5%" }} />
         <Cards items={cardContents} />
         <Flex gap="0.5rem" maxw="470px" w="100%" vertical justify="center" align="end">
@@ -169,7 +169,7 @@ export default function Home() {
           <Text margin="0 0 1rem 0" size="3rem" color="#e1e1e6" alt weight="700">
             Todas as nossas vertentes...
           </Text>
-          <Text loose color="#999a9b">
+          <Text loose color="#999a9b" w="100%">
             Explore as oportunidades no PET Computação da UFPB, onde nosso constante desejo de crescimento se
             conecta aos fundamentos da universidade: ensino, pesquisa e extensão. Somos um grupo comprometido
             com uma formação integral, combinada a inovação e a responsabilidade social para criar uma
@@ -177,7 +177,7 @@ export default function Home() {
           </Text>
         </Flex>
       </Flex>
-      <Flex id="sobre" w="100%" justify="space-between" wrap>
+      <Flex id="sobre" w="min(100%,95vw)" justify="space-between" wrap gap="3rem">
         <Flex gap="0.5rem" maxw="470px" w="100%" vertical justify="center" align="end">
           <Text w="100%" alt color="#0072ed99" weight="700" size="1rem">
             Mas, o que seria o PET ?
@@ -211,8 +211,17 @@ export default function Home() {
           </Flex>
         </IgnorePageWidth>
       </Flex>
-      <Flex w="100%" bg="#0072ed1a" margin="2rem 0 0">
-        <Flex stretch vertical gap="2rem" align="center" justify="center" padding="3rem" br="1px solid white">
+      <Flex w="min(100%,93vw)" bg="#0072ed1a" margin="2rem 0 0" wrap>
+        <Flex
+          stretch
+          vertical
+          gap="2rem"
+          align="center"
+          justify="center"
+          padding="3rem"
+          br="1px solid white"
+          mobile={{ br: "none" }}
+        >
           <Flex
             margin="2rem 0 0.5rem 0"
             rounded="1.5rem"
@@ -251,15 +260,32 @@ export default function Home() {
             </Text>
           </Flex>
         </Flex>
-        <Flex vertical w="350px">
-          <Flex padding="3rem" bb="1px solid white" h="100%" vertical gap="1rem" w="100%" justify="center">
+        <Flex vertical w="350px" mobile={{ w: "100%" }}>
+          <Flex
+            padding="3rem"
+            bb="1px solid white"
+            h="100%"
+            vertical
+            gap="1rem"
+            w="100%"
+            justify="center"
+            mobile={{ bb: "none", bt: "1px solid white" }}
+          >
             <Apoio />
             <Text color="white" alt weight="700" size="1.25rem">
               Seu apoio
             </Text>
             <Text>A sua contribuição nos ajuda a manter o nosso laboratório e máquinas.</Text>
           </Flex>
-          <Flex h="100%" padding="3rem" vertical gap="1rem" w="100%" justify="center">
+          <Flex
+            h="100%"
+            padding="3rem"
+            vertical
+            gap="1rem"
+            w="100%"
+            justify="center"
+            mobile={{ bt: "1px solid white" }}
+          >
             <Recompensas />
             <Text color="white" alt weight="700" size="1.25rem">
               Recompensas
