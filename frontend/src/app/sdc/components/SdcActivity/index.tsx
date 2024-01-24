@@ -1,7 +1,6 @@
 import { Modal } from "@hyoretsu/react-components";
 import { Info } from "@phosphor-icons/react";
 import { isAfter } from "date-fns";
-import Link from "next/link";
 import { useState } from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import { HiArrowUpRight } from "react-icons/hi2";
@@ -91,7 +90,7 @@ export function SdcActivity({ data, dayEvent }: { data: SDCEventData; dayEvent: 
           opacity={0.6}
           textColor="#fff9"
         >
-          {data.about!.split(/\\n/).map((paragraph, index) => {
+          {data.about!.split("\\\\n").map((paragraph, index) => {
             if (paragraph === "") {
               return <br key={index} />;
             }
