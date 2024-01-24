@@ -1,11 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { CountdownContainer, Divider, TimeUnit, Timer } from "./styles";
 
 export function Countdown({ startingTime }: { startingTime: string }) {
-  const countDownDate = new Date(startingTime).getTime();
+  const countDownDate = useMemo(() => {
+    const startingDate = new Date(startingTime);
+    startingDate.setHours(startingDate.getHours() + 3);
+
+    return startingDate.getTime();
+  }, [startingTime]);
 
   const [timeRemaining, setTimeRemaining] = useState({
     days: 0,
