@@ -2,7 +2,7 @@
 
 import { SectionTitle } from "@app/sdc/styles";
 import { useEffect, useState } from "react";
-import { HiArrowUpRight, HiXCircle, HiXMark } from "react-icons/hi2";
+import { HiArrowUpRight, HiXMark } from "react-icons/hi2";
 import { SDCScheduleData } from "sdc";
 
 import {
@@ -20,7 +20,13 @@ export function MobileSchedule({ data }: { data: SDCScheduleData }) {
   const [currentDay, setCurrentDay] = useState<number | null>(
     new Date(data.events[0]?.startTime || "").getDate(),
   );
-  const days: number[] = [...new Set(data.events.map(event => new Date(event.startTime).getDate()).sort())];
+  const days: number[] = [
+    ...new Set(
+      data.events
+        .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())
+        .map(event => new Date(event.startTime).getDate()),
+    ),
+  ];
 
   const [dayEvents, setDayEvents] = useState(
     data.events.filter(event => new Date(event.startTime).getDate() === currentDay),
