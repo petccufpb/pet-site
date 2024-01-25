@@ -220,7 +220,7 @@ export default function Home() {
           justify="center"
           padding="3rem"
           br="1px solid white"
-          mobile={{ br: "none" }}
+          mobile={{ br: "none", padding: "3rem 0.875rem" }}
         >
           <Flex
             margin="2rem 0 0.5rem 0"
@@ -229,14 +229,15 @@ export default function Home() {
             bg="#1A1A1A"
             padding="0.75rem 1.5rem"
             align="center"
+            mobile={{ margin: "1.5rem 0 1.5rem 0" }}
           >
             <FaBolt color="#0072ED" />
             <Text color="white" alt weight="700">
               Faça sua contribuição
             </Text>
           </Flex>
-          <Title level={2} w="100%" maxw="530px" center>
-            Dê o primeiro passo e torne-se um dos contribuintes do PET.{" "}
+          <Title level={2} w="100%" maxw="530px" center mobile={{ level: 0 }}>
+            Dê o <u>primeiro passo</u> e torne-se um dos contribuintes do PET.{" "}
           </Title>
           <Text center maxw="555px" w="100%" loose color="#ffffff99" margin="0.5rem 0 0 0">
             Estamos comprometidos com a constante melhoria de nossas atividades. Valorizamos cada pequena
@@ -247,14 +248,14 @@ export default function Home() {
             <span>Fazer Contribuição</span>
             <RiArrowRightLine />
           </Button>
-          <Flex gap="1.5rem" align="center">
+          <Flex gap="1.5rem" align="center" wrap justify="center">
             <Flex align="center" gap="1rem">
               <PIX height="36px" width="auto" />
               <Text weight="700" bg="#0072ED" color="white" rounded="1rem" alt padding="0.25rem 1rem">
                 Novo!
               </Text>
             </Flex>
-            <VL />
+            <VL nomobile />
             <Text alt color="#AFAFAF" weight="700">
               Para fins INSTITUCIONAIS
             </Text>
@@ -269,20 +270,31 @@ export default function Home() {
             gap="1rem"
             w="100%"
             justify="center"
-            mobile={{ bb: "none", bt: "1px solid white" }}
+            mobile={{ bb: "none", bt: "1px solid white", align: "center", padding: "3.5rem 3rem" }}
           >
             <Apoio />
             <Text color="white" alt weight="700" size="1.25rem">
               Seu apoio
             </Text>
-            <Text>A sua contribuição nos ajuda a manter o nosso laboratório e máquinas.</Text>
+            <Text mobile={{ center: true }}>
+              A sua contribuição nos ajuda a manter o nosso laboratório e máquinas.
+            </Text>
           </Flex>
-          <Flex h="100%" padding="3rem" vertical gap="1rem" w="100%" mobile={{ bt: "1px solid white" }}>
+          <Flex
+            h="100%"
+            padding="3rem"
+            vertical
+            gap="1rem"
+            w="100%"
+            mobile={{ bt: "1px solid white", align: "center", padding: "3.5rem 3rem" }}
+          >
             <Recompensas />
             <Text color="white" alt weight="700" size="1.25rem">
               Recompensas
             </Text>
-            <Text>Somos eternamente gratos! Seu nome irá aparecer em nossas publicações.</Text>
+            <Text mobile={{ center: true }}>
+              Somos eternamente gratos! Seu nome irá aparecer em nossas publicações.
+            </Text>
           </Flex>
         </Flex>
       </Flex>

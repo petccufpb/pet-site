@@ -24,6 +24,8 @@ export const Card = styled(Flex)<{ index: number; highlighted: boolean; zIndex: 
   @media (max-width: 1100px) {
     left: 0;
     top: ${({ index }) => 85 + index * 90}px;
+
+    height: auto;
   }
 `;
 
