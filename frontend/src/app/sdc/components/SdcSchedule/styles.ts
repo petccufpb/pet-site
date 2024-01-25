@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const SdcScheduleContainer = styled.div`
   font-family: ${({ theme }) => theme.fonts.sdc};
-  margin: 6rem 0;
+  margin-top: 5.5rem;
 
   // Apenas renderizar se a tela é maior que 900px.
   @media (max-width: 900px) {

@@ -152,9 +152,9 @@ export default class ProjectsController {
   @Get("editions")
   async getProjectsEditions(
     @Query("id") editionId?: string,
-    @Query("projectId") projectId?: string,
+    @Query("project") projectTitle?: string,
   ): Promise<ProjectEdition[]> {
-    const editions = await this.listEditions.execute({ editionId, projectId });
+    const editions = await this.listEditions.execute({ editionId, projectTitle });
 
     return editions;
   }

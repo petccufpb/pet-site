@@ -89,6 +89,7 @@ model ProjectEdition {
     name                String?
     number              Float
     date                DateTime
+    logoUrl             String?
     certificateTemplate ProjectCertificateTemplate?
     certificates        ProjectCertificate[]
     events              ProjectEvent[]
@@ -107,6 +108,7 @@ model ProjectEvent {
     capacity            Int?
     extraCapacity       Int                         @default(0)
     onSite              Boolean                     @default(true)
+    externalSignup      String?
     location            String?
     startTime           DateTime
     endTime             DateTime

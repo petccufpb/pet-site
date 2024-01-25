@@ -1,54 +1,6 @@
 "use client";
 
-import { Section } from "@app/sdc/styles";
 import styled from "styled-components";
-
-export const LastEditionSection = styled(Section)`
-  border-right: solid 1px ${({ theme }) => theme.colors["third-grey"]};
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-
-  > div:last-child {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-`;
-
-export const Description = styled.div`
-  font-family: ${({ theme }) => theme.fonts.alt};
-  width: 100%;
-`;
-
-export const MoreInfo = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 1rem;
-  justify-content: space-between;
-
-  > div:first-child {
-    flex: 1;
-    min-width: 150px;
-  }
-`;
-
-export const InstagramContainer = styled.a`
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  padding: 0.5rem 0;
-  cursor: pointer;
-  transition: 450ms;
-
-  div {
-    border-bottom: 0.5px solid white;
-  }
-
-  &:hover {
-    filter: brightness(0.7);
-  }
-`;
 
 export const HeadContainer = styled.div`
   font-family: ${({ theme }) => theme.fonts.sdc};
@@ -63,6 +15,58 @@ export const HeadContainer = styled.div`
   grid-template-columns: 1fr 1fr;
 
   margin: 2rem 0;
+
+  section:first-of-type {
+    img,
+    > svg {
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+
+      margin-bottom: -2.625rem;
+
+      width: 100%;
+      cursor: auto;
+      max-height: 20rem;
+      object-fit: contain;
+
+      @media (max-width: 900px) {
+        padding: 0;
+      }
+    }
+
+    > div:last-child {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: space-between;
+      align-self: flex-end;
+
+      height: 2.625rem;
+
+      margin-right: 0.75rem;
+
+      > div {
+        justify-content: flex-end;
+        display: flex;
+        color: rgba(255, 255, 255, 0.6);
+        align-items: center;
+        font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
+        gap: 0.5rem;
+        font-weight: bold;
+
+        margin-top: 0.4375rem;
+
+        span {
+          font-size: 0.75rem;
+        }
+      }
+    }
+  }
+
+  > section:last-of-type {
+    border-left: solid 1px ${({ theme }) => theme.colors["third-grey"]};
+  }
 
   @media (max-width: 900px) {
     grid-template-columns: none;
@@ -82,6 +86,72 @@ export const HeadContainer = styled.div`
   }
 `;
 
+export const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+
+  padding: 1.25rem;
+
+  word-break: break-word;
+  overflow-x: hidden;
+
+  width: 100%;
+
+  > div:last-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+  }
+`;
+
+export const Description = styled.div`
+  font-family: ${({ theme }) => theme.fonts.alt};
+  color: #e1e1e6;
+  width: 100%;
+`;
+
+export const SmallTitle = styled.p`
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  width: max-content;
+`;
+
+export const MoreInfo = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    min-width: 150px;
+  }
+`;
+
+export const InstagramContainer = styled.a`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  cursor: pointer;
+  transition: 450ms;
+  color: #e1e1e6;
+
+  span {
+    color: #ffffff;
+    font-weight: 600;
+
+    border-bottom: 0.5px solid white;
+  }
+
+  &:hover {
+    filter: brightness(0.7);
+  }
+`;
+
 export const SubscribeButton = styled.button`
   font-family: ${({ theme }) => theme.fonts.sdc};
   justify-content: center;
@@ -89,13 +159,12 @@ export const SubscribeButton = styled.button`
 
   background: ${({ theme }) => theme.colors["opacity-green"]};
   border-radius: 2rem;
-  margin: 0.5rem auto;
+  padding: 0.75rem 3.375rem;
 
   font-size: ${({ theme }) => theme.textSizes["text-regular-xs"]};
   transition: 450ms;
 
   min-width: min(100%, 12rem);
-  height: 2.5rem;
 
   a {
     color: ${({ theme }) => theme.colors["base-green"]};
@@ -106,68 +175,4 @@ export const SubscribeButton = styled.button`
   }
 `;
 
-export const SubscribeCount = styled.div`
-  padding-right: 1rem;
-  justify-content: flex-end;
-  display: flex;
-  color: rgba(255, 255, 255, 0.6);
-  align-items: center;
-  font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
-  gap: 0.5rem;
-  padding-bottom: 0.2rem;
-  font-weight: bold;
-`;
-
-export const JustifyBetween = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-export const ImgContainer = styled.div`
-  display: flex;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  place-items: center;
-  overflow: hidden;
-  padding: 1rem;
-  gap: 1rem;
-
-  img {
-    width: 100%;
-    cursor: auto;
-    max-height: 20rem;
-    object-fit: contain;
-  }
-
-  @media (max-width: 900px) {
-    padding: 0;
-  }
-
-  margin-bottom: -2rem;
-
-  /* img:first-child {
-    margin-bottom: -120px;
-    margin-left: -20px;
-    margin-right: -20px;
-  } */
-
-  /* @media (max-width: 70rem) {
-    img {
-      width: min(100%, 200px);
-    }
-  } */
-
-  /* img {
-    cursor: auto;
-    width: min(100%, 300px);
-    height: auto;
-  }
-
-  @media (max-width: 70rem) {
-    img {
-      width: min(100%, 200px);
-    }
-  } */
-`;
+export const ImgContainer = styled.div``;

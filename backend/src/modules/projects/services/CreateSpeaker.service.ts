@@ -1,3 +1,4 @@
+import { directLink } from "@hyoretsu/utils";
 import { Injectable } from "@nestjs/common";
 import { ProjectSpeaker } from "@prisma/client";
 
@@ -11,7 +12,7 @@ export default class CreateSpeaker {
   public async execute({ photoUrl, ...data }: CreateSpeakerDTO): Promise<ProjectSpeaker> {
     const speaker = await this.projectsRepository.createSpeaker({
       ...data,
-      photoUrl: photoUrl.replace(/file\/d\/(.+?)\/view.*/g, "uc?id=$1"),
+      photoUrl: directLink(photoUrl),
     });
 
     return speaker;

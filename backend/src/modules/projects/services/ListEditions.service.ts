@@ -8,7 +8,7 @@ import ProjectsRepository from "../repositories/projects.repository";
 export default class ListEditions {
   constructor(private projectsRepository: ProjectsRepository) {}
 
-  public async execute({ editionId, projectId }: ListEditionsDTO): Promise<ProjectEdition[]> {
+  public async execute({ editionId, projectTitle }: ListEditionsDTO): Promise<ProjectEdition[]> {
     let editions: ProjectEdition[];
 
     if (editionId) {
@@ -18,13 +18,13 @@ export default class ListEditions {
       }
 
       editions = [edition];
-    } else if (projectId) {
-      const project = await this.projectsRepository.findProjectById(projectId);
+    } else if (projectTitle) {
+      const project = await this.projectsRepository.findProjectByTitle(projectTitle);
       if (!project) {
-        throw new HttpException("Esse projeto não existe", HttpStatus.NOT_FOUND);
+        throw new HttpException("Não existe um projeto com esse nome", HttpStatus.NOT_FOUND);
       }
 
-      editions = await this.projectsRepository.findAllEditions(projectId);
+      editions = await this.projectsRepository.findAllEditions(project.id);
     } else {
       throw new HttpException("Você deve enviar um projeto ou edição para pesquisar", HttpStatus.BAD_REQUEST);
     }
