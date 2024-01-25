@@ -7,7 +7,7 @@ export const FeatureListContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   justify-content: space-between;
-  margin: 7.5rem 1em;
+  margin: 7.5rem 1em 0;
   overflow-x: hidden;
   gap: 2rem;
 

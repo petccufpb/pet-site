@@ -9,6 +9,5 @@ export default class ListEditionsDTO {
 
   @IsOptional()
   @IsString()
-  @IsUUID()
-  projectId?: string;
+  projectTitle?: string;
 }

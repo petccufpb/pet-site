@@ -64,11 +64,11 @@ export function SdcActivity({ data, dayEvent }: { data: SDCEventData; dayEvent: 
           )}
         </th>
         <th>
-          {data.type === "minicurso" && (
+          {(data.type === "minicurso" || data.externalSignup) && (
             <SubscribeLink
               disabled={!available || isAfter(new Date(), new Date(data.startTime))}
               aria-label="Realizar Inscrição"
-              href={`/sdc/minicurso/${data.id}`}
+              href={data.externalSignup || `/sdc/minicurso/${data.id}`}
             >
               <Subscribe availability={available && !isAfter(new Date(), new Date(data.startTime))}>
                 <span>FAZER INSCRIÇÃO</span>

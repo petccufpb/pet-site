@@ -1,45 +1,53 @@
-import { LastEditionText, Section, SectionTitle, Title } from "@app/sdc/styles";
-import Image from "next/image";
+import { SectionTitle } from "@app/sdc/styles";
+import parse from "html-react-parser";
 import Link from "next/link";
 import { FaInstagram } from "react-icons/fa";
-
-import PETVsoft from "@assets/images/pet-vsoft.png";
-import SDCLast from "@assets/images/sdc-xxx.svg";
+import { SDCScheduleData } from "sdc";
 
 import { FireHexagon } from "../Hexagon";
 import {
   Description,
   HeadContainer,
-  ImgContainer,
   InstagramContainer,
-  JustifyBetween,
-  LastEditionSection,
   MoreInfo,
+  Section,
+  SmallTitle,
   SubscribeButton,
-  SubscribeCount,
 } from "./styles";
 
-export function Head() {
+interface HeadProps {
+  data: SDCScheduleData;
+}
+
+export async function Head({ data }: HeadProps) {
+  const participantsRes = await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/editions?project=SDC");
+  const participants = (await participantsRes.json())[1].participants.length;
+
+  let logo = "";
+  if (data.logoUrl) {
+    const logoRes = await fetch(data.logoUrl);
+    logo = await logoRes.text();
+  }
+
   return (
     <HeadContainer>
-      <LastEditionSection>
+      <Section>
+        {logo.startsWith("<svg") ? parse(logo) : <img src={logo} alt={`Logo da ${data.name}`} />}
+
         <div>
-          <ImgContainer>
-            <Image src={PETVsoft} alt="Logo do PET e da Vsoft" priority={true} />
-            <Image src={SDCLast} alt="Logo da SDC XXIX" priority={true} />
-          </ImgContainer>
+          <SmallTitle>Última Edição</SmallTitle>
+
           <div>
-            <LastEditionText>ULTIMA EDIÇÃO</LastEditionText>
-            <SubscribeCount>
-              <FireHexagon></FireHexagon>
-              <div>+450 INSCRITOS</div>
-            </SubscribeCount>
+            <FireHexagon></FireHexagon>
+            <span>
+              +{Math.floor(participants / 10) * 10} INSCRITO{participants === 1 ? "" : "S"}
+            </span>
           </div>
         </div>
-      </LastEditionSection>
+      </Section>
       <Section>
         <SectionTitle>SOBRE</SectionTitle>
-        <JustifyBetween>
+        <div>
           <Description>
             Todo semestre o PET Computação (Programa de Educação Tutorial) realiza a Semana da Computação, que
             acontece junto com a entrada de novos estudantes na universidade. A Semana é dedicada para todos
@@ -49,13 +57,13 @@ export function Head() {
           </Description>
           <MoreInfo>
             <div>
-              <Title>MAIS INFORMAÇÕES</Title>
+              <SmallTitle>Mais informações</SmallTitle>
               <InstagramContainer
                 aria-label="Instagram PET Computação"
                 href="https://www.instagram.com/petccufpb/"
               >
                 <FaInstagram size={20}></FaInstagram>
-                <div>@petccufpb</div>
+                <span>@petccufpb</span>
               </InstagramContainer>
             </div>
             <SubscribeButton>
@@ -64,7 +72,7 @@ export function Head() {
               </Link>
             </SubscribeButton>
           </MoreInfo>
-        </JustifyBetween>
+        </div>
       </Section>
     </HeadContainer>
   );

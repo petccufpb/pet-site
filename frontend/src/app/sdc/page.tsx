@@ -16,7 +16,7 @@ export default async function SDC() {
 
   return (
     <div>
-      <Head />
+      <Head data={sdcData} />
       <Countdown startingTime={sdcData.date} />
       <FeatureList />
       <ScheduleDesc />

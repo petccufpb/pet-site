@@ -89,9 +89,10 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     });
   }
 
-  public async createEdition({ name, number, ...data }: CreateEditionDTO): Promise<ProjectEdition> {
+  public async createEdition({ logoUrl, name, number, ...data }: CreateEditionDTO): Promise<ProjectEdition> {
     const edition = {
       ...data,
+      logoUrl: logoUrl || null,
       name: name || "",
       number: number || 1,
       id: randomUUID(),
@@ -106,6 +107,7 @@ export default class FakeProjectsRepository implements ProjectsRepository {
 
   public async createEvent({
     capacity,
+    externalSignup,
     extraCapacity,
     location,
     onSite,
@@ -114,6 +116,7 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     const event = {
       ...data,
       capacity: capacity || null,
+      externalSignup: externalSignup || null,
       extraCapacity: extraCapacity || 0,
       location: location || null,
       onSite: onSite || true,

@@ -1,6 +1,6 @@
 export function FireHexagon() {
   return (
-    <svg width="25" height="27" viewBox="0 0 25 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="21" height="22" viewBox="0 0 25 27" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_741_46)">
         <path
           d="M0 6.73077L12.5 0L25 6.73077V20.1923L12.5 26.9231L0 20.1923V6.73077Z"

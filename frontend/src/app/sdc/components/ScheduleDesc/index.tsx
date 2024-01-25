@@ -1,9 +1,8 @@
 import { SDC_READY } from "@app/sdc/page";
-import { SectionTitle } from "@app/sdc/styles";
 
 import { Scrambles } from "@components/Scrambles";
 
-import { ScheduleDescContainer, ScheduleSubtitle, ScheduleTitle } from "./styles";
+import { ScheduleDescContainer, ScheduleSubtitle, ScheduleTitle, SectionTitle } from "./styles";
 
 export function ScheduleDesc() {
   return (

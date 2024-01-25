@@ -5,6 +5,7 @@ declare module "sdc" {
     about: string | null;
     type: string;
     capacity?: number;
+    externalSignup?: string;
     extraCapacity: number;
     onSite: boolean;
     location: string;
@@ -30,6 +31,8 @@ declare module "sdc" {
     name: null | string;
     number: number;
     date: string;
+    logoUrl?: string;
+    participants: any[];
     projectId: string;
     createdAt: string;
     updatedAt: string;
