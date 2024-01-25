@@ -64,8 +64,10 @@ export const HeadContainer = styled.div`
     }
   }
 
-  > section:last-of-type {
-    border-left: solid 1px ${({ theme }) => theme.colors["third-grey"]};
+  @media (min-width: 900px) {
+    > section:last-of-type {
+      border-left: solid 1px ${({ theme }) => theme.colors["third-grey"]};
+    }
   }
 
   @media (max-width: 900px) {
@@ -102,6 +104,20 @@ export const Section = styled.section`
     flex-direction: column;
     justify-content: space-between;
     flex: 1;
+  }
+
+  &:last-child {
+    > div {
+      gap: 1rem;
+
+      > div {
+        gap: 1rem;
+
+        > div {
+          gap: 0.5rem;
+        }
+      }
+    }
   }
 `;
 

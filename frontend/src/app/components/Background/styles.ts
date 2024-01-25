@@ -9,10 +9,14 @@ export const BackgroundContainer = styled.div`
   width: 100%;
   height: 100%;
 
-  overflow-x: visible;
+  overflow: hidden;
 
   display: flex;
   justify-content: center;
+
+  > * {
+    max-width: 100%;
+  }
 `;
 
 export const Grid = styled.div`

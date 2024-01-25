@@ -48,16 +48,18 @@ export default function Layout({ children }: PropsWithChildren) {
         <ContainerForBackground>
           {innerWidth <= 768 ? <MobileHeader /> : <Header />}
 
-          <WavesContainer>
-            <Waves />
-            <WavesBackgroundMasker />
-          </WavesContainer>
           {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
           {pathname.split("/")[1] !== "sdc" && (
-            <Background limited={pathname === "/"}>
-              <Fishes />
-              {pathname !== "/" && <FishesHider />}
-            </Background>
+            <>
+              <WavesContainer>
+                <Waves />
+                <WavesBackgroundMasker />
+              </WavesContainer>
+              <Background limited={pathname === "/"}>
+                <Fishes />
+                {pathname !== "/" && <FishesHider />}
+              </Background>
+            </>
           )}
 
           <LayoutContainer id="main">
