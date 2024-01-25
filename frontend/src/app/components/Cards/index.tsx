@@ -19,7 +19,7 @@ export default function Cards({ items }: { items: CardProps[] }) {
       <GenericDiv
         h="450px"
         w="570px"
-        mobile={{ h: "630px", w: "390px" }}
+        mobile={{ h: "530px", w: "390px" }}
         onMouseLeave={() => setHighlighted(2)}
       >
         {items.map((item, index) => (
@@ -34,7 +34,7 @@ export default function Cards({ items }: { items: CardProps[] }) {
               <CardIndex>0{3 - index}</CardIndex>
               <CardTitle>{item.title}</CardTitle>
             </CardHeader>
-            <Flex h="100%" justify="space-between" vertical padding="2rem 2.5rem">
+            <Flex h="100%" gap="1rem" justify="space-between" vertical padding="2rem 2.5rem">
               <div>
                 {item.description.map((text, i) =>
                   i % 2 === 0 ? (

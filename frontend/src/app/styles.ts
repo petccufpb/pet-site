@@ -49,6 +49,12 @@ type FlexPropsWithMobile = FlexProps & {
   mobile?: FlexProps;
 };
 
+type TitleProps = { level?: number; maxw?: string; w?: string; center?: boolean };
+
+type TitlePropsWithMobile = TitleProps & {
+  mobile?: TitleProps;
+};
+
 export const GenericDiv = styled.div<GenericElementPropsWithMobile>`
   ${({ w }) => w && `width: ${w}`};
   ${({ maxw }) => maxw && `max-width: ${maxw}`};
@@ -144,17 +150,29 @@ export const Text = styled(GenericDiv)<{
   ${({ space }) => space && `white-space: pre-wrap;`};
 `;
 
-export const Title = styled.h1<{ level?: number; maxw?: string; w?: string; center?: boolean }>`
+export const Title = styled.h1<TitlePropsWithMobile>`
   font-family: "Bai Jamjuree", sans-serif;
   font-weight: bold;
   color: #e1e1e6;
-  font-size: ${({ level }) => (level ? `${2 + 0.5 * level}rem` : "2rem")};
+  font-size: ${({ level }) => (level !== undefined ? `${2 + 0.5 * level}rem` : "2rem")};
   margin: 0;
   line-height: 1em;
 
   ${({ maxw }) => maxw && `max-width: ${maxw}`};
   ${({ w }) => w && `width: ${w}`};
   ${({ center }) => center && `text-align: center`};
+
+  @media (max-width: 1100px) {
+    font-size: ${({ mobile, level }) =>
+      mobile?.level !== undefined
+        ? `${2 + 0.5 * mobile.level}rem`
+        : level
+        ? `${2 + 0.5 * level}rem`
+        : "2rem"};
+    ${({ mobile }) => mobile?.maxw && `max-width: ${mobile.maxw}`};
+    ${({ mobile }) => mobile?.w && `width: ${mobile.w}`};
+    ${({ mobile }) => mobile?.center && `text-align: center`};
+  }
 `;
 
 export const Flex = styled(GenericDiv)<GenericElementPropsWithMobile & FlexPropsWithMobile>`
@@ -254,10 +272,12 @@ export const HR = styled.div<{ w?: string }>`
   ${({ w }) => (w ? `width: ${w}` : "flex-grow: 1")};
 `;
 
-export const VL = styled.div`
+export const VL = styled.div<{ nomobile?: boolean }>`
   height: 100%;
   width: 1px;
   background: #afafaf;
+
+  ${({ nomobile }) => nomobile && "@media (max-width: 1100px) { display: none; }"}
 `;
 
 export const Bold = styled.span`
