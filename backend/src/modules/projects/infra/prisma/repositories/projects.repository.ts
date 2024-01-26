@@ -17,6 +17,7 @@ import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
 import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParticipant.dto";
+import UpdateParticipantDTO from "@modules/projects/dtos/UpdateParticipant.dto";
 import ProjectsRepository, {
   CertificateInfo,
   CompleteProjectAttendance,
@@ -394,5 +395,23 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     });
 
     return speaker;
+  }
+
+  public async updateParticipant(
+    id: string,
+    { course, email, phoneNumber }: UpdateParticipantDTO,
+  ): Promise<ProjectParticipant> {
+    const participant = await this.prisma.projectParticipant.update({
+      data: {
+        ...(course && { course }),
+        ...(email && { email }),
+        ...(phoneNumber && { phoneNumber }),
+      },
+      where: {
+        id,
+      },
+    });
+
+    return participant;
   }
 }

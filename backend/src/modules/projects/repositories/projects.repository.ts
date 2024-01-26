@@ -18,6 +18,7 @@ import CreateParticipationDTO from "../dtos/CreateParticipation.dto";
 import CreateProjectDTO from "../dtos/CreateProject.dto";
 import CreateSpeakerDTO from "../dtos/CreateSpeaker.dto";
 import FindExistingParticipantDTO from "../dtos/FindExistingParticipant.dto";
+import UpdateParticipantDTO from "../dtos/UpdateParticipant.dto";
 
 export interface CertificateInfo {
   editionId?: string;
@@ -116,4 +117,5 @@ export default abstract class ProjectsRepository {
   abstract findProjectById(id: string): Promise<Project | null>;
   abstract findProjectByTitle(title: string): Promise<Project | null>;
   abstract findSpeakerById(id: string): Promise<ProjectSpeaker | null>;
+  abstract updateParticipant(id: string, data: UpdateParticipantDTO): Promise<ProjectParticipant>;
 }

@@ -18,6 +18,7 @@ import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
 import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParticipant.dto";
+import UpdateParticipantDTO from "@modules/projects/dtos/UpdateParticipant.dto";
 
 import ProjectsRepository, {
   CertificateInfo,
@@ -366,14 +367,12 @@ export default class FakeProjectsRepository implements ProjectsRepository {
   }
 
   public async findExistingParticipant({
-    email,
     matricula,
     name,
   }: FindExistingParticipantDTO): Promise<ProjectParticipant | null> {
     const participant =
       this.participants.find(
-        participant =>
-          participant.email === email && participant.matricula === matricula && participant.name === name,
+        participant => participant.matricula === matricula && participant.name === name,
       ) || null;
 
     return participant;
@@ -467,5 +466,24 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     const speaker = this.speakers.find(speaker => speaker.id === id) || null;
 
     return speaker;
+  }
+
+  public async updateParticipant(
+    id: string,
+    { course, email, phoneNumber }: UpdateParticipantDTO,
+  ): Promise<ProjectParticipant> {
+    const participant = this.participants.find(speaker => speaker.id === id)!;
+
+    if (course) {
+      Object.assign(participant, { course });
+    }
+    if (email) {
+      Object.assign(participant, { email });
+    }
+    if (phoneNumber) {
+      Object.assign(participant, { phoneNumber });
+    }
+
+    return participant;
   }
 }
