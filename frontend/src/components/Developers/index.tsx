@@ -31,14 +31,6 @@ export function Developers({ color = undefined }: { color?: string | undefined }
             height={45}
           ></Image>
         </a>
-        <a aria-label="Github de Ryann" href="https://github.com/ryann-arruda">
-          <Image
-            src="https://avatars.githubusercontent.com/u/53544629?s=100&v=4"
-            alt="Ryann Carlos de Arruda Quintino"
-            width={45}
-            height={45}
-          ></Image>
-        </a>
       </DevelopersItem>
     </DevelopersContainer>
   );
