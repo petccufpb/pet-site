@@ -11,7 +11,9 @@ export const SDC_READY = true;
 
 export default async function SDC() {
   const sdcData: SDCScheduleData = await (
-    await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/editions/latest?project=SDC")
+    await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/editions/latest?project=SDC", {
+      cache: "no-store",
+    })
   ).json();
 
   return (
