@@ -34,8 +34,6 @@ export default class CreateParticipant {
     }
 
     const samePhone = await this.projectsRepository.findParticipantByPhone(phoneNumber);
-    console.log(existingParticipant);
-    console.log(samePhone);
     if (samePhone && samePhone.id !== existingParticipant?.id) {
       throw new HttpException("Já existe um aluno com esse telefone", HttpStatus.FORBIDDEN);
     }
