@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, ArrowRight, Check } from "@phosphor-icons/react";
-import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import InputMask from "react-input-mask";
@@ -26,7 +25,7 @@ import {
   Steps,
 } from "./styles";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 const sendFormSchema = z.object({
   name: z.string().nonempty("Preencha este campo"),
@@ -60,6 +59,7 @@ const sendFormSchema = z.object({
 type SendFormData = z.infer<typeof sendFormSchema>;
 
 export default function Inscricao() {
+  const { editionId } = useParams();
   const router = useRouter();
   const options = [
     { value: "cdia", label: "Ciência de Dados" },
@@ -170,6 +170,7 @@ export default function Inscricao() {
       method: "POST",
       body: JSON.stringify({
         ...data,
+        editionId,
         name: name.trim(),
         matricula: matricula.toString(),
         course: course.value,

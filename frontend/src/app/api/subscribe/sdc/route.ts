@@ -27,6 +27,17 @@ export async function POST(request: Request) {
   const data = await res.json();
 
   if (res.status === 201) {
+    await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/participations", {
+      method: "POST",
+      body: JSON.stringify({
+        editionId: params.editionId,
+        participantId: data.id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
     return NextResponse.json(data);
   } else {
     return NextResponse.json(data, { status: 500 });
