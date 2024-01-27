@@ -54,7 +54,7 @@ export default class CreateParticipant {
       throw new HttpException("Já existe um aluno com essa matrícula", HttpStatus.FORBIDDEN);
     }
 
-    if (sameMatricula?.id === existingParticipant?.id) {
+    if (existingParticipant && sameMatricula?.id === existingParticipant?.id) {
       const updatedParticipant = await this.projectsRepository.updateParticipant(sameMatricula!.id, {
         course,
         email,
