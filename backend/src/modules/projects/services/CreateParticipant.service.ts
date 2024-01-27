@@ -42,9 +42,14 @@ export default class CreateParticipant {
 
     const sameMatricula = await this.projectsRepository.findParticipantByMatricula(matricula);
 
+    const sameMatriculaNameLowercase = sameMatricula?.name.toLowerCase() || "";
+    const nameLowercase = name.toLowerCase();
+
+    // If name isn't the same nor found participant is same as the existing one
     if (
       sameMatricula?.id !== existingParticipant?.id ||
-      sameMatricula?.name.toLowerCase() !== name.toLowerCase()
+      (!sameMatriculaNameLowercase.includes(nameLowercase) &&
+        !nameLowercase.includes(sameMatriculaNameLowercase))
     ) {
       throw new HttpException("Já existe um aluno com essa matrícula", HttpStatus.FORBIDDEN);
     }
