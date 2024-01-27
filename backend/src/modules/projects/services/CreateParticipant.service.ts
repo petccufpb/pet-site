@@ -47,7 +47,7 @@ export default class CreateParticipant {
 
     // If name isn't the same nor found participant is same as the existing one
     if (
-      sameMatricula?.id !== existingParticipant?.id ||
+      (sameMatricula && sameMatricula.id !== existingParticipant?.id) ||
       (!sameMatriculaNameLowercase.includes(nameLowercase) &&
         !nameLowercase.includes(sameMatriculaNameLowercase))
     ) {
