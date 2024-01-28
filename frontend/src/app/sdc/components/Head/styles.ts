@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import styled from "styled-components";
 
 export const HeadContainer = styled.div`
@@ -168,7 +169,7 @@ export const InstagramContainer = styled.a`
   }
 `;
 
-export const SubscribeButton = styled.button`
+export const SubscribeButton = styled(Link)`
   font-family: ${({ theme }) => theme.fonts.sdc};
   justify-content: center;
   border: 1px solid ${({ theme }) => theme.colors["base-green"]};
@@ -182,9 +183,7 @@ export const SubscribeButton = styled.button`
 
   min-width: min(100%, 12rem);
 
-  a {
-    color: ${({ theme }) => theme.colors["base-green"]};
-  }
+  color: ${({ theme }) => theme.colors["base-green"]};
 
   &:hover {
     filter: brightness(0.8);
