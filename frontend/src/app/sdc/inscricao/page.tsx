@@ -1,14 +1,16 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, ArrowRight, Check } from "@phosphor-icons/react";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import InputMask from "react-input-mask";
 import Select from "react-select";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { z } from "zod";
+
+import api from "@api";
 
 import Logo from "@assets/images/logo.svg?svgr";
 import Petrucio from "@assets/images/petrucio.svg?svgr";
@@ -24,8 +26,6 @@ import {
   SecondColumn,
   Steps,
 } from "./styles";
-
-import { useParams, useRouter } from "next/navigation";
 
 const sendFormSchema = z.object({
   name: z.string().nonempty("Preencha este campo"),
@@ -59,7 +59,6 @@ const sendFormSchema = z.object({
 type SendFormData = z.infer<typeof sendFormSchema>;
 
 export default function Inscricao() {
-  const { editionId } = useParams();
   const router = useRouter();
   const options = [
     { value: "cdia", label: "Ciência de Dados" },
@@ -68,8 +67,20 @@ export default function Inscricao() {
     { value: "outro", label: "Outro" },
   ];
 
+  const [editionId, setEditionId] = useState("");
   const [step, setStep] = useState(0);
   const [course, setCourse] = useState(options[1]);
+
+  useEffect(() => {
+    async function execute() {
+      const {
+        data: { id },
+      } = await api.get("/projects/editions/latest?project=SDC");
+      setEditionId(id);
+    }
+
+    execute();
+  }, []);
 
   const {
     register,
