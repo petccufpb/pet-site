@@ -14,8 +14,8 @@ import { FrequenciaForm } from "../components/FrequenciaForm";
 import {
   DescriptionContainer,
   FormContainer,
-  LocationWarning,
   FrequenciaContainer,
+  LocationWarning,
   SpeakerInfo,
 } from "./styles";
 
@@ -66,6 +66,9 @@ export default async function Frequencia({ params }: { params: { id: string } })
             { title: "Seu nome", placeholder: "João da Silva", id: "name" },
             { title: "E-mail cadastrado", placeholder: "seuemail@exemplo.com", id: "email" },
           ]}
+          eventName={event.name}
+          eventType={event.type}
+          editionName={schedule.name || ""}
           date={{
             day: formatInTimeZone(new Date(event.startTime), "America/Fortaleza", "dd MMMM yyyy", {
               locale: ptBR,
