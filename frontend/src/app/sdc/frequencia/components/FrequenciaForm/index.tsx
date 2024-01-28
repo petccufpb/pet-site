@@ -65,6 +65,7 @@ const sendFormSchema = z.object({
         .join(" ");
     }),
   email: z.string().trim().nonempty("O email é obrigatório").email("Formato de email inválido"),
+  feedback: z.string().optional(),
 });
 
 type SendFormData = z.infer<typeof sendFormSchema>;
@@ -72,6 +73,9 @@ type SendFormData = z.infer<typeof sendFormSchema>;
 export function FrequenciaForm({
   date,
   endTime,
+  editionName,
+  eventName,
+  eventType,
   isEventOnSite,
   sections,
   id,
@@ -87,7 +91,10 @@ export function FrequenciaForm({
     day: string;
     time: string;
   };
+  editionName: string;
   endTime?: Date;
+  eventName: string;
+  eventType?: string;
   isEventOnSite?: boolean;
   sections?: { title: string; placeholder: string; id: "name" | "email" }[];
   id: string;
@@ -95,7 +102,7 @@ export function FrequenciaForm({
 }) {
   const [userLocation, setUserLocation] = useState<GeolocationPosition | null>(null);
 
-  async function sendForm(data: any) {
+  async function sendForm(data: SendFormData) {
     const i = toast.info("Carregando...");
 
     if (isEventOnSite && !userLocation && !isFromUFPB) {
@@ -206,6 +213,18 @@ export function FrequenciaForm({
     toast.dismiss(i);
 
     if (res.status === 200) {
+      if (data.feedback) {
+        await fetch("/api/email/self", {
+          method: "POST",
+          body: JSON.stringify({
+            content: data.feedback,
+            subject: `[Feedback ${editionName.replace("Semana da Computação", "SDC")}] ${eventName} (${
+              eventType === "minicurso" ? "minicurso" : "palestra"
+            })`,
+          }),
+        });
+      }
+
       toast.success("Frequência cadastrada com sucesso!");
       localStorage.setItem(id, "true");
     } else {
@@ -232,11 +251,16 @@ export function FrequenciaForm({
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isValid },
   } = useForm<SendFormData>({
     resolver: zodResolver(sendFormSchema),
     mode: "onChange",
   });
+
+  useEffect(() => {
+    register("feedback");
+  }, [register]);
 
   const error: PositionErrorCallback = e => {
     toast.error("Não foi possível obter sua localização.", {
@@ -297,6 +321,14 @@ export function FrequenciaForm({
               {errors[section.id] && <span>{errors[section.id]?.message}</span>}
             </InputContainer>
           ))}
+        <InputContainer>
+          <div>Feedback (opcional)</div>
+          <p
+            role="textbox"
+            contentEditable
+            onInput={e => setValue("feedback", e.currentTarget.textContent || "", { shouldValidate: true })}
+          />
+        </InputContainer>
         {!isFromUFPB && (
           <CheckboxContainer onClick={() => navigator.geolocation.getCurrentPosition(setUserLocation, error)}>
             <CheckBox enabled={userLocation ? true : false}>

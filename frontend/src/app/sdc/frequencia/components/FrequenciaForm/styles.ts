@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import styled from "styled-components";
 
 export const FormContainer = styled.form<{ borderType: "static" | "gradient" }>`
@@ -8,7 +7,6 @@ export const FormContainer = styled.form<{ borderType: "static" | "gradient" }>`
   font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
   border-radius: 0.5rem;
   width: min(100%, 31rem);
-  max-height: 42rem;
   background: ${({ borderType }) =>
     borderType === "static"
       ? "#323238"
@@ -36,7 +34,8 @@ export const FormContainer = styled.form<{ borderType: "static" | "gradient" }>`
     background: ${({ theme }) => theme.colors["fourth-black"]};
   }
 
-  input {
+  input,
+  p {
     width: 100%;
     background-color: ${({ theme }) => theme.colors["fifth-black"]};
     border-radius: 0.5rem;
@@ -46,6 +45,7 @@ export const FormContainer = styled.form<{ borderType: "static" | "gradient" }>`
     color: white;
     font-family: inherit;
     font-size: inherit;
+    overflow-wrap: anywhere;
 
     ::placeholder {
       color: ${({ theme }) => theme.colors["fifth-grey"]};

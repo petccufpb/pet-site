@@ -19,6 +19,7 @@
     "@fontsource/roboto": "^5.0.8",
     "@googleapis/youtube": "^11.0.1",
     "@hookform/resolvers": "^3.1.0",
+    "@hyoretsu/providers": "^1.1.2",
     "@hyoretsu/react-components": "^1.6.8",
     "@hyoretsu/react-hooks": "^1.2.5",
     "@phosphor-icons/react": "^2.0.9",
