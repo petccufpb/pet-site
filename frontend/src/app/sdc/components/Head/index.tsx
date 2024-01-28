@@ -65,7 +65,7 @@ export async function Head({ data }: HeadProps) {
                 <span>@petccufpb</span>
               </InstagramContainer>
             </div>
-            <SubscribeButton aria-label="Inscrição" href={`/sdc/${data.id}/inscricao`}>
+            <SubscribeButton aria-label="Inscrição" href="/sdc/inscricao">
               GARANTIR MINHA VAGA
             </SubscribeButton>
           </MoreInfo>

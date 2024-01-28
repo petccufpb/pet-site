@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import styled from "styled-components";
 
 export const VerticalLine = styled.span`
@@ -59,7 +60,7 @@ interface RouteLinkProps {
   active: boolean;
 }
 
-export const RouteLink = styled.a<RouteLinkProps>`
+export const RouteLink = styled(Link)<RouteLinkProps>`
   font-weight: ${({ active }) => (active ? "bold" : "normal")};
   color: ${({ theme }) => theme.colors["base-white"]};
   text-align: center;
