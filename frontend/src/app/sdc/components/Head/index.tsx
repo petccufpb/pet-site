@@ -1,6 +1,5 @@
 import { SectionTitle } from "@app/sdc/styles";
 import parse from "html-react-parser";
-import Link from "next/link";
 import { FaInstagram } from "react-icons/fa";
 import { SDCScheduleData } from "sdc";
 
@@ -66,10 +65,8 @@ export async function Head({ data }: HeadProps) {
                 <span>@petccufpb</span>
               </InstagramContainer>
             </div>
-            <SubscribeButton>
-              <Link aria-label="Inscrição" href={`/sdc/${data.id}/inscricao`}>
-                GARANTIR MINHA VAGA
-              </Link>
+            <SubscribeButton aria-label="Inscrição" href={`/sdc/${data.id}/inscricao`}>
+              GARANTIR MINHA VAGA
             </SubscribeButton>
           </MoreInfo>
         </div>
