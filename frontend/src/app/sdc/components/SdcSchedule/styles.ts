@@ -83,7 +83,7 @@ export const Table = styled.table`
 
     font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
 
-    div {
+    > div {
       margin-right: 20px;
     }
 

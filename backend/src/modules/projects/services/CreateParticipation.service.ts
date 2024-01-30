@@ -4,7 +4,7 @@ import { ProjectParticipant, ProjectParticipation } from "@prisma/client";
 import { isAfter } from "date-fns";
 
 import CreateParticipationDTO from "../dtos/CreateParticipation.dto";
-import ProjectsRepository from "../repositories/projects.repository";
+import ProjectsRepository, { FindParticipationDTO } from "../repositories/projects.repository";
 import { CreateRepoParticipation } from "../repositories/projects.repository";
 
 @Injectable()
@@ -46,7 +46,7 @@ export default class CreateParticipation {
       }
     }
 
-    let payload: CreateRepoParticipation;
+    let payload: FindParticipationDTO;
 
     if (eventId) {
       const event = await this.projectsRepository.findEventById(eventId);
@@ -95,7 +95,7 @@ export default class CreateParticipation {
         eventId,
         participantId,
       };
-    } else {
+    } else if (editionId) {
       const edition = await this.projectsRepository.findEditionById(editionId as string);
       if (!edition) {
         throw new HttpException("Essa edição não existe", HttpStatus.NOT_FOUND);
@@ -109,6 +109,8 @@ export default class CreateParticipation {
         editionId,
         participantId,
       };
+    } else {
+      throw new HttpException("", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     const existingParticipation = await this.projectsRepository.findParticipation(payload);

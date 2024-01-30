@@ -71,7 +71,7 @@ export function SdcActivity({ data, dayEvent }: { data: SDCEventData; dayEvent: 
               href={data.externalSignup || `/sdc/minicurso/${data.id}`}
             >
               <Subscribe availability={available && !isAfter(new Date(), new Date(data.startTime))}>
-                <span>FAZER INSCRIÇÃO</span>
+                <span>INSCRIÇÃO</span>
                 <HiArrowUpRight />
               </Subscribe>
             </SubscribeLink>

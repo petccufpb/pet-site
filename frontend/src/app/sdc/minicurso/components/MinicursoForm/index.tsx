@@ -13,11 +13,13 @@ import {
   CancelButton,
   ConfirmButton,
   DateContainer,
+  DeleteButton,
   FormContainer,
   InputContainer,
 } from "./styles";
 
 import { FaExclamationTriangle, FaUsers } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 function DateOrNothing({
   date,
@@ -59,18 +61,18 @@ function CancelButtonOrNothing({ type }: { type: "normal" | "cancel" }) {
 }
 
 const sendFormSchema = z.object({
-  name: z
+  matricula: z
     .string()
-    .nonempty("Preencha este campo")
-    .transform(name => {
-      return name
-        .trim()
-        .split(" ")
-        .map(word => {
-          return word[0]?.toLocaleUpperCase().concat(word.substring(1));
+    .transform(m => parseInt(m))
+    .pipe(
+      z
+        .number({
+          invalid_type_error: "A matrícula deve ser um número",
+          required_error: "A matrícula é obrigatória",
         })
-        .join(" ");
-    }),
+        .min(10000000, { message: "Sua matrícula deve conter no mínimo 8 dígitos (antigas)" })
+        .max(99999999999, { message: "Sua matrícula deve conter 11 dígitos" }),
+    ),
   email: z.string().trim().nonempty("O email é obrigatório").email("Formato de email inválido"),
 });
 
@@ -94,10 +96,12 @@ export function MinicursoForm({
     day: string;
     time: string;
   };
-  sections?: { title: string; placeholder: string; id: "name" | "email" }[];
+  sections?: { title: string; placeholder: string; id: keyof SendFormData }[];
   id: string;
   slotsRemaining: number | null;
 }) {
+  const { back } = useRouter();
+
   async function sendForm(data: any) {
     const i = toast.info("Carregando...");
 
@@ -114,6 +118,7 @@ export function MinicursoForm({
 
     if (res.status === 200) {
       toast.success("Inscrição realizada com sucesso!");
+      setTimeout(back, 5500);
     } else {
       toast.error(d.message || "Falha na inscrição", {
         position: "top-center",
@@ -135,6 +140,7 @@ export function MinicursoForm({
 
   const {
     register,
+    getValues,
     handleSubmit,
     formState: { errors, isValid },
     watch,
@@ -171,12 +177,41 @@ export function MinicursoForm({
           <span>
             <FaExclamationTriangle />
             <span>
-              Esse minicurso está com as vagas de computador cheio. Ao se inscrever, você se compromete em
+              Esse minicurso está com as vagas de computador cheias. Ao se inscrever, você se compromete em
               levar seu próprio notebook.
             </span>
           </span>
         )}
         <ButtonContainer type={type}>
+          <DeleteButton
+            type="button"
+            disabled={!isValid}
+            onClick={async e => {
+              e.preventDefault();
+              const i = toast.info("Carregando...");
+
+              const { email, matricula } = getValues();
+
+              const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/projects/participations?email=${email}&eventId=${id}&matricula=${matricula}`,
+                {
+                  method: "DELETE",
+                },
+              );
+
+              toast.dismiss(i);
+
+              if (res.status === 200) {
+                toast.success("Inscrição deletada com sucesso!");
+                setTimeout(back, 5500);
+              } else {
+                toast.error((await res.json()).message || "Falha ao se desinscrever, tente novamente.");
+              }
+            }}
+          >
+            Desinscrever-se
+          </DeleteButton>
+
           <CancelButtonOrNothing type={type} />
           <ConfirmButton disabled={!isValid} type="submit">
             <span>{confirmType === "next" ? "Próximo Passo" : "Confirmar"}</span>

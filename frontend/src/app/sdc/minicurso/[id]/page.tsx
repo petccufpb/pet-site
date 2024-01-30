@@ -39,11 +39,13 @@ export default async function Minicurso({ params }: { params: { id: string } }) 
           <div>Minicurso,</div>
           <div>correeeeee!</div>
         </h1>
-        <h3>Corre, que as vagas nesse minicurso estão se esgotando.</h3>
-        <button>
-          <HiCheck />
-          <span>Verificar Programação</span>
-        </button>
+        <h3>
+          Corre, que as vagas nesse minicurso estão se esgotando.
+          <br />
+          <br />
+          Lembre-se: apesar de ser possível se desinscrever de um minicurso, é possível participar de apenas
+          um.
+        </h3>
       </DescriptionContainer>
       <FormContainer>
         <SpeakerInfo>
@@ -63,7 +65,7 @@ export default async function Minicurso({ params }: { params: { id: string } }) 
             event.extraCapacity ? event.participants.length >= (event.capacity as number) : false
           }
           sections={[
-            { title: "Seu nome", placeholder: "João da Silva", id: "name" },
+            { title: "Matrícula", placeholder: "20000115555 ou 11109999", id: "matricula" },
             { title: "E-mail cadastrado", placeholder: "seuemail@exemplo.com", id: "email" },
           ]}
           date={{

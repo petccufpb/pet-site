@@ -191,6 +191,14 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     return speaker;
   }
 
+  public async deleteParticipation(participantId: string, eventId: string): Promise<void> {
+    const participationIndex = this.participations.findIndex(
+      participation => participation.participantId === participantId && participation.eventId === eventId,
+    );
+
+    this.participations.splice(participationIndex);
+  }
+
   public async findAllEditions(projectId: string): Promise<CompleteProjectEdition[]> {
     const editions = this.editions.filter(
       edition => edition.projectId === projectId,
@@ -429,11 +437,18 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     participantId,
   }: CreateRepoParticipation): Promise<ProjectParticipation | null> {
     const participation =
-      this.participations.find(
-        participation =>
-          participation.participantId === participantId &&
-          (participation.editionId === editionId || participation.eventId === eventId),
-      ) || null;
+      this.participations.find(participation => {
+        if (participation.participantId === participantId) {
+          if (editionId && participation.editionId === editionId) {
+            return true;
+          }
+          if (eventId && participation.eventId === eventId) {
+            return true;
+          }
+        }
+
+        return false;
+      }) || null;
 
     return participation;
   }

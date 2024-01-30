@@ -86,6 +86,17 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     return speaker;
   }
 
+  public async deleteParticipation(participantId: string, eventId: string): Promise<void> {
+    await this.prisma.projectParticipation.delete({
+      where: {
+        participantId_eventId: {
+          participantId,
+          eventId,
+        },
+      },
+    });
+  }
+
   public async findAllEditions(projectId: string): Promise<CompleteProjectEdition[]> {
     const editions = await this.prisma.projectEdition.findMany({
       where: { projectId },
@@ -351,8 +362,17 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     return participations.map(participation => participation.participant);
   }
 
-  public async findParticipation(where: CreateRepoParticipation): Promise<ProjectParticipation | null> {
-    const participation = await this.prisma.projectParticipation.findFirst({ where });
+  public async findParticipation({
+    editionId,
+    eventId,
+    participantId,
+  }: CreateRepoParticipation): Promise<ProjectParticipation | null> {
+    const participation = await this.prisma.projectParticipation.findUnique({
+      where: {
+        ...(editionId && { participantId_editionId: { editionId, participantId } }),
+        ...(eventId && { participantId_eventId: { eventId, participantId } }),
+      },
+    });
 
     return participation;
   }

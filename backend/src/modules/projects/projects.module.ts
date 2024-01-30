@@ -16,6 +16,7 @@ import CreateParticipant from "./services/CreateParticipant.service";
 import CreateParticipation from "./services/CreateParticipation.service";
 import CreateProject from "./services/CreateProject.service";
 import CreateSpeaker from "./services/CreateSpeaker.service";
+import DeleteParticipation from "./services/DeleteParticipation.service";
 import FindLatestEdition from "./services/FindLatestEdition.service";
 import FindParticipant from "./services/FindParticipant.service";
 import ListAttendees from "./services/ListAttendees.service";
@@ -48,6 +49,7 @@ import ValidateCertificate from "./services/ValidateCertificate.service";
       CreateParticipation,
       CreateProject,
       CreateSpeaker,
+      DeleteParticipation,
       FindLatestEdition,
       FindParticipant,
       ListAttendees,

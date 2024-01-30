@@ -1,12 +1,20 @@
+import { IsOptional } from "@hyoretsu/decorators";
 import { ProjectParticipant } from "@prisma/client";
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 
 export default class FindExistingParticipantDTO implements Partial<ProjectParticipant> {
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
+  @IsNotEmpty()
+  @IsEmail()
+  email?: string;
+
+  @IsString()
+  @IsNotEmpty()
   matricula!: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  name!: string;
+  @IsNotEmpty()
+  name?: string;
 }

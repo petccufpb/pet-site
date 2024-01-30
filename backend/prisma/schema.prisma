@@ -134,6 +134,9 @@ model ProjectParticipation {
     participant   ProjectParticipant @relation(fields: [participantId], references: [id])
     createdAt     DateTime           @default(now())
     updatedAt     DateTime           @updatedAt
+
+    @@unique([participantId, editionId])
+    @@unique([participantId, eventId])
 }
 
 model ProjectParticipant {
