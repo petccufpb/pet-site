@@ -1,5 +1,5 @@
 import { QueryRequired } from "@hyoretsu/decorators";
-import { Body, Controller, Get, HttpException, HttpStatus, Post, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Post, Query } from "@nestjs/common";
 import {
   Project,
   ProjectAttendance,
@@ -20,6 +20,7 @@ import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
 import CreateParticipationDTO from "@modules/projects/dtos/CreateParticipation.dto";
 import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
+import DeleteParticipationDTO from "@modules/projects/dtos/DeleteParticipation.dto";
 import FindParticipantDTO from "@modules/projects/dtos/FindParticipant.dto";
 import ValidateCertificateDTO from "@modules/projects/dtos/ValidateCertificate.dto";
 import { CompleteProjectCertificate } from "@modules/projects/repositories/projects.repository";
@@ -33,6 +34,7 @@ import CreateParticipant from "@modules/projects/services/CreateParticipant.serv
 import CreateParticipation from "@modules/projects/services/CreateParticipation.service";
 import CreateProject from "@modules/projects/services/CreateProject.service";
 import CreateSpeaker from "@modules/projects/services/CreateSpeaker.service";
+import DeleteParticipation from "@modules/projects/services/DeleteParticipation.service";
 import FindLatestEdition from "@modules/projects/services/FindLatestEdition.service";
 import FindParticipant from "@modules/projects/services/FindParticipant.service";
 import ListAttendees, { ListAttendeesResponse } from "@modules/projects/services/ListAttendees.service";
@@ -57,6 +59,7 @@ export default class ProjectsController {
     private createParticipation: CreateParticipation,
     private createProject: CreateProject,
     private createSpeaker: CreateSpeaker,
+    private deleteParticipation: DeleteParticipation,
     private findLatestEdition: FindLatestEdition,
     private findParticipant: FindParticipant,
     private listAttendees: ListAttendees,
@@ -231,6 +234,19 @@ export default class ProjectsController {
     const participant = await this.findParticipant.execute(body);
 
     return participant;
+  }
+
+  @Delete("participations")
+  async deleteProjectsParticipations(
+    @QueryRequired("email") email: string,
+    @QueryRequired("eventId") eventId: string,
+    @QueryRequired("matricula") matricula: string,
+  ): Promise<void> {
+    await this.deleteParticipation.execute({
+      email,
+      eventId,
+      matricula,
+    });
   }
 
   @Post("participations")

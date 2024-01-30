@@ -90,9 +90,7 @@ export const ButtonContainer = styled.div<{ type: "normal" | "cancel" }>`
   }
 `;
 
-export const ConfirmButton = styled.button`
-  border: 1px solid ${({ theme }) => theme.colors["base-green"]};
-  background: rgba(4, 211, 97, 0.2);
+export const ActionButton = styled.button`
   font-family: inherit;
   font-size: inherit;
   color: inherit;
@@ -107,6 +105,20 @@ export const ConfirmButton = styled.button`
   &:hover {
     filter: brightness(0.8);
   }
+`;
+
+export const DeleteButton = styled(ActionButton)`
+  border: 1px solid ${({ theme }) => theme.colors["base-red"]};
+  background: rgb(206, 74, 74, 0.2);
+
+  color: #ffffff;
+
+  margin-right: auto;
+`;
+
+export const ConfirmButton = styled(ActionButton)`
+  border: 1px solid ${({ theme }) => theme.colors["base-green"]};
+  background: rgba(4, 211, 97, 0.2);
 `;
 
 export const CancelButton = styled.a`

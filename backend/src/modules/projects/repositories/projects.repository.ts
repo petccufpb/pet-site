@@ -45,6 +45,16 @@ export interface FindExistingEventDTO {
   startTime: Date;
 }
 
+export type FindParticipationDTO =
+  | {
+      editionId: string;
+      participantId: string;
+    }
+  | {
+      eventId: string;
+      participantId: string;
+    };
+
 export type CompleteProjectAttendance = Prisma.ProjectAttendanceGetPayload<{
   include: {
     event: true;
@@ -89,6 +99,7 @@ export default abstract class ProjectsRepository {
   abstract createParticipation(data: CreateRepoParticipation): Promise<ProjectParticipation>;
   abstract createProject(data: CreateProjectDTO): Promise<Project>;
   abstract createSpeaker(data: CreateSpeakerDTO): Promise<ProjectSpeaker>;
+  abstract deleteParticipation(participantId: string, eventId: string): Promise<void>;
   abstract findAllEditions(projectId: string): Promise<CompleteProjectEdition[]>;
   abstract findAllEvents(): Promise<ProjectEvent[]>;
   abstract findAttendance(data: CreateRepoAttendance): Promise<CompleteProjectAttendance | null>;
@@ -111,7 +122,7 @@ export default abstract class ProjectsRepository {
   abstract findParticipants(ids: string[]): Promise<ProjectParticipant[]>;
   abstract findParticipantsByEdition(editionId: string): Promise<ProjectParticipant[]>;
   abstract findParticipantsByEvent(eventId: string): Promise<ProjectParticipant[]>;
-  abstract findParticipation(data: CreateRepoParticipation): Promise<ProjectParticipation | null>;
+  abstract findParticipation(data: FindParticipationDTO): Promise<ProjectParticipation | null>;
   abstract findParticipationsByEdition(editionId: string): Promise<ProjectParticipation[]>;
   abstract findParticipationsByEvent(eventId: string): Promise<ProjectParticipation[]>;
   abstract findProjectById(id: string): Promise<Project | null>;

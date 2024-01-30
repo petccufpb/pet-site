@@ -31,7 +31,7 @@ export const Availability = styled(SdcButton)`
     ${({ availability, extrasAvailable, theme }) => {
       if (availability) {
         if (extrasAvailable) {
-          return theme.colors["sixth-grey"];
+          return "rgb(255, 173, 13, 0.6)";
         }
 
         return theme.colors["base-green"];
@@ -41,7 +41,7 @@ export const Availability = styled(SdcButton)`
     }};
   background: ${({ theme, availability, extrasAvailable }) =>
     availability
-      ? `${extrasAvailable ? theme.colors["sixth-grey"] : theme.colors["base-green"]}60`
+      ? `${extrasAvailable ? "#FFAD0D" : theme.colors["base-green"]}60`
       : "rgba(213, 35, 45, 0.6)"};
   font-weight: 700;
   font-size: ${({ theme }) => theme.textSizes["text-regular-xs"]};
