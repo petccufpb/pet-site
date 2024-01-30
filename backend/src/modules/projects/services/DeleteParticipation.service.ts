@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { differenceInHours } from "date-fns";
 
 import DeleteParticipationDTO from "../dtos/DeleteParticipation.dto";
 import ProjectsRepository from "../repositories/projects.repository";
@@ -13,6 +14,18 @@ export default class DeleteParticipation {
       throw new HttpException(
         "Os dados que você enviou não conferem. Por motivos de segurança não foi possível efetuar a desinscrição.",
         HttpStatus.UNAUTHORIZED,
+      );
+    }
+
+    const existingEvent = await this.projectsRepository.findEventById(eventId);
+    if (!existingEvent) {
+      throw new HttpException("Esse evento não existe", HttpStatus.NOT_FOUND);
+    }
+
+    if (differenceInHours(existingEvent.startTime, new Date()) <= 1) {
+      throw new HttpException(
+        "Você só pode se desinscrever de um evento no máximo 1h antes dele começar.",
+        HttpStatus.FORBIDDEN,
       );
     }
 
