@@ -31,37 +31,20 @@ export const DescriptionContainer = styled.div`
     font-weight: 400;
     color: ${({ theme }) => theme.colors["sixth-grey"]};
     font-family: ${({ theme }) => theme.fonts.sdc};
-    margin-bottom: 1rem;
   }
 
-  span:first-child {
-    transform: translateX(-1rem);
-  }
-
-  a {
-    display: inline-block;
-    color: white;
-    font-family: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid ${({ theme }) => theme.colors["fifth-blue"]};
-    background: rgba(0, 114, 237, 0.2);
-    max-width: 16rem;
-    width: 100%;
-    padding: 0.7rem 0;
-    gap: 0.5rem;
-    border-radius: 0.5rem;
-    transition: 450ms;
-    font-family: ${({ theme }) => theme.fonts.alt};
-
-    &:hover {
-      filter: brightness(0.8);
+  @media (min-width: 1051px) {
+    > div {
+      transform: translateX(-1rem);
     }
   }
 
   @media (max-width: 1050px) {
-    display: none;
+    text-align: center;
+
+    h1 {
+      display: none;
+    }
   }
 `;
 
@@ -69,6 +52,10 @@ export const FormContainer = styled.div`
   margin: auto 0;
   display: grid;
   gap: 1rem;
+
+  @media (max-width: 1050px) {
+    margin-top: 1rem;
+  }
 `;
 
 export const SpeakerInfo = styled.div`

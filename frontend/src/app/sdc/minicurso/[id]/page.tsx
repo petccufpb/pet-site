@@ -31,18 +31,16 @@ export default async function Minicurso({ params }: { params: { id: string } }) 
   return (
     <MinicursoContainer>
       <DescriptionContainer>
-        <span>
+        <div>
           <Petrucio alt="Logo PET Computação" width={120} height={66}></Petrucio>
           <Logo alt="Logo PET Computação" width={100} height={55}></Logo>
-        </span>
+        </div>
         <h1>
           <div>Minicurso,</div>
           <div>correeeeee!</div>
         </h1>
+        <h3>Corre, que as vagas nesse minicurso estão se esgotando.</h3>
         <h3>
-          Corre, que as vagas nesse minicurso estão se esgotando.
-          <br />
-          <br />
           Lembre-se: apesar de ser possível se desinscrever de um minicurso, é possível participar de apenas
           um.
         </h3>

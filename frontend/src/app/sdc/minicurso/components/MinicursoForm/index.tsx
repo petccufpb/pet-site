@@ -212,11 +212,13 @@ export function MinicursoForm({
             Desinscrever-se
           </DeleteButton>
 
-          <CancelButtonOrNothing type={type} />
-          <ConfirmButton disabled={!isValid} type="submit">
-            <span>{confirmType === "next" ? "Próximo Passo" : "Confirmar"}</span>
-            {confirmType === "next" && <HiArrowRight />}
-          </ConfirmButton>
+          <div>
+            <CancelButtonOrNothing type={type} />
+            <ConfirmButton disabled={!isValid} type="submit">
+              <span>{confirmType === "next" ? "Próximo Passo" : "Confirmar"}</span>
+              {confirmType === "next" && <HiArrowRight />}
+            </ConfirmButton>
+          </div>
         </ButtonContainer>
       </FormContainer>
     </>

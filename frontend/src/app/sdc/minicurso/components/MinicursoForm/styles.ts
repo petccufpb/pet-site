@@ -79,6 +79,16 @@ export const ButtonContainer = styled.div<{ type: "normal" | "cancel" }>`
   justify-content: ${({ type }) => (type === "cancel" ? "flex-end" : "stretch")};
   gap: 2rem;
 
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    * {
+      flex: 1;
+    }
+  }
+
   > button,
   > a {
     width: ${({ type }) => (type === "cancel" ? "auto" : "100%")};
@@ -87,6 +97,14 @@ export const ButtonContainer = styled.div<{ type: "normal" | "cancel" }>`
   > button:disabled {
     opacity: 40%;
     cursor: not-allowed;
+  }
+
+  @media (max-width: 1050px) {
+    flex-direction: column;
+
+    > button {
+      width: 100%;
+    }
   }
 `;
 
@@ -127,8 +145,8 @@ export const CancelButton = styled.a`
   font-size: inherit;
   color: inherit;
   border: none;
-  display: flex;
-  align-items: center;
+  width: 100%;
+  text-align: center;
 `;
 
 export const DateContainer = styled.div`
