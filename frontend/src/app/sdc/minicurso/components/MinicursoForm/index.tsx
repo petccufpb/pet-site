@@ -1,12 +1,16 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { formatInTimeZone } from "date-fns-tz";
+import { ptBR } from "date-fns/locale";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { FaExclamationTriangle, FaUsers } from "react-icons/fa";
 import { HiArrowRight } from "react-icons/hi2";
 import { RiCalendarLine, RiTimeLine } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { z } from "zod";
+import "react-toastify/dist/ReactToastify.css";
 
 import {
   ButtonContainer,
@@ -18,26 +22,24 @@ import {
   InputContainer,
 } from "./styles";
 
-import { FaExclamationTriangle, FaUsers } from "react-icons/fa";
-import { useRouter } from "next/navigation";
-
-function DateOrNothing({
-  date,
-  slotsRemaining,
-}: {
-  date?: { day: string; time: string };
-  slotsRemaining: number | null;
-}) {
+function DateOrNothing({ date, slotsRemaining }: { date?: Date; slotsRemaining: number | null }) {
   if (date) {
+    const day = formatInTimeZone(date, "America/Fortaleza", "dd MMMM yyyy", {
+      locale: ptBR,
+    })
+      .split(" ")
+      .join(" de ");
+    const time = `${formatInTimeZone(date, "America/Fortaleza", "HH:mm")}h`;
+
     return (
       <DateContainer>
         <span>
           <RiCalendarLine />
-          <span>{date.day}</span>
+          <span>{day}</span>
         </span>
         <span>
           <RiTimeLine />
-          <span>{date.time}</span>
+          <span>{time}</span>
         </span>
         {slotsRemaining && (
           <span>
@@ -92,10 +94,7 @@ export function MinicursoForm({
   confirmType?: "next" | "confirm";
   borderType?: "static" | "gradient";
   extrasAvailable?: boolean;
-  date?: {
-    day: string;
-    time: string;
-  };
+  date?: Date;
   sections?: { title: string; placeholder: string; id: keyof SendFormData }[];
   id: string;
   slotsRemaining: number | null;

@@ -66,14 +66,7 @@ export default async function Minicurso({ params }: { params: { id: string } }) 
             { title: "Matrícula", placeholder: "20000115555 ou 11109999", id: "matricula" },
             { title: "E-mail cadastrado", placeholder: "seuemail@exemplo.com", id: "email" },
           ]}
-          date={{
-            day: formatInTimeZone(new Date(event.startTime), "America/Fortaleza", "dd MMMM yyyy", {
-              locale: ptBR,
-            })
-              .split(" ")
-              .join(" de "),
-            time: `${formatInTimeZone(new Date(event.startTime), "America/Fortaleza", "HH:mm")}h`,
-          }}
+          date={new Date(event.startTime)}
           confirmType="confirm"
           slotsRemaining={
             event.capacity ? event.capacity + event.extraCapacity - event.participants.length : null
