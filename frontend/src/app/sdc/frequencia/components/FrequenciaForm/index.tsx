@@ -263,6 +263,7 @@ export function FrequenciaForm({
   }, [register]);
 
   const error: PositionErrorCallback = e => {
+    alert(`Ajude-nos a debuggar! Nos mostre essa mensagem de erro:\n\n${e.message} - ${e.code}`);
     toast.error("Não foi possível obter sua localização.", {
       position: "top-center",
       autoClose: 5000,
