@@ -1,13 +1,16 @@
-import helmet from "@fastify/helmet";
-import { ValidationPipe } from "@nestjs/common";
-import { NestFactory } from "@nestjs/core";
-import { FastifyAdapter, NestFastifyApplication } from "@nestjs/platform-fastify";
+import { HttpException, HttpStatus, ValidationPipe } from "@nestjs/common";
+import { RequestHandler } from "@nestjs/common/interfaces";
+import { MiddlewareBuilder, NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import * as expressBasicAuth from "express-basic-auth";
+import helmet from "helmet";
 
 import { AppModule } from "./app.module";
 
 const bootstrap = async () => {
-  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
+  const app = await NestFactory.create(AppModule, {
+    cors: true,
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -16,17 +19,33 @@ const bootstrap = async () => {
     }),
   );
 
-  await app.register(helmet);
-  app.enableCors(
-    process.env.RAILWAY_ENVIRONMENT === "production"
-      ? {
-          origin: [
-            process.env.WEB_URL as string,
-            "https://website-frontend-git-development-plataforma-sdc.vercel.app",
-            "https://website-sdc.vercel.app",
-          ],
-        }
-      : {},
+  app.use(helmet());
+  // @ts-ignore
+  app.use((req, res, next) => {
+    // Disallow requests not from the frontend or for the favicon (Swagger)
+    if (
+      req.url !== "/favicon.ico" &&
+      req.hostname !==
+        process.env.WEB_URL?.replace(/https?:\/\/(www\.)?/g, "")
+          .replace(/:\d+/g, "")
+          .replace("/", "")
+    ) {
+      throw new HttpException("You don't have permission to access this API.", HttpStatus.UNAUTHORIZED);
+    }
+
+    next!();
+  });
+
+  // Enable authentication for Swagger
+  app.use(
+    "/docs*",
+    expressBasicAuth({
+      challenge: true,
+      users: (JSON.parse(process.env.SWAGGER_USERS || "[]") as string[][]).reduce(
+        (obj, [user, password]) => ({ ...obj, [user]: password }),
+        {},
+      ),
+    }),
   );
 
   const config = new DocumentBuilder()
