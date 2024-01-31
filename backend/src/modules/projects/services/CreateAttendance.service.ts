@@ -33,7 +33,7 @@ export default class CreateAttendance {
       }
     } else {
       if (email) {
-        foundParticipant = await this.projectsRepository.findParticipantByEmail(email);
+        foundParticipant = await this.projectsRepository.findParticipantByEmail(email.toLowerCase());
         if (!foundParticipant) {
           throw new HttpException("Não existe um aluno com esse email", HttpStatus.NOT_FOUND);
         }

@@ -16,6 +16,8 @@ export default class CreateParticipant {
     phoneNumber,
     ...data
   }: CreateParticipantDTO): Promise<ProjectParticipant> {
+    email = email.toLowerCase();
+
     const existingParticipant = await this.projectsRepository.findExistingParticipant({
       matricula,
       name,
