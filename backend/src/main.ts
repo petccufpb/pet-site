@@ -30,7 +30,10 @@ const bootstrap = async () => {
           .replace(/:\d+/g, "")
           .replace("/", "")
     ) {
-      throw new HttpException("You don't have permission to access this API.", HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        `You don't have permission to access this API. Host - ${req.hostname}`,
+        HttpStatus.UNAUTHORIZED,
+      );
     }
 
     next!();
