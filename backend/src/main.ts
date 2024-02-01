@@ -22,8 +22,9 @@ const bootstrap = async () => {
   app.use(helmet());
   // @ts-ignore
   app.use((req, res, next) => {
-    // Disallow requests not from the frontend or for the favicon (Swagger)
+    // Allow simple GET requests and disallow requests not originated from the frontend or for Swagger's favicon
     if (
+      req.method !== "GET" &&
       req.url !== "/favicon.ico" &&
       req.headers.origin?.replace("www.", "") !== process.env.WEB_URL?.replace("www.", "").replace(/\/$/, "")
     ) {
