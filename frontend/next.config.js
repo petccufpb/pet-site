@@ -29,7 +29,7 @@ module.exports = () => ({
   productionBrowserSourceMaps: true,
   reactStrictMode: true,
   swcMinify: true,
-  transpilePackages: ["nextjs-toploader"],
+  transpilePackages: ["@vercel/speed-insights", "nextjs-toploader"],
   typescript: {
     ignoreBuildErrors: true,
   },
