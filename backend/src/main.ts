@@ -22,11 +22,13 @@ const bootstrap = async () => {
   app.use(helmet());
   // @ts-ignore
   app.use((req, res, next) => {
+    const urlRegex = /(https?)|(www.)|(:\d{1,4})|(\/$)/g;
+
     // Allow simple GET requests and disallow requests not originated from the frontend or for Swagger's favicon
     if (
       req.method !== "GET" &&
       req.url !== "/favicon.ico" &&
-      req.headers.origin?.replace("www.", "") !== process.env.WEB_URL?.replace("www.", "").replace(/\/$/, "")
+      req.headers.origin?.replace(urlRegex, "") !== process.env.WEB_URL?.replace(urlRegex, "")
     ) {
       throw new HttpException(
         `You don't have permission to access this API. Host - ${req.headers.origin}`,
