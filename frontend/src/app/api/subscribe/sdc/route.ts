@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
-  const params = await request.json();
+export async function POST(req: Request) {
+  const params = await req.json();
 
   const splitDate = params.birthDate.split("/");
   const dt = new Date(parseInt(splitDate[2], 10), parseInt(splitDate[1], 10) - 1, parseInt(splitDate[0], 10));
@@ -21,6 +21,7 @@ export async function POST(request: Request) {
     body: JSON.stringify(d),
     headers: {
       "Content-Type": "application/json",
+      Origin: req.headers.get("Origin")!,
     },
   });
 
@@ -35,6 +36,7 @@ export async function POST(request: Request) {
       }),
       headers: {
         "Content-Type": "application/json",
+        Origin: req.headers.get("Origin")!,
       },
     });
 

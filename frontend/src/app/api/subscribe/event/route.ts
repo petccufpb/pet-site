@@ -1,35 +1,7 @@
 import { NextResponse } from "next/server";
-import { SDCScheduleData } from "sdc";
 
-export async function POST(request: Request) {
-  const params = await request.json();
-  const find = await (
-    await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/participants/find", {
-      method: "POST",
-      body: JSON.stringify({
-        email: params.email,
-      }),
-    })
-  ).json();
-
-  if (find === null) {
-    const sdcData: SDCScheduleData = await (
-      await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/editions/latest?project=SDC")
-    ).json();
-
-    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/participations", {
-      method: "POST",
-      body: JSON.stringify({
-        email: params.email,
-        editionId: sdcData.id,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    console.log(res.status, await res.json());
-  }
+export async function POST(req: Request) {
+  const params = await req.json();
 
   const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/participations", {
     method: "POST",
@@ -40,6 +12,7 @@ export async function POST(request: Request) {
     }),
     headers: {
       "Content-Type": "application/json",
+      Origin: req.headers.get("Origin")!,
     },
   });
 

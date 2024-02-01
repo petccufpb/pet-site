@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
-  const params = await request.json();
+export async function POST(req: Request) {
+  const params = await req.json();
 
   const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/attendance", {
     method: "POST",
     body: JSON.stringify({ ...params }),
     headers: {
       "Content-Type": "application/json",
+      Origin: req.headers.get("Origin")!,
     },
   });
 
