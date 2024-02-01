@@ -25,7 +25,7 @@ const bootstrap = async () => {
     // Disallow requests not from the frontend or for the favicon (Swagger)
     if (
       req.url !== "/favicon.ico" &&
-      req.hostname !==
+      req.headers.origin !==
         process.env.WEB_URL?.replace(/https?:\/\/(www\.)?/g, "")
           .replace(/:\d+/g, "")
           .replace("/", "")
