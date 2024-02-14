@@ -90,10 +90,17 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     });
   }
 
-  public async createEdition({ logoUrl, name, number, ...data }: CreateEditionDTO): Promise<ProjectEdition> {
+  public async createEdition({
+    logoUrl,
+    minimumAttendance,
+    name,
+    number,
+    ...data
+  }: CreateEditionDTO): Promise<ProjectEdition> {
     const edition = {
       ...data,
       logoUrl: logoUrl || null,
+      minimumAttendance: minimumAttendance || 100,
       name: name || "",
       number: number || 1,
       id: randomUUID(),

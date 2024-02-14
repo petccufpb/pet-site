@@ -7,6 +7,7 @@ import {
   IsString,
   IsUUID,
   IsUrl,
+  Max,
   Min,
 } from "class-validator";
 
@@ -20,6 +21,12 @@ export default class CreateEditionDTO implements Partial<ProjectEdition> {
   @IsNotEmpty()
   @IsUrl()
   logoUrl?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  @Max(100)
+  minimumAttendance?: number;
 
   @IsOptional()
   @IsString()
