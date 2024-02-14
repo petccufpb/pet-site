@@ -34,13 +34,19 @@ export default class CreateEditionCertificates {
     // }, {} as Record<string, CompleteProjectEvent[]>);
 
     outerLoop: for (const { participantId } of participations) {
-      // Todas as palestras
+      // Contagem de palestras
+      let totalAttendances = 0;
+
       for (const event of mainEvents) {
         const attendance = event.attendees.find(attendance => attendance.participantId === participantId);
-
-        if (!attendance) {
-          continue outerLoop;
+        if (attendance) {
+          totalAttendances += 1;
         }
+      }
+
+      const attendanceRatio = totalAttendances / mainEvents.length;
+      if (attendanceRatio * 100 < existingEdition.minimumAttendance) {
+        continue outerLoop;
       }
 
       // 1 minicurso por SDC
