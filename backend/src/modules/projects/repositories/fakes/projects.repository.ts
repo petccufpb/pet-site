@@ -57,12 +57,14 @@ export default class FakeProjectsRepository implements ProjectsRepository {
   }
 
   public async createCertificate({
+    attendance,
     editionId,
     eventId,
     ...data
   }: CertificateInfo): Promise<ProjectCertificate> {
     const certificate = {
       ...data,
+      attendance: attendance || null,
       editionId: editionId || null,
       eventId: eventId || null,
       id: randomUUID(),
@@ -76,9 +78,10 @@ export default class FakeProjectsRepository implements ProjectsRepository {
   }
 
   public async createCertificates(data: CertificateInfo[]): Promise<void> {
-    data.forEach(({ editionId, eventId, ...info }) => {
+    data.forEach(({ attendance, editionId, eventId, ...info }) => {
       const certificate = {
         ...info,
+        attendance: attendance || null,
         editionId: editionId || null,
         eventId: eventId || null,
         id: randomUUID(),

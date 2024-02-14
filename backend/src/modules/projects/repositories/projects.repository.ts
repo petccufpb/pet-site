@@ -21,6 +21,7 @@ import FindExistingParticipantDTO from "../dtos/FindExistingParticipant.dto";
 import UpdateParticipantDTO from "../dtos/UpdateParticipant.dto";
 
 export interface CertificateInfo {
+  attendance?: number;
   editionId?: string;
   eventId?: string;
   participantId: string;

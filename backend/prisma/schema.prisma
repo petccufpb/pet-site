@@ -65,9 +65,10 @@ model ProjectCertificate {
     participantId String
     participant   ProjectParticipant @relation(fields: [participantId], references: [id])
     editionId     String?
-    edition       ProjectEdition?     @relation(fields: [editionId], references: [id])
+    edition       ProjectEdition?    @relation(fields: [editionId], references: [id])
     eventId       String?
     event         ProjectEvent?      @relation(fields: [eventId], references: [id])
+    attendance    Float?
     createdAt     DateTime           @default(now())
     updatedAt     DateTime           @updatedAt
 }

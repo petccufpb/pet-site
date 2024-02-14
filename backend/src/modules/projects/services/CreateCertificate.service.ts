@@ -57,6 +57,7 @@ export default class CreateCertificate {
       }
 
       const certificate = await this.projectsRepository.createCertificate({
+        attendance: 100,
         editionId,
         participantId,
       });

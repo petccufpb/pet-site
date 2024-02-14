@@ -44,8 +44,8 @@ export default class CreateEditionCertificates {
         }
       }
 
-      const attendanceRatio = totalAttendances / mainEvents.length;
-      if (attendanceRatio * 100 < existingEdition.minimumAttendance) {
+      const attendanceRatio = (totalAttendances / mainEvents.length) * 100;
+      if (attendanceRatio < existingEdition.minimumAttendance) {
         continue outerLoop;
       }
 
@@ -76,6 +76,7 @@ export default class CreateEditionCertificates {
       //   }
 
       certificateInfo.push({
+        attendance: attendanceRatio,
         editionId,
         participantId,
       });
