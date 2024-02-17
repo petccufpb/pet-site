@@ -25,6 +25,7 @@ export default function GerarCertificados({
   params: { id },
   searchParams: { event: isEvent, participantId },
 }: GerarCertificadoParams) {
+  const [attendance, setAttendance] = useState(0);
   const [certificateId, setCertificateId] = useState("");
   const [edition, setEdition] = useState<ProjectEdition>();
   const [event, setEvent] = useState<ProjectEvent>();
@@ -51,6 +52,7 @@ export default function GerarCertificados({
         notFound();
       }
 
+      setAttendance(certificate.attendance / 100);
       setEvent(certificate.event);
       setParticipant(certificate.participant);
       setTemplate(certificateTemplate);
