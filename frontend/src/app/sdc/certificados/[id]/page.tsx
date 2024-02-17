@@ -52,7 +52,7 @@ export default function GerarCertificados({
         notFound();
       }
 
-      setAttendance(certificate.attendance / 100);
+      setAttendance(certificate.attendance);
       setEvent(certificate.event);
       setParticipant(certificate.participant);
       setTemplate(certificateTemplate);
