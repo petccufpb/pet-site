@@ -26,6 +26,10 @@ const bootstrap = async () => {
   app.use(helmet());
   // @ts-ignore
   app.use((req, res, next) => {
+    if (req.headers.origin?.includes("localhost")) {
+      next!();
+    }
+
     const urlRegex = /(https?:\/\/)|(www.)|(\/$)/g;
 
     const [user, pass] = Buffer.from(req.headers.authorization.split("Basic ")[1], "base64")
