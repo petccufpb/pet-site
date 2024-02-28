@@ -29,6 +29,8 @@ const bootstrap = async () => {
     const urlRegex = /(https?:\/\/)|(www.)|(\/$)/g;
 
     if (
+      req.method === "GET" ||
+      req.url === "/favicon.ico" ||
       req.headers["host" || "origin"]?.includes("localhost") ||
       req.headers.origin?.replace(urlRegex, "") === process.env.WEB_URL?.replace(urlRegex, "")
     ) {
@@ -41,7 +43,7 @@ const bootstrap = async () => {
       .split(":");
 
     // Allow simple GET requests and disallow requests not originated from the frontend or for Swagger's favicon
-    if (req.method !== "GET" && req.url !== "/favicon.ico" && !(users[user] && pass === users[user])) {
+    if (!(users[user] && pass === users[user])) {
       throw new HttpException(
         `You don't have permission to access this API. Host - ${req.headers.origin}`,
         HttpStatus.UNAUTHORIZED,
