@@ -26,8 +26,9 @@ const bootstrap = async () => {
   app.use(helmet());
   // @ts-ignore
   app.use((req, res, next) => {
-    if (req.headers.origin?.includes("localhost")) {
+    if (req.headers.host?.includes("localhost") || req.headers.origin?.includes("localhost")) {
       next!();
+      return;
     }
 
     const urlRegex = /(https?:\/\/)|(www.)|(\/$)/g;
@@ -53,13 +54,15 @@ const bootstrap = async () => {
   });
 
   // Enable authentication for Swagger
-  app.use(
-    "/docs*",
-    expressBasicAuth({
-      challenge: true,
-      users,
-    }),
-  );
+  if (process.env.NODE_ENV === "production") {
+    app.use(
+      "/docs*",
+      expressBasicAuth({
+        challenge: true,
+        users,
+      }),
+    );
+  }
 
   const config = new DocumentBuilder()
     .setTitle("API do PET.CC (UFPB)")
