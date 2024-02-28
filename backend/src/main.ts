@@ -26,24 +26,22 @@ const bootstrap = async () => {
   app.use(helmet());
   // @ts-ignore
   app.use((req, res, next) => {
-    if (req.headers.host?.includes("localhost") || req.headers.origin?.includes("localhost")) {
+    const urlRegex = /(https?:\/\/)|(www.)|(\/$)/g;
+
+    if (
+      req.headers["host" || "origin"]?.includes("localhost") ||
+      req.headers.origin?.replace(urlRegex, "") === process.env.WEB_URL?.replace(urlRegex, "")
+    ) {
       next!();
       return;
     }
-
-    const urlRegex = /(https?:\/\/)|(www.)|(\/$)/g;
 
     const [user, pass] = Buffer.from(req.headers.authorization.split("Basic ")[1], "base64")
       .toString()
       .split(":");
 
     // Allow simple GET requests and disallow requests not originated from the frontend or for Swagger's favicon
-    if (
-      req.method !== "GET" &&
-      req.url !== "/favicon.ico" &&
-      req.headers.origin?.replace(urlRegex, "") !== process.env.WEB_URL?.replace(urlRegex, "") &&
-      !(users[user] && pass === users[user])
-    ) {
+    if (req.method !== "GET" && req.url !== "/favicon.ico" && !(users[user] && pass === users[user])) {
       throw new HttpException(
         `You don't have permission to access this API. Host - ${req.headers.origin}`,
         HttpStatus.UNAUTHORIZED,
