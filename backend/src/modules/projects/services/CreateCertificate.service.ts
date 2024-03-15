@@ -9,12 +9,17 @@ export default class CreateCertificate {
   constructor(private projectsRepository: ProjectsRepository) {}
 
   public async execute({
+    attendance = 100,
     editionId,
     email,
     eventId,
     matricula,
     participantId,
   }: CreateCertificateDTO): Promise<ProjectCertificate> {
+    if (attendance < 1) {
+      attendance *= 100;
+    }
+
     if (participantId) {
       const foundParticipant = await this.projectsRepository.findParticipantById(participantId);
       if (!foundParticipant) {
@@ -50,32 +55,32 @@ export default class CreateCertificate {
       throw new HttpException("Esse certificado já existe", HttpStatus.FORBIDDEN);
     }
 
+    let certificate: ProjectCertificate;
+
     if (editionId) {
       const edition = await this.projectsRepository.findEditionById(editionId);
       if (!edition) {
         throw new HttpException("Essa edição não existe", HttpStatus.NOT_FOUND);
       }
 
-      const certificate = await this.projectsRepository.createCertificate({
-        attendance: 100,
+      certificate = await this.projectsRepository.createCertificate({
+        attendance,
         editionId,
         participantId,
       });
-
-      return certificate;
     } else {
       const event = await this.projectsRepository.findEventById(eventId as string);
       if (!event) {
         throw new HttpException("Esse evento não existe", HttpStatus.NOT_FOUND);
       }
 
-      const certificate = await this.projectsRepository.createCertificate({
+      certificate = await this.projectsRepository.createCertificate({
         editionId: event.editionId,
         eventId,
         participantId,
       });
-
-      return certificate;
     }
+
+    return certificate;
   }
 }
