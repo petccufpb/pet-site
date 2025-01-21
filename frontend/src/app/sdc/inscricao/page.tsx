@@ -33,15 +33,16 @@ const sendFormSchema = z.object({
   celular: z.string().min(17, { message: "O número deve conter 9 dígitos" }),
   matricula: z
     .string()
-    .transform(m => parseInt(m))
+    .optional()
+    .transform(m => (!m || m.trim() === "" ? undefined : parseInt(m, 10)))
     .pipe(
       z
         .number({
           invalid_type_error: "A matrícula deve ser um número",
-          required_error: "A matrícula é obrigatória",
         })
         .min(10000000, { message: "Sua matrícula deve conter no mínimo 8 dígitos [Matrículas Antigas]" })
-        .max(99999999999, { message: "Sua matrícula deve conter 11 dígitos" }),
+        .max(99999999999, { message: "Sua matrícula deve conter 11 dígitos" })
+        .optional(),
     ),
   birthDate: z
     .string({
@@ -64,12 +65,13 @@ export default function Inscricao() {
     { value: "cdia", label: "Ciência de Dados" },
     { value: "cc", label: "Ciência da Computação" },
     { value: "ec", label: "Engenharia da Computação" },
+    { value: "ext", label: "Externo" },
     { value: "outro", label: "Outro" },
   ];
 
   const [editionId, setEditionId] = useState("");
   const [step, setStep] = useState(0);
-  const [course, setCourse] = useState(options[1]);
+  const [course, setCourse] = useState();
 
   useEffect(() => {
     async function execute() {
@@ -83,9 +85,13 @@ export default function Inscricao() {
   }, []);
 
   const {
-    register,
-    handleSubmit,
+    clearErrors,
     formState: { errors, isValid },
+    handleSubmit,
+    register,
+    setError,
+    setValue,
+    trigger,
     watch,
   } = useForm<SendFormData>({
     resolver: zodResolver(sendFormSchema),
@@ -147,7 +153,20 @@ export default function Inscricao() {
         <div>Curso</div>
         <Select
           form="sdc"
-          onChange={e => (e ? setCourse(e) : null)}
+          onChange={e => {
+            if (!e) {
+              return;
+            }
+
+            setCourse(e);
+
+            if (e.value === "ext") {
+              clearErrors("matricula");
+              // @ts-expect-error
+              setValue("matricula", "");
+              trigger();
+            }
+          }}
           defaultValue={options[1]}
           options={options}
           styles={{
@@ -175,6 +194,12 @@ export default function Inscricao() {
   ];
 
   async function sendForm({ matricula, name, ...data }: SendFormData) {
+    if (course?.value !== "ext") {
+      setError("matricula", { message: "A matrícula é obrigatória" });
+
+      return;
+    }
+
     const i = toast.info("Carregando...");
 
     const res = await fetch("/api/subscribe/sdc", {
@@ -183,7 +208,7 @@ export default function Inscricao() {
         ...data,
         editionId,
         name: name.trim(),
-        matricula: matricula.toString(),
+        matricula: matricula?.toString(),
         course: course.value,
       }),
     });
