@@ -153,7 +153,6 @@ export const Forms = styled.form`
   align-items: center;
   z-index: 1;
   box-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, 0.3);
-  border: auto 0;
   margin: 0 auto;
 
   ::before {
