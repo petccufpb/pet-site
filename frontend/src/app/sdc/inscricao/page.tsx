@@ -71,7 +71,7 @@ export default function Inscricao() {
 
   const [editionId, setEditionId] = useState("");
   const [step, setStep] = useState(0);
-  const [course, setCourse] = useState();
+  const [course, setCourse] = useState<{ value: string; label: string }>();
 
   useEffect(() => {
     async function execute() {
@@ -138,16 +138,18 @@ export default function Inscricao() {
         />
         {errors.celular && <span>{errors.celular.message}</span>}
       </InputContainer>
-      <InputContainer>
-        <div>Matrícula</div>
-        <InputMask
-          placeholder="20000115555 ou 11109999"
-          mask="99999999999"
-          maskChar={null}
-          {...register("matricula")}
-        />
-        {errors.matricula && <span>{errors.matricula.message}</span>}
-      </InputContainer>
+      {course?.value !== "ext" && (
+        <InputContainer>
+          <div>Matrícula</div>
+          <InputMask
+            placeholder="20000115555 ou 11109999"
+            mask="99999999999"
+            maskChar={null}
+            {...register("matricula")}
+          />
+          {errors.matricula && <span>{errors.matricula.message}</span>}
+        </InputContainer>
+      )}
 
       <InputContainer>
         <div>Curso</div>
