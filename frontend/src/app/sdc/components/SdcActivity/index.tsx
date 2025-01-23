@@ -88,6 +88,7 @@ export function SdcActivity({ data, dayEvent }: { data: SDCEventData; dayEvent: 
           buttonText="Fechar"
           onConfirm={() => showModal(false)}
           opacity={0.6}
+          style={{ gap: "1rem", textAlign: "center" }}
           textColor="#fff9"
         >
           {data.about!.split("\\\\n").map((paragraph, index) => {
