@@ -40,28 +40,30 @@ export default class CreateParticipant {
       throw new HttpException("Já existe um aluno com esse telefone", HttpStatus.FORBIDDEN);
     }
 
-    const sameMatricula = await this.projectsRepository.findParticipantByMatricula(matricula);
+    if (matricula) {
+      const sameMatricula = await this.projectsRepository.findParticipantByMatricula(matricula);
 
-    const sameMatriculaNameLowercase = sameMatricula?.name.toLowerCase() || "";
-    const nameLowercase = name.toLowerCase();
+      const sameMatriculaNameLowercase = sameMatricula?.name.toLowerCase() || "";
+      const nameLowercase = name.toLowerCase();
 
-    // If name isn't the same nor found participant is same as the existing one
-    if (
-      (sameMatricula && sameMatricula.id !== existingParticipant?.id) ||
-      (!sameMatriculaNameLowercase.includes(nameLowercase) &&
-        !nameLowercase.includes(sameMatriculaNameLowercase))
-    ) {
-      throw new HttpException("Já existe um aluno com essa matrícula", HttpStatus.FORBIDDEN);
-    }
+      // If name isn't the same nor found participant is same as the existing one
+      if (
+        (sameMatricula && sameMatricula.id !== existingParticipant?.id) ||
+        (!sameMatriculaNameLowercase.includes(nameLowercase) &&
+          !nameLowercase.includes(sameMatriculaNameLowercase))
+      ) {
+        throw new HttpException("Já existe um aluno com essa matrícula", HttpStatus.FORBIDDEN);
+      }
 
-    if (existingParticipant && sameMatricula?.id === existingParticipant?.id) {
-      const updatedParticipant = await this.projectsRepository.updateParticipant(sameMatricula!.id, {
-        course,
-        email,
-        phoneNumber,
-      });
+      if (existingParticipant && sameMatricula?.id === existingParticipant?.id) {
+        const updatedParticipant = await this.projectsRepository.updateParticipant(sameMatricula!.id, {
+          course,
+          email,
+          phoneNumber,
+        });
 
-      return updatedParticipant;
+        return updatedParticipant;
+      }
     }
 
     const participant = await this.projectsRepository.createParticipant({

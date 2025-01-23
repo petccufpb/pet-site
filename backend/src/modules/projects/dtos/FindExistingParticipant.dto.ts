@@ -9,9 +9,9 @@ export default class FindExistingParticipantDTO implements Partial<ProjectPartic
   @IsEmail()
   email?: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  matricula!: string;
+  matricula: string | null = null;
 
   @IsOptional()
   @IsString()

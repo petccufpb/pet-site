@@ -368,6 +368,7 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     participantId,
   }: CreateRepoParticipation): Promise<ProjectParticipation | null> {
     const participation = await this.prisma.projectParticipation.findUnique({
+      // @ts-ignore
       where: {
         ...(editionId && { participantId_editionId: { editionId, participantId } }),
         ...(eventId && { participantId_eventId: { eventId, participantId } }),

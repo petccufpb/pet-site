@@ -1,5 +1,5 @@
 import { ProjectParticipant } from "@prisma/client";
-import { IsDateString, IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { IsDateString, IsEmail, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export default class CreateParticipantDTO implements Partial<ProjectParticipant> {
   @IsNotEmpty()
@@ -15,8 +15,9 @@ export default class CreateParticipantDTO implements Partial<ProjectParticipant>
   @IsEmail()
   email!: string;
 
+  @IsOptional()
   @IsString()
-  matricula!: string;
+  matricula: string | null = null;
 
   @IsNotEmpty()
   @IsString()

@@ -46,7 +46,7 @@ export default class ListParticipants {
     }
     if (periodoGeral) {
       participants = participants.filter(participant =>
-        participant.matricula.startsWith(String(periodoGeral)),
+        participant.matricula?.startsWith(String(periodoGeral)),
       );
     }
     if (university) {
