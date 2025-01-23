@@ -18,20 +18,20 @@ interface HeadProps {
   data: SDCScheduleData;
 }
 
-export async function Head({ data }: HeadProps) {
+export async function Head({ data: { logoUrl, name } }: HeadProps) {
   const participantsRes = await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/editions?project=SDC");
   const participants = (await participantsRes.json())[1].participants.length;
 
   let logo = "";
-  if (data.logoUrl) {
-    const logoRes = await fetch(data.logoUrl);
+  if (logoUrl) {
+    const logoRes = await fetch(logoUrl);
     logo = await logoRes.text();
   }
 
   return (
     <HeadContainer>
       <Section>
-        {logo.startsWith("<svg") ? parse(logo) : <img src={logo} alt={`Logo da ${data.name}`} />}
+        {logo.includes("<svg") ? parse(logo) : <img src={logo} alt={`Logo da ${name}`} />}
 
         <div>
           <SmallTitle>Última Edição</SmallTitle>
