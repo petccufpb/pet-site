@@ -65,15 +65,15 @@ function CancelButtonOrNothing({ type }: { type: "normal" | "cancel" }) {
 const sendFormSchema = z.object({
   matricula: z
     .string()
-    .transform(m => parseInt(m))
+    .optional()
     .pipe(
       z
         .number({
           invalid_type_error: "A matrícula deve ser um número",
-          required_error: "A matrícula é obrigatória",
         })
         .min(10000000, { message: "Sua matrícula deve conter no mínimo 8 dígitos (antigas)" })
-        .max(99999999999, { message: "Sua matrícula deve conter 11 dígitos" }),
+        .max(99999999999, { message: "Sua matrícula deve conter 11 dígitos" })
+        .optional(),
     ),
   email: z.string().trim().nonempty("O email é obrigatório").email("Formato de email inválido"),
 });

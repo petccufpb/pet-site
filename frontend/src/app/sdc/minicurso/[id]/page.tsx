@@ -62,10 +62,7 @@ export default async function Minicurso({ params }: { params: { id: string } }) 
           extrasAvailable={
             event.extraCapacity ? event.participants.length >= (event.capacity as number) : false
           }
-          sections={[
-            { title: "Matrícula", placeholder: "20000115555 ou 11109999", id: "matricula" },
-            { title: "E-mail cadastrado", placeholder: "seuemail@exemplo.com", id: "email" },
-          ]}
+          sections={[{ title: "E-mail cadastrado", placeholder: "seuemail@exemplo.com", id: "email" }]}
           date={new Date(event.startTime)}
           confirmType="confirm"
           slotsRemaining={
