@@ -4,7 +4,7 @@
   "main": "typings/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "nest build && prisma migrate deploy",
+    "build": "nest build",
     "debug": "nest build && pnpm start:prod",
     "dev": "nest start --watch",
     "prisma:generate": "prisma generate",
