@@ -71,7 +71,7 @@ export default function Inscricao() {
 
   const [editionId, setEditionId] = useState("");
   const [step, setStep] = useState(0);
-  const [course, setCourse] = useState<{ value: string; label: string }>();
+  const [course, setCourse] = useState<{ value: string; label: string }>(options[1]);
 
   useEffect(() => {
     async function execute() {
@@ -196,6 +196,7 @@ export default function Inscricao() {
   ];
 
   async function sendForm({ matricula, name, ...data }: SendFormData) {
+    // if (course?.value !== "ext") {
     if (course?.value !== "ext" && !matricula) {
       setError("matricula", { message: "A matrícula é obrigatória" });
 
@@ -211,7 +212,7 @@ export default function Inscricao() {
         editionId,
         name: name.trim(),
         matricula: matricula?.toString(),
-        course: course.value,
+        course: course?.value,
       }),
     });
 
