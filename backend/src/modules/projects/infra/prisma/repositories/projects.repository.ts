@@ -63,7 +63,7 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
   }
 
   public async createParticipant(data: CreateParticipantDTO): Promise<ProjectParticipant> {
-    const participant = await this.prisma.projectParticipant.create({ data });
+    const participant = await this.prisma.projectParticipant.upsert({ data });
 
     return participant;
   }
