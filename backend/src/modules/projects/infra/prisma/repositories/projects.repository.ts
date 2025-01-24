@@ -63,7 +63,14 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
   }
 
   public async createParticipant(data: CreateParticipantDTO): Promise<ProjectParticipant> {
-    const participant = await this.prisma.projectParticipant.upsert({ where:{email:data.email}, create:data, update:data });
+    const participant = await this.prisma.projectParticipant.upsert({
+      // @ts-expect-error
+      where: {
+        OR: [{ email: data.email }, { matricula: data.matricula }, { phoneNumber: data.phoneNumber }],
+      },
+      create: data,
+      update: data,
+    });
 
     return participant;
   }
