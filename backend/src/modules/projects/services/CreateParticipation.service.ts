@@ -5,7 +5,6 @@ import { isAfter } from "date-fns";
 
 import CreateParticipationDTO from "../dtos/CreateParticipation.dto";
 import ProjectsRepository, { FindParticipationDTO } from "../repositories/projects.repository";
-import { CreateRepoParticipation } from "../repositories/projects.repository";
 
 @Injectable()
 export default class CreateParticipation {

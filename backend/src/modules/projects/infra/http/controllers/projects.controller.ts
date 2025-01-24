@@ -20,7 +20,6 @@ import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
 import CreateParticipationDTO from "@modules/projects/dtos/CreateParticipation.dto";
 import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
-import DeleteParticipationDTO from "@modules/projects/dtos/DeleteParticipation.dto";
 import FindParticipantDTO from "@modules/projects/dtos/FindParticipant.dto";
 import ValidateCertificateDTO from "@modules/projects/dtos/ValidateCertificate.dto";
 import { CompleteProjectCertificate } from "@modules/projects/repositories/projects.repository";
@@ -240,12 +239,10 @@ export default class ProjectsController {
   async deleteProjectsParticipations(
     @QueryRequired("email") email: string,
     @QueryRequired("eventId") eventId: string,
-    @QueryRequired("matricula") matricula: string,
   ): Promise<void> {
     await this.deleteParticipation.execute({
       email,
       eventId,
-      matricula,
     });
   }
 

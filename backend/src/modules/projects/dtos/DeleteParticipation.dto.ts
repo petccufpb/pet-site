@@ -11,7 +11,7 @@ export default class DeleteParticipationDTO {
   @IsUUID()
   eventId!: string;
 
-  @IsString()
-  @IsNotEmpty()
-  matricula!: string;
+  //   @IsString()
+  //   @IsNotEmpty()
+  //   matricula!: string;
 }

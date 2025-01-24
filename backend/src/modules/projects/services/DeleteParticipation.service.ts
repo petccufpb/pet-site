@@ -9,7 +9,7 @@ export default class DeleteParticipation {
   constructor(private projectsRepository: ProjectsRepository) {}
 
   public async execute({ eventId, ...data }: DeleteParticipationDTO): Promise<void> {
-    const existingParticipant = await this.projectsRepository.findExistingParticipant(data);
+    const existingParticipant = await this.projectsRepository.findParticipantByEmail(data.email);
     if (!existingParticipant) {
       throw new HttpException(
         "Os dados que você enviou não conferem. Por motivos de segurança não foi possível efetuar a desinscrição.",
