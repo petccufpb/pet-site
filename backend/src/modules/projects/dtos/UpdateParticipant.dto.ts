@@ -15,5 +15,15 @@ export default class UpdateParticipantDTO {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
+  matricula?: string | null;
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  name?: string;
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
   phoneNumber?: string;
 }

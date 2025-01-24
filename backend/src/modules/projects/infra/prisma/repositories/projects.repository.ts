@@ -63,13 +63,8 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
   }
 
   public async createParticipant(data: CreateParticipantDTO): Promise<ProjectParticipant> {
-    const participant = await this.prisma.projectParticipant.upsert({
-      // @ts-expect-error
-      where: {
-        OR: [{ email: data.email }, { matricula: data.matricula }, { phoneNumber: data.phoneNumber }],
-      },
-      create: data,
-      update: data,
+    const participant = await this.prisma.projectParticipant.create({
+      data,
     });
 
     return participant;
@@ -297,10 +292,16 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     return event;
   }
 
-  public async findExistingParticipant(
-    where: FindExistingParticipantDTO,
-  ): Promise<ProjectParticipant | null> {
-    const participant = await this.prisma.projectParticipant.findFirst({ where });
+  public async findExistingParticipant({
+    email,
+    matricula,
+    phoneNumber,
+  }: FindExistingParticipantDTO): Promise<ProjectParticipant | null> {
+    const participant = await this.prisma.projectParticipant.findFirst({
+      where: {
+        OR: [{ email }, { matricula }, { phoneNumber }],
+      },
+    });
 
     return participant;
   }

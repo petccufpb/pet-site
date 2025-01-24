@@ -118,7 +118,7 @@ export default abstract class ProjectsRepository {
   abstract findExistingParticipant(data: FindExistingParticipantDTO): Promise<ProjectParticipant | null>;
   abstract findParticipantByEmail(email: string): Promise<ProjectParticipant | null>;
   abstract findParticipantById(id: string): Promise<ProjectParticipant | null>;
-  abstract findParticipantByMatricula(matricula: string): Promise<ProjectParticipant | null>;
+  abstract findParticipantByMatricula(matricula: string | null): Promise<ProjectParticipant | null>;
   abstract findParticipantByPhone(phone: string): Promise<ProjectParticipant | null>;
   abstract findParticipants(ids: string[]): Promise<ProjectParticipant[]>;
   abstract findParticipantsByEdition(editionId: string): Promise<ProjectParticipant[]>;

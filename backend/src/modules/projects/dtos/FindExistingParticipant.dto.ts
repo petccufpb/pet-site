@@ -16,5 +16,5 @@ export default class FindExistingParticipantDTO implements Partial<ProjectPartic
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  name?: string;
+  phoneNumber?: string;
 }

@@ -385,12 +385,16 @@ export default class FakeProjectsRepository implements ProjectsRepository {
   }
 
   public async findExistingParticipant({
+    email,
     matricula,
-    name,
+    phoneNumber,
   }: FindExistingParticipantDTO): Promise<ProjectParticipant | null> {
     const participant =
       this.participants.find(
-        participant => participant.matricula === matricula && participant.name === name,
+        participant =>
+          participant.email === email ||
+          participant.matricula === matricula ||
+          participant.phoneNumber === phoneNumber,
       ) || null;
 
     return participant;
