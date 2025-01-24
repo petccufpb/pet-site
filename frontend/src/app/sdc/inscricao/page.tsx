@@ -196,7 +196,7 @@ export default function Inscricao() {
   ];
 
   async function sendForm({ matricula, name, ...data }: SendFormData) {
-    if (course?.value !== "ext") {
+    if (course?.value !== "ext" && !matricula) {
       setError("matricula", { message: "A matrícula é obrigatória" });
 
       return;
