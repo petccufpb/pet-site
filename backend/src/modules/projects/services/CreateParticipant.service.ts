@@ -32,21 +32,21 @@ export default class CreateParticipant {
 
     if (existingParticipant) {
       const sameEmail = await this.projectsRepository.findParticipantByEmail(email);
-      if (sameEmail!.id !== existingParticipant.id) {
+      if (sameEmail?.id !== existingParticipant.id) {
         throw new HttpException("Já existe um aluno com esse email", HttpStatus.FORBIDDEN);
       }
 
       const samePhone = await this.projectsRepository.findParticipantByPhone(phoneNumber);
-      if (samePhone!.id !== existingParticipant.id) {
+      if (samePhone?.id !== existingParticipant.id) {
         throw new HttpException("Já existe um aluno com esse telefone", HttpStatus.FORBIDDEN);
       }
 
       const sameMatricula = await this.projectsRepository.findParticipantByMatricula(matricula);
-      if (sameMatricula!.id !== existingParticipant.id) {
+      if (sameMatricula?.id !== existingParticipant.id) {
         throw new HttpException("Já existe um aluno com essa matrícula", HttpStatus.FORBIDDEN);
       }
 
-      const updatedParticipant = await this.projectsRepository.updateParticipant(sameMatricula!.id, {
+      const updatedParticipant = await this.projectsRepository.updateParticipant(existingParticipant.id, {
         ...data,
         email,
         matricula,
