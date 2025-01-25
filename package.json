@@ -13,7 +13,7 @@
       "cd backend && bun prisma:migrate-deploy"
     ],
     "backend/src/**/*.ts": [
-      "cd backend && bun test --bail --findRelatedTests"
+      "cd backend && bun run test --bail --findRelatedTests"
     ],
     "**/*.(ts|tsx)": [
       "eslint --fix"
