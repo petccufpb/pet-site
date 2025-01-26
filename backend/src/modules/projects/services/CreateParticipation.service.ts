@@ -75,7 +75,7 @@ export default class CreateParticipation {
       const participatingInEvent = allEventParticipations.find(
         participation => participation.participantId === participantId,
       );
-      if (participatingInEvent) {
+      if (participatingInEvent && !event.allowMultiple) {
         throw new HttpException("Você só pode participar de um evento por edição", HttpStatus.FORBIDDEN);
       }
 

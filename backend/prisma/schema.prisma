@@ -114,6 +114,7 @@ model ProjectEvent {
     location            String?
     startTime           DateTime
     endTime             DateTime
+    allowMultiple       Boolean                     @default(false)
     certificateTemplate ProjectCertificateTemplate?
     certificates        ProjectCertificate[]
     speakerId           String
