@@ -117,6 +117,7 @@ export default class FakeProjectsRepository implements ProjectsRepository {
   }
 
   public async createEvent({
+    allowMultiple,
     capacity,
     externalSignup,
     extraCapacity,
@@ -131,6 +132,7 @@ export default class FakeProjectsRepository implements ProjectsRepository {
       extraCapacity: extraCapacity || 0,
       location: location || null,
       onSite: onSite || true,
+      allowMultiple: allowMultiple || false,
       id: randomUUID(),
       createdAt: new Date(),
       updatedAt: new Date(),
