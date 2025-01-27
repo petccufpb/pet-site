@@ -35,9 +35,9 @@ export default class CreateParticipant {
       const sameMatricula = await this.projectsRepository.findParticipantByMatricula(matricula);
       const samePhone = await this.projectsRepository.findParticipantByPhone(phoneNumber);
 
-      const updatingEmail = sameEmail?.id === existingParticipant.id;
-      const updatingMatricula = sameMatricula?.id === existingParticipant.id;
-      const updatingPhone = samePhone?.id === existingParticipant.id;
+      const updatingEmail = sameEmail?.id !== existingParticipant.id;
+      const updatingMatricula = sameMatricula?.id !== existingParticipant.id;
+      const updatingPhone = samePhone?.id !== existingParticipant.id;
 
       if ([updatingEmail, updatingMatricula, updatingPhone].filter(Boolean).length > 1) {
         throw new HttpException(

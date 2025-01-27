@@ -18,6 +18,10 @@ export default class CreateEventDTO implements Partial<ProjectEvent> {
   about!: string | null;
 
   @IsOptional()
+  @IsBoolean()
+  allowMultiple?: boolean;
+
+  @IsOptional()
   @IsNumber()
   @Min(1)
   capacity?: number;
