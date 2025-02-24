@@ -14,24 +14,13 @@ export default class CreateEventCertificates {
       throw new HttpException("Esse evento não existe", HttpStatus.NOT_FOUND);
     }
 
-    const participations = await this.projectsRepository.findParticipationsByEvent(eventId);
+    const attendances = await this.projectsRepository.findAttendancesByEvent(eventId);
 
-    const certificateInfo: CertificateInfo[] = [];
-    for (const { participantId } of participations) {
-      const attendance = await this.projectsRepository.findAttendance({
-        eventId,
-        participantId,
-      });
-
-      if (!attendance) {
-        continue;
-      }
-
-      certificateInfo.push({
-        eventId,
-        participantId,
-      });
-    }
+    const certificateInfo: CertificateInfo[] = attendances.map(({ participantId }) => ({
+      editionId: existingEvent.editionId,
+      eventId,
+      participantId,
+    }));
 
     await this.projectsRepository.createCertificates(certificateInfo);
 
@@ -42,10 +31,12 @@ export default class CreateEventCertificates {
         participantId,
       )) as ProjectParticipant;
 
+      const eventTitle = `existingEvent.type === "minicurso" ? "do minicurso" : "do(a)" ${existingEvent.name}`;
+
       await this.mailProvider.sendMail({
         to: participant.email,
-        subject: `Certificado do minicurso ${existingEvent.name}`,
-        body: `Olá!<br/><br/>Estamos passando para informar que seu certificado do minicurso ${existingEvent.name} já está disponível.<br/><br/>Você pode acessá-lo em: ${process.env.WEB_URL}/sdc/certificados/${eventId}?participantId=${participantId}`,
+        subject: `Certificado ${eventTitle}`,
+        body: `Olá!<br/><br/>Estamos passando para informar que seu certificado ${eventTitle} já está disponível.<br/><br/>Você pode acessá-lo em: ${process.env.WEB_URL}/sdc/certificados/${eventId}?event=true&participantId=${participantId}`,
       });
     }
 

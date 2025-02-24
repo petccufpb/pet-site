@@ -21,10 +21,9 @@ interface GerarCertificadoParams {
   };
 }
 
-export default function GerarCertificados({
-  params: { id },
-  searchParams: { event: isEvent, participantId },
-}: GerarCertificadoParams) {
+export default function GerarCertificados({ params: { id }, searchParams }: GerarCertificadoParams) {
+  const isEvent = JSON.parse(searchParams.event || "null");
+
   const [attendance, setAttendance] = useState("");
   const [certificateId, setCertificateId] = useState("");
   const [edition, setEdition] = useState<ProjectEdition>();
@@ -37,9 +36,9 @@ export default function GerarCertificados({
   useEffect(() => {
     const execute = async () => {
       const { data: certificateData } = await api.get(
-        `/projects/certificates?${
-          Boolean(isEvent) ? "eventId" : "editionId"
-        }=${id}&participantId=${participantId}`,
+        `/projects/certificates?${isEvent ? "eventId" : "editionId"}=${id}&participantId=${
+          searchParams.participantId
+        }`,
       );
 
       if (!certificateData || certificateData.length === 0) {
@@ -47,28 +46,27 @@ export default function GerarCertificados({
       }
 
       const [certificate] = certificateData;
-      const { certificateTemplate } = certificate.edition || certificate.event;
+      const { certificateTemplate } = isEvent ? certificate.event : certificate.edition;
       if (!certificateTemplate) {
         notFound();
       }
 
-      setAttendance(certificate.attendance.toFixed(2).replace(".", ","));
+      setAttendance(certificate.attendance?.toFixed(2).replace(".", ","));
       setEvent(certificate.event);
       setParticipant(certificate.participant);
       setTemplate(certificateTemplate);
 
-      if (certificate.edition) {
+      if (!isEvent && certificate.edition) {
         const { data: eventsData } = await api.get<ProjectEvent[]>(`/projects/events?editionId=${id}`);
         certificate.edition.endDate = eventsData.at(-1)?.endTime;
-
-        setEdition(certificate.edition);
       }
+      setEdition(certificate.edition);
 
       setCertificateId(certificate.id);
     };
 
     execute();
-  }, [id, isEvent, participantId]);
+  }, [id, isEvent, searchParams.participantId]);
 
   useEffect(() => {
     if (Object.entries(template).length === 0) return;
@@ -89,7 +87,7 @@ export default function GerarCertificados({
           }
 
           if (part.includes("{")) {
-            return eval(part);
+            return eval(part.split(/{|}/)[1]);
           }
 
           return part;
@@ -97,7 +95,7 @@ export default function GerarCertificados({
         .join(""),
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [edition]);
+  }, [edition, event, participant]);
 
   const certificateTitle = `Certificado do(a) ${edition?.name || event?.name}`;
 
