@@ -183,17 +183,22 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     const certificates = await this.prisma.projectCertificate.findMany({
       where: { eventId },
       include: {
-        edition: {
-          include: { certificateTemplate: true },
-        },
         participant: true,
         event: {
-          include: { certificateTemplate: true },
+          include: {
+            certificateTemplate: true,
+            edition: {
+              include: { certificateTemplate: true },
+            },
+          },
         },
       },
     });
 
-    return certificates;
+    return certificates.map(each => ({
+      ...each,
+      edition: each.event!.edition,
+    }));
   }
 
   public async findCertificatesByParticipantId(participantId: string): Promise<CompleteProjectCertificate[]> {
