@@ -33,9 +33,6 @@ export default class CreateEditionCertificates {
     //   };
     // }, {} as Record<string, CompleteProjectEvent[]>);
 
-    console.log(mainEvents.length);
-    let minicursoCount = 0;
-
     outerLoop: for (const { participantId } of participations) {
       // Contagem de palestras
       let totalAttendances = 0;
@@ -47,7 +44,6 @@ export default class CreateEditionCertificates {
         }
       }
 
-      console.log(participantId, totalAttendances);
       const attendanceRatio = (totalAttendances / mainEvents.length) * 100;
       if (attendanceRatio < existingEdition.minimumAttendance) {
         continue outerLoop;
@@ -62,7 +58,6 @@ export default class CreateEditionCertificates {
         }
 
         if (index === minicursos.length - 1) {
-          minicursoCount += 1;
           continue outerLoop;
         }
       }
@@ -86,9 +81,6 @@ export default class CreateEditionCertificates {
         participantId,
       });
     }
-
-    console.log(`${certificateInfo.length} pessoas ganharam o certificado`);
-    console.log(`${minicursoCount} vão perder por falta de minicurso`);
 
     await this.projectsRepository.createCertificates(certificateInfo);
 
