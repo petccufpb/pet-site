@@ -1,4 +1,4 @@
-import { MailProvider, MailProviderKeys, mailProviders } from "@hyoretsu/providers";
+import { MailProvider, mailProviders, type MailProviderKeys } from "@hyoretsu/providers";
 import { Module } from "@nestjs/common";
 
 import { PrismaService } from "@database/prisma.service";

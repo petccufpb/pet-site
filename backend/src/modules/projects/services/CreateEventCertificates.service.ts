@@ -1,6 +1,7 @@
 import { MailProvider } from "@hyoretsu/providers";
+import { sleep } from "@hyoretsu/utils";
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { ProjectCertificate, ProjectParticipant } from "@prisma/client";
+import { ProjectCertificate } from "@prisma/client";
 
 import ProjectsRepository, { CertificateInfo } from "../repositories/projects.repository";
 
@@ -22,22 +23,34 @@ export default class CreateEventCertificates {
       participantId,
     }));
 
-    await this.projectsRepository.createCertificates(certificateInfo);
+    const emailWhitelist: string[] = [];
+
+    if (emailWhitelist.length === 0) {
+      await this.projectsRepository.createCertificates(certificateInfo);
+    }
 
     const certificates = await this.projectsRepository.findCertificatesByEventId(eventId);
 
-    for (const { participantId } of certificates) {
-      const participant = (await this.projectsRepository.findParticipantById(
-        participantId,
-      )) as ProjectParticipant;
+    const participants = await this.projectsRepository.findParticipants(
+      certificates.map(({ participantId }) => participantId),
+    );
 
-      const eventTitle = `existingEvent.type === "minicurso" ? "do minicurso" : "do(a)" ${existingEvent.name}`;
+    const eventTitle = `${existingEvent.type === "minicurso" ? "do minicurso" : "do(a)"} "${
+      existingEvent.name
+    }"`;
+
+    for (const participant of participants) {
+      if (emailWhitelist.length > 0 && !emailWhitelist.includes(participant.email)) {
+        continue;
+      }
 
       await this.mailProvider.sendMail({
         to: participant.email,
         subject: `Certificado ${eventTitle}`,
-        body: `Olá!<br/><br/>Estamos passando para informar que seu certificado ${eventTitle} já está disponível.<br/><br/>Você pode acessá-lo em: ${process.env.WEB_URL}/sdc/certificados/${eventId}?event=true&participantId=${participantId}`,
+        body: `Olá!<br/><br/>Estamos passando para informar que seu certificado ${eventTitle} já está disponível.<br/><br/>Você pode acessá-lo em: ${process.env.WEB_URL}/sdc/certificados/${eventId}?event=true&participantId=${participant.id}`,
       });
+
+      await sleep(1000);
     }
 
     return certificates;

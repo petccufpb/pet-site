@@ -1,6 +1,7 @@
 import { MailProvider } from "@hyoretsu/providers";
+import { sleep } from "@hyoretsu/utils";
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { Project, ProjectCertificate, ProjectParticipant } from "@prisma/client";
+import { ProjectCertificate } from "@prisma/client";
 
 import ProjectsRepository, { CertificateInfo } from "../repositories/projects.repository";
 
@@ -33,6 +34,8 @@ export default class CreateEditionCertificates {
     //   };
     // }, {} as Record<string, CompleteProjectEvent[]>);
 
+    let minicursoCount = 0;
+
     outerLoop: for (const { participantId } of participations) {
       // Contagem de palestras
       let totalAttendances = 0;
@@ -58,6 +61,7 @@ export default class CreateEditionCertificates {
         }
 
         if (index === minicursos.length - 1) {
+          minicursoCount += 1;
           continue outerLoop;
         }
       }
@@ -82,28 +86,39 @@ export default class CreateEditionCertificates {
       });
     }
 
-    await this.projectsRepository.createCertificates(certificateInfo);
+    const emailWhitelist: string[] = [];
+
+    if (emailWhitelist.length === 0) {
+      await this.projectsRepository.createCertificates(certificateInfo);
+    }
 
     const certificates = await this.projectsRepository.findCertificatesByEditionId(editionId);
 
-    for (const { participantId } of certificates) {
-      const participant = (await this.projectsRepository.findParticipantById(
-        participantId,
-      )) as ProjectParticipant;
+    const participants = await this.projectsRepository.findParticipants(
+      certificates.map(({ participantId }) => participantId),
+    );
 
-      let project: Project;
-      if (!existingEdition.name) {
-        project = (await this.projectsRepository.findProjectById(existingEdition.projectId)) as Project;
+    let editionTitle: string;
+    if (existingEdition.name) {
+      editionTitle = existingEdition.name;
+    } else {
+      const project = await this.projectsRepository.findProjectById(existingEdition.projectId);
+
+      editionTitle = `${existingEdition.number}ª edição do(a) ${project!.title}`;
+    }
+
+    for (const participant of participants) {
+      if (emailWhitelist.length > 0 && !emailWhitelist.includes(participant.email)) {
+        continue;
       }
-
-      const certificateTitle =
-        existingEdition.name || `${existingEdition.number}ª edição do(a) ${project!.title}`;
 
       await this.mailProvider.sendMail({
         to: participant.email,
-        subject: `Certificado do(a) ${certificateTitle}`,
-        body: `Olá!<br/><br/>Estamos passando para informar que seu certificado do(a) ${certificateTitle} já está disponível.<br/><br/>Você pode acessá-lo em: ${process.env.WEB_URL}/sdc/certificados/${editionId}?participantId=${participantId}`,
+        subject: `Certificado do(a) ${editionTitle}`,
+        body: `Olá!<br/><br/>Estamos passando para informar que seu certificado do(a) ${editionTitle} já está disponível.<br/><br/>Você pode acessá-lo em: ${process.env.WEB_URL}/sdc/certificados/${editionId}?participantId=${participant.id}`,
       });
+
+      await sleep(1000);
     }
 
     return certificates;
