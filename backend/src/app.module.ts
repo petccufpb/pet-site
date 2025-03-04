@@ -1,4 +1,4 @@
-import { CacheModule, CacheInterceptor } from "@nestjs/cache-manager";
+import { CacheInterceptor, CacheModule } from "@nestjs/cache-manager";
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { APP_INTERCEPTOR } from "@nestjs/core";

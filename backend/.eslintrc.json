@@ -40,7 +40,7 @@
     "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
     "no-constant-condition": "off",
     "no-continue": "off",
-    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "no-plusplus": "off",
     "no-unused-expressions": ["off", { "allowShortCircuit": true }],
     "no-unused-vars": ["error", { "argsIgnorePattern": "^_|next" }],
     "no-use-before-define": "off",
