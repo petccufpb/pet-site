@@ -69,7 +69,14 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
   }, [id, isEvent, searchParams.participantId]);
 
   useEffect(() => {
-    if (Object.entries(template).length === 0) return;
+    if (
+		Object.entries(template).length === 0 ||
+		edition === undefined ||
+		event === undefined ||
+		participant === undefined
+	) {
+		return;
+	}
 
     setTemplate(old => ({
       ...old,
@@ -94,7 +101,6 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
         })
         .join(""),
     }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [edition, event, participant]);
 
   const certificateTitle = `Certificado do(a) ${edition?.name || event?.name}`;
