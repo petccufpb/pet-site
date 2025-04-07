@@ -55,6 +55,19 @@
     "tsconfig-paths": "4.1.1",
     "webpack": "^5.76.2"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@nestjs/core",
+      "@prisma/client",
+      "@prisma/engines",
+      "@vercel/speed-insights",
+      "bcrypt",
+      "esbuild",
+      "prisma",
+      "sharp",
+      "typeit"
+    ]
+  },
   "engines": {
     "node": "^12 || >=14"
   }
