@@ -75,19 +75,24 @@ model ProjectCertificate {
     updatedAt     DateTime            @updatedAt
 }
 
+enum ProjectCertificateKind {
+    minicurso
+    palestra
+}
+
 model ProjectCertificateTemplate {
-    id            String          @id @default(uuid())
+    id            String                  @id @default(uuid())
     text          String
     backgroundUrl String
     editionId     String?
-    edition       ProjectEdition? @relation(fields: [editionId], references: [id])
+    edition       ProjectEdition?         @relation(fields: [editionId], references: [id])
     eventId       String?
-    event         ProjectEvent?   @relation(fields: [eventId], references: [id])
-    speaker       Boolean         @default(false)
-    createdAt     DateTime        @default(now())
-    updatedAt     DateTime        @updatedAt
+    event         ProjectEvent?           @relation(fields: [eventId], references: [id])
+    kind          ProjectCertificateKind?
+    createdAt     DateTime                @default(now())
+    updatedAt     DateTime                @updatedAt
 
-    @@unique([editionId, eventId, speaker])
+    @@unique([editionId, eventId, kind])
 }
 
 model ProjectEdition {

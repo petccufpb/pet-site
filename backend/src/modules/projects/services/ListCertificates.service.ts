@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { ProjectCertificateKind } from "@prisma/client";
 
 import { PrismaService } from "@database/prisma.service";
 
@@ -48,7 +49,10 @@ export default class ListCertificates {
               include: {
                 certificateTemplate: {
                   where: {
-                    speaker: true,
+                    kind: (event!.type &&
+                      (event!.type !== "minicurso"
+                        ? "palestra"
+                        : "minicurso")) as ProjectCertificateKind | null,
                   },
                 },
               },
