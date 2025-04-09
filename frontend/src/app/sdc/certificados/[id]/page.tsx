@@ -1,6 +1,12 @@
 "use client";
 import { BlobProvider, PDFViewer } from "@react-pdf/renderer";
-import { ProjectCertificateTemplate, ProjectEdition, ProjectEvent, ProjectParticipant } from "backend";
+import {
+	ProjectCertificateTemplate,
+	ProjectEdition,
+	ProjectEvent,
+	ProjectParticipant,
+	ProjectSpeaker,
+} from "backend";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { notFound } from "next/navigation";
@@ -17,7 +23,8 @@ interface GerarCertificadoParams {
   };
   searchParams: {
     event?: string;
-    participantId: string;
+    participantId?: string;
+    speakerId?: string;
   };
 }
 
@@ -29,17 +36,28 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
   const [edition, setEdition] = useState<ProjectEdition>();
   const [event, setEvent] = useState<ProjectEvent>();
   const [participant, setParticipant] = useState<ProjectParticipant>();
+  const [speaker, setSpeaker] = useState<ProjectSpeaker>();
   const [template, setTemplate] = useState<ProjectCertificateTemplate>({
     text: "",
   } as ProjectCertificateTemplate);
 
   useEffect(() => {
     const execute = async () => {
-      const { data: certificateData } = await api.get(
-        `/projects/certificates?${isEvent ? "eventId" : "editionId"}=${id}&participantId=${
-          searchParams.participantId
-        }`,
+      if (!searchParams.participantId && !searchParams.speakerId) {
+        return;
+      }
+
+      const url = new URL(
+        `${process.env.NEXT_PUBLIC_API_URL}/projects/certificates?${isEvent ? "eventId" : "editionId"}=${id}`,
       );
+
+      if (searchParams.participantId) {
+        url.searchParams.append("participantId", searchParams.participantId);
+      } else if (searchParams.speakerId) {
+        url.searchParams.append("speakerId", searchParams.speakerId);
+      }
+
+      const { data: certificateData } = await api.get(url.toString());
 
       if (!certificateData || certificateData.length === 0) {
         notFound();
@@ -54,7 +72,8 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
       setAttendance(certificate.attendance?.toFixed(2).replace(".", ","));
       setEvent(certificate.event);
       setParticipant(certificate.participant);
-      setTemplate(certificateTemplate);
+      setSpeaker(certificate.speaker);
+      setTemplate(certificateTemplate[0]);
 
       if (!isEvent && certificate.edition) {
         const { data: eventsData } = await api.get<ProjectEvent[]>(`/projects/events?editionId=${id}`);
@@ -66,41 +85,42 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
     };
 
     execute();
-  }, [id, isEvent, searchParams.participantId]);
+  }, [id, isEvent, searchParams.participantId, searchParams.speakerId]);
 
   useEffect(() => {
-    if (
-		Object.entries(template).length === 0 ||
-		edition === undefined ||
-		event === undefined ||
-		participant === undefined
-	) {
-		return;
-	}
+    if (edition === undefined || event === undefined || participant === undefined) {
+      return;
+    }
 
-    setTemplate(old => ({
-      ...old,
-      text: old.text
-        .replace('\\"', '"')
-        .split(/({.+?}\)?\}?)/)
-        .map(part => {
-          if (part.includes("{format")) {
-            const args = part
-              .split(/{format\(|\)}/)
-              .filter(str => str)[0]
-              .split(",");
+    setTemplate(old => {
+      if (Object.entries(old).length === 0) {
+        return old;
+      }
 
-            return format(eval(args[0]), eval(args[1]), { locale: ptBR });
-          }
+      return {
+        ...old,
+        text: old.text
+          .replace('\\"', '"')
+          .split(/({.+?}\)?\}?)/)
+          .map(part => {
+            if (part.includes("{format")) {
+              const args = part
+                .split(/{format\(|\)}/)
+                .filter(str => str)[0]
+                .split(",");
 
-          if (part.includes("{")) {
-            return eval(part.split(/{|}/)[1]);
-          }
+              return format(eval(args[0]), eval(args[1]), { locale: ptBR });
+            }
 
-          return part;
-        })
-        .join(""),
-    }));
+            if (part.includes("{")) {
+              return eval(part.split(/{|}/)[1]);
+            }
+
+            return part;
+          })
+          .join(""),
+      };
+    });
   }, [edition, event, participant]);
 
   const certificateTitle = `Certificado do(a) ${edition?.name || event?.name}`;

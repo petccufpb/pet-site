@@ -1,14 +1,14 @@
 import { QueryRequired } from "@hyoretsu/decorators";
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Post, Query } from "@nestjs/common";
 import {
-  Project,
-  ProjectAttendance,
-  ProjectCertificate,
-  ProjectEdition,
-  ProjectEvent,
-  ProjectParticipant,
-  ProjectParticipation,
-  ProjectSpeaker,
+	Project,
+	ProjectAttendance,
+	ProjectCertificate,
+	ProjectEdition,
+	ProjectEvent,
+	ProjectParticipant,
+	ProjectParticipation,
+	ProjectSpeaker,
 } from "@prisma/client";
 
 import CreateAttendanceDTO from "@modules/projects/dtos/CreateAttendance.dto";
@@ -21,6 +21,7 @@ import CreateParticipationDTO from "@modules/projects/dtos/CreateParticipation.d
 import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import FindParticipantDTO from "@modules/projects/dtos/FindParticipant.dto";
+import ListCertificatesDTO from "@modules/projects/dtos/ListCertificates.dto";
 import ValidateCertificateDTO from "@modules/projects/dtos/ValidateCertificate.dto";
 import { CompleteProjectCertificate } from "@modules/projects/repositories/projects.repository";
 import CreateAttendance from "@modules/projects/services/CreateAttendance.service";
@@ -41,7 +42,7 @@ import ListCertificates from "@modules/projects/services/ListCertificates.servic
 import ListEditions from "@modules/projects/services/ListEditions.service";
 import ListEvents from "@modules/projects/services/ListEvents.service";
 import ListParticipants, {
-  ListParticipantsResponse,
+	ListParticipantsResponse,
 } from "@modules/projects/services/ListParticipants.service";
 import ValidateCertificate from "@modules/projects/services/ValidateCertificate.service";
 
@@ -101,18 +102,10 @@ export default class ProjectsController {
 
   @Get("certificates")
   async getProjectsCertificates(
-    @Query("editionId")
-    editionId?: string,
-    @Query("eventId")
-    eventId?: string,
-    @Query("participantId")
-    participantId?: string,
+    @Query()
+    query: ListCertificatesDTO,
   ): Promise<CompleteProjectCertificate[]> {
-    const certificates = await this.listCertificates.execute({
-      editionId,
-      eventId,
-      participantId,
-    });
+    const certificates = await this.listCertificates.execute(query);
 
     return certificates;
   }

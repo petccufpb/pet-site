@@ -24,8 +24,6 @@ export default class ValidateCertificate {
       }
 
       participantId = foundParticipant.id;
-    } else {
-      throw new HttpException("Você deve enviar um email, matrícula ou ID", HttpStatus.BAD_REQUEST);
     }
 
     const certificate = await this.projectsRepository.findCertificateById(certificateId);
@@ -33,6 +31,10 @@ export default class ValidateCertificate {
       throw new HttpException("Esse certificado não existe", HttpStatus.NOT_FOUND);
     }
 
-    return certificate.participantId === participantId;
+    if (!email && !matricula && certificate.speakerId === null) {
+      throw new HttpException("Você deve enviar um email, matrícula ou ID", HttpStatus.BAD_REQUEST);
+    }
+
+    return certificate.speakerId !== null || certificate.participantId === participantId!;
   }
 }

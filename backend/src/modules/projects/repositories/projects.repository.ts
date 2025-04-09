@@ -1,13 +1,13 @@
 import {
-  Prisma,
-  Project,
-  ProjectAttendance,
-  ProjectCertificate,
-  ProjectEdition,
-  ProjectEvent,
-  ProjectParticipant,
-  ProjectParticipation,
-  ProjectSpeaker,
+	Prisma,
+	Project,
+	ProjectAttendance,
+	ProjectCertificate,
+	ProjectEdition,
+	ProjectEvent,
+	ProjectParticipant,
+	ProjectParticipation,
+	ProjectSpeaker,
 } from "@prisma/client";
 
 import CreateAttendanceDTO from "../dtos/CreateAttendance.dto";
@@ -120,7 +120,7 @@ export default abstract class ProjectsRepository {
   abstract findParticipantById(id: string): Promise<ProjectParticipant | null>;
   abstract findParticipantByMatricula(matricula: string | null): Promise<ProjectParticipant | null>;
   abstract findParticipantByPhone(phone: string): Promise<ProjectParticipant | null>;
-  abstract findParticipants(ids: string[]): Promise<ProjectParticipant[]>;
+  abstract findParticipants(ids: (string | null)[]): Promise<ProjectParticipant[]>;
   abstract findParticipantsByEdition(editionId: string): Promise<ProjectParticipant[]>;
   abstract findParticipantsByEvent(eventId: string): Promise<ProjectParticipant[]>;
   abstract findParticipation(data: FindParticipationDTO): Promise<ProjectParticipation | null>;

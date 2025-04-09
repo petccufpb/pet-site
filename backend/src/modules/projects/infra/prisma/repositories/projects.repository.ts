@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import {
-  Project,
-  ProjectAttendance,
-  ProjectCertificate,
-  ProjectEdition,
-  ProjectEvent,
-  ProjectParticipant,
-  ProjectParticipation,
-  ProjectSpeaker,
+	Project,
+	ProjectAttendance,
+	ProjectCertificate,
+	ProjectEdition,
+	ProjectEvent,
+	ProjectParticipant,
+	ProjectParticipation,
+	ProjectSpeaker,
 } from "@prisma/client";
 
 import { PrismaService } from "@database/prisma.service";
@@ -19,15 +19,15 @@ import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParticipant.dto";
 import UpdateParticipantDTO from "@modules/projects/dtos/UpdateParticipant.dto";
 import ProjectsRepository, {
-  CertificateInfo,
-  CompleteProjectAttendance,
-  CompleteProjectCertificate,
-  CompleteProjectEdition,
-  CompleteProjectEvent,
-  CreateRepoAttendance,
-  CreateRepoParticipation,
-  FindEditionDTO,
-  FindExistingEventDTO,
+	CertificateInfo,
+	CompleteProjectAttendance,
+	CompleteProjectCertificate,
+	CompleteProjectEdition,
+	CompleteProjectEvent,
+	CreateRepoAttendance,
+	CreateRepoParticipation,
+	FindEditionDTO,
+	FindExistingEventDTO,
 } from "@modules/projects/repositories/projects.repository";
 
 @Injectable()
@@ -184,6 +184,7 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
       where: { eventId },
       include: {
         participant: true,
+        speaker: true,
         event: {
           include: {
             certificateTemplate: true,
