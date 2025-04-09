@@ -1,11 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 
+import { PrismaService } from "@database/prisma.service";
+
 import ListCertificatesDTO from "../dtos/ListCertificates.dto";
 import ProjectsRepository, { CompleteProjectCertificate } from "../repositories/projects.repository";
 
 @Injectable()
 export default class ListCertificates {
-  constructor(private projectsRepository: ProjectsRepository) {}
+  constructor(private readonly prisma: PrismaService, private projectsRepository: ProjectsRepository) {}
 
   public async execute({
     editionId,
@@ -31,7 +33,41 @@ export default class ListCertificates {
         certificates = certificates.filter(certificate => certificate.participantId === participantId);
       }
     } else if (eventId) {
-      certificates = await this.projectsRepository.findCertificatesByEventId(eventId);
+      if (speakerId) {
+        const event = await this.prisma.projectEvent.findUnique({
+          where: { id: eventId },
+        });
+
+        const certificate = (await this.prisma.projectCertificate.findFirst({
+          where: {
+            editionId: event?.editionId,
+            speakerId,
+          },
+          include: {
+            edition: {
+              include: {
+                certificateTemplate: {
+                  where: {
+                    speaker: true,
+                  },
+                },
+              },
+            },
+            speaker: true,
+          },
+        })) as unknown as CompleteProjectCertificate;
+
+        if (!certificate) {
+          throw new HttpException("Esse certificado não existe", HttpStatus.NOT_FOUND);
+        }
+
+        // @ts-ignore
+        certificate.event = { ...event, certificateTemplate: [] };
+
+        certificates = [certificate];
+      } else {
+        certificates = await this.projectsRepository.findCertificatesByEventId(eventId);
+      }
 
       if (participantId) {
         certificates = certificates.filter(certificate => certificate.participantId === participantId);
