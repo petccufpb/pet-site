@@ -64,7 +64,8 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
       }
 
       const [certificate] = certificateData;
-      const { certificateTemplate } = isEvent ? certificate.event : certificate.edition;
+      const { certificateTemplate } =
+        isEvent && !searchParams.speakerId ? certificate.event : certificate.edition;
       if (!certificateTemplate) {
         notFound();
       }
@@ -88,7 +89,7 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
   }, [id, isEvent, searchParams.participantId, searchParams.speakerId]);
 
   useEffect(() => {
-    if (edition === undefined || event === undefined || participant === undefined) {
+    if (edition === undefined || event === undefined || (speaker === null && participant === undefined)) {
       return;
     }
 
@@ -121,7 +122,7 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
           .join(""),
       };
     });
-  }, [edition, event, participant]);
+  }, [edition, event, participant, speaker]);
 
   const certificateTitle = `Certificado do(a) ${edition?.name || event?.name}`;
 
