@@ -16,4 +16,9 @@ export default class ListCertificatesDTO {
   @IsString()
   @IsUUID()
   participantId?: string;
+
+  @IsOptional()
+  @IsString()
+  @IsUUID()
+  speakerId?: string;
 }

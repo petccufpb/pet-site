@@ -61,70 +61,75 @@ model ProjectAttendance {
 }
 
 model ProjectCertificate {
-    id            String             @id @default(uuid())
-    participantId String
-    participant   ProjectParticipant @relation(fields: [participantId], references: [id])
+    id            String              @id @default(uuid())
+    participantId String?
+    participant   ProjectParticipant? @relation(fields: [participantId], references: [id])
+    speakerId     String?
+    speaker       ProjectSpeaker?     @relation(fields: [speakerId], references: [id])
     editionId     String?
-    edition       ProjectEdition?    @relation(fields: [editionId], references: [id])
+    edition       ProjectEdition?     @relation(fields: [editionId], references: [id])
     eventId       String?
-    event         ProjectEvent?      @relation(fields: [eventId], references: [id])
+    event         ProjectEvent?       @relation(fields: [eventId], references: [id])
     attendance    Float?
-    createdAt     DateTime           @default(now())
-    updatedAt     DateTime           @updatedAt
+    createdAt     DateTime            @default(now())
+    updatedAt     DateTime            @updatedAt
 }
 
 model ProjectCertificateTemplate {
     id            String          @id @default(uuid())
     text          String
     backgroundUrl String
-    editionId     String?         @unique
+    editionId     String?
     edition       ProjectEdition? @relation(fields: [editionId], references: [id])
-    eventId       String?         @unique
+    eventId       String?
     event         ProjectEvent?   @relation(fields: [eventId], references: [id])
+    speaker       Boolean         @default(false)
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
+
+    @@unique([editionId, eventId, speaker])
 }
 
 model ProjectEdition {
-    id                  String                      @id @default(uuid())
+    id                  String                       @id @default(uuid())
     name                String?
     number              Float
     date                DateTime
     logoUrl             String?
-    minimumAttendance   Int                         @default(100)
-    certificateTemplate ProjectCertificateTemplate?
+    minimumAttendance   Int                          @default(100)
+    certificateTemplate ProjectCertificateTemplate[]
     certificates        ProjectCertificate[]
     events              ProjectEvent[]
     participants        ProjectParticipation[]
     projectId           String
-    project             Project                     @relation(fields: [projectId], references: [id])
-    createdAt           DateTime                    @default(now())
-    updatedAt           DateTime                    @updatedAt
+    project             Project                      @relation(fields: [projectId], references: [id])
+    createdAt           DateTime                     @default(now())
+    updatedAt           DateTime                     @updatedAt
 }
 
 model ProjectEvent {
-    id                  String                      @id @default(uuid())
+    id                  String                       @id @default(uuid())
     name                String
     about               String?
     type                String?
     capacity            Int?
-    extraCapacity       Int                         @default(0)
-    onSite              Boolean                     @default(true)
+    extraCapacity       Int                          @default(0)
+    onSite              Boolean                      @default(true)
     externalSignup      String?
     location            String?
     startTime           DateTime
     endTime             DateTime
-    allowMultiple       Boolean                     @default(false)
-    certificateTemplate ProjectCertificateTemplate?
+    allowMultiple       Boolean                      @default(false)
+    certificateTemplate ProjectCertificateTemplate[]
     certificates        ProjectCertificate[]
     speakerId           String
-    speaker             ProjectSpeaker              @relation(fields: [speakerId], references: [id])
+    speaker             ProjectSpeaker               @relation(fields: [speakerId], references: [id])
     participants        ProjectParticipation[]
     attendees           ProjectAttendance[]
     editionId           String
-    edition             ProjectEdition              @relation(fields: [editionId], references: [id])
-    createdAt           DateTime                    @default(now())
-    updatedAt           DateTime                    @updatedAt
+    edition             ProjectEdition               @relation(fields: [editionId], references: [id])
+    createdAt           DateTime                     @default(now())
+    updatedAt           DateTime                     @updatedAt
 }
 
 model ProjectParticipation {
@@ -160,11 +165,12 @@ model ProjectParticipant {
 }
 
 model ProjectSpeaker {
-    id        String         @id @default(uuid())
-    name      String
-    about     String?
-    photoUrl  String
-    events    ProjectEvent[]
-    createdAt DateTime       @default(now())
-    updatedAt DateTime       @updatedAt
+    id           String               @id @default(uuid())
+    name         String
+    about        String?
+    photoUrl     String
+    events       ProjectEvent[]
+    certificates ProjectCertificate[]
+    createdAt    DateTime             @default(now())
+    updatedAt    DateTime             @updatedAt
 }

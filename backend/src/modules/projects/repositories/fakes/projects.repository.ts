@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import {
-  Project,
-  ProjectAttendance,
-  ProjectCertificate,
-  ProjectEdition,
-  ProjectEvent,
-  ProjectParticipant,
-  ProjectParticipation,
-  ProjectSpeaker,
+	Project,
+	ProjectAttendance,
+	ProjectCertificate,
+	ProjectEdition,
+	ProjectEvent,
+	ProjectParticipant,
+	ProjectParticipation,
+	ProjectSpeaker,
 } from "@prisma/client";
 import { randomUUID } from "crypto";
 import { isBefore, isSameHour, isSameMinute } from "date-fns";
@@ -21,15 +21,15 @@ import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParti
 import UpdateParticipantDTO from "@modules/projects/dtos/UpdateParticipant.dto";
 
 import ProjectsRepository, {
-  CertificateInfo,
-  CompleteProjectAttendance,
-  CompleteProjectCertificate,
-  CompleteProjectEdition,
-  CompleteProjectEvent,
-  CreateRepoAttendance,
-  CreateRepoParticipation,
-  FindEditionDTO,
-  FindExistingEventDTO,
+	CertificateInfo,
+	CompleteProjectAttendance,
+	CompleteProjectCertificate,
+	CompleteProjectEdition,
+	CompleteProjectEvent,
+	CreateRepoAttendance,
+	CreateRepoParticipation,
+	FindEditionDTO,
+	FindExistingEventDTO,
 } from "../projects.repository";
 
 @Injectable()
@@ -67,6 +67,7 @@ export default class FakeProjectsRepository implements ProjectsRepository {
       attendance: attendance || null,
       editionId: editionId || null,
       eventId: eventId || null,
+      speakerId: null,
       id: randomUUID(),
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -84,6 +85,7 @@ export default class FakeProjectsRepository implements ProjectsRepository {
         attendance: attendance || null,
         editionId: editionId || null,
         eventId: eventId || null,
+        speakerId: null,
         id: randomUUID(),
         createdAt: new Date(),
         updatedAt: new Date(),

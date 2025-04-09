@@ -11,6 +11,7 @@ export default class ListCertificates {
     editionId,
     eventId,
     participantId,
+    speakerId,
   }: ListCertificatesDTO): Promise<CompleteProjectCertificate[]> {
     let certificates: CompleteProjectCertificate[] = [];
 
@@ -34,6 +35,8 @@ export default class ListCertificates {
 
       if (participantId) {
         certificates = certificates.filter(certificate => certificate.participantId === participantId);
+      } else if (speakerId) {
+        certificates = certificates.filter(certificate => certificate.speakerId === speakerId);
       }
     } else if (participantId) {
       certificates = await this.projectsRepository.findCertificatesByParticipantId(participantId);
