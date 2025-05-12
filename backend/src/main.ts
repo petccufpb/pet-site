@@ -31,7 +31,7 @@ const bootstrap = async () => {
     if (
       req.method === "GET" ||
       req.url === "/favicon.ico" ||
-      req.headers["host" || "origin"]?.includes("localhost") ||
+      (req.headers.host || req.headers.origin)?.includes("localhost") ||
       req.headers.origin?.replace(urlRegex, "") === process.env.WEB_URL?.replace(urlRegex, "")
     ) {
       next!();

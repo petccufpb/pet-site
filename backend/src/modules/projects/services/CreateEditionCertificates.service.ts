@@ -5,9 +5,65 @@ import { ProjectCertificate } from "@prisma/client";
 
 import ProjectsRepository, { CertificateInfo } from "../repositories/projects.repository";
 
+interface DebugParticipantsParams {
+  attendanceRatio: number;
+  events: Array<{
+    attendees: Array<{
+      participantId: string;
+    }>;
+    id: string;
+    name: string;
+    startTime: Date;
+  }>;
+  minimumAttendance: number;
+  participantId: string;
+  totalAttendances: number;
+  totalEvents: number;
+}
+
 @Injectable()
 export default class CreateEditionCertificates {
   constructor(private mailProvider: MailProvider, private projectsRepository: ProjectsRepository) {}
+
+  private debugParticipant({
+    attendanceRatio,
+    events,
+    minimumAttendance,
+    participantId,
+    totalAttendances,
+    totalEvents,
+  }: DebugParticipantsParams): void {
+    console.info(
+      `${participantId} participou de apenas ${totalAttendances} palestras, com ${attendanceRatio.toFixed(
+        2,
+      )}% de frequência, mas ao todo houveram ${totalEvents}, com frequência mínima de ${minimumAttendance}%.`,
+    );
+
+    let day = 0;
+    let currentDay: number;
+
+    events
+      .sort((eventA, eventB) => eventA.startTime.getTime() - eventB.startTime.getTime())
+      .forEach(event => {
+        const thisDay = event.startTime.getDate();
+        if (currentDay !== thisDay) {
+          day++;
+          currentDay = thisDay;
+        }
+
+        console.log(
+          event.name,
+          "-",
+          `\x1b[1mDia ${day} às ${event.startTime.getHours()}h${event.startTime.getMinutes()}m\x1b[0m`,
+          "-",
+          event.attendees.find(attendance => attendance.participantId === participantId) === undefined
+            ? `${Bun.color("red", "ansi")}NÃO`
+            : `${Bun.color("green", "ansi")}SIM`,
+          "\x1b[0m-",
+          event.id,
+        );
+      });
+  }
 
   public async execute(editionId: string): Promise<ProjectCertificate[]> {
     const existingEdition = await this.projectsRepository.findEditionById(editionId);
@@ -49,6 +105,17 @@ export default class CreateEditionCertificates {
 
       const attendanceRatio = (totalAttendances / mainEvents.length) * 100;
       if (attendanceRatio < existingEdition.minimumAttendance) {
+        if (participantId === "d7e6060b-c565-455d-8da3-9f8d530e30e9") {
+          this.debugParticipant({
+            attendanceRatio,
+            events: mainEvents,
+            minimumAttendance: existingEdition.minimumAttendance,
+            participantId,
+            totalAttendances,
+            totalEvents: mainEvents.length,
+          });
+        }
+
         continue outerLoop;
       }
 
@@ -89,7 +156,12 @@ export default class CreateEditionCertificates {
     const emailWhitelist: string[] = [];
 
     if (emailWhitelist.length === 0) {
-      await this.projectsRepository.createCertificates(certificateInfo);
+      const existingCertificates = await this.projectsRepository.findCertificatesByEditionId(editionId);
+      const existingParticipants = existingCertificates.map(({ participantId }) => participantId);
+
+      await this.projectsRepository.createCertificates(
+        certificateInfo.filter(({ participantId }) => !existingParticipants.includes(participantId)),
+      );
     }
 
     const certificates = await this.projectsRepository.findCertificatesByEditionId(editionId);
