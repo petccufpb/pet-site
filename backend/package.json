@@ -12,7 +12,7 @@
     "postinstall": "prisma generate",
     "start": "nest start",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "bun dist/src/main",
+    "start:prod": "node dist/src/main",
     "test": "jest"
   },
   "dependencies": {
