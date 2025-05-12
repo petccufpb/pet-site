@@ -57,8 +57,8 @@ export default class CreateEditionCertificates {
           `\x1b[1mDia ${day} às ${event.startTime.getHours()}h${event.startTime.getMinutes()}m\x1b[0m`,
           "-",
           event.attendees.find(attendance => attendance.participantId === participantId) === undefined
-            ? `${Bun.color("red", "ansi")}NÃO`
-            : `${Bun.color("green", "ansi")}SIM`,
+            ? `${'\x1b[31m'}NÃO`
+            : `${'\x1b[32m'}SIM`,
           "\x1b[0m-",
           event.id,
         );
