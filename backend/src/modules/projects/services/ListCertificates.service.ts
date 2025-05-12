@@ -3,6 +3,8 @@ import { ProjectCertificateKind } from "@prisma/client";
 
 import { PrismaService } from "@database/prisma.service";
 
+import { PrismaService } from "@database/prisma.service";
+
 import ListCertificatesDTO from "../dtos/ListCertificates.dto";
 import ProjectsRepository, { CompleteProjectCertificate } from "../repositories/projects.repository";
 
