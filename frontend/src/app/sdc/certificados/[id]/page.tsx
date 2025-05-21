@@ -41,11 +41,22 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
     text: "",
   } as ProjectCertificateTemplate);
 
+  console.log("attendance", attendance);
+  console.log("certificateId", certificateId);
+  console.log("edition", edition);
+  console.log("event", event);
+  console.log("participant", participant);
+  console.log("speaker", speaker);
+  console.log("template", template);
+
   useEffect(() => {
     const execute = async () => {
+      console.log("searchp", searchParams);
       if (!searchParams.participantId && !searchParams.speakerId) {
         return;
       }
+      console.log("alo");
+      //   console.log()
 
       const url = new URL(
         `${process.env.NEXT_PUBLIC_API_URL}/projects/certificates?${isEvent ? "eventId" : "editionId"}=${id}`,

@@ -26,6 +26,9 @@ import ListEvents from "./services/ListEvents.service";
 import ListParticipants from "./services/ListParticipants.service";
 import ValidateCertificate from "./services/ValidateCertificate.service";
 
+console.log(process.env.MAIL_DRIVER);
+console.log(mailProviders[process.env.MAIL_DRIVER as MailProviderKeys]);
+
 @Module({
   controllers: [ProjectsController],
   providers: [

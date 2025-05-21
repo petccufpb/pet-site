@@ -167,7 +167,13 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
       },
       include: {
         edition: {
-          include: { certificateTemplate: true },
+          include: {
+            certificateTemplate: {
+              where: {
+                kind: null,
+              },
+            },
+          },
         },
         participant: true,
         event: {
