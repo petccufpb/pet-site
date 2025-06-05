@@ -1,10 +1,6 @@
-import { formatInTimeZone } from "date-fns-tz";
-import ptBR from "date-fns/locale/pt-BR";
 import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { Router, useRouter } from "next/router";
-import { HiCheck } from "react-icons/hi2";
 import { SDCEventData, SDCScheduleData } from "sdc";
 
 import Logo from "@assets/images/logo.svg?svgr";
@@ -19,7 +15,7 @@ export const metadata: Metadata = {
 
 export default async function Minicurso({ params }: { params: { id: string } }) {
   const schedule: SDCScheduleData = await (
-    await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/editions/latest?project=SDC")
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects/editions/latest?project=SDC`, { next: { revalidate: 0 } })
   ).json();
 
   const [event] = schedule.events.filter(({ id }: SDCEventData) => id === params.id);

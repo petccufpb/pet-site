@@ -5,13 +5,13 @@ import { SDCScheduleData } from "sdc";
 
 import { FireHexagon } from "../Hexagon";
 import {
-  Description,
-  HeadContainer,
-  InstagramContainer,
-  MoreInfo,
-  Section,
-  SmallTitle,
-  SubscribeButton,
+	Description,
+	HeadContainer,
+	InstagramContainer,
+	MoreInfo,
+	Section,
+	SmallTitle,
+	SubscribeButton,
 } from "./styles";
 
 interface HeadProps {
