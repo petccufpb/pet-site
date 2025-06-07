@@ -31,7 +31,7 @@ export async function Head({ data: { logoUrl, name } }: HeadProps) {
   return (
     <HeadContainer>
       <Section>
-        {logo.includes("<svg") ? parse(logo) : <img src={logo} alt={`Logo da ${name}`} />}
+        {logo.includes("<svg") ? parse(logo) : <img src={logoUrl} alt={`Logo da ${name}`} />}
 
         <div>
           <SmallTitle>Última Edição</SmallTitle>
