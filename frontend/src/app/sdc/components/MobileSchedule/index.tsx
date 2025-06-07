@@ -6,18 +6,19 @@ import { HiArrowUpRight, HiXMark } from "react-icons/hi2";
 import { SDCScheduleData } from "sdc";
 
 import {
-  Availability,
-  Day,
-  DaySelector,
-  Event,
-  EventContainer,
-  SdcScheduleContainer,
-  SpeakerPhoto,
-  Table,
+	Availability,
+	Day,
+	DaySelector,
+	Event,
+	EventContainer,
+	SdcScheduleContainer,
+	SpeakerPhoto,
+	Table,
 } from "./styles";
 
 export function MobileSchedule({ data }: { data: SDCScheduleData }) {
   const [currentDay, setCurrentDay] = useState<number>(new Date(data.events[0]?.startTime || "").getDate());
+
   const days: number[] = [
     ...new Set(
       data.events

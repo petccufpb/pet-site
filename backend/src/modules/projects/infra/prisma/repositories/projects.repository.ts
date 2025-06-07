@@ -110,6 +110,9 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
             participants: true,
             speaker: true,
           },
+			orderBy: {
+				startTime: "asc",
+			},
         },
         participants: true,
       },
