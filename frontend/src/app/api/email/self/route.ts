@@ -1,5 +1,13 @@
-import { MailProviderKeys, mailProviders } from "@hyoretsu/providers";
 import { NextRequest } from "next/server";
+import nodemailer from "nodemailer";
+
+const client = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS,
+  },
+});
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,11 +17,11 @@ export async function POST(req: NextRequest) {
       return new Response(null, { status: 400 });
     }
 
-    new mailProviders[process.env.MAIL_DRIVER as MailProviderKeys]().sendMail({
-      body: content,
-      subject,
+    client.sendMail({
+			html: content,
+			subject,
       to: process.env.MAIL_USER!,
-    });
+		});
 
     return new Response(null, { status: 200 });
   } catch (err) {
