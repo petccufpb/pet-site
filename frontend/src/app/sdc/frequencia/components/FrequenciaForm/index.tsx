@@ -79,6 +79,7 @@ export function FrequenciaForm({
   isEventOnSite,
   sections,
   id,
+  location,
   isFromUFPB,
   type = "normal",
   confirmType = "confirm",
@@ -95,6 +96,7 @@ export function FrequenciaForm({
   endTime?: Date;
   eventName: string;
   eventType?: string;
+  location?:string
   isEventOnSite?: boolean;
   sections?: { title: string; placeholder: string; id: "name" | "email" }[];
   id: string;
@@ -177,14 +179,23 @@ export function FrequenciaForm({
       return;
     }
 
+    let coordinates: string[] | number[] | undefined = location?.split(",")
+    if (coordinates) {
+      if (coordinates.length > 1){
+        coordinates = coordinates.map(each => Number(each))
+      } else {
+        coordinates = undefined;
+      }
+    }
+
     if (
       distanceBetweenCoordinates(
-        [userLocation.coords.latitude, userLocation.coords.longitude],
-        [-7.16252, -34.8173],
+        [userLocation!.coords.latitude, userLocation!.coords.longitude],
+        (coordinates ?? [-7.16252, -34.8173]) as [number, number],
       ) > 2000
     ) {
       toast.dismiss(i);
-      toast.error("Você está fora da área do Centro de Informática.", {
+      toast.error("Você está fora da área desse evento.", {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,

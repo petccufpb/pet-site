@@ -66,6 +66,7 @@ export default async function Frequencia({ params }: { params: { id: string } })
             { title: "Seu nome", placeholder: "João da Silva", id: "name" },
             { title: "E-mail cadastrado", placeholder: "seuemail@exemplo.com", id: "email" },
           ]}
+          location={event.location}
           eventName={event.name}
           eventType={event.type}
           editionName={schedule.name || ""}

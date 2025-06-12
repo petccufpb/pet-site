@@ -45,5 +45,14 @@
       "sharp",
       "typeit"
     ]
-  }
+  },
+  "trustedDependencies": [
+    "@nestjs/core",
+    "@vercel/speed-insights",
+    "aws-sdk",
+    "backend",
+    "protobufjs",
+    "typeit",
+    "unrs-resolver"
+  ]
 }
