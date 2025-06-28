@@ -157,7 +157,7 @@ model ProjectParticipant {
     name                 String
     email                String                 @unique
     birthDate            DateTime
-    phoneNumber          String                 @unique
+    phoneNumber          String?                @unique
     // It'll bug if it's an 'Int' and 'BigInt' is messy to work with
     matricula            String?                @unique
     course               String
