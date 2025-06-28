@@ -26,7 +26,12 @@ export default class CreateEventCertificates {
     const emailWhitelist: string[] = [];
 
     if (emailWhitelist.length === 0) {
-      await this.projectsRepository.createCertificates(certificateInfo);
+      const existingCertificates = await this.projectsRepository.findCertificatesByEventId(eventId);
+      const existingParticipants = existingCertificates.map(({ participantId }) => participantId);
+
+      await this.projectsRepository.createCertificates(
+        certificateInfo.filter(({ participantId }) => !existingParticipants.includes(participantId)),
+      );
     }
 
     const certificates = await this.projectsRepository.findCertificatesByEventId(eventId);
