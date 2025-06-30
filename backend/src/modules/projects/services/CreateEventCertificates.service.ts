@@ -51,8 +51,8 @@ export default class CreateEventCertificates {
 
       await this.mailProvider.sendMail({
         to: participant.email,
-        subject: `[${existingEvent.edition.name}] Certificado do minicurso "${eventTitle}"`,
-        body: `Olá!<br/><br/>Estamos passando para informar que seu certificado do minicurso "${eventTitle}" já está disponível.<br/><br/>Você pode acessá-lo em: ${process.env.WEB_URL}/sdc/certificados/${eventId}?event=true&participantId=${participant.id}`,
+        subject: `[${existingEvent.edition.name}] Certificado ${eventTitle}`,
+        body: `Olá!<br/><br/>Estamos passando para informar que seu certificado ${eventTitle} já está disponível.<br/><br/>Você pode acessá-lo em: ${process.env.WEB_URL}/sdc/certificados/${eventId}?event=true&participantId=${participant.id}`,
       });
 
       await sleep(1000);
