@@ -1,11 +1,11 @@
 "use client";
 import { BlobProvider, PDFViewer } from "@react-pdf/renderer";
 import {
-	ProjectCertificateTemplate,
-	ProjectEdition,
-	ProjectEvent,
-	ProjectParticipant,
-	ProjectSpeaker,
+  ProjectCertificateTemplate,
+  ProjectEdition,
+  ProjectEvent,
+  ProjectParticipant,
+  ProjectSpeaker,
 } from "backend";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -102,7 +102,7 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
         ...old,
         text: old.text
           .replace('\\"', '"')
-          .split(/({.+?}\)?\}?)/)
+          .split(/({(?:[^{}]|\${[^{}]*})*})/)
           .map(part => {
             if (part.includes("{format")) {
               const args = part
