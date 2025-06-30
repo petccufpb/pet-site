@@ -109,7 +109,7 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
               splitParts[0] = splitParts[0].slice(1);
               splitParts[splitParts.length - 1] = splitParts.at(-1)!.slice(0, -1);
 
-              return splitParts
+              const value = splitParts
                 .map(each => {
                   if (each.startsWith("format(")) {
                     const args = each.match(/\((.*)(?:"|')\)/)![1].split(/,\s?(?:"|')/);
@@ -120,6 +120,12 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
                   return each;
                 })
                 .join("");
+
+              try {
+                eval(value);
+              } catch {
+                return value;
+              }
             }
 
             if (part.includes("{")) {
