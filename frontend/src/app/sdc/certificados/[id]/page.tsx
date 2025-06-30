@@ -115,7 +115,7 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
                     if (each.startsWith("format(")) {
                       const args = each.match(/\((.*)(?:"|')\)/)![1].split(/,\s?(?:"|')/);
 
-                      return format(eval(args[0]), eval(args[1]), { locale: ptBR });
+                      return format(eval(args[0]), args[1], { locale: ptBR });
                     }
 
                     return each;
