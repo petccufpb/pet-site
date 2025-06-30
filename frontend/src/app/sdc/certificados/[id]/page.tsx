@@ -104,17 +104,28 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
           .replace('\\"', '"')
           .split(/({(?:[^{}]|\${[^{}]*})*})/)
           .map(part => {
-            if (part.includes("{format")) {
-              const args = part
-                .split(/{format\(|\)}/)
-                .filter(str => str)[0]
-                .split(",");
+            if (part.includes("format(")) {
+              const splitParts = [...part.split(/\$?{(format\(.+?\))}/g)];
+              splitParts[0] = splitParts[0].slice(1);
+              splitParts[splitParts.length - 1] = splitParts.at(-1)!.slice(0, -1);
 
-              return format(eval(args[0]), eval(args[1]), { locale: ptBR });
+              return eval(
+                splitParts
+                  .map(each => {
+                    if (each.startsWith("format(")) {
+                      const args = each.match(/\((.*)(?:"|')\)/)![1].split(/,\s?(?:"|')/);
+
+                      return format(eval(args[0]), eval(args[1]), { locale: ptBR });
+                    }
+
+                    return each;
+                  })
+                  .join(""),
+              );
             }
 
             if (part.includes("{")) {
-              return eval(part.split(/{|}/)[1]);
+              return eval(part.slice(1, -1));
             }
 
             return part;
