@@ -179,18 +179,27 @@ export default class CreateEditionCertificates {
       editionTitle = `${existingEdition.number}ª edição do(a) ${project!.title}`;
     }
 
-    for (const participant of participants) {
-      if (emailWhitelist.length > 0 && !emailWhitelist.includes(participant.email)) {
-        continue;
+    while (participants.length > 0) {
+      try {
+        const [participant] = participants;
+
+        if (emailWhitelist.length > 0 && !emailWhitelist.includes(participant.email)) {
+          participants.shift();
+          continue;
+        }
+
+        await this.mailProvider.sendMail({
+          to: participant.email,
+          subject: `Certificado do(a) ${editionTitle}`,
+          body: `Olá!<br/><br/>Estamos passando para informar que seu certificado do(a) ${editionTitle} já está disponível.<br/><br/>Você pode acessá-lo em: ${process.env.WEB_URL}/sdc/certificados/${editionId}?participantId=${participant.id}`,
+        });
+
+        participants.shift();
+
+        await sleep(1000);
+      } catch {
+        await sleep(5000);
       }
-
-      await this.mailProvider.sendMail({
-        to: participant.email,
-        subject: `Certificado do(a) ${editionTitle}`,
-        body: `Olá!<br/><br/>Estamos passando para informar que seu certificado do(a) ${editionTitle} já está disponível.<br/><br/>Você pode acessá-lo em: ${process.env.WEB_URL}/sdc/certificados/${editionId}?participantId=${participant.id}`,
-      });
-
-      await sleep(1000);
     }
 
     return certificates;
