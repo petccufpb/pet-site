@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import {
-	Project,
-	ProjectAttendance,
-	ProjectCertificate,
-	ProjectEdition,
-	ProjectEvent,
-	ProjectParticipant,
-	ProjectParticipation,
-	ProjectSpeaker,
+  Project,
+  ProjectAttendance,
+  ProjectCertificate,
+  ProjectEdition,
+  ProjectEvent,
+  ProjectParticipant,
+  ProjectParticipation,
+  ProjectSpeaker,
 } from "@prisma/client";
 import { randomUUID } from "crypto";
 import { isBefore, isSameHour, isSameMinute } from "date-fns";
@@ -21,15 +21,15 @@ import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParti
 import UpdateParticipantDTO from "@modules/projects/dtos/UpdateParticipant.dto";
 
 import ProjectsRepository, {
-	CertificateInfo,
-	CompleteProjectAttendance,
-	CompleteProjectCertificate,
-	CompleteProjectEdition,
-	CompleteProjectEvent,
-	CreateRepoAttendance,
-	CreateRepoParticipation,
-	FindEditionDTO,
-	FindExistingEventDTO,
+  CertificateInfo,
+  CompleteProjectAttendance,
+  CompleteProjectCertificate,
+  CompleteProjectEdition,
+  CompleteProjectEvent,
+  CreateRepoAttendance,
+  CreateRepoParticipation,
+  FindEditionDTO,
+  FindExistingEventDTO,
 } from "../projects.repository";
 
 @Injectable()
@@ -224,6 +224,7 @@ export default class FakeProjectsRepository implements ProjectsRepository {
         .map(event => ({
           ...event,
           attendees: this.attendances.filter(attendance => attendance.eventId === event.id),
+          edition: this.editions.filter(edition => edition.id === event.editionId)[0],
           participants: this.participations.filter(participation => participation.eventId === event.id),
           speaker: this.speakers.find(speaker => speaker.id === event.speakerId) as ProjectSpeaker,
         }));
@@ -311,6 +312,7 @@ export default class FakeProjectsRepository implements ProjectsRepository {
         .map(event => ({
           ...event,
           attendees: this.attendances.filter(attendance => attendance.eventId === event.id),
+          edition: this.editions.filter(edition => edition.id === event.editionId)[0],
           participants: this.participations.filter(participation => participation.eventId === event.id),
           speaker: this.speakers.find(speaker => speaker.id === event.speakerId) as ProjectSpeaker,
         }));
