@@ -107,6 +107,7 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
         events: {
           include: {
             attendees: true,
+            edition: true,
             participants: true,
             speaker: true,
           },
@@ -230,6 +231,7 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
         events: {
           include: {
             attendees: true,
+            edition: true,
             participants: true,
             speaker: true,
           },
@@ -252,6 +254,7 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     const event = await this.prisma.projectEvent.findFirst({
       where: { id },
       include: {
+        edition: true,
         participants: true,
         speaker: true,
       },

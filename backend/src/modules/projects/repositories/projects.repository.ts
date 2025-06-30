@@ -1,13 +1,13 @@
 import {
-	Prisma,
-	Project,
-	ProjectAttendance,
-	ProjectCertificate,
-	ProjectEdition,
-	ProjectEvent,
-	ProjectParticipant,
-	ProjectParticipation,
-	ProjectSpeaker,
+  Prisma,
+  Project,
+  ProjectAttendance,
+  ProjectCertificate,
+  ProjectEdition,
+  ProjectEvent,
+  ProjectParticipant,
+  ProjectParticipation,
+  ProjectSpeaker,
 } from "@prisma/client";
 
 import CreateAttendanceDTO from "../dtos/CreateAttendance.dto";
@@ -85,6 +85,7 @@ export type CompleteProjectEdition = ProjectEdition & {
 
 export type CompleteProjectEvent = Prisma.ProjectEventGetPayload<{
   include: {
+    edition: true;
     participants: true;
     speaker: true;
   };
