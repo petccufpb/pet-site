@@ -44,18 +44,27 @@ export default class CreateEventCertificates {
       existingEvent.name
     }"`;
 
-    for (const participant of participants) {
-      if (emailWhitelist.length > 0 && !emailWhitelist.includes(participant.email)) {
-        continue;
+    while (participants.length > 0) {
+      try {
+        const [participant] = participants;
+
+        if (emailWhitelist.length > 0 && !emailWhitelist.includes(participant.email)) {
+          participants.shift();
+          continue;
+        }
+
+        await this.mailProvider.sendMail({
+          to: participant.email,
+          subject: `[${existingEvent.edition.name}] Certificado ${eventTitle}`,
+          body: `Olá!<br/><br/>Estamos passando para informar que seu certificado ${eventTitle} já está disponível.<br/><br/>Você pode acessá-lo em: ${process.env.WEB_URL}/sdc/certificados/${eventId}?event=true&participantId=${participant.id}`,
+        });
+
+        participants.shift();
+
+        await sleep(1000);
+      } catch {
+        await sleep(5000);
       }
-
-      await this.mailProvider.sendMail({
-        to: participant.email,
-        subject: `[${existingEvent.edition.name}] Certificado ${eventTitle}`,
-        body: `Olá!<br/><br/>Estamos passando para informar que seu certificado ${eventTitle} já está disponível.<br/><br/>Você pode acessá-lo em: ${process.env.WEB_URL}/sdc/certificados/${eventId}?event=true&participantId=${participant.id}`,
-      });
-
-      await sleep(1000);
     }
 
     return certificates;
