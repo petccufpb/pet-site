@@ -122,7 +122,7 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
                 .join("");
 
               try {
-                eval(value);
+                return eval(value);
               } catch {
                 return value;
               }
