@@ -37,7 +37,7 @@ export default class CreateEventCertificates {
     const certificates = await this.projectsRepository.findCertificatesByEventId(eventId);
 
     const participants = await this.projectsRepository.findParticipants(
-      certificates.map(({ participantId }) => participantId),
+      certificates.map(({ participantId }) => participantId).filter(id => id !== null),
     );
 
     const eventTitle = `${existingEvent.type === "minicurso" ? "do minicurso" : "do(a)"} "${
