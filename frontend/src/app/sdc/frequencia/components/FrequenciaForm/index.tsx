@@ -180,11 +180,15 @@ export function FrequenciaForm({
     }
 
     let coordinates: string[] | number[] | undefined = location?.split(",")
-    if (coordinates) {
-      if (coordinates.length > 1){
+    if (coordinates?.length) {
+      try {
         coordinates = coordinates.map(each => Number(each))
-      } else {
-        coordinates = undefined;
+
+        if (coordinates.some(each => Number.isNan(each))) {
+          coordinates = undefined
+        }
+      } catch {
+        coordinates = undefined
       }
     }
 
