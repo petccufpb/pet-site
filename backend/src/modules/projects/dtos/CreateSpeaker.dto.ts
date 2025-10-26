@@ -11,8 +11,8 @@ export default class CreateSpeakerDTO implements Partial<ProjectSpeaker> {
   @IsString()
   name!: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @IsUrl()
-  photoUrl!: string;
+  photoUrl = '';
 }
