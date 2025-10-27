@@ -18,7 +18,7 @@ export default class CreateParticipationDTO implements Partial<ProjectParticipat
 
   @IsOptional()
   @IsString()
-  matricula?: string;
+  matricula?: string | null;
 
   @IsOptional()
   @IsString()
