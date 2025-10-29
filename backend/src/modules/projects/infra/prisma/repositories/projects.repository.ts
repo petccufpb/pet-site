@@ -16,6 +16,7 @@ import CreateEventDTO from "@modules/projects/dtos/CreateEvent.dto";
 import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
 import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
+import type FindEventParticipationsByEditionDTO from "@modules/projects/dtos/FindEventParticipationsByEdition.dto";
 import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParticipant.dto";
 import UpdateParticipantDTO from "@modules/projects/dtos/UpdateParticipant.dto";
 import ProjectsRepository, {
@@ -263,26 +264,24 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     return event;
   }
 
-  public async findEventParticipationsByEdition(editionId: string): Promise<ProjectParticipation[]> {
-    const completeEdition = await this.prisma.projectEdition.findFirst({
-      where: { id: editionId },
-      include: {
-        events: {
-          include: {
-            participants: true,
-          },
+  public async findEventParticipationsByEdition({
+    editionId,
+    participantId,
+  }: FindEventParticipationsByEditionDTO): Promise<string[]> {
+    const participations = await this.prisma.projectParticipation.findMany({
+      where: {
+        event: {
+          allowMultiple: false,
+          editionId,
         },
+        participantId,
+      },
+      select: {
+        eventId: true,
       },
     });
 
-    const participations: ProjectParticipation[] = [];
-    completeEdition?.events.forEach(event => {
-      event.participants.forEach(participation => {
-        participations.push(participation);
-      });
-    });
-
-    return participations;
+    return participations.map(each => each.eventId!);
   }
 
   public async findEventsByEdition(editionId: string): Promise<ProjectEvent[]> {
