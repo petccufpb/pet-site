@@ -23,5 +23,6 @@
     "strictBindCallApply": true,
     "strictNullChecks": true,
     "target": "es2017"
-  }
+  },
+  "exclude": ["src/**/*.spec.ts"]
 }
