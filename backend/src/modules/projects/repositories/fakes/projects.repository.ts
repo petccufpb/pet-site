@@ -17,6 +17,7 @@ import CreateEventDTO from "@modules/projects/dtos/CreateEvent.dto";
 import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
 import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
+import type FindEventParticipationsByEditionDTO from "@modules/projects/dtos/FindEventParticipationsByEdition.dto";
 import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParticipant.dto";
 import UpdateParticipantDTO from "@modules/projects/dtos/UpdateParticipant.dto";
 
@@ -339,32 +340,24 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     return event;
   }
 
-  public async findEventParticipationsByEdition(editionId: string): Promise<ProjectParticipation[]> {
+  public async findEventParticipationsByEdition({
+    editionId,
+    participantId,
+  }: FindEventParticipationsByEditionDTO): Promise<string[]> {
     const edition =
       (this.editions.find(edition => edition.id === editionId) as CompleteProjectEdition) || null;
 
-    if (edition) {
-      // @ts-ignore
-      edition.events = this.events.filter(event => event.editionId === editionId);
-      edition.events.forEach((event, index) => {
-        const completeEvent = event;
-        completeEvent.attendees = this.attendances.filter(attendance => attendance.eventId === event.id);
-        completeEvent.participants = this.participations.filter(
-          participation => participation.eventId === event.id,
-        );
+    const events = edition
+      ? this.events.filter(each => !each.allowMultiple && each.editionId === edition.id).map(each => each.id)
+      : undefined;
 
-        edition.events[index] = completeEvent;
-      });
-    }
+    const participations: ProjectParticipation[] = events
+      ? this.participations.filter(
+          each => each.eventId && each.participantId === participantId && events.includes(each.eventId),
+        )
+      : [];
 
-    const participations: ProjectParticipation[] = [];
-    edition?.events.forEach(event => {
-      event.participants.forEach(participation => {
-        participations.push(participation);
-      });
-    });
-
-    return participations;
+    return participations.map(each => each.eventId!);
   }
 
   public async findEventsByEdition(editionId: string): Promise<ProjectEvent[]> {
