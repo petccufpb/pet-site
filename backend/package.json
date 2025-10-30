@@ -66,8 +66,5 @@
       "sharp",
       "typeit"
     ]
-  },
-  "engines": {
-    "node": "^12 || >=14"
   }
 }
