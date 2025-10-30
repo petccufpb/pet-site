@@ -25,40 +25,40 @@ const bootstrap = async () => {
 
   app.use(helmet());
 
-	// Todo: block API unless logged in
-	// // @ts-ignore
-	// app.use((req, res, next) => {
-	// const urlRegex = /(https?:\/\/)|(www.)|(\/$)/g;
+  // Todo: block API unless logged in
+  // // @ts-ignore
+  // app.use((req, res, next) => {
+  // const urlRegex = /(https?:\/\/)|(www.)|(\/$)/g;
 
-	// if (
-	// 	req.method === "GET" ||
-	// 	req.url === "/favicon.ico" ||
-	// 	(req.headers.host || req.headers.origin)?.includes("localhost") ||
-	// 	req.headers.origin?.replace(urlRegex, "") === process.env.WEB_URL?.replace(urlRegex, "")
-	// ) {
-	// 	next!();
-	// 	return;
-	// }
+  // if (
+  // 	req.method === "GET" ||
+  // 	req.url === "/favicon.ico" ||
+  // 	(req.headers.host || req.headers.origin)?.includes("localhost") ||
+  // 	req.headers.origin?.replace(urlRegex, "") === process.env.WEB_URL?.replace(urlRegex, "")
+  // ) {
+  // 	next!();
+  // 	return;
+  // }
 
-	// const [user, pass] = Buffer.from(req.headers.authorization.split("Basic ")[1], "base64")
-	// 	.toString()
-	// 	.split(":");
+  // const [user, pass] = Buffer.from(req.headers.authorization.split("Basic ")[1], "base64")
+  // 	.toString()
+  // 	.split(":");
 
-	// // Allow simple GET requests and disallow requests not originated from the frontend or for Swagger's favicon
-	// if (!(users[user] && pass === users[user])) {
-	// 	throw new HttpException(
-	// 	`You don't have permission to access this API. Host - ${req.headers.origin}`,
-	// 	HttpStatus.UNAUTHORIZED,
-	// 	);
-	// }
+  // // Allow simple GET requests and disallow requests not originated from the frontend or for Swagger's favicon
+  // if (!(users[user] && pass === users[user])) {
+  // 	throw new HttpException(
+  // 	`You don't have permission to access this API. Host - ${req.headers.origin}`,
+  // 	HttpStatus.UNAUTHORIZED,
+  // 	);
+  // }
 
-	// next!();
-	// });
+  // next!();
+  // });
 
   // Enable authentication for Swagger
   if (process.env.NODE_ENV === "production") {
     app.use(
-      "/docs*",
+      "/docs",
       expressBasicAuth({
         challenge: true,
         users,
