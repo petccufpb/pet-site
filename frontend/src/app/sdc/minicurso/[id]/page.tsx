@@ -15,7 +15,9 @@ export const metadata: Metadata = {
 
 export default async function Minicurso({ params }: { params: { id: string } }) {
   const schedule: SDCScheduleData = await (
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects/editions/latest?project=SDC`, { next: { revalidate: 0 } })
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects/editions/latest?project=SDC`, {
+      cache: "no-store",
+    })
   ).json();
 
   const [event] = schedule.events.filter(({ id }: SDCEventData) => id === params.id);

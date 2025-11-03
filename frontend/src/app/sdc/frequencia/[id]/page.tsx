@@ -25,7 +25,9 @@ export const metadata: Metadata = {
 
 export default async function Frequencia({ params }: { params: { id: string } }) {
   const schedule: SDCScheduleData = await (
-    await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/editions/latest?project=SDC")
+    await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/editions/latest?project=SDC", {
+      cache: "no-store",
+    })
   ).json();
 
   const [event] = schedule.events.filter(({ id }: SDCEventData) => id === params.id);

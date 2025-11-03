@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { FaPlay, FaShareNodes } from "react-icons/fa6";
+import { FaPlay } from "react-icons/fa6";
 
 import SharePodcast from "./components/SharePodcast";
 import { Episode, EpisodeInfo, Episodes, Playback, PodcastContainer } from "./styles";
@@ -12,27 +12,28 @@ export default async function Podcast() {
   const id = process.env.NEXT_SPOTIFY_ID;
   const secret = process.env.NEXT_SPOTIFY_SECRET;
 
-  const authOptions = {
-    method: "POST",
-    headers: {
-      Authorization: "Basic " + Buffer.from(id + ":" + secret).toString("base64"),
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: "grant_type=client_credentials",
-  };
-
-  const token = (await (await fetch("https://accounts.spotify.com/api/token", authOptions)).json())
-    .access_token;
-  const options = {
-    method: "GET",
-    headers: { Authorization: "Bearer " + token },
-  };
+  const token = (
+    await (
+      await fetch("https://accounts.spotify.com/api/token", {
+        body: "grant_type=client_credentials",
+        headers: {
+          Authorization: "Basic " + Buffer.from(id + ":" + secret).toString("base64"),
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        method: "POST",
+      })
+    ).json()
+  ).access_token;
 
   const episodes = (
     await (
       await fetch(
         `https://api.spotify.com/v1/shows/7yyTumVntw0JcKO33uP5fX/episodes?offset=0&limit=50&market=BR`,
-        options,
+        {
+          cache: "no-store",
+          headers: { Authorization: "Bearer " + token },
+          method: "GET",
+        },
       )
     ).json()
   ).items;
@@ -70,7 +71,7 @@ export default async function Podcast() {
             </Episode>
           );
         })}
-        {/* 
+        {/*
         <Episode>
           <img src="/images/podcast/ep-03.png" width="15%" />
           <EpisodeInfo>
