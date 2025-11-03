@@ -5,13 +5,13 @@ import { SDCScheduleData } from "sdc";
 
 import { FireHexagon } from "../Hexagon";
 import {
-	Description,
-	HeadContainer,
-	InstagramContainer,
-	MoreInfo,
-	Section,
-	SmallTitle,
-	SubscribeButton,
+  Description,
+  HeadContainer,
+  InstagramContainer,
+  MoreInfo,
+  Section,
+  SmallTitle,
+  SubscribeButton,
 } from "./styles";
 
 interface HeadProps {
@@ -19,7 +19,9 @@ interface HeadProps {
 }
 
 export async function Head({ data: { logoUrl, name } }: HeadProps) {
-  const participantsRes = await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/editions?project=SDC");
+  const participantsRes = await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/editions?project=SDC", {
+    cache: "no-store",
+  });
   const participants = (await participantsRes.json())[1].participants.length;
 
   let logo = "";
