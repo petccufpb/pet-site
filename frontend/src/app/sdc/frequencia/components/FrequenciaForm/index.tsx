@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { distanceBetweenCoordinates } from "@hyoretsu/utils";
 import { useForm } from "react-hook-form";
 import { HiArrowRight } from "react-icons/hi2";
 import { RiCalendarLine, RiTimeLine } from "react-icons/ri";
@@ -12,8 +11,6 @@ import { z } from "zod";
 import {
   ButtonContainer,
   CancelButton,
-  CheckBox,
-  CheckboxContainer,
   ConfirmButton,
   DateContainer,
   FormContainer,
@@ -21,8 +18,7 @@ import {
 } from "./styles";
 
 import { differenceInMinutes } from "date-fns";
-import { useEffect, useState } from "react";
-import { FaCheck } from "react-icons/fa";
+import { useEffect } from "react";
 
 function DateOrNothing({ date }: { date?: { day: string; time: string } }) {
   if (date) {
@@ -96,37 +92,37 @@ export function FrequenciaForm({
   endTime?: Date;
   eventName: string;
   eventType?: string;
-  location?:string
+  location?: string;
   isEventOnSite?: boolean;
   sections?: { title: string; placeholder: string; id: "name" | "email" }[];
   id: string;
   isFromUFPB: boolean;
 }) {
-  const [userLocation, setUserLocation] = useState<GeolocationPosition | null>(null);
+  // const [userLocation, setUserLocation] = useState<GeolocationPosition | null>(null);
 
   async function sendForm(data: SendFormData) {
     const i = toast.info("Carregando...");
 
-    if (isEventOnSite && !userLocation && !isFromUFPB) {
-      toast.dismiss(i);
-      toast.error("Você precisa habilitar a localização para marcar a frequência.", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        style: {
-          position: "sticky",
-          textAlign: "center",
-          color: "#fgfgfg",
-        },
-      });
+    // if (isEventOnSite && !userLocation && !isFromUFPB) {
+    //   toast.dismiss(i);
+    //   toast.error("Você precisa habilitar a localização para marcar a frequência.", {
+    //     position: "top-center",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "dark",
+    //     style: {
+    //       position: "sticky",
+    //       textAlign: "center",
+    //       color: "#fgfgfg",
+    //     },
+    //   });
 
-      return;
-    }
+    //   return;
+    // }
 
     const eventEndTimeOffset = differenceInMinutes(new Date(), endTime as Date);
 
@@ -179,43 +175,43 @@ export function FrequenciaForm({
       return;
     }
 
-    let coordinates: string[] | number[] | undefined = location?.split(",")
+    let coordinates: string[] | number[] | undefined = location?.split(",");
     if (coordinates?.length) {
       try {
-        coordinates = coordinates.map(each => Number(each))
+        coordinates = coordinates.map(each => Number(each));
 
-        if (coordinates.some(each => Number.isNan(each))) {
-          coordinates = undefined
+        if (coordinates.some(each => Number.isNaN(each))) {
+          coordinates = undefined;
         }
       } catch {
-        coordinates = undefined
+        coordinates = undefined;
       }
     }
 
-    if (
-      distanceBetweenCoordinates(
-        [userLocation!.coords.latitude, userLocation!.coords.longitude],
-        (coordinates ?? [-7.16252, -34.8173]) as [number, number],
-      ) > 2000
-    ) {
-      toast.dismiss(i);
-      toast.error("Você está fora da área desse evento.", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        style: {
-          position: "sticky",
-          textAlign: "center",
-          color: "#fgfgfg",
-        },
-      });
-      return;
-    }
+    // if (
+    //   distanceBetweenCoordinates(
+    //     [userLocation!.coords.latitude, userLocation!.coords.longitude],
+    //     (coordinates ?? [-7.16252, -34.8173]) as [number, number],
+    //   ) > 2000
+    // ) {
+    //   toast.dismiss(i);
+    //   toast.error("Você está fora da área desse evento.", {
+    //     position: "top-center",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "dark",
+    //     style: {
+    //       position: "sticky",
+    //       textAlign: "center",
+    //       color: "#fgfgfg",
+    //     },
+    //   });
+    //   return;
+    // }
 
     const res = await fetch("/api/attendance", {
       method: "POST",
@@ -277,41 +273,41 @@ export function FrequenciaForm({
     register("feedback");
   }, [register]);
 
-  const error: PositionErrorCallback = e => {
-    alert(`Ajude-nos a debuggar! Nos mostre essa mensagem de erro:\n\n${e.message} - ${e.code}`);
-    toast.error("Não foi possível obter sua localização.", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-      style: {
-        textAlign: "center",
-        color: "#fgfgfg",
-      },
-    });
-    setUserLocation(null);
-  };
+  // const error: PositionErrorCallback = e => {
+  //   alert(`Ajude-nos a debuggar! Nos mostre essa mensagem de erro:\n\n${e.message} - ${e.code}`);
+  //   toast.error("Não foi possível obter sua localização.", {
+  //     position: "top-center",
+  //     autoClose: 5000,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     progress: undefined,
+  //     theme: "dark",
+  //     style: {
+  //       textAlign: "center",
+  //       color: "#fgfgfg",
+  //     },
+  //   });
+  //   setUserLocation(null);
+  // };
 
-  useEffect(() => {
-    if (navigator.geolocation && !userLocation) {
-      navigator.geolocation.getCurrentPosition(setUserLocation, null);
+  // useEffect(() => {
+  //   if (navigator.geolocation && !userLocation) {
+  //     navigator.geolocation.getCurrentPosition(setUserLocation, null);
 
-      navigator.permissions.query({ name: "geolocation" }).then(permissionStatus => {
-        permissionStatus.onchange = e => {
-          if (permissionStatus.state === "granted") {
-            navigator.geolocation.getCurrentPosition(setUserLocation, null);
-            return;
-          }
+  //     navigator.permissions.query({ name: "geolocation" }).then(permissionStatus => {
+  //       permissionStatus.onchange = e => {
+  //         if (permissionStatus.state === "granted") {
+  //           navigator.geolocation.getCurrentPosition(setUserLocation, null);
+  //           return;
+  //         }
 
-          setUserLocation(null);
-        };
-      });
-    }
-  }, [userLocation]);
+  //         setUserLocation(null);
+  //       };
+  //     });
+  //   }
+  // }, [userLocation]);
 
   return (
     <>
@@ -345,17 +341,20 @@ export function FrequenciaForm({
             onInput={e => setValue("feedback", e.currentTarget.textContent || "", { shouldValidate: true })}
           />
         </InputContainer>
-        {!isFromUFPB && (
+        {/* {!isFromUFPB && (
           <CheckboxContainer onClick={() => navigator.geolocation.getCurrentPosition(setUserLocation, error)}>
             <CheckBox enabled={userLocation ? true : false}>
               <FaCheck size="0.7em" color="white"></FaCheck>
             </CheckBox>
             <span>Compartilhar localização</span>
           </CheckboxContainer>
-        )}
+        )} */}
         <ButtonContainer type={type}>
           <CancelButtonOrNothing type={type} />
-          <ConfirmButton disabled={!(userLocation || isFromUFPB) || !isValid} type="submit">
+          <ConfirmButton
+            // disabled={!(userLocation || isFromUFPB) || !isValid}
+            type="submit"
+          >
             <span>{confirmType === "next" ? "Próximo Passo" : "Confirmar"}</span>
             {confirmType === "next" && <HiArrowRight />}
           </ConfirmButton>
