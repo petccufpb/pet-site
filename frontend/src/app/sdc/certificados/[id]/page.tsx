@@ -25,11 +25,15 @@ interface GerarCertificadoParams {
     event?: string;
     participantId?: string;
     speakerId?: string;
+    type?: string;
   };
 }
 
+type CertificateType = "minicurso" | "palestra" | undefined;
+
 export default function GerarCertificados({ params: { id }, searchParams }: GerarCertificadoParams) {
-  const isEvent = JSON.parse(searchParams.event || "null");
+  const certificateType = ((searchParams.event === "true" ? "minicurso" : searchParams.type) ||
+    null) as CertificateType;
 
   const [attendance, setAttendance] = useState("");
   const [certificateId, setCertificateId] = useState("");
@@ -48,7 +52,9 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
       }
 
       const url = new URL(
-        `${process.env.NEXT_PUBLIC_API_URL}/projects/certificates?${isEvent ? "eventId" : "editionId"}=${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/projects/certificates?${
+          certificateType ? "eventId" : "editionId"
+        }=${id}`,
       );
 
       if (searchParams.participantId) {
@@ -64,8 +70,7 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
       }
 
       const [certificate] = certificateData;
-      const { certificateTemplate } =
-        isEvent && !searchParams.speakerId ? certificate.event : certificate.edition;
+      const { certificateTemplate } = certificate.edition;
       if (!certificateTemplate) {
         notFound();
       }
@@ -74,10 +79,29 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
       setEvent(certificate.event);
       setParticipant(certificate.participant);
       setSpeaker(certificate.speaker);
-      setTemplate(certificateTemplate[0]);
+      setTemplate(
+        certificateTemplate.find((each: any) => {
+          const correctKind = each.kind === certificateType;
 
-      if (!isEvent && certificate.edition) {
+          if (correctKind) {
+            if (certificateType === "minicurso") {
+              if (searchParams.speakerId) {
+                return each.eventId === certificate.event.id;
+              }
+
+              return !each.eventId;
+            }
+
+            return true;
+          }
+
+          return false;
+        }),
+      );
+
+      if (!certificateType && certificate.edition) {
         const { data: eventsData } = await api.get<ProjectEvent[]>(`/projects/events?editionId=${id}`);
+
         certificate.edition.endDate = eventsData.at(-1)?.endTime;
       }
       setEdition(certificate.edition);
@@ -86,7 +110,7 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
     };
 
     execute();
-  }, [id, isEvent, searchParams.participantId, searchParams.speakerId]);
+  }, [certificateType, id, searchParams.participantId, searchParams.speakerId]);
 
   useEffect(() => {
     if (edition === undefined || event === undefined || (speaker === null && participant === undefined)) {
@@ -127,6 +151,11 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
                 return value;
               }
             }
+
+            console.log(part);
+            console.log(participant);
+            console.log(edition);
+            console.log(event);
 
             if (part.includes("{")) {
               return eval(part.slice(1, -1));

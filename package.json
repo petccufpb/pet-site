@@ -38,12 +38,16 @@
       "@nestjs/core",
       "@prisma/client",
       "@prisma/engines",
+      "@scarf/scarf",
       "@vercel/speed-insights",
+      "aws-sdk",
       "bcrypt",
       "esbuild",
       "prisma",
+      "protobufjs",
       "sharp",
-      "typeit"
+      "typeit",
+      "unrs-resolver"
     ]
   },
   "trustedDependencies": [
