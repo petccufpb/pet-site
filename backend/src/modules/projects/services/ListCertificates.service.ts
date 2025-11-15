@@ -49,8 +49,8 @@ export default class ListCertificates {
               include: {
                 certificateTemplate: {
                   where: {
-                    kind: (event!.type &&
-                      (event!.type !== "minicurso"
+                    kind: (event &&
+                      (event.type !== "minicurso"
                         ? "palestra"
                         : "minicurso")) as ProjectCertificateKind | null,
                   },
