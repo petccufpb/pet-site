@@ -9,12 +9,10 @@ import "@fontsource/bai-jamjuree/500.css";
 import "@fontsource/bai-jamjuree/600.css";
 import "@fontsource/bai-jamjuree/700.css";
 import "@fontsource/bai-jamjuree/700-italic.css";
-
 import { PropsWithChildren } from "react";
-
 import StyledComponentsRegistry from "@components/registry";
-
 import Layout from "./components/Layout";
+import "./globals.css";
 
 export const metadata = {
   title: {

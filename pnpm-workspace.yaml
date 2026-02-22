@@ -1,0 +1,17 @@
+packages:
+  - backend
+  - frontend
+
+onlyBuiltDependencies:
+  - '@nestjs/core'
+  - '@prisma/client'
+  - '@prisma/engines'
+  - '@scarf/scarf'
+  - aws-sdk
+  - bcrypt
+  - esbuild
+  - prisma
+  - protobufjs
+  - sharp
+  - typeit
+  - unrs-resolver

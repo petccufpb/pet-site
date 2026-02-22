@@ -26,6 +26,7 @@
     "@nestjs/platform-express": "^11.1.12",
     "@nestjs/swagger": "^11.2.5",
     "@prisma/client": "^6.19.2",
+    "bcrypt": "^6.0.0",
     "cache-manager": "^7.2.8",
     "cache-manager-redis-yet": "^5.1.5",
     "class-transformer": "^0.5.1",
@@ -53,18 +54,5 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "4.2.0",
     "webpack": "^5.104.1"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@nestjs/core",
-      "@prisma/client",
-      "@prisma/engines",
-      "@vercel/speed-insights",
-      "bcrypt",
-      "esbuild",
-      "prisma",
-      "sharp",
-      "typeit"
-    ]
   }
 }
