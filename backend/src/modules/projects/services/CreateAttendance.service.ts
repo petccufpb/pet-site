@@ -10,6 +10,7 @@ export default class CreateAttendance {
   constructor(private mailProvider: MailProvider, private projectsRepository: ProjectsRepository) {}
 
   public async execute({
+    admin,
     email,
     eventId,
     matricula,
@@ -73,18 +74,20 @@ export default class CreateAttendance {
 
     const attendance = await this.projectsRepository.createAttendance(payload);
 
-    const edition = await this.projectsRepository.findEditionById(event.editionId);
-    const project = await this.projectsRepository.findProjectById(edition!.projectId);
+    if (!admin) {
+      const edition = await this.projectsRepository.findEditionById(event.editionId);
+      const project = await this.projectsRepository.findProjectById(edition!.projectId);
 
-    await this.mailProvider.sendMail({
-      to: foundParticipant!.email as string,
-      subject: `Confirmação de frequência`,
-      body: `Olá estudante!\n\nEstamos passando para avisar que sua frequência n${
-        event.type === "minicurso" ? "o minicurso" : "a palestra"
-      } ${event.name} foi realizada com sucesso.\n\nEspero que estejam gostando dessa edição do(a) ${
-        project!.title
-      }!`,
-    });
+      await this.mailProvider.sendMail({
+        to: foundParticipant!.email as string,
+        subject: `Confirmação de frequência`,
+        body: `Olá estudante!\n\nEstamos passando para avisar que sua frequência n${
+          event.type === "minicurso" ? "o minicurso" : "a palestra"
+        } ${event.name} foi realizada com sucesso.\n\nEspero que estejam gostando dessa edição do(a) ${
+          project!.title
+        }!`,
+      });
+    }
 
     return attendance;
   }

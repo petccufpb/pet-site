@@ -1,8 +1,13 @@
-import { IsOptional } from "@hyoretsu/decorators";
+import { IsOptional, TransformToBoolean } from "@hyoretsu/decorators";
 import { ProjectAttendance } from "@prisma/client";
-import { IsEmail, IsNotEmpty, IsString, IsUUID } from "class-validator";
+import { IsBoolean, IsEmail, IsNotEmpty, IsString, IsUUID } from "class-validator";
 
 export default class CreateAttendanceDTO implements Partial<ProjectAttendance> {
+  @IsOptional()
+  @TransformToBoolean()
+  @IsBoolean()
+  admin?: boolean;
+
   @IsOptional()
   @IsString()
   @IsEmail()
