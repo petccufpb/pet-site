@@ -13,14 +13,20 @@ import { MiscController } from "./controllers/misc.controller";
 
 @Module({
   imports: [
-    CacheModule.registerAsync<RedisClientOptions>({
-      // @ts-ignore
-      useFactory: async () => ({
-        store: await redisStore({
-          url: process.env.REDIS_URL,
-          ttl: 1 * 1 * 5 * 60 * 1000, // 5 minutes
-        }),
-      }),
+    CacheModule.registerAsync<any>({
+      useFactory: async () => {
+        if (!process.env.REDIS_URL) {
+          return {
+            ttl: 5 * 60 * 1000, // 5 minutes
+          };
+        }
+        return {
+          store: await redisStore({
+            url: process.env.REDIS_URL,
+            ttl: 5 * 60 * 1000, // 5 minutes
+          }),
+        };
+      },
     }),
     ConfigModule.forRoot({
       envFilePath: [

@@ -14,6 +14,54 @@ interface MemberListProps {
 
 const snsList = ["GitHub", "Instagram", "LinkedIn"];
 
+function formatMemberName(fullName: string): string {
+  if (!fullName) return "";
+
+  // Remove parênteses e colchetes com conteúdo (ex: "(Tutor)", "[PET]")
+  const withoutAnnotations = fullName.replace(/\([^)]*\)/g, "").replace(/\[[^\]]*\]/g, "");
+
+  // Trata símbolos especiais: remove caracteres indesejados, preservando letras (com acentos), hífens, apóstrofos e espaços
+  const cleaned = withoutAnnotations
+    .replace(/[^a-zA-ZáàâãéèêíïóòôõúçñÁÀÂÃÉÈÊÍÏÓÒÔÕÚÇÑ\s'-]/g, "")
+    .trim()
+    .replace(/\s+/g, " ");
+
+  const words = cleaned.split(" ");
+  if (words.length === 0 || words[0] === "") return "";
+
+  const [firstName] = words;
+  if (words.length === 1) return firstName;
+
+  const prepositions = ["de", "da", "do", "dos", "das", "e", "di", "del"];
+
+  // Encontra a primeira palavra a partir do índice 1 que não seja uma preposição
+  let firstSurnameIdx = -1;
+  for (let i = 1; i < words.length; i++) {
+    if (!prepositions.includes(words[i].toLowerCase())) {
+      firstSurnameIdx = i;
+      break;
+    }
+  }
+
+  // Se não encontrou um sobrenome válido
+  if (firstSurnameIdx === -1) {
+    return words.join(" ");
+  }
+
+  // Verifica se há uma preposição imediatamente anterior a esse primeiro sobrenome
+  const hasPrepositionBefore =
+    firstSurnameIdx > 1 && prepositions.includes(words[firstSurnameIdx - 1].toLowerCase());
+
+  if (hasPrepositionBefore) {
+    const preposition = words[firstSurnameIdx - 1];
+    const surname = words[firstSurnameIdx];
+    return `${firstName} ${preposition} ${surname}`;
+  }
+
+  const surname = words[firstSurnameIdx];
+  return `${firstName} ${surname}`;
+}
+
 export function MemberList({ data, style, type }: MemberListProps) {
   const titles = type === "members" ? ["Membros Ativos", "Membros Antigos"] : ["Tutores"];
 
@@ -43,7 +91,7 @@ export function MemberList({ data, style, type }: MemberListProps) {
 
                 <div>
                   <div>
-                    <span>{member.name.split(" ")[0]}</span>
+                    <span>{formatMemberName(member.name)}</span>
 
                     {/* <span>Novo!</span> */}
                   </div>

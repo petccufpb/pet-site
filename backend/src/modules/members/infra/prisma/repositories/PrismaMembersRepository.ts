@@ -5,6 +5,7 @@ import { PrismaService } from "@database/prisma.service";
 import MembersRepository, { CompleteMember } from "@modules/members/repositories/MembersRepository";
 
 import { CreateMemberDTO } from "../../../dtos/CreateMember.dto";
+import { UpdateMemberDTO } from "../../../dtos/UpdateMember.dto";
 
 @Injectable()
 export class PrismaMembersRepository implements MembersRepository {
@@ -80,5 +81,54 @@ export class PrismaMembersRepository implements MembersRepository {
     });
 
     return members;
+  }
+
+  async findById(id: string): Promise<CompleteMember | null> {
+    const member = await this.prisma.member.findUnique({
+      where: { id },
+      include: {
+        contactInfo: {
+          orderBy: {
+            name: "asc",
+          },
+        },
+      },
+    });
+
+    return member;
+  }
+
+  async update(id: string, { contactInfo, ...data }: UpdateMemberDTO): Promise<Member> {
+    const updateData: any = { ...data };
+
+    if (contactInfo) {
+      updateData.contactInfo = {
+        deleteMany: {},
+        createMany: {
+          data: contactInfo,
+        },
+      };
+    }
+
+    const member = await this.prisma.member.update({
+      where: { id },
+      data: updateData,
+      include: {
+        contactInfo: true,
+      },
+    });
+
+    return member;
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.$transaction([
+      this.prisma.memberContact.deleteMany({
+        where: { memberId: id },
+      }),
+      this.prisma.member.delete({
+        where: { id },
+      }),
+    ]);
   }
 }
