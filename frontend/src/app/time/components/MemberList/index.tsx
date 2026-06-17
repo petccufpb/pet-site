@@ -4,6 +4,8 @@ import Image from "next/image";
 import { CSSProperties } from "react";
 import { FaGithubAlt, FaInstagram, FaLinkedin } from "react-icons/fa";
 
+import { getDirectImageLink } from "@utils/googleDrive";
+
 import { MemberDiv, Styling } from "./styles";
 
 interface MemberListProps {
@@ -87,7 +89,7 @@ export function MemberList({ data, style, type }: MemberListProps) {
           <div>
             {(type === "members" ? (index === 0 ? activeMembers : inactiveMembers) : data).map(member => (
               <MemberDiv key={member.id}>
-                <Image src={member.photoUrl || ""} alt={`Foto de ${member.name}`} fill />
+                <Image src={getDirectImageLink(member.photoUrl)} alt={`Foto de ${member.name}`} fill />
 
                 <div>
                   <div>

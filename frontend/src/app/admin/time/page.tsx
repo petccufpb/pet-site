@@ -1,9 +1,11 @@
 "use client";
 
+import { Member } from "backend";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Member } from "backend";
 import { HiPlus, HiOutlineLogout, HiPencil, HiTrash, HiUser } from "react-icons/hi";
+
+import { getDirectImageLink } from "@utils/googleDrive";
 
 import MemberForm from "./components/MemberForm";
 import {
@@ -64,6 +66,7 @@ export default function AdminTimePage() {
 
   useEffect(() => {
     checkAuthAndFetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   const handleLogout = () => {
@@ -138,7 +141,8 @@ export default function AdminTimePage() {
 
   const handleDeleteMember = async (member: Member) => {
     if (!token) return;
-    if (!confirm(`Deseja excluir permanentemente o membro ${member.name}? Esta ação não pode ser desfeita.`)) return;
+    if (!confirm(`Deseja excluir permanentemente o membro ${member.name}? Esta ação não pode ser desfeita.`))
+      return;
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/team/members/${member.id}`, {
@@ -205,12 +209,12 @@ export default function AdminTimePage() {
               </tr>
             </thead>
             <tbody>
-              {activeList.map((member) => (
+              {activeList.map(member => (
                 <TableRow key={member.id}>
                   <TableCell>
                     <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                       {member.photoUrl ? (
-                        <Avatar src={member.photoUrl} alt={member.name} />
+                        <Avatar src={getDirectImageLink(member.photoUrl)} alt={member.name} />
                       ) : (
                         <div
                           style={{
@@ -228,7 +232,16 @@ export default function AdminTimePage() {
                       )}
                       <div>
                         <div style={{ fontWeight: 600, color: "#DEE1F4" }}>{member.name}</div>
-                        <div style={{ fontSize: "0.8rem", color: "#A8A8B3", maxWidth: "250px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        <div
+                          style={{
+                            fontSize: "0.8rem",
+                            color: "#A8A8B3",
+                            maxWidth: "250px",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
                           {member.about || "Sem biografia."}
                         </div>
                       </div>

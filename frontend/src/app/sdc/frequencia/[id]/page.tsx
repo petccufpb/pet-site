@@ -7,6 +7,8 @@ import { notFound } from "next/navigation";
 import { FaShieldAlt } from "react-icons/fa";
 import { SDCEventData, SDCScheduleData } from "sdc";
 
+import { getDirectImageLink } from "@utils/googleDrive";
+
 import Logo from "@assets/images/logo.svg?svgr";
 import Petrucio from "@assets/images/petrucio.svg?svgr";
 
@@ -57,7 +59,12 @@ export default async function Frequencia({ params }: { params: { id: string } })
       </DescriptionContainer>
       <FormContainer>
         <SpeakerInfo>
-          <Image width={64} height={64} src={event.speaker.photoUrl} alt="Palestrante"></Image>
+          <Image
+            width={64}
+            height={64}
+            src={getDirectImageLink(event.speaker.photoUrl)}
+            alt="Palestrante"
+          ></Image>
           <h2>{event.speaker.name}</h2>
           <div>{event.name}</div>
         </SpeakerInfo>

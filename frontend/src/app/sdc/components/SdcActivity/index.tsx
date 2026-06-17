@@ -6,6 +6,8 @@ import { FaTimesCircle } from "react-icons/fa";
 import { HiArrowUpRight } from "react-icons/hi2";
 import { SDCEventData } from "sdc";
 
+import { getDirectImageLink } from "@utils/googleDrive";
+
 import { Availability, SDCtr, SpeakerPhoto, Subscribe, SubscribeLink } from "./styles";
 
 export function SdcActivity({ data, dayEvent }: { data: SDCEventData; dayEvent: number }) {
@@ -23,7 +25,7 @@ export function SdcActivity({ data, dayEvent }: { data: SDCEventData; dayEvent: 
       <SDCtr>
         <th>
           <SpeakerPhoto
-            src={data.speaker.photoUrl}
+            src={getDirectImageLink(data.speaker.photoUrl)}
             alt={data.speaker.name}
             width={45}
             height={45}
