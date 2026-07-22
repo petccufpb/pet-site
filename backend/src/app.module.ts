@@ -8,6 +8,7 @@ import type { RedisClientOptions } from "redis";
 import { MembersModule } from "@modules/members/members.module";
 import NewsModule from "@modules/news/news.module";
 import ProjectsModule from "@modules/projects/projects.module";
+import { AuthModule } from "@modules/auth/auth.module";
 
 import { MiscController } from "./controllers/misc.controller";
 
@@ -37,7 +38,7 @@ import { MiscController } from "./controllers/misc.controller";
           : [".env.development.local", ".env.development"]),
       ],
     }),
-    ...[MembersModule, NewsModule, ProjectsModule],
+    ...[AuthModule, MembersModule, NewsModule, ProjectsModule],
   ],
   controllers: [MiscController],
   providers: [

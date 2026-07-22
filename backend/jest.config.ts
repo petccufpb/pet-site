@@ -1,7 +1,9 @@
 import type { Config } from "jest";
+import { createRequire } from "module";
 import { pathsToModuleNameMapper } from "ts-jest";
 
-import { compilerOptions } from "./tsconfig.json";
+const require = createRequire(import.meta.url);
+const { compilerOptions } = require("./tsconfig.json") as { compilerOptions: { paths: Record<string, string[]> } };
 
 const config: Config = {
   cache: true,

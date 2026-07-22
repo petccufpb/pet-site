@@ -1,6 +1,7 @@
 import { MailProvider, mailProviders, type MailProviderKeys } from "@hyoretsu/providers";
 import { Module } from "@nestjs/common";
 
+import { AuthModule } from "@modules/auth/auth.module";
 import { PrismaService } from "@database/prisma.service";
 
 import ProjectsController from "./infra/http/controllers/projects.controller";
@@ -27,6 +28,7 @@ import ListParticipants from "./services/ListParticipants.service";
 import ValidateCertificate from "./services/ValidateCertificate.service";
 
 @Module({
+  imports: [AuthModule],
   controllers: [ProjectsController],
   providers: [
     {

@@ -1,5 +1,5 @@
 import { QueryRequired } from "@hyoretsu/decorators";
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Post, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Post, Query, UseGuards } from "@nestjs/common";
 import {
 	Project,
 	ProjectAttendance,
@@ -23,6 +23,7 @@ import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import FindParticipantDTO from "@modules/projects/dtos/FindParticipant.dto";
 import ListCertificatesDTO from "@modules/projects/dtos/ListCertificates.dto";
 import ValidateCertificateDTO from "@modules/projects/dtos/ValidateCertificate.dto";
+import AdminGuard from "@modules/auth/guards/admin.guard";
 import { CompleteProjectCertificate } from "@modules/projects/repositories/projects.repository";
 import CreateAttendance from "@modules/projects/services/CreateAttendance.service";
 import CreateCertificate from "@modules/projects/services/CreateCertificate.service";
@@ -71,6 +72,7 @@ export default class ProjectsController {
   ) {}
 
   @Post()
+  @UseGuards(AdminGuard)
   async postProjects(@Body() body: CreateProjectDTO): Promise<Project> {
     const project = await this.createProject.execute(body);
 
@@ -111,6 +113,7 @@ export default class ProjectsController {
   }
 
   @Post("certificates")
+  @UseGuards(AdminGuard)
   async postProjectsCertificates(
     @Body() { editionId, eventId }: CreateCertificatesDTO,
   ): Promise<ProjectCertificate[]> {
@@ -131,6 +134,7 @@ export default class ProjectsController {
   }
 
   @Post("certificates/create")
+  @UseGuards(AdminGuard)
   async postProjectsCertificatesCreate(@Body() body: CreateCertificateDTO): Promise<ProjectCertificate> {
     const certificates = await this.createCertificate.execute(body);
 
@@ -138,6 +142,7 @@ export default class ProjectsController {
   }
 
   @Post("certificates/validate")
+  // Public endpoint — certificate validation does not require admin auth
   async postProjectsCertificatesValidate(@Body() body: ValidateCertificateDTO): Promise<boolean> {
     const validity = await this.validateCertificate.execute(body);
 
@@ -155,6 +160,7 @@ export default class ProjectsController {
   }
 
   @Post("editions")
+  @UseGuards(AdminGuard)
   async postProjectsEditions(@Body() body: CreateEditionDTO): Promise<ProjectEdition> {
     const edition = await this.createEdition.execute(body);
 
@@ -181,6 +187,7 @@ export default class ProjectsController {
   }
 
   @Post("events")
+  @UseGuards(AdminGuard)
   async postProjectsEvents(@Body() body: CreateEventDTO): Promise<ProjectEvent> {
     const event = await this.createEvent.execute(body);
 
@@ -247,6 +254,7 @@ export default class ProjectsController {
   }
 
   @Post("speakers")
+  @UseGuards(AdminGuard)
   async postProjectsSpeakers(@Body() body: CreateSpeakerDTO): Promise<ProjectSpeaker> {
     const speaker = await this.createSpeaker.execute(body);
 
