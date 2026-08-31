@@ -308,9 +308,25 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     matricula,
     phoneNumber,
   }: FindExistingParticipantDTO): Promise<ProjectParticipant | null> {
+    const conditions: Array<{ email: string } | { matricula: string } | { phoneNumber: string }> = [];
+
+    if (email) {
+      conditions.push({ email });
+    }
+    if (matricula) {
+      conditions.push({ matricula });
+    }
+    if (phoneNumber) {
+      conditions.push({ phoneNumber });
+    }
+
+    if (conditions.length === 0) {
+      return null;
+    }
+
     const participant = await this.prisma.projectParticipant.findFirst({
       where: {
-        OR: [{ email }, { matricula }, { phoneNumber }],
+        OR: conditions,
       },
     });
 
