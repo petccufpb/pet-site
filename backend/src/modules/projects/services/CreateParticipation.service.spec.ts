@@ -1,4 +1,3 @@
-import { MailProvider } from "@hyoretsu/providers";
 import { HttpException } from "@nestjs/common";
 import { ProjectEdition, ProjectEvent, ProjectParticipant } from "@prisma/client";
 
@@ -17,12 +16,7 @@ describe("CreateParticipation", () => {
 
   beforeEach(async () => {
     fakeProjectsRepository = new FakeProjectsRepository();
-    service = new CreateParticipation(
-      {
-        sendMail: async () => {},
-      } as MailProvider,
-      fakeProjectsRepository,
-    );
+    service = new CreateParticipation(fakeProjectsRepository);
 
     const { id: projectId } = await fakeProjectsRepository.createProject({ title: "Test Project" });
     edition = await fakeProjectsRepository.createEdition({ date: new Date(), number: 1, projectId });

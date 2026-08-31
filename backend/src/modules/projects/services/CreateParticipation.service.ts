@@ -1,4 +1,3 @@
-import { MailProvider } from "@hyoretsu/providers";
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { ProjectParticipant, ProjectParticipation } from "@prisma/client";
 import { isAfter } from "date-fns";
@@ -8,7 +7,7 @@ import ProjectsRepository, { FindParticipationDTO } from "../repositories/projec
 
 @Injectable()
 export default class CreateParticipation {
-  constructor(private mailProvider: MailProvider, private projectsRepository: ProjectsRepository) {}
+  constructor(private projectsRepository: ProjectsRepository) {}
 
   public async execute({
     email,
@@ -18,7 +17,6 @@ export default class CreateParticipation {
     participantId,
   }: CreateParticipationDTO): Promise<ProjectParticipation> {
     let foundParticipant: ProjectParticipant | null;
-    let title: string;
 
     if (participantId) {
       foundParticipant = await this.projectsRepository.findParticipantById(participantId);
@@ -66,7 +64,6 @@ export default class CreateParticipation {
       }
 
       editionId = event.editionId;
-      title = event.name;
 
       if (!event.allowMultiple) {
         const eventParticipations = await this.projectsRepository.findEventParticipationsByEdition({
@@ -100,10 +97,6 @@ export default class CreateParticipation {
         throw new HttpException("Essa edição não existe", HttpStatus.NOT_FOUND);
       }
 
-      const project = await this.projectsRepository.findProjectById(edition.projectId);
-
-      title = edition.name || `${edition.number}ª edição do(a) ${project!.title}`;
-
       payload = {
         editionId,
         participantId,
@@ -118,24 +111,6 @@ export default class CreateParticipation {
     }
 
     const participation = await this.projectsRepository.createParticipation(payload);
-
-    if (eventId) {
-      this.mailProvider
-        .sendMail({
-          to: foundParticipant.email as string,
-          subject: `Confirmação de inscrição em minicurso`,
-          body: `Olá estudante,\n\nSua inscrição no minicurso ${title} foi realizada com sucesso.\n\nAproveite!`,
-        })
-        .catch(error => console.error("Falha ao enviar email de confirmação de inscrição", error));
-    } else {
-      this.mailProvider
-        .sendMail({
-          to: foundParticipant.email as string,
-          subject: `Confirmação de inscrição na ${title}`,
-          body: `Olá estudante,\n\nSua inscrição na ${title} foi realizada com sucesso.\n\nAproveite!`,
-        })
-        .catch(error => console.error("Falha ao enviar email de confirmação de inscrição", error));
-    }
 
     return participation;
   }
