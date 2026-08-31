@@ -182,36 +182,34 @@ export function MinicursoForm({
           </span>
         )}
         <ButtonContainer type={type}>
-          {type === "cancel" && (
-            <DeleteButton
-              type="button"
-              disabled={!isValid}
-              onClick={async e => {
-                e.preventDefault();
-                const i = toast.info("Carregando...");
+          <DeleteButton
+            type="button"
+            disabled={!isValid}
+            onClick={async e => {
+              e.preventDefault();
+              const i = toast.info("Carregando...");
 
-                const { email, matricula } = getValues();
+              const { email, matricula } = getValues();
 
-                const res = await fetch(
-                  `${process.env.NEXT_PUBLIC_API_URL}/projects/participations?email=${email}&eventId=${id}&matricula=${matricula}`,
-                  {
-                    method: "DELETE",
-                  },
-                );
+              const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/projects/participations?email=${email}&eventId=${id}&matricula=${matricula}`,
+                {
+                  method: "DELETE",
+                },
+              );
 
-                toast.dismiss(i);
+              toast.dismiss(i);
 
-                if (res.status === 200) {
-                  toast.success("Inscrição deletada com sucesso!");
-                  setTimeout(back, 5500);
-                } else {
-                  toast.error((await res.json()).message || "Falha ao se desinscrever, tente novamente.");
-                }
-              }}
-            >
-              Desinscrever-se
-            </DeleteButton>
-          )}
+              if (res.status === 200) {
+                toast.success("Inscrição deletada com sucesso!");
+                setTimeout(back, 5500);
+              } else {
+                toast.error((await res.json()).message || "Falha ao se desinscrever, tente novamente.");
+              }
+            }}
+          >
+            Desinscrever-se
+          </DeleteButton>
 
           <div>
             <CancelButtonOrNothing type={type} />
