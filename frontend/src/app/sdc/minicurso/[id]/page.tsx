@@ -55,7 +55,6 @@ export default async function Minicurso({ params }: { params: { id: string } }) 
           <div>{event.name}</div>
         </SpeakerInfo>
         <MinicursoForm
-          type="cancel"
           id={event.id}
           extrasAvailable={
             event.extraCapacity ? event.participants.length >= (event.capacity as number) : false
