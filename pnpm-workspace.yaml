@@ -2,16 +2,16 @@ packages:
   - backend
   - frontend
 
-onlyBuiltDependencies:
-  - '@nestjs/core'
-  - '@prisma/client'
-  - '@prisma/engines'
-  - '@scarf/scarf'
-  - aws-sdk
-  - bcrypt
-  - esbuild
-  - prisma
-  - protobufjs
-  - sharp
-  - typeit
-  - unrs-resolver
+allowBuilds:
+  '@nestjs/core': true
+  '@prisma/client': true
+  '@prisma/engines': true
+  '@scarf/scarf': true
+  aws-sdk: true
+  bcrypt: true
+  esbuild: true
+  prisma: true
+  protobufjs: true
+  sharp: true
+  typeit: true
+  unrs-resolver: true
