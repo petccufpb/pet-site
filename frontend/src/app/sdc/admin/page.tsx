@@ -18,6 +18,7 @@ import {
   SelectionContainer,
   SendButton,
 } from "./styles";
+import { SpeakerForm } from "./components/SpeakerForm";
 
 const sendFormSchema = z.object({
   edition: z.number().positive("O número da edição deve ser positivo").min(1),
@@ -31,11 +32,9 @@ type SendFormData = z.infer<typeof sendFormSchema>;
 export default function AdminPage() {
   const [selectedArea, setSelectedArea] = useState(0);
   const [gameDay, setGameDay] = useState(false);
-
   const {
     register,
-    handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<SendFormData>({
     resolver: zodResolver(sendFormSchema),
   });
@@ -54,6 +53,7 @@ export default function AdminPage() {
           Palestras
         </AreaOption>
       </AreaSelector>
+
       {selectedArea === 0 && (
         <AreaContainer>
           <Area>
@@ -70,44 +70,37 @@ export default function AdminPage() {
             <InputContainer>
               <h3>Contém Gameday?</h3>
               <SelectionContainer>
-                <SelectButton onClick={() => setGameDay(true)} selected={gameDay}>
+                <SelectButton type="button" onClick={() => setGameDay(true)} selected={gameDay}>
                   Sim
                 </SelectButton>
-                <SelectButton onClick={() => setGameDay(false)} selected={!gameDay}>
+                <SelectButton type="button" onClick={() => setGameDay(false)} selected={!gameDay}>
                   Não
                 </SelectButton>
               </SelectionContainer>
             </InputContainer>
             <InputContainer>
               <h3>Data de Início</h3>
-              <InputMask
-                placeholder="dd-mm-yyyy"
-                mask="99-99-9999"
-                maskChar={null}
-                {...register("startDate")}
-              />
+              <InputMask placeholder="dd-mm-yyyy" mask="99-99-9999" maskChar={null} {...register("startDate")} />
             </InputContainer>
             <InputContainer>
               <h3>Data de Término</h3>
-              <InputMask
-                placeholder="dd-mm-yyyy"
-                mask="99-99-9999"
-                maskChar={null}
-                {...register("endDate")}
-              />
+              <InputMask placeholder="dd-mm-yyyy" mask="99-99-9999" maskChar={null} {...register("endDate")} />
             </InputContainer>
           </Area>
-          <SendButton>
+          <SendButton type="button">
             <span>Cadastrar Evento</span>
             <HiOutlineCheckBadge size="1.1em" />
           </SendButton>
         </AreaContainer>
       )}
+
       {selectedArea === 1 && (
         <AreaContainer>
           <Area>Teste</Area>
         </AreaContainer>
       )}
+
+      {selectedArea === 2 && <SpeakerForm />}
     </Container>
   );
 }

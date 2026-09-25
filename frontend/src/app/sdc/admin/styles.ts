@@ -81,8 +81,9 @@ export const Area = styled.div`
   }
 `;
 
-export const Button = styled.div`
+export const Button = styled.button`
   border-radius: 0.5rem;
+  border: none;
   outline: ${({ theme }) => theme.colors["fifth-blue"]} solid 1px;
   background-color: ${({ theme }) => `${theme.colors["fifth-blue"]}75`};
   padding: 0.5rem 1rem;
@@ -92,6 +93,12 @@ export const Button = styled.div`
   font-size: small;
   transition: all 300ms ease-in-out;
   cursor: pointer;
+  color: #ffffff;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 `;
 
 export const SelectButton = styled(Button)<{ selected: boolean }>`
@@ -115,7 +122,7 @@ export const SendButton = styled(Button)`
   background-color: ${({ theme }) => `${theme.colors["base-green"]}75`};
   outline-color: ${({ theme }) => theme.colors["base-green"]};
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: ${({ theme }) => `${theme.colors["base-green"]}60`};
   }
 `;
