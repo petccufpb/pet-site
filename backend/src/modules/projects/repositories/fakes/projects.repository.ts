@@ -445,7 +445,7 @@ export default class FakeProjectsRepository implements ProjectsRepository {
   }
 
   public async findParticipantsByEvent(eventId: string): Promise<ProjectParticipant[]> {
-    const participations = this.participations.filter(participation => participation.editionId === eventId);
+    const participations = this.participations.filter(participation => participation.eventId === eventId);
     const participantIds = participations.map(participation => participation.participantId);
 
     return this.participants.filter(participant => participantIds.includes(participant.id));
