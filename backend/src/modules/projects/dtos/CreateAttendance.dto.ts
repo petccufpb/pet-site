@@ -1,6 +1,6 @@
 import { IsOptional } from "@hyoretsu/decorators";
 import { ProjectAttendance } from "@prisma/client";
-import { IsEmail, IsNotEmpty, IsString, IsUUID } from "class-validator";
+import { IsBoolean, IsEmail, IsNotEmpty, IsString, IsUUID } from "class-validator";
 
 export default class CreateAttendanceDTO implements Partial<ProjectAttendance> {
   @IsOptional()
@@ -12,6 +12,11 @@ export default class CreateAttendanceDTO implements Partial<ProjectAttendance> {
   @IsString()
   @IsUUID()
   eventId!: string;
+
+  /** Check-in feito pelo painel admin: aceita qualquer tipo de evento e não envia e-mail */
+  @IsOptional()
+  @IsBoolean()
+  manual?: boolean;
 
   @IsOptional()
   @IsString()

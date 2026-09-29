@@ -1,5 +1,5 @@
 import { MailProvider } from "@hyoretsu/providers";
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable, Logger } from "@nestjs/common";
 import { ProjectAttendance, ProjectParticipant } from "@prisma/client";
 
 import CreateAttendanceDTO from "../dtos/CreateAttendance.dto";
@@ -7,11 +7,14 @@ import ProjectsRepository from "../repositories/projects.repository";
 
 @Injectable()
 export default class CreateAttendance {
+  private logger = new Logger(CreateAttendance.name);
+
   constructor(private mailProvider: MailProvider, private projectsRepository: ProjectsRepository) {}
 
   public async execute({
     email,
     eventId,
+    manual,
     matricula,
     participantId,
   }: CreateAttendanceDTO): Promise<ProjectAttendance> {
@@ -20,7 +23,7 @@ export default class CreateAttendance {
       throw new HttpException("Esse evento não existe", HttpStatus.NOT_FOUND);
     }
 
-    if (!event.type || event.type === "palestra") {
+    if (!manual && (!event.type || event.type === "palestra")) {
       throw new HttpException("Você não precisa marcar frequência nesse evento", HttpStatus.OK);
     }
 
@@ -73,18 +76,25 @@ export default class CreateAttendance {
 
     const attendance = await this.projectsRepository.createAttendance(payload);
 
+    if (manual) {
+      return attendance;
+    }
+
     const edition = await this.projectsRepository.findEditionById(event.editionId);
     const project = await this.projectsRepository.findProjectById(edition!.projectId);
 
-    await this.mailProvider.sendMail({
-      to: foundParticipant!.email as string,
-      subject: `Confirmação de frequência`,
-      body: `Olá estudante!\n\nEstamos passando para avisar que sua frequência n${
-        event.type === "minicurso" ? "o minicurso" : "a palestra"
-      } ${event.name} foi realizada com sucesso.\n\nEspero que estejam gostando dessa edição do(a) ${
-        project!.title
-      }!`,
-    });
+    // Não bloqueia a resposta esperando o SMTP
+    this.mailProvider
+      .sendMail({
+        to: foundParticipant!.email as string,
+        subject: `Confirmação de frequência`,
+        body: `Olá estudante!\n\nEstamos passando para avisar que sua frequência n${
+          event.type === "minicurso" ? "o minicurso" : "a palestra"
+        } ${event.name} foi realizada com sucesso.\n\nEspero que estejam gostando dessa edição do(a) ${
+          project!.title
+        }!`,
+      })
+      .catch(err => this.logger.error(`Falha ao enviar confirmação de frequência: ${err}`));
 
     return attendance;
   }

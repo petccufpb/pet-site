@@ -28,7 +28,7 @@ export interface CertificateInfo {
   participantId: string;
 }
 
-export interface CreateRepoAttendance extends Omit<CreateAttendanceDTO, "email" | "matricula"> {
+export interface CreateRepoAttendance extends Omit<CreateAttendanceDTO, "email" | "manual" | "matricula"> {
   participantId: string;
 }
 

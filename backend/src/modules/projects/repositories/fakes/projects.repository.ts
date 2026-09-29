@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import {
   Project,
   ProjectAttendance,
@@ -45,6 +45,13 @@ export default class FakeProjectsRepository implements ProjectsRepository {
   private speakers: ProjectSpeaker[] = [];
 
   public async createAttendance({ ...data }: CreateRepoAttendance): Promise<ProjectAttendance> {
+    const duplicate = this.attendances.some(
+      attendance => attendance.participantId === data.participantId && attendance.eventId === data.eventId,
+    );
+    if (duplicate) {
+      throw new HttpException("Você já marcou frequência", HttpStatus.CONFLICT);
+    }
+
     const attendance = {
       ...data,
       id: randomUUID(),

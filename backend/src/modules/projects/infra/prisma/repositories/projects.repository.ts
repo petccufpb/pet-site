@@ -1,5 +1,6 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import {
+  Prisma,
   Project,
   ProjectAttendance,
   ProjectCertificate,
@@ -36,9 +37,17 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
   constructor(private prisma: PrismaService) {}
 
   public async createAttendance(data: CreateRepoAttendance): Promise<ProjectAttendance> {
-    const attendance = await this.prisma.projectAttendance.create({ data });
+    try {
+      const attendance = await this.prisma.projectAttendance.create({ data });
 
-    return attendance;
+      return attendance;
+    } catch (err) {
+      if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002") {
+        throw new HttpException("Você já marcou frequência", HttpStatus.CONFLICT);
+      }
+
+      throw err;
+    }
   }
 
   public async createCertificate(data: CertificateInfo): Promise<ProjectCertificate> {
