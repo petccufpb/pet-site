@@ -30,6 +30,7 @@ import ProjectsRepository, {
   CreateRepoParticipation,
   FindEditionDTO,
   FindExistingEventDTO,
+  SearchParticipantsQuery,
 } from "@modules/projects/repositories/projects.repository";
 
 @Injectable()
@@ -449,6 +450,27 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     });
 
     return speaker;
+  }
+
+  public async searchParticipants({
+    editionId,
+    limit,
+    query,
+  }: SearchParticipantsQuery): Promise<ProjectParticipant[]> {
+    const participants = await this.prisma.projectParticipant.findMany({
+      where: {
+        OR: [
+          { name: { contains: query, mode: "insensitive" } },
+          { email: { contains: query, mode: "insensitive" } },
+          { matricula: { contains: query } },
+        ],
+        ...(editionId && { projectsParticipated: { some: { editionId } } }),
+      },
+      orderBy: { name: "asc" },
+      take: limit,
+    });
+
+    return participants;
   }
 
   public async updateParticipant(

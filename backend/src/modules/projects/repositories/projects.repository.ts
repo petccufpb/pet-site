@@ -57,6 +57,12 @@ export type FindParticipationDTO =
       participantId: string;
     };
 
+export interface SearchParticipantsQuery {
+  editionId?: string;
+  limit: number;
+  query: string;
+}
+
 export type CompleteProjectAttendance = Prisma.ProjectAttendanceGetPayload<{
   include: {
     event: true;
@@ -132,5 +138,6 @@ export default abstract class ProjectsRepository {
   abstract findProjectById(id: string): Promise<Project | null>;
   abstract findProjectByTitle(title: string): Promise<Project | null>;
   abstract findSpeakerById(id: string): Promise<ProjectSpeaker | null>;
+  abstract searchParticipants(data: SearchParticipantsQuery): Promise<ProjectParticipant[]>;
   abstract updateParticipant(id: string, data: UpdateParticipantDTO): Promise<ProjectParticipant>;
 }

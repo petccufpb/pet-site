@@ -31,6 +31,7 @@ import ProjectsRepository, {
   CreateRepoParticipation,
   FindEditionDTO,
   FindExistingEventDTO,
+  SearchParticipantsQuery,
 } from "../projects.repository";
 
 @Injectable()
@@ -501,6 +502,30 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     const speaker = this.speakers.find(speaker => speaker.id === id) || null;
 
     return speaker;
+  }
+
+  public async searchParticipants({
+    editionId,
+    limit,
+    query,
+  }: SearchParticipantsQuery): Promise<ProjectParticipant[]> {
+    const lowerQuery = query.toLowerCase();
+    const editionParticipantIds =
+      editionId &&
+      this.participations
+        .filter(participation => participation.editionId === editionId)
+        .map(participation => participation.participantId);
+
+    return this.participants
+      .filter(
+        participant =>
+          participant.name.toLowerCase().includes(lowerQuery) ||
+          participant.email.toLowerCase().includes(lowerQuery) ||
+          participant.matricula?.includes(query),
+      )
+      .filter(participant => !editionParticipantIds || editionParticipantIds.includes(participant.id))
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .slice(0, limit);
   }
 
   public async updateParticipant(
