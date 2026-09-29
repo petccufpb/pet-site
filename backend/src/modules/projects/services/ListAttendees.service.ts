@@ -36,8 +36,8 @@ export default class ListAttendees {
             attendances.push(attendance);
           }
         } else {
-          const attendances = await this.projectsRepository.findAttendancesByEvent(event.id);
-          attendances.concat(attendances);
+          const eventAttendances = await this.projectsRepository.findAttendancesByEvent(event.id);
+          attendances = attendances.concat(eventAttendances);
         }
       }
     } else if (eventId) {
@@ -60,13 +60,15 @@ export default class ListAttendees {
       attendances = attendances.filter(attendance => attendance.participant!.course === course);
     }
 
+    // Mais recentes primeiro, para a tabela de check-in
+    attendances.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
     return {
       total: attendances.length,
-      ...(eventId
-        ? {
-            attendees: attendances.map(attendance => attendance.participant),
-          }
-        : { attendances }),
+      attendances,
+      ...(eventId && {
+        attendees: attendances.map(attendance => attendance.participant),
+      }),
     };
   }
 }

@@ -58,6 +58,8 @@ model ProjectAttendance {
     event         ProjectEvent?      @relation(fields: [eventId], references: [id])
     createdAt     DateTime           @default(now())
     updatedAt     DateTime           @updatedAt
+
+    @@unique([participantId, eventId])
 }
 
 model ProjectCertificate {

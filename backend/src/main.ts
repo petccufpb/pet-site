@@ -1,3 +1,6 @@
+// Precisa ser o primeiro import: carrega o .env antes dos módulos lerem process.env
+import "./env";
+
 import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";

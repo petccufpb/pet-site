@@ -1,6 +1,6 @@
 import { IsOptional } from "@hyoretsu/decorators";
 import { ProjectParticipation } from "@prisma/client";
-import { IsEmail, IsString, IsUUID } from "class-validator";
+import { IsBoolean, IsEmail, IsString, IsUUID } from "class-validator";
 
 export default class CreateParticipationDTO implements Partial<ProjectParticipation> {
   @IsOptional()
@@ -15,6 +15,11 @@ export default class CreateParticipationDTO implements Partial<ProjectParticipat
   @IsOptional()
   @IsString()
   eventId?: string;
+
+  /** Inscrição feita pelo painel admin durante o check-in: ignora prazo, vagas e limite por edição */
+  @IsOptional()
+  @IsBoolean()
+  manual?: boolean;
 
   @IsOptional()
   @IsString()

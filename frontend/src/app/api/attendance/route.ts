@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const params = await req.json();
+  // `manual` é exclusivo do painel admin; o fluxo do aluno nunca o repassa
+  const { manual: _manual, ...params } = await req.json();
 
   const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/projects/attendance", {
     method: "POST",
-    body: JSON.stringify({ ...params }),
+    body: JSON.stringify(params),
     headers: {
       "Content-Type": "application/json",
       Origin: req.headers.get("Origin")!,

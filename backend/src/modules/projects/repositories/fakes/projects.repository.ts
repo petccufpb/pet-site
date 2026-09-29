@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import {
   Project,
   ProjectAttendance,
@@ -31,6 +31,7 @@ import ProjectsRepository, {
   CreateRepoParticipation,
   FindEditionDTO,
   FindExistingEventDTO,
+  SearchParticipantsQuery,
 } from "../projects.repository";
 
 @Injectable()
@@ -45,6 +46,13 @@ export default class FakeProjectsRepository implements ProjectsRepository {
   private speakers: ProjectSpeaker[] = [];
 
   public async createAttendance({ ...data }: CreateRepoAttendance): Promise<ProjectAttendance> {
+    const duplicate = this.attendances.some(
+      attendance => attendance.participantId === data.participantId && attendance.eventId === data.eventId,
+    );
+    if (duplicate) {
+      throw new HttpException("Você já marcou frequência", HttpStatus.CONFLICT);
+    }
+
     const attendance = {
       ...data,
       id: randomUUID(),
@@ -391,9 +399,9 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     const participant =
       this.participants.find(
         participant =>
-          participant.email === email ||
-          participant.matricula === matricula ||
-          participant.phoneNumber === phoneNumber,
+          (!!email && participant.email === email) ||
+          (!!matricula && participant.matricula === matricula) ||
+          (!!phoneNumber && participant.phoneNumber === phoneNumber),
       ) || null;
 
     return participant;
@@ -438,7 +446,7 @@ export default class FakeProjectsRepository implements ProjectsRepository {
   }
 
   public async findParticipantsByEvent(eventId: string): Promise<ProjectParticipant[]> {
-    const participations = this.participations.filter(participation => participation.editionId === eventId);
+    const participations = this.participations.filter(participation => participation.eventId === eventId);
     const participantIds = participations.map(participation => participation.participantId);
 
     return this.participants.filter(participant => participantIds.includes(participant.id));
@@ -494,6 +502,30 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     const speaker = this.speakers.find(speaker => speaker.id === id) || null;
 
     return speaker;
+  }
+
+  public async searchParticipants({
+    editionId,
+    limit,
+    query,
+  }: SearchParticipantsQuery): Promise<ProjectParticipant[]> {
+    const lowerQuery = query.toLowerCase();
+    const editionParticipantIds =
+      editionId &&
+      this.participations
+        .filter(participation => participation.editionId === editionId)
+        .map(participation => participation.participantId);
+
+    return this.participants
+      .filter(
+        participant =>
+          participant.name.toLowerCase().includes(lowerQuery) ||
+          participant.email.toLowerCase().includes(lowerQuery) ||
+          participant.matricula?.includes(query),
+      )
+      .filter(participant => !editionParticipantIds || editionParticipantIds.includes(participant.id))
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .slice(0, limit);
   }
 
   public async updateParticipant(

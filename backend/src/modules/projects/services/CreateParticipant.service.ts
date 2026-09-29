@@ -32,11 +32,16 @@ export default class CreateParticipant {
 
     if (existingParticipant) {
       const sameEmail = await this.projectsRepository.findParticipantByEmail(email);
-      const sameMatricula = await this.projectsRepository.findParticipantByMatricula(matricula);
+      // Buscar matrícula null retornaria um externo qualquer
+      const sameMatricula = matricula
+        ? await this.projectsRepository.findParticipantByMatricula(matricula)
+        : null;
       const samePhone = await this.projectsRepository.findParticipantByPhone(phoneNumber);
 
       const updatingEmail = sameEmail?.id !== existingParticipant.id;
-      const updatingMatricula = sameMatricula?.id !== existingParticipant.id;
+      const updatingMatricula = matricula
+        ? sameMatricula?.id !== existingParticipant.id
+        : existingParticipant.matricula !== null;
       const updatingPhone = samePhone?.id !== existingParticipant.id;
 
       if ([updatingEmail, updatingMatricula, updatingPhone].filter(Boolean).length > 1) {

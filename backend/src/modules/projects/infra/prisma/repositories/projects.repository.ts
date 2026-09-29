@@ -1,5 +1,6 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import {
+  Prisma,
   Project,
   ProjectAttendance,
   ProjectCertificate,
@@ -29,6 +30,7 @@ import ProjectsRepository, {
   CreateRepoParticipation,
   FindEditionDTO,
   FindExistingEventDTO,
+  SearchParticipantsQuery,
 } from "@modules/projects/repositories/projects.repository";
 
 @Injectable()
@@ -36,9 +38,17 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
   constructor(private prisma: PrismaService) {}
 
   public async createAttendance(data: CreateRepoAttendance): Promise<ProjectAttendance> {
-    const attendance = await this.prisma.projectAttendance.create({ data });
+    try {
+      const attendance = await this.prisma.projectAttendance.create({ data });
 
-    return attendance;
+      return attendance;
+    } catch (err) {
+      if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002") {
+        throw new HttpException("Você já marcou frequência", HttpStatus.CONFLICT);
+      }
+
+      throw err;
+    }
   }
 
   public async createCertificate(data: CertificateInfo): Promise<ProjectCertificate> {
@@ -308,9 +318,14 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     matricula,
     phoneNumber,
   }: FindExistingParticipantDTO): Promise<ProjectParticipant | null> {
+    // Sem o filtro, { matricula: null } vira "IS NULL" e casa com qualquer participante externo
     const participant = await this.prisma.projectParticipant.findFirst({
       where: {
-        OR: [{ email }, { matricula }, { phoneNumber }],
+        OR: [
+          ...(email ? [{ email }] : []),
+          ...(matricula ? [{ matricula }] : []),
+          ...(phoneNumber ? [{ phoneNumber }] : []),
+        ],
       },
     });
 
@@ -435,6 +450,27 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     });
 
     return speaker;
+  }
+
+  public async searchParticipants({
+    editionId,
+    limit,
+    query,
+  }: SearchParticipantsQuery): Promise<ProjectParticipant[]> {
+    const participants = await this.prisma.projectParticipant.findMany({
+      where: {
+        OR: [
+          { name: { contains: query, mode: "insensitive" } },
+          { email: { contains: query, mode: "insensitive" } },
+          { matricula: { contains: query } },
+        ],
+        ...(editionId && { projectsParticipated: { some: { editionId } } }),
+      },
+      orderBy: { name: "asc" },
+      take: limit,
+    });
+
+    return participants;
   }
 
   public async updateParticipant(

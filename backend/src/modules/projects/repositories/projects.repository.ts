@@ -28,7 +28,7 @@ export interface CertificateInfo {
   participantId: string;
 }
 
-export interface CreateRepoAttendance extends Omit<CreateAttendanceDTO, "email" | "matricula"> {
+export interface CreateRepoAttendance extends Omit<CreateAttendanceDTO, "email" | "manual" | "matricula"> {
   participantId: string;
 }
 
@@ -56,6 +56,12 @@ export type FindParticipationDTO =
       eventId: string;
       participantId: string;
     };
+
+export interface SearchParticipantsQuery {
+  editionId?: string;
+  limit: number;
+  query: string;
+}
 
 export type CompleteProjectAttendance = Prisma.ProjectAttendanceGetPayload<{
   include: {
@@ -132,5 +138,6 @@ export default abstract class ProjectsRepository {
   abstract findProjectById(id: string): Promise<Project | null>;
   abstract findProjectByTitle(title: string): Promise<Project | null>;
   abstract findSpeakerById(id: string): Promise<ProjectSpeaker | null>;
+  abstract searchParticipants(data: SearchParticipantsQuery): Promise<ProjectParticipant[]>;
   abstract updateParticipant(id: string, data: UpdateParticipantDTO): Promise<ProjectParticipant>;
 }
