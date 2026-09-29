@@ -391,9 +391,9 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     const participant =
       this.participants.find(
         participant =>
-          participant.email === email ||
-          participant.matricula === matricula ||
-          participant.phoneNumber === phoneNumber,
+          (!!email && participant.email === email) ||
+          (!!matricula && participant.matricula === matricula) ||
+          (!!phoneNumber && participant.phoneNumber === phoneNumber),
       ) || null;
 
     return participant;

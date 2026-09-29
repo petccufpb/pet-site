@@ -308,9 +308,14 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     matricula,
     phoneNumber,
   }: FindExistingParticipantDTO): Promise<ProjectParticipant | null> {
+    // Sem o filtro, { matricula: null } vira "IS NULL" e casa com qualquer participante externo
     const participant = await this.prisma.projectParticipant.findFirst({
       where: {
-        OR: [{ email }, { matricula }, { phoneNumber }],
+        OR: [
+          ...(email ? [{ email }] : []),
+          ...(matricula ? [{ matricula }] : []),
+          ...(phoneNumber ? [{ phoneNumber }] : []),
+        ],
       },
     });
 
