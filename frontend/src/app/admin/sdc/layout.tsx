@@ -64,7 +64,7 @@ const NavLinks = styled.nav`
   gap: 0.5rem;
 `;
 
-const NavItem = styled(Link)<{ active: boolean }>`
+const NavItem = styled(Link)<{ $active: boolean }>`
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -74,10 +74,10 @@ const NavItem = styled(Link)<{ active: boolean }>`
   font-weight: 600;
   text-decoration: none;
   transition: all 0.2s ease;
-  color: ${({ active, theme }) =>
-    active ? theme.colors["third-blue"] : theme.colors["second-white"]};
-  background: ${({ active }) => (active ? "rgba(115, 229, 226, 0.1)" : "transparent")};
-  border: 1px solid ${({ active }) => (active ? "rgba(115, 229, 226, 0.25)" : "transparent")};
+  color: ${({ $active, theme }) =>
+    $active ? theme.colors["third-blue"] : theme.colors["second-white"]};
+  background: ${({ $active }) => ($active ? "rgba(115, 229, 226, 0.1)" : "transparent")};
+  border: 1px solid ${({ $active }) => ($active ? "rgba(115, 229, 226, 0.25)" : "transparent")};
 
   &:hover {
     color: ${({ theme }) => theme.colors["base-white"]};
@@ -126,7 +126,7 @@ function SDCHeaderBar() {
         <NavLinks>
           <NavItem
             href="/admin/sdc/edicoes"
-            active={pathname?.startsWith("/admin/sdc/edicoes") ?? false}
+            $active={pathname?.startsWith("/admin/sdc/edicoes") ?? false}
           >
             <HiOutlineCalendar size={17} />
             Edições
@@ -134,7 +134,7 @@ function SDCHeaderBar() {
 
           <NavItem
             href="/admin/sdc/eventos"
-            active={pathname?.startsWith("/admin/sdc/eventos") ?? false}
+            $active={pathname?.startsWith("/admin/sdc/eventos") ?? false}
           >
             <HiOutlineClock size={17} />
             Cronograma de Eventos

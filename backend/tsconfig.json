@@ -24,5 +24,6 @@
     "strictNullChecks": true,
     "target": "es2017"
   },
-  "exclude": ["src/**/*.spec.ts"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "src/**/*.spec.ts", "jest.config.ts"]
 }

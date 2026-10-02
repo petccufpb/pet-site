@@ -18,6 +18,10 @@ export default class AdminLoginRateLimitGuard implements CanActivate {
     const req = ctx.switchToHttp().getRequest<Request>();
     const ip = (req.ip ?? req.socket?.remoteAddress ?? "unknown").replace(/^::ffff:/, "");
 
+    if (process.env.NODE_ENV !== "production") {
+      return true;
+    }
+
     const now = Date.now();
     const entry = this.store.get(ip);
 

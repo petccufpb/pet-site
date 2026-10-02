@@ -153,16 +153,29 @@ export const EditionSubtitle = styled.div`
   color: ${({ theme }) => theme.colors["second-white"]};
 `;
 
-export const StatusBadge = styled.span<{ active: boolean }>`
+export const StatusBadge = styled.span<{ $active: boolean }>`
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   padding: 0.3rem 0.8rem;
   font-size: 0.8rem;
   font-weight: 600;
+  border-radius: 9999px;
+  background: ${({ $active }) =>
+    $active ? "rgba(4, 211, 97, 0.15)" : "rgba(255, 255, 255, 0.05)"};
+  color: ${({ $active }) => ($active ? "#5cf396" : "rgba(255, 255, 255, 0.6)")};
+  border: 1px solid
+    ${({ $active }) => ($active ? "rgba(4, 211, 97, 0.3)" : "rgba(255, 255, 255, 0.1)")};
 `;
 
-export const SelectActionBtn = styled.button<{ selected: boolean }>`
+export const SelectActionBtn = styled.button<{ $selected: boolean }>`
+  background: ${({ $selected }) =>
+    $selected ? "rgba(4, 211, 97, 0.15)" : "rgba(255, 255, 255, 0.05)"};
+  color: ${({ $selected }) => ($selected ? "#5cf396" : "white")};
+  border: 1px solid
+    ${({ $selected }) =>
+      $selected ? "rgba(4, 211, 97, 0.3)" : "rgba(255, 255, 255, 0.1)"};
+  border-radius: 6px;
   padding: 0.4rem 0.8rem;
   font-size: 0.8rem;
   font-weight: 600;
@@ -173,8 +186,8 @@ export const SelectActionBtn = styled.button<{ selected: boolean }>`
   gap: 0.4rem;
 
   &:hover {
-    background: ${({ selected }) =>
-      selected ? "rgba(4, 211, 97, 0.2)" : "rgba(255, 255, 255, 0.1)"};
+    background: ${({ $selected }) =>
+      $selected ? "rgba(4, 211, 97, 0.2)" : "rgba(255, 255, 255, 0.1)"};
   }
 `;
 

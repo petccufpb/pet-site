@@ -21,13 +21,7 @@ export default function AdminLoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    // Se o usuário já estiver logado, redireciona para o painel do time
-    const token = localStorage.getItem("pet_admin_auth");
-    if (token) {
-      router.push("/admin/time");
-    }
-  }, [router]);
+  const apiUrl = "/api/proxy";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,24 +34,22 @@ export default function AdminLoginPage() {
     setError("");
 
     try {
-      const basicToken = btoa(`${username}:${password}`);
-      const authHeader = `Basic ${basicToken}`;
-
-      // Fazer uma requisição de validação para o endpoint de auth-check no backend
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/team/members/auth-check`, {
-        method: "GET",
+      // Autenticação com cookie HttpOnly First-Party (100% compatível com Edge, Chrome e Safari)
+      const response = await fetch(`${apiUrl}/auth/admin/login`, {
+        method: "POST",
         headers: {
-          Authorization: authHeader,
+          "Content-Type": "application/json",
         },
+        credentials: "include",
+        body: JSON.stringify({ username, password }),
       });
 
       if (!response.ok) {
-        throw new Error("Usuário ou senha inválidos.");
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.message || "Usuário ou senha inválidos.");
       }
 
-      // Salva a credencial no localStorage se a verificação tiver sucesso
-      localStorage.setItem("pet_admin_auth", authHeader);
-      router.push("/admin/time");
+      window.location.href = "/admin/time";
     } catch (err: any) {
       setError(err.message || "Erro de conexão com o servidor.");
     } finally {

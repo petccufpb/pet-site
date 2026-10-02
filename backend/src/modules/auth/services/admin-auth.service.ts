@@ -27,14 +27,32 @@ export default class AdminAuthService {
     const passwordHash = process.env.ADMIN_PASSWORD_HASH;
     const jwtExpiresIn = (process.env.JWT_EXPIRES_IN ?? "8h") as StringValue;
 
-    // Constant-time check: always run bcrypt even on wrong username to avoid timing attacks
-    const dummyHash = "$2b$12$invalidhashpadding000000000000000000000000000000000000";
-    const hashToCompare = passwordHash ?? dummyHash;
+    let isValid = false;
 
-    const passwordMatch = passwordHash ? await bcrypt.compare(password, hashToCompare) : false;
-    const usernameMatch = username === ADMIN_USERNAME;
+    // 1. Check against SWAGGER_USERS
+    const usersEnv = process.env.SWAGGER_USERS || "[]";
+    try {
+      const usersList = JSON.parse(usersEnv) as string[][];
+      if (usersList.some(([u, p]) => u === username && p === password)) {
+        isValid = true;
+      }
+    } catch {}
 
-    if (!usernameMatch || !passwordMatch) {
+    // 2. Check against ADMIN_PASSWORD_HASH or ADMIN_PASSWORD
+    if (!isValid) {
+      const dummyHash = "$2b$12$invalidhashpadding000000000000000000000000000000000000";
+      const hashToCompare = passwordHash ?? dummyHash;
+      const passwordMatch = passwordHash ? await bcrypt.compare(password, hashToCompare) : false;
+      const usernameMatch = username === ADMIN_USERNAME;
+
+      if (usernameMatch && passwordMatch) {
+        isValid = true;
+      } else if (process.env.ADMIN_PASSWORD && username === ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
+        isValid = true;
+      }
+    }
+
+    if (!isValid) {
       this.logger.warn(`Failed admin login attempt | username="${username}" | ip=${ip}`);
       throw new HttpException("Credenciais inválidas", HttpStatus.UNAUTHORIZED);
     }

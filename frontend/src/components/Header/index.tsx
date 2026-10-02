@@ -146,7 +146,7 @@ export function Header() {
               <ListItem key={i}>
                 <RouteLink
                   href={href}
-                  active={href === "/" || href === "/sdc" ? pathname === href : pathname.startsWith(href)}
+                  $active={href === "/" || href === "/sdc" ? pathname === href : pathname.startsWith(href)}
                 >
                   {name}
                 </RouteLink>
@@ -157,7 +157,7 @@ export function Header() {
               <ListItem key={i}>
                 <RouteLink
                   href={href}
-                  active={href === "/" || href === "/sdc" ? pathname === href : pathname.startsWith(href)}
+                  $active={href === "/" || href === "/sdc" ? pathname === href : pathname.startsWith(href)}
                 >
                   {name}
                 </RouteLink>

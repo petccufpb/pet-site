@@ -129,7 +129,7 @@ export default function SdcEdicoesPage() {
                     </TableCell>
 
                     <TableCell>
-                      <StatusBadge active={isCurrent}>
+                      <StatusBadge $active={isCurrent}>
                         {isCurrent ? (
                           <>
                             <HiCheck size={14} />
@@ -144,7 +144,7 @@ export default function SdcEdicoesPage() {
                     <TableCell style={{ textAlign: "right" }}>
                       <div style={{ display: "inline-flex", gap: "0.5rem", alignItems: "center" }}>
                         <SelectActionBtn
-                          selected={isCurrent}
+                          $selected={isCurrent}
                           onClick={() => selectEdition(edition.id)}
                           title={isCurrent ? "Edição atualmente ativa" : "Definir como edição ativa no painel"}
                         >
@@ -153,7 +153,7 @@ export default function SdcEdicoesPage() {
                         </SelectActionBtn>
 
                         <Link href="/admin/sdc/eventos" style={{ textDecoration: "none" }}>
-                          <SelectActionBtn selected={false} title="Ver cronograma de eventos desta edição">
+                          <SelectActionBtn $selected={false} title="Ver cronograma de eventos desta edição">
                             <HiOutlineClock size={15} />
                             Eventos
                           </SelectActionBtn>

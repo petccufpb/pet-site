@@ -68,11 +68,11 @@ export const TabSelector = styled.div`
   margin-bottom: 2rem;
 `;
 
-export const Tab = styled.button<{ active: boolean }>`
+export const Tab = styled.button<{ $active: boolean }>`
   background: transparent;
   border: none;
-  border-bottom: 2px solid ${({ theme, active }) => (active ? theme.colors["fifth-blue"] : "transparent")};
-  color: ${({ theme, active }) => (active ? theme.colors["base-white"] : theme.colors["second-grey"])};
+  border-bottom: 2px solid ${({ theme, $active }) => ($active ? theme.colors["fifth-blue"] : "transparent")};
+  color: ${({ theme, $active }) => ($active ? theme.colors["base-white"] : theme.colors["second-grey"])};
   padding: 0.75rem 1rem;
   font-size: 1rem;
   font-weight: 600;
@@ -136,11 +136,11 @@ export const Avatar = styled.img`
   border: 2px solid ${({ theme }) => theme.colors["fifth-blue"]};
 `;
 
-export const StatusBadge = styled.span<{ active: boolean }>`
+export const StatusBadge = styled.span<{ $active: boolean }>`
   display: inline-block;
-  background: ${({ active }) => (active ? "rgba(4, 211, 97, 0.15)" : "rgba(206, 74, 74, 0.15)")};
-  color: ${({ active }) => (active ? "#5cf396" : "#ff8888")};
-  border: 1px solid ${({ active }) => (active ? "rgba(4, 211, 97, 0.3)" : "rgba(206, 74, 74, 0.3)")};
+  background: ${({ $active }) => ($active ? "rgba(4, 211, 97, 0.15)" : "rgba(206, 74, 74, 0.15)")};
+  color: ${({ $active }) => ($active ? "#5cf396" : "#ff8888")};
+  border: 1px solid ${({ $active }) => ($active ? "rgba(4, 211, 97, 0.3)" : "rgba(206, 74, 74, 0.3)")};
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
   font-size: 0.8rem;

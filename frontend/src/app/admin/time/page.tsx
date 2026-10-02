@@ -26,9 +26,10 @@ import {
   NoData,
 } from "./styles";
 
+const API_URL = "/api/proxy";
+
 export default function AdminTimePage() {
   const router = useRouter();
-  const [token, setToken] = useState<string | null>(null);
   const [members, setMembers] = useState<Member[]>([]);
   const [tutors, setTutors] = useState<Member[]>([]);
   const [activeTab, setActiveTab] = useState<"members" | "tutors">("members");
@@ -40,25 +41,34 @@ export default function AdminTimePage() {
   const [loading, setLoading] = useState(true);
 
   const checkAuthAndFetchData = async () => {
-    const storedToken = localStorage.getItem("pet_admin_auth");
-    if (!storedToken) {
-      router.push("/admin/login");
-      return;
-    }
-    setToken(storedToken);
-
     try {
       setLoading(true);
-      const membersRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/team/members`);
+
+      // Validação do cookie HttpOnly através do endpoint /auth/admin/me
+      const meRes = await fetch(`${API_URL}/auth/admin/me`, {
+        credentials: "include",
+      });
+
+      if (!meRes.ok) {
+        window.location.href = "/admin/login";
+        return;
+      }
+
+      const membersRes = await fetch(`${API_URL}/team/members`, {
+        credentials: "include",
+      });
       const membersData = await membersRes.json();
 
-      const tutorsRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/team/tutors`);
+      const tutorsRes = await fetch(`${API_URL}/team/tutors`, {
+        credentials: "include",
+      });
       const tutorsData = await tutorsRes.json();
 
       setMembers(membersData);
       setTutors(tutorsData);
     } catch (err) {
       console.error("Erro ao carregar dados:", err);
+      window.location.href = "/admin/login";
     } finally {
       setLoading(false);
     }
@@ -67,11 +77,18 @@ export default function AdminTimePage() {
   useEffect(() => {
     checkAuthAndFetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router]);
+  }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("pet_admin_auth");
-    router.push("/admin/login");
+  const handleLogout = async () => {
+    try {
+      await fetch(`${API_URL}/auth/admin/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (err) {
+      console.error("Erro no logout:", err);
+    }
+    window.location.href = "/admin/login";
   };
 
   const handleOpenAddModal = () => {
@@ -85,11 +102,9 @@ export default function AdminTimePage() {
   };
 
   const handleSaveMember = async (payload: any) => {
-    if (!token) return;
-
     const url = editingMember
-      ? `${process.env.NEXT_PUBLIC_API_URL}/team/members/${editingMember.id}`
-      : `${process.env.NEXT_PUBLIC_API_URL}/team/members`;
+      ? `${API_URL}/team/members/${editingMember.id}`
+      : `${API_URL}/team/members`;
 
     const method = editingMember ? "PATCH" : "POST";
 
@@ -97,8 +112,8 @@ export default function AdminTimePage() {
       method,
       headers: {
         "Content-Type": "application/json",
-        Authorization: token,
       },
+      credentials: "include",
       body: JSON.stringify(payload),
     });
 
@@ -114,16 +129,15 @@ export default function AdminTimePage() {
   };
 
   const handleToggleActive = async (member: Member) => {
-    if (!token) return;
     if (!confirm(`Deseja alterar o status de ${member.name}?`)) return;
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/team/members/${member.id}`, {
+      const response = await fetch(`${API_URL}/team/members/${member.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: token,
         },
+        credentials: "include",
         body: JSON.stringify({
           isActive: !member.isActive,
         }),
@@ -140,16 +154,13 @@ export default function AdminTimePage() {
   };
 
   const handleDeleteMember = async (member: Member) => {
-    if (!token) return;
     if (!confirm(`Deseja excluir permanentemente o membro ${member.name}? Esta ação não pode ser desfeita.`))
       return;
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/team/members/${member.id}`, {
+      const response = await fetch(`${API_URL}/team/members/${member.id}`, {
         method: "DELETE",
-        headers: {
-          Authorization: token,
-        },
+        credentials: "include",
       });
 
       if (!response.ok) {
@@ -184,10 +195,10 @@ export default function AdminTimePage() {
       </Header>
 
       <TabSelector>
-        <Tab active={activeTab === "members"} onClick={() => setActiveTab("members")}>
+        <Tab $active={activeTab === "members"} onClick={() => setActiveTab("members")}>
           Membros do PET
         </Tab>
-        <Tab active={activeTab === "tutors"} onClick={() => setActiveTab("tutors")}>
+        <Tab $active={activeTab === "tutors"} onClick={() => setActiveTab("tutors")}>
           Tutores e Fundadores
         </Tab>
       </TabSelector>
@@ -258,7 +269,7 @@ export default function AdminTimePage() {
                   </TableCell>
                   <TableCell>
                     <StatusBadge
-                      active={member.isActive}
+                      $active={member.isActive}
                       onClick={() => handleToggleActive(member)}
                       title="Clique para alternar o status"
                     >

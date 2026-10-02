@@ -12,6 +12,8 @@ import { ListMembers } from "./services/ListMembers.service";
 import { ListTutors } from "./services/ListTutors.service";
 import { UpdateMember } from "./services/UpdateMember.service";
 
+import { AuthModule } from "@modules/auth/auth.module";
+
 console.log("PROVIDERS TO MODULE:", [
   PrismaService,
   {
@@ -26,7 +28,7 @@ console.log("PROVIDERS TO MODULE:", [
 ]);
 
 @Module({
-  imports: [],
+  imports: [AuthModule],
   controllers: [MembersController, TutorsController],
   providers: [
     PrismaService,
