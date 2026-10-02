@@ -20,7 +20,27 @@ export async function fetchLatestEdition(project: string = DEFAULT_PROJECT): Pro
 }
 
 export async function createEdition(data: CreateEditionInput): Promise<SDCEdition> {
-  const response = await api.post<SDCEdition>("/projects/editions", data);
+  // No navegador (painel admin), usamos o /api/proxy para enviar o cookie HttpOnly de autenticação
+  if (typeof window !== "undefined") {
+    const response = await fetch("/api/proxy/projects/editions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(data),
+    });
 
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const error: any = new Error(errorData.message || "Erro ao criar edição.");
+      error.response = { data: errorData, status: response.status };
+      throw error;
+    }
+
+    return response.json();
+  }
+
+  const response = await api.post<SDCEdition>("/projects/editions", data);
   return response.data;
 }

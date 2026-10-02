@@ -12,7 +12,7 @@ export const MOCK_SPEAKER_ID = "9e2e2d4b-d044-46b7-8977-1d2a2a0c4f82";
  * Título e ID padrão do projeto SDC (projectId) para criação e consulta de edições.
  */
 export const DEFAULT_PROJECT_TITLE = "SDC";
-export const DEFAULT_SDC_PROJECT_ID = "00000000-0000-0000-0000-000000000001";
+export const DEFAULT_SDC_PROJECT_ID = "0a93034b-208c-4807-8670-5a0233b8bd9d";
 
 /**
  * Mock de palestrante para exibição de fallback visual em selects/previews.

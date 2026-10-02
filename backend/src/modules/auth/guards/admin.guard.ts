@@ -19,18 +19,19 @@ export default class AdminGuard implements CanActivate {
       throw new UnauthorizedException("Autenticação necessária");
     }
 
+    let payload;
     try {
-      const payload = this.adminAuthService.verifyToken(token);
-
-      if (payload.role !== "admin") {
-        throw new UnauthorizedException("Acesso negado");
-      }
-
-      req.admin = payload;
-      return true;
+      payload = this.adminAuthService.verifyToken(token);
     } catch (err) {
       this.logger.debug(`AdminGuard rejected token: ${(err as Error).message}`);
       throw new UnauthorizedException("Token inválido ou expirado");
     }
+
+    if (payload.role !== "admin") {
+      throw new UnauthorizedException("Acesso negado");
+    }
+
+    req.admin = payload;
+    return true;
   }
 }

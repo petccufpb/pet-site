@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { SDCEdition } from "sdc-admin";
 import { useSDC } from "../../../../contexts/SDCContext";
+import { EditionFormModal } from "./components/EditionFormModal";
 import {
   HiOutlineCalendar,
   HiOutlineCheckCircle,
@@ -49,6 +50,7 @@ function formatDate(dateString: string): string {
 
 export default function SdcEdicoesPage() {
   const { editions, currentEdition, isLoading, error, selectEdition, refreshEditions } = useSDC();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   return (
     <Container>
@@ -66,7 +68,7 @@ export default function SdcEdicoesPage() {
             <HiOutlineRefresh size={16} />
             Recarregar
           </Button>
-          <Button primary onClick={() => alert("O formulário de criação de edição será aberto no próximo passo!")}>
+          <Button primary onClick={() => setIsModalOpen(true)}>
             <HiPlus size={18} />
             Nova Edição
           </Button>
@@ -133,7 +135,7 @@ export default function SdcEdicoesPage() {
                         {isCurrent ? (
                           <>
                             <HiCheck size={14} />
-                            Ativa no Painel
+                            Ativa
                           </>
                         ) : (
                           "Histórico"
@@ -146,7 +148,7 @@ export default function SdcEdicoesPage() {
                         <SelectActionBtn
                           $selected={isCurrent}
                           onClick={() => selectEdition(edition.id)}
-                          title={isCurrent ? "Edição atualmente ativa" : "Definir como edição ativa no painel"}
+                          title={isCurrent ? "Edição atualmente ativa" : "Definir como edição ativa"}
                         >
                           <HiOutlineCheckCircle size={15} />
                           {isCurrent ? "Selecionada" : "Selecionar"}
@@ -167,6 +169,17 @@ export default function SdcEdicoesPage() {
           </Table>
         </TableContainer>
       )}
+
+      <EditionFormModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSuccess={async (newEdition) => {
+          await refreshEditions();
+          selectEdition(newEdition.id);
+        }}
+        existingEditions={editions}
+        projectId={editions[0]?.projectId}
+      />
     </Container>
   );
 }
