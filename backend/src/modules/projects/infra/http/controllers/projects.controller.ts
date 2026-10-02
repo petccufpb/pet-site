@@ -1,5 +1,5 @@
 import { QueryRequired } from "@hyoretsu/decorators";
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Post, Query, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Query, UseGuards } from "@nestjs/common";
 import {
 	Project,
 	ProjectAttendance,
@@ -35,6 +35,7 @@ import CreateParticipant from "@modules/projects/services/CreateParticipant.serv
 import CreateParticipation from "@modules/projects/services/CreateParticipation.service";
 import CreateProject from "@modules/projects/services/CreateProject.service";
 import CreateSpeaker from "@modules/projects/services/CreateSpeaker.service";
+import DeleteEdition from "@modules/projects/services/DeleteEdition.service";
 import DeleteParticipation from "@modules/projects/services/DeleteParticipation.service";
 import FindLatestEdition from "@modules/projects/services/FindLatestEdition.service";
 import FindParticipant from "@modules/projects/services/FindParticipant.service";
@@ -61,6 +62,7 @@ export default class ProjectsController {
     private createParticipation: CreateParticipation,
     private createProject: CreateProject,
     private createSpeaker: CreateSpeaker,
+    private deleteEdition: DeleteEdition,
     private deleteParticipation: DeleteParticipation,
     private findLatestEdition: FindLatestEdition,
     private findParticipant: FindParticipant,
@@ -167,6 +169,12 @@ export default class ProjectsController {
     const edition = await this.createEdition.execute(body);
 
     return edition;
+  }
+
+  @Delete("editions/:id")
+  @UseGuards(AdminGuard)
+  async deleteProjectsEditions(@Param("id") id: string): Promise<void> {
+    await this.deleteEdition.execute(id);
   }
 
   @Get("editions/latest")

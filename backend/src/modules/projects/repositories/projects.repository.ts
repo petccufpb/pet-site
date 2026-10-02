@@ -102,6 +102,7 @@ export default abstract class ProjectsRepository {
   abstract createParticipation(data: CreateRepoParticipation): Promise<ProjectParticipation>;
   abstract createProject(data: CreateProjectDTO): Promise<Project>;
   abstract createSpeaker(data: CreateSpeakerDTO): Promise<ProjectSpeaker>;
+  abstract deleteEdition(id: string): Promise<void>;
   abstract deleteParticipation(participantId: string, eventId: string): Promise<void>;
   abstract findAllEditions(projectId: string): Promise<CompleteProjectEdition[]>;
   abstract findAllEvents(): Promise<ProjectEvent[]>;

@@ -191,6 +191,27 @@ export const SelectActionBtn = styled.button<{ $selected: boolean }>`
   }
 `;
 
+export const DeleteActionBtn = styled.button`
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  &:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.45);
+    color: #fca5a5;
+  }
+`;
+
 export const EmptyState = styled.div`
   text-align: center;
   padding: 4rem 2rem;

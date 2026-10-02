@@ -44,3 +44,24 @@ export async function createEdition(data: CreateEditionInput): Promise<SDCEditio
   const response = await api.post<SDCEdition>("/projects/editions", data);
   return response.data;
 }
+
+export async function deleteEdition(id: string): Promise<void> {
+  // No navegador (painel admin), usamos o /api/proxy para enviar o cookie HttpOnly de autenticação
+  if (typeof window !== "undefined") {
+    const response = await fetch(`/api/proxy/projects/editions/${id}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const error: any = new Error(errorData.message || "Erro ao excluir edição.");
+      error.response = { data: errorData, status: response.status };
+      throw error;
+    }
+
+    return;
+  }
+
+  await api.delete(`/projects/editions/${id}`);
+}

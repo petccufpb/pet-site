@@ -214,6 +214,15 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     this.participations.splice(participationIndex);
   }
 
+  public async deleteEdition(id: string): Promise<void> {
+    const eventIds = this.events.filter(e => e.editionId === id).map(e => e.id);
+    this.certificates = this.certificates.filter(c => c.editionId !== id && (!c.eventId || !eventIds.includes(c.eventId)));
+    this.attendances = this.attendances.filter(a => !a.eventId || !eventIds.includes(a.eventId));
+    this.participations = this.participations.filter(p => p.editionId !== id && (!p.eventId || !eventIds.includes(p.eventId)));
+    this.events = this.events.filter(e => e.editionId !== id);
+    this.editions = this.editions.filter(e => e.id !== id);
+  }
+
   public async findAllEditions(projectId: string): Promise<CompleteProjectEdition[]> {
     const editions = this.editions.filter(
       edition => edition.projectId === projectId,

@@ -100,6 +100,52 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     });
   }
 
+  public async deleteEdition(id: string): Promise<void> {
+    const events = await this.prisma.projectEvent.findMany({
+      where: { editionId: id },
+      select: { id: true },
+    });
+    const eventIds = events.map(e => e.id);
+
+    await this.prisma.$transaction([
+      this.prisma.projectCertificateTemplate.deleteMany({
+        where: {
+          OR: [
+            { editionId: id },
+            { eventId: { in: eventIds } },
+          ],
+        },
+      }),
+      this.prisma.projectCertificate.deleteMany({
+        where: {
+          OR: [
+            { editionId: id },
+            { eventId: { in: eventIds } },
+          ],
+        },
+      }),
+      this.prisma.projectAttendance.deleteMany({
+        where: {
+          eventId: { in: eventIds },
+        },
+      }),
+      this.prisma.projectParticipation.deleteMany({
+        where: {
+          OR: [
+            { editionId: id },
+            { eventId: { in: eventIds } },
+          ],
+        },
+      }),
+      this.prisma.projectEvent.deleteMany({
+        where: { editionId: id },
+      }),
+      this.prisma.projectEdition.delete({
+        where: { id },
+      }),
+    ]);
+  }
+
   public async findAllEditions(projectId: string): Promise<CompleteProjectEdition[]> {
     const editions = await this.prisma.projectEdition.findMany({
       where: { projectId },

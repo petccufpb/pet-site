@@ -5,12 +5,14 @@ import Link from "next/link";
 import { SDCEdition } from "sdc-admin";
 import { useSDC } from "../../../../contexts/SDCContext";
 import { EditionFormModal } from "./components/EditionFormModal";
+import { DeleteEditionModal } from "./components/DeleteEditionModal";
 import {
   HiOutlineCalendar,
   HiOutlineCheckCircle,
   HiOutlineRefresh,
   HiPlus,
   HiOutlineClock,
+  HiOutlineTrash,
   HiCheck,
 } from "react-icons/hi";
 
@@ -30,6 +32,7 @@ import {
   EditionSubtitle,
   StatusBadge,
   SelectActionBtn,
+  DeleteActionBtn,
   EmptyState,
   LoadingContainer,
 } from "./styles";
@@ -51,6 +54,7 @@ function formatDate(dateString: string): string {
 export default function SdcEdicoesPage() {
   const { editions, currentEdition, isLoading, error, selectEdition, refreshEditions } = useSDC();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [editionToDelete, setEditionToDelete] = useState<SDCEdition | null>(null);
 
   return (
     <Container>
@@ -160,6 +164,15 @@ export default function SdcEdicoesPage() {
                             Eventos
                           </SelectActionBtn>
                         </Link>
+
+                        <DeleteActionBtn
+                          type="button"
+                          onClick={() => setEditionToDelete(edition)}
+                          title="Excluir esta edição da SDC"
+                        >
+                          <HiOutlineTrash size={15} />
+                          Excluir
+                        </DeleteActionBtn>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -179,6 +192,15 @@ export default function SdcEdicoesPage() {
         }}
         existingEditions={editions}
         projectId={editions[0]?.projectId}
+      />
+
+      <DeleteEditionModal
+        isOpen={!!editionToDelete}
+        onClose={() => setEditionToDelete(null)}
+        edition={editionToDelete}
+        onSuccess={async () => {
+          await refreshEditions();
+        }}
       />
     </Container>
   );
