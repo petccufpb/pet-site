@@ -11,6 +11,9 @@ export type CompleteMember = Prisma.MemberGetPayload<{
 export default abstract class MembersRepository {
   abstract create(data: CreateMemberDTO): Promise<Member>;
   abstract findByType(type: string): Promise<Member | null>;
+  abstract findMemberById(id: string): Promise<Member | null>;
   abstract findMembers(): Promise<CompleteMember[]>;
   abstract findTutors(): Promise<CompleteMember[]>;
+  abstract setMemberActive(id: string, isActive: boolean): Promise<Member>;
+  abstract softDeleteMember(id: string): Promise<Member>;
 }

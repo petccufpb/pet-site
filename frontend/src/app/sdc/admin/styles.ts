@@ -115,6 +115,66 @@ export const AreaContainer = styled.div`
   gap: 2rem;
 `;
 
+export const SpeakerList = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: 0.75rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+`;
+
+export const SpeakerItem = styled.li`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+  padding: 0.75rem;
+  border: 1px solid #ffffff24;
+  border-radius: 0.5rem;
+  background: #202020;
+`;
+
+export const SpeakerPhoto = styled.div`
+  display: grid;
+  flex: 0 0 3.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  background: #343434;
+  color: #ffffff90;
+  font-size: 0.75rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+export const SpeakerInfo = styled.div`
+  min-width: 0;
+
+  h3,
+  p {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  h3 {
+    color: #ffffff;
+    font-size: 1rem;
+  }
+
+  p {
+    margin-top: 0.25rem;
+    color: #ffffffa0;
+    font-size: 0.875rem;
+  }
+`;
+
 export const SendButton = styled(Button)`
   gap: 0.5rem;
   font-size: medium;

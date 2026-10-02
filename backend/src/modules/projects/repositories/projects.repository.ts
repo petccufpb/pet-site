@@ -132,5 +132,6 @@ export default abstract class ProjectsRepository {
   abstract findProjectById(id: string): Promise<Project | null>;
   abstract findProjectByTitle(title: string): Promise<Project | null>;
   abstract findSpeakerById(id: string): Promise<ProjectSpeaker | null>;
+  abstract findSpeakers(): Promise<ProjectSpeaker[]>;
   abstract updateParticipant(id: string, data: UpdateParticipantDTO): Promise<ProjectParticipant>;
 }

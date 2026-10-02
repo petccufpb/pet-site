@@ -496,6 +496,10 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     return speaker;
   }
 
+  public async findSpeakers(): Promise<ProjectSpeaker[]> {
+    return [...this.speakers].sort((left, right) => left.name.localeCompare(right.name));
+  }
+
   public async updateParticipant(
     id: string,
     { course, email, phoneNumber }: UpdateParticipantDTO,

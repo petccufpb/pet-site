@@ -437,6 +437,14 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     return speaker;
   }
 
+  public async findSpeakers(): Promise<ProjectSpeaker[]> {
+    const speakers = await this.prisma.projectSpeaker.findMany({
+      orderBy: { name: "asc" },
+    });
+
+    return speakers;
+  }
+
   public async updateParticipant(
     id: string,
     { course, email, phoneNumber }: UpdateParticipantDTO,

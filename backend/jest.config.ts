@@ -1,7 +1,9 @@
 import type { Config } from "jest";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { pathsToModuleNameMapper } from "ts-jest";
 
-import { compilerOptions } from "./tsconfig.json";
+const { compilerOptions } = JSON.parse(readFileSync(resolve(process.cwd(), "tsconfig.json"), "utf8"));
 
 const config: Config = {
   cache: true,
@@ -37,7 +39,7 @@ const config: Config = {
   passWithNoTests: true,
   preset: "ts-jest",
   testEnvironment: "node",
-  testRegex: ".*\\.(e2e-){0}spec\\.ts$",
+  testRegex: ".*\\.(e2e-)?spec\\.ts$",
   transform: {
     "^.+\\.(j|t)s$": [
       "ts-jest",
