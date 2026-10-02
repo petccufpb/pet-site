@@ -3,29 +3,15 @@ packages:
   - frontend
 
 allowBuilds:
-  '@nestjs/core': set this to true or false
-  '@prisma/client': set this to true or false
-  '@prisma/engines': set this to true or false
-  '@scarf/scarf': set this to true or false
-  aws-sdk: set this to true or false
-  bcrypt: set this to true or false
-  esbuild: set this to true or false
-  prisma: set this to true or false
-  protobufjs: set this to true or false
-  sharp: set this to true or false
-  typeit: set this to true or false
+  '@nestjs/core': true
+  '@prisma/client': true
+  '@prisma/engines': true
+  '@scarf/scarf': true
+  aws-sdk: true
+  bcrypt: true
+  esbuild: true
+  prisma: true
+  protobufjs: true
+  sharp: true
+  typeit: true
   unrs-resolver: true
-
-onlyBuiltDependencies:
-  - '@nestjs/core'
-  - '@prisma/client'
-  - '@prisma/engines'
-  - '@scarf/scarf'
-  - aws-sdk
-  - bcrypt
-  - esbuild
-  - prisma
-  - protobufjs
-  - sharp
-  - typeit
-  - unrs-resolver

@@ -4,6 +4,10 @@ import { IsString, IsUUID } from "class-validator";
 export default class ListCertificatesDTO {
   @IsOptional()
   @IsString()
+  _t?: string;
+
+  @IsOptional()
+  @IsString()
   @IsUUID()
   editionId?: string;
 
