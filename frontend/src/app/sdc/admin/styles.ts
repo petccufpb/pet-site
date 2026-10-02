@@ -81,8 +81,9 @@ export const Area = styled.div`
   }
 `;
 
-export const Button = styled.div`
+export const Button = styled.button`
   border-radius: 0.5rem;
+  border: none;
   outline: ${({ theme }) => theme.colors["fifth-blue"]} solid 1px;
   background-color: ${({ theme }) => `${theme.colors["fifth-blue"]}75`};
   padding: 0.5rem 1rem;
@@ -92,6 +93,12 @@ export const Button = styled.div`
   font-size: small;
   transition: all 300ms ease-in-out;
   cursor: pointer;
+  color: #ffffff;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 `;
 
 export const SelectButton = styled(Button)<{ selected: boolean }>`
@@ -108,6 +115,66 @@ export const AreaContainer = styled.div`
   gap: 2rem;
 `;
 
+export const SpeakerList = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: 0.75rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+`;
+
+export const SpeakerItem = styled.li`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+  padding: 0.75rem;
+  border: 1px solid #ffffff24;
+  border-radius: 0.5rem;
+  background: #202020;
+`;
+
+export const SpeakerPhoto = styled.div`
+  display: grid;
+  flex: 0 0 3.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  background: #343434;
+  color: #ffffff90;
+  font-size: 0.75rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+export const SpeakerInfo = styled.div`
+  min-width: 0;
+
+  h3,
+  p {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  h3 {
+    color: #ffffff;
+    font-size: 1rem;
+  }
+
+  p {
+    margin-top: 0.25rem;
+    color: #ffffffa0;
+    font-size: 0.875rem;
+  }
+`;
+
 export const SendButton = styled(Button)`
   gap: 0.5rem;
   font-size: medium;
@@ -115,7 +182,7 @@ export const SendButton = styled(Button)`
   background-color: ${({ theme }) => `${theme.colors["base-green"]}75`};
   outline-color: ${({ theme }) => theme.colors["base-green"]};
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: ${({ theme }) => `${theme.colors["base-green"]}60`};
   }
 `;

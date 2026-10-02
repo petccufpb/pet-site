@@ -1,12 +1,16 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { ProjectSpeaker } from "backend";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { HiOutlineCheckBadge } from "react-icons/hi2";
 import InputMask from "react-input-mask";
 import { z } from "zod";
 
+import api from "@services/api";
+
+import { SpeakerForm } from "./components/SpeakerForm";
 import {
   Area,
   AreaContainer,
@@ -17,6 +21,10 @@ import {
   SelectButton,
   SelectionContainer,
   SendButton,
+  SpeakerInfo,
+  SpeakerItem,
+  SpeakerList,
+  SpeakerPhoto,
 } from "./styles";
 
 const sendFormSchema = z.object({
@@ -31,6 +39,10 @@ type SendFormData = z.infer<typeof sendFormSchema>;
 export default function AdminPage() {
   const [selectedArea, setSelectedArea] = useState(0);
   const [gameDay, setGameDay] = useState(false);
+  const [speakers, setSpeakers] = useState<ProjectSpeaker[]>([]);
+  const [speakersVersion, setSpeakersVersion] = useState(0);
+  const [isLoadingSpeakers, setIsLoadingSpeakers] = useState(false);
+  const [speakerListError, setSpeakerListError] = useState(false);
 
   const {
     register,
@@ -39,6 +51,32 @@ export default function AdminPage() {
   } = useForm<SendFormData>({
     resolver: zodResolver(sendFormSchema),
   });
+
+
+  useEffect(() => {
+    if (selectedArea !== 2) return;
+
+    let isCurrent = true;
+    setIsLoadingSpeakers(true);
+    setSpeakerListError(false);
+
+    api
+      .get<ProjectSpeaker[]>("/projects/speakers")
+      .then(({ data }) => {
+        if (isCurrent) setSpeakers(data);
+      })
+      .catch(error => {
+        console.error(error);
+        if (isCurrent) setSpeakerListError(true);
+      })
+      .finally(() => {
+        if (isCurrent) setIsLoadingSpeakers(false);
+      });
+
+    return () => {
+      isCurrent = false;
+    };
+  }, [selectedArea, speakersVersion]);
 
   return (
     <Container>
@@ -106,6 +144,37 @@ export default function AdminPage() {
       {selectedArea === 1 && (
         <AreaContainer>
           <Area>Teste</Area>
+        </AreaContainer>
+      )}
+
+      {selectedArea === 2 && (
+        <AreaContainer>
+          <SpeakerForm onCreated={() => setSpeakersVersion(version => version + 1)} />
+
+          <section>
+            <h2>Palestrantes cadastrados</h2>
+            {isLoadingSpeakers ? (
+              <p>Carregando palestrantes...</p>
+            ) : speakerListError ? (
+              <p role="alert">Não foi possível carregar a lista de palestrantes.</p>
+            ) : speakers.length === 0 ? (
+              <p>Nenhum palestrante cadastrado.</p>
+            ) : (
+              <SpeakerList>
+                {speakers.map(speaker => (
+                  <SpeakerItem key={speaker.id}>
+                    <SpeakerPhoto>
+                      {speaker.photoUrl ? <img src={speaker.photoUrl} alt="" /> : "Sem foto"}
+                    </SpeakerPhoto>
+                    <SpeakerInfo>
+                      <h3>{speaker.name}</h3>
+                      {speaker.about && <p>{speaker.about}</p>}
+                    </SpeakerInfo>
+                  </SpeakerItem>
+                ))}
+              </SpeakerList>
+            )}
+          </section>
         </AreaContainer>
       )}
     </Container>

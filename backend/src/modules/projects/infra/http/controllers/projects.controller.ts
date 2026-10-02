@@ -43,8 +43,9 @@ import ListCertificates from "@modules/projects/services/ListCertificates.servic
 import ListEditions from "@modules/projects/services/ListEditions.service";
 import ListEvents from "@modules/projects/services/ListEvents.service";
 import ListParticipants, {
-	ListParticipantsResponse,
+  ListParticipantsResponse,
 } from "@modules/projects/services/ListParticipants.service";
+import ListSpeakers from "@modules/projects/services/ListSpeakers.service";
 import ValidateCertificate from "@modules/projects/services/ValidateCertificate.service";
 
 @Controller("projects")
@@ -68,6 +69,7 @@ export default class ProjectsController {
     private listEditions: ListEditions,
     private listEvents: ListEvents,
     private listParticipants: ListParticipants,
+    private listSpeakers: ListSpeakers,
     private validateCertificate: ValidateCertificate,
   ) {}
 
@@ -259,5 +261,10 @@ export default class ProjectsController {
     const speaker = await this.createSpeaker.execute(body);
 
     return speaker;
+  }
+
+  @Get("speakers")
+  async getProjectsSpeakers(): Promise<ProjectSpeaker[]> {
+    return this.listSpeakers.execute();
   }
 }

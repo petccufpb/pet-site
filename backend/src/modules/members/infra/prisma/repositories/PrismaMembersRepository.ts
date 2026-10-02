@@ -30,6 +30,7 @@ export class PrismaMembersRepository implements MembersRepository {
     const user = await this.prisma.member.findFirst({
       where: {
         type,
+        deletedAt: null,
       },
     });
 
@@ -39,6 +40,7 @@ export class PrismaMembersRepository implements MembersRepository {
   async findMembers(): Promise<CompleteMember[]> {
     const members = await this.prisma.member.findMany({
       where: {
+        deletedAt: null,
         OR: [
           {
             type: null,
@@ -66,6 +68,7 @@ export class PrismaMembersRepository implements MembersRepository {
   async findTutors(): Promise<CompleteMember[]> {
     const members = await this.prisma.member.findMany({
       where: {
+        deletedAt: null,
         type: {
           in: ["founder", "tutor"],
         },
@@ -130,5 +133,17 @@ export class PrismaMembersRepository implements MembersRepository {
         where: { id },
       }),
     ]);
+  }
+
+  async findMemberById(id: string): Promise<Member | null> {
+    return this.prisma.member.findUnique({ where: { id } });
+  }
+
+  async setMemberActive(id: string, isActive: boolean): Promise<Member> {
+    return this.prisma.member.update({ where: { id }, data: { isActive } });
+  }
+
+  async softDeleteMember(id: string): Promise<Member> {
+    return this.prisma.member.update({ where: { id }, data: { deletedAt: new Date() } });
   }
 }

@@ -25,6 +25,7 @@ import ListCertificates from "./services/ListCertificates.service";
 import ListEditions from "./services/ListEditions.service";
 import ListEvents from "./services/ListEvents.service";
 import ListParticipants from "./services/ListParticipants.service";
+import ListSpeakers from "./services/ListSpeakers.service";
 import ValidateCertificate from "./services/ValidateCertificate.service";
 
 @Module({
@@ -59,6 +60,7 @@ import ValidateCertificate from "./services/ValidateCertificate.service";
       ListEditions,
       ListEvents,
       ListParticipants,
+      ListSpeakers,
       ValidateCertificate,
     ],
   ],

@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 
 import { PrismaService } from "@database/prisma.service";
+import { AuthModule } from "@modules/auth/auth.module";
 
 import { MembersController } from "./infra/http/controllers/members.controller";
 import { TutorsController } from "./infra/http/controllers/tutors.controller";
@@ -10,22 +11,9 @@ import { CreateMember } from "./services/CreateMember.service";
 import { DeleteMember } from "./services/DeleteMember.service";
 import { ListMembers } from "./services/ListMembers.service";
 import { ListTutors } from "./services/ListTutors.service";
+import { SoftDeleteMember } from "./services/SoftDeleteMember.service";
 import { UpdateMember } from "./services/UpdateMember.service";
-
-import { AuthModule } from "@modules/auth/auth.module";
-
-console.log("PROVIDERS TO MODULE:", [
-  PrismaService,
-  {
-    provide: MembersRepository,
-    useClass: PrismaMembersRepository,
-  },
-  CreateMember,
-  ListMembers,
-  ListTutors,
-  UpdateMember,
-  DeleteMember,
-]);
+import { UpdateMemberStatus } from "./services/UpdateMemberStatus.service";
 
 @Module({
   imports: [AuthModule],
@@ -41,6 +29,8 @@ console.log("PROVIDERS TO MODULE:", [
     ListTutors,
     UpdateMember,
     DeleteMember,
+    SoftDeleteMember,
+    UpdateMemberStatus,
   ],
 })
 export class MembersModule {}

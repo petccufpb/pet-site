@@ -39,7 +39,7 @@ const config: Config = {
   passWithNoTests: true,
   preset: "ts-jest",
   testEnvironment: "node",
-  testRegex: ".*\\.(e2e-){0}spec\\.ts$",
+  testRegex: ".*\\.(e2e-)?spec\\.ts$",
   transform: {
     "^.+\\.(j|t)s$": [
       "ts-jest",

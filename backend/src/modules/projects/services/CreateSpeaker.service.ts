@@ -12,7 +12,7 @@ export default class CreateSpeaker {
   public async execute({ photoUrl, ...data }: CreateSpeakerDTO): Promise<ProjectSpeaker> {
     const speaker = await this.projectsRepository.createSpeaker({
       ...data,
-      photoUrl: directLink(photoUrl),
+      photoUrl: photoUrl ? directLink(photoUrl) : "",
     });
 
     return speaker;
