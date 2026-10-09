@@ -60,6 +60,10 @@ const defaultSdcRoutes = {
       name: "Inscrição",
       path: "/sdc/inscricao",
     },
+    {
+      name: "Minha Inscrição",
+      path: "/sdc/minha-inscricao"
+    },
   ],
   end: [
     {

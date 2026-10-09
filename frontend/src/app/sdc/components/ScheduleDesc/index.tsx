@@ -20,7 +20,7 @@ export function ScheduleDesc() {
       </ScheduleTitle>
       <ScheduleSubtitle>
         {SDC_READY
-          ? "Abaixo estão listados as palestras, rodas de conversa, mini-cursos e o gameday."
+          ? "Abaixo estão listados as palestras, rodas de conversa, minicursos e o gameday."
           : "Aguarde, a programação da SDC será revelada em breve!"}
       </ScheduleSubtitle>
     </ScheduleDescContainer>
