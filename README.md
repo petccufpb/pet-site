@@ -8,7 +8,7 @@ Desenvolvido por Abraão Homualdo, Aran Leite e Lucas Garrafielo.
  - [pnpm](https://pnpm.io/pt/)
  - [node](https://nodejs.org/pt-br)
  - Qualquer ambiente Linux ([wsl](https://learn.microsoft.com/pt-br/windows/wsl/install) ou nativo).
-
+ 
 ## Iniciar ambiente de desenvolvimento.
  - Instalar dependências:
 ```
