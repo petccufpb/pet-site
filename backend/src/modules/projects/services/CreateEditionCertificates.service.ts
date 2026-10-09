@@ -78,18 +78,6 @@ export default class CreateEditionCertificates {
     const minicursos = events.filter(event => event.type === "minicurso");
     const participations = await this.projectsRepository.findParticipationsByEdition(editionId);
 
-    // const sortedMinicursos = minicursos.reduce((obj, value) => {
-    //   const arrKeys = Object.keys(obj);
-    //   const sameDayStr = arrKeys.find(storedDate =>
-    //     isSameDay(new Date(storedDate), new Date(value.startTime)),
-    //   );
-
-    //   return {
-    //     ...obj,
-    //     [sameDayStr || value.startTime.toString()]: [...(sameDayStr ? obj[sameDayStr] : []), value],
-    //   };
-    // }, {} as Record<string, CompleteProjectEvent[]>);
-
     let minicursoCount = 0;
 
     outerLoop: for (const { participantId } of participations) {
@@ -103,7 +91,11 @@ export default class CreateEditionCertificates {
         }
       }
 
-      const attendanceRatio = (totalAttendances / mainEvents.length) * 100;
+      // Evita divisão por zero caso o cronograma ainda não tenha eventos "main"
+      const attendanceRatio = mainEvents.length > 0 
+        ? (totalAttendances / mainEvents.length) * 100 
+        : 100;
+        
       if (attendanceRatio < existingEdition.minimumAttendance) {
         if (participantId === "d7e6060b-c565-455d-8da3-9f8d530e30e9") {
           this.debugParticipant({
@@ -115,7 +107,6 @@ export default class CreateEditionCertificates {
             totalEvents: mainEvents.length,
           });
         }
-
         continue outerLoop;
       }
 
@@ -133,19 +124,6 @@ export default class CreateEditionCertificates {
         }
       }
 
-      // 1 minicurso por dia
-      //   dayMinicursoLoop: for (const minicursosByDay of Object.values(sortedMinicursos)) {
-      //     for (const minicurso of minicursosByDay) {
-      //       const attendance = event.attendees.find(attendance => attendance.participantId === participantId);
-
-      //       if (attendance) {
-      //         continue dayMinicursoLoop;
-      //       }
-      //     }
-
-      //     continue outerLoop;
-      //   }
-
       certificateInfo.push({
         attendance: attendanceRatio,
         editionId,
@@ -159,6 +137,7 @@ export default class CreateEditionCertificates {
       const existingCertificates = await this.projectsRepository.findCertificatesByEditionId(editionId);
       const existingParticipants = existingCertificates.map(({ participantId }) => participantId);
 
+      // Só cria certificado para quem ainda não tem
       await this.projectsRepository.createCertificates(
         certificateInfo.filter(({ participantId }) => !existingParticipants.includes(participantId)),
       );
@@ -167,7 +146,7 @@ export default class CreateEditionCertificates {
     const certificates = await this.projectsRepository.findCertificatesByEditionId(editionId);
 
     const participants = await this.projectsRepository.findParticipants(
-      certificates.map(({ participantId }) => participantId),
+      certificates.map(({ participantId }) => participantId).filter(id => id !== null),
     );
 
     let editionTitle: string;
@@ -175,30 +154,34 @@ export default class CreateEditionCertificates {
       editionTitle = existingEdition.name;
     } else {
       const project = await this.projectsRepository.findProjectById(existingEdition.projectId);
-
       editionTitle = `${existingEdition.number}ª edição do(a) ${project!.title}`;
     }
 
-    while (participants.length > 0) {
-      try {
-        const [participant] = participants;
+    // Disparo em lotes controlados (chunks de 20 e-mails) com delay de 1,5s
+    const chunkSize = 20;
+    for (let i = 0; i < participants.length; i += chunkSize) {
+      const chunk = participants.slice(i, i + chunkSize);
+      
+      await Promise.all(
+        chunk.map(async (participant) => {
+          if (emailWhitelist.length > 0 && !emailWhitelist.includes(participant.email)) {
+            return;
+          }
+          try {
+            await this.mailProvider.sendMail({
+              to: participant.email,
+              subject: `Certificado do(a) ${editionTitle}`,
+              body: `Olá!<br/><br/>Estamos passando para informar que seu certificado do(a) ${editionTitle} já está disponível.<br/><br/>Você pode acessá-lo em: ${process.env.WEB_URL}/sdc/certificados/${editionId}?participantId=${participant.id}`,
+            });
+          } catch (error) {
+            console.error(`Erro ao enviar e-mail para ${participant.email}:`, error);
+          }
+        })
+      );
 
-        if (emailWhitelist.length > 0 && !emailWhitelist.includes(participant.email)) {
-          participants.shift();
-          continue;
-        }
-
-        await this.mailProvider.sendMail({
-          to: participant.email,
-          subject: `Certificado do(a) ${editionTitle}`,
-          body: `Olá!<br/><br/>Estamos passando para informar que seu certificado do(a) ${editionTitle} já está disponível.<br/><br/>Você pode acessá-lo em: ${process.env.WEB_URL}/sdc/certificados/${editionId}?participantId=${participant.id}`,
-        });
-
-        participants.shift();
-
-        await sleep(1000);
-      } catch {
-        await sleep(5000);
+      // Aplica o delay apenas se não for o último chunk
+      if (i + chunkSize < participants.length) {
+        await sleep(1500);
       }
     }
 

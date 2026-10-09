@@ -16,6 +16,8 @@ export default class CreateCertificate {
     matricula,
     participantId,
   }: CreateCertificateDTO): Promise<ProjectCertificate> {
+    
+    // Normaliza a frequência caso venha em decimal (ex: 0.75 -> 75)
     if (attendance < 1) {
       attendance *= 100;
     }
@@ -27,7 +29,8 @@ export default class CreateCertificate {
       }
     } else {
       if (email) {
-        const foundParticipant = await this.projectsRepository.findParticipantByEmail(email);
+        // Correção: forçar toLowerCase para evitar erros de case sensitivity na procura
+        const foundParticipant = await this.projectsRepository.findParticipantByEmail(email.toLowerCase());
         if (!foundParticipant) {
           throw new HttpException("Não existe um aluno com esse email", HttpStatus.NOT_FOUND);
         }
@@ -45,14 +48,14 @@ export default class CreateCertificate {
       }
     }
 
-    const existingCertificate = (
-      await this.projectsRepository.findCertificatesByParticipantId(participantId)
-    ).filter(certificate =>
+    // Correção: Utilização de `.some()` é mais performático que `.filter().length > 0`
+    const existingCertificates = await this.projectsRepository.findCertificatesByParticipantId(participantId);
+    const isDuplicate = existingCertificates.some(certificate =>
       editionId ? certificate.editionId === editionId : certificate.eventId === eventId,
     );
 
-    if (existingCertificate.length > 0) {
-      throw new HttpException("Esse certificado já existe", HttpStatus.FORBIDDEN);
+    if (isDuplicate) {
+      throw new HttpException("Esse certificado já existe para este participante", HttpStatus.FORBIDDEN);
     }
 
     let certificate: ProjectCertificate;
@@ -75,6 +78,7 @@ export default class CreateCertificate {
       }
 
       certificate = await this.projectsRepository.createCertificate({
+        attendance, // Correção: A frequência deve ser registada mesmo se for um certificado de evento avulso
         editionId: event.editionId,
         eventId,
         participantId,
