@@ -2,7 +2,8 @@ import { SDC_READY } from "@app/sdc/page";
 
 import { Scrambles } from "@components/Scrambles";
 
-import { ScheduleDescContainer, ScheduleSubtitle, ScheduleTitle, SectionTitle } from "./styles";
+import { Informative, ScheduleDescContainer, ScheduleSubtitle, ScheduleTitle, SectionTitle } from "./styles";
+import { InfoIcon } from "@phosphor-icons/react/dist/ssr";
 
 export function ScheduleDesc() {
   return (
@@ -23,6 +24,13 @@ export function ScheduleDesc() {
           ? "Abaixo estão listados as palestras, rodas de conversa, minicursos e o gameday."
           : "Aguarde, a programação da SDC será revelada em breve!"}
       </ScheduleSubtitle>
+      {SDC_READY && (
+        <Informative>
+          <InfoIcon size={16} />
+          {/* TROCAR NÚMERO BASEADO NA REGRA ATUAL */}
+          <span>Cada participante pode se inscrever em no máximo 1 minicurso!</span>
+        </Informative>
+      )}
     </ScheduleDescContainer>
   );
 }
