@@ -1,6 +1,47 @@
 "use client";
 import styled from "styled-components";
 
+export const Title = styled.h1`
+  padding: 0.5em 0;
+  font-size: ${({ theme }) => theme.textSizes["text-title-l"]};
+  text-align: center;
+  font-family: ${({ theme }) => theme.fonts.sdc};
+  font-weight: 600;
+`;
+
+export const Message = styled.div`
+  padding: 2em 30%;
+  font-family: ${({ theme }) => theme.fonts.regular};
+  font-size: ${({ theme }) => theme.textSizes["text-regular-m"]};
+  font-weight: 400;
+  text-align: center;
+  color: ${({ theme }) => theme.colors["fifth-grey"]};
+
+  i {
+    font-size: ${({ theme }) => theme.textSizes["text-bold-m"]};
+  }
+`;
+
+export const LoaderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2em 0;
+  & > svg {
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      rotate: 0deg;
+    }
+    100% {
+      rotate: 360deg;
+    }
+  }
+`;
+
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -8,7 +49,7 @@ export const InputContainer = styled.div`
 
   span {
     color: #d5232d;
-    font-size: ${({ theme }) => theme.textSizes["text-regular-xs"]};
+    font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
   }
 
   select {
