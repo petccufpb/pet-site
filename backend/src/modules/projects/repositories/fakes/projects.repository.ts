@@ -19,6 +19,7 @@ import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import type FindEventParticipationsByEditionDTO from "@modules/projects/dtos/FindEventParticipationsByEdition.dto";
 import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParticipant.dto";
+import UpdateEventDTO from "@modules/projects/dtos/UpdateEvent.dto";
 import UpdateParticipantDTO from "@modules/projects/dtos/UpdateParticipant.dto";
 
 import ProjectsRepository, {
@@ -526,5 +527,19 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     }
 
     return participant;
+  }
+
+  public async updateEvent(id: string, data: UpdateEventDTO): Promise<ProjectEvent> {
+    const event = this.events.find(e => e.id === id);
+    if (!event) {
+      throw new Error("Event not found");
+    }
+
+    Object.assign(event, {
+      ...data,
+      updatedAt: new Date(),
+    });
+
+    return event;
   }
 }

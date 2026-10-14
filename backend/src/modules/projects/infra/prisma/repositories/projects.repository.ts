@@ -18,6 +18,7 @@ import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import type FindEventParticipationsByEditionDTO from "@modules/projects/dtos/FindEventParticipationsByEdition.dto";
 import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParticipant.dto";
+import UpdateEventDTO from "@modules/projects/dtos/UpdateEvent.dto";
 import UpdateParticipantDTO from "@modules/projects/dtos/UpdateParticipant.dto";
 import ProjectsRepository, {
   CertificateInfo,
@@ -507,5 +508,32 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     });
 
     return participant;
+  }
+
+  public async updateEvent(
+    id: string,
+    data: UpdateEventDTO,
+  ): Promise<ProjectEvent> {
+    const event = await this.prisma.projectEvent.update({
+      data: {
+        ...(data.name && { name: data.name }),
+        ...(data.about !== undefined && { about: data.about }),
+        ...(data.capacity !== undefined && { capacity: data.capacity }),
+        ...(data.extraCapacity !== undefined && { extraCapacity: data.extraCapacity }),
+        ...(data.location !== undefined && { location: data.location }),
+        ...(data.onSite !== undefined && { onSite: data.onSite }),
+        ...(data.speakerId && { speakerId: data.speakerId }),
+        ...(data.startTime && { startTime: data.startTime }),
+        ...(data.endTime && { endTime: data.endTime }),
+        ...(data.type !== undefined && { type: data.type }),
+        ...(data.allowMultiple !== undefined && { allowMultiple: data.allowMultiple }),
+        ...(data.externalSignup !== undefined && { externalSignup: data.externalSignup }),
+      },
+      where: {
+        id,
+      },
+    });
+
+    return event;
   }
 }

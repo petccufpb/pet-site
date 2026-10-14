@@ -17,6 +17,7 @@ import CreateParticipantDTO from "../dtos/CreateParticipant.dto";
 import CreateParticipationDTO from "../dtos/CreateParticipation.dto";
 import CreateProjectDTO from "../dtos/CreateProject.dto";
 import CreateSpeakerDTO from "../dtos/CreateSpeaker.dto";
+import UpdateEventDTO from "../dtos/UpdateEvent.dto";
 import type FindEventParticipationsByEditionDTO from "../dtos/FindEventParticipationsByEdition.dto";
 import FindExistingParticipantDTO from "../dtos/FindExistingParticipant.dto";
 import UpdateParticipantDTO from "../dtos/UpdateParticipant.dto";
@@ -134,5 +135,6 @@ export default abstract class ProjectsRepository {
   abstract findProjectByTitle(title: string): Promise<Project | null>;
   abstract findSpeakerById(id: string): Promise<ProjectSpeaker | null>;
   abstract findSpeakers(): Promise<ProjectSpeaker[]>;
+  abstract updateEvent(id: string, data: UpdateEventDTO): Promise<ProjectEvent>;
   abstract updateParticipant(id: string, data: UpdateParticipantDTO): Promise<ProjectParticipant>;
 }

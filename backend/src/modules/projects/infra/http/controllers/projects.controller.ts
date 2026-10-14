@@ -1,5 +1,5 @@
 import { QueryRequired } from "@hyoretsu/decorators";
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Query, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Patch, Post, Put, Query, UseGuards } from "@nestjs/common";
 import {
 	Project,
 	ProjectAttendance,
@@ -16,6 +16,7 @@ import CreateCertificateDTO from "@modules/projects/dtos/CreateCertificate.dto";
 import CreateCertificatesDTO from "@modules/projects/dtos/CreateCertificates.dto";
 import CreateEditionDTO from "@modules/projects/dtos/CreateEdition.dto";
 import CreateEventDTO from "@modules/projects/dtos/CreateEvent.dto";
+import UpdateEventDTO from "@modules/projects/dtos/UpdateEvent.dto";
 import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
 import CreateParticipationDTO from "@modules/projects/dtos/CreateParticipation.dto";
 import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
@@ -37,6 +38,7 @@ import CreateProject from "@modules/projects/services/CreateProject.service";
 import CreateSpeaker from "@modules/projects/services/CreateSpeaker.service";
 import DeleteEdition from "@modules/projects/services/DeleteEdition.service";
 import DeleteParticipation from "@modules/projects/services/DeleteParticipation.service";
+import UpdateEvent from "@modules/projects/services/UpdateEvent.service";
 import FindLatestEdition from "@modules/projects/services/FindLatestEdition.service";
 import FindParticipant from "@modules/projects/services/FindParticipant.service";
 import ListAttendees, { ListAttendeesResponse } from "@modules/projects/services/ListAttendees.service";
@@ -72,6 +74,7 @@ export default class ProjectsController {
     private listEvents: ListEvents,
     private listParticipants: ListParticipants,
     private listSpeakers: ListSpeakers,
+    private updateEvent: UpdateEvent,
     private validateCertificate: ValidateCertificate,
   ) {}
 
@@ -200,6 +203,28 @@ export default class ProjectsController {
   @UseGuards(AdminGuard)
   async postProjectsEvents(@Body() body: CreateEventDTO): Promise<ProjectEvent> {
     const event = await this.createEvent.execute(body);
+
+    return event;
+  }
+
+  @Put("events/:id")
+  @UseGuards(AdminGuard)
+  async putProjectsEvents(
+    @Param("id") id: string,
+    @Body() body: UpdateEventDTO,
+  ): Promise<ProjectEvent> {
+    const event = await this.updateEvent.execute(id, body);
+
+    return event;
+  }
+
+  @Patch("events/:id")
+  @UseGuards(AdminGuard)
+  async patchProjectsEvents(
+    @Param("id") id: string,
+    @Body() body: UpdateEventDTO,
+  ): Promise<ProjectEvent> {
+    const event = await this.updateEvent.execute(id, body);
 
     return event;
   }

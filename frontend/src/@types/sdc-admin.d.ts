@@ -67,6 +67,21 @@ export interface CreateEventInput {
   externalSignup?: string;
 }
 
+export interface UpdateEventInput {
+  name?: string;
+  speakerId?: string;
+  startTime?: string; // ISO 8601
+  endTime?: string; // ISO 8601
+  about?: string | null;
+  type?: SDCEventType | null;
+  location?: string | null;
+  capacity?: number;
+  extraCapacity?: number;
+  onSite?: boolean;
+  allowMultiple?: boolean;
+  externalSignup?: string;
+}
+
 declare module "sdc-admin" {
   export type {
     SDCEventType,
@@ -75,5 +90,6 @@ declare module "sdc-admin" {
     SDCEdition,
     CreateEditionInput,
     CreateEventInput,
+    UpdateEventInput,
   };
 }
