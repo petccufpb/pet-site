@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styled from "styled-components";
 import { SDCProvider, useSDC } from "../../../contexts/SDCContext";
-import { HiOutlineCalendar, HiOutlineClock, HiOutlineExternalLink, HiOutlineSparkles } from "react-icons/hi";
+import { HiOutlineCalendar, HiOutlineClock, HiOutlineExternalLink, HiOutlineSparkles, HiOutlineHome } from "react-icons/hi";
 
 const ShellContainer = styled.div`
   min-height: 100vh;
@@ -124,6 +124,11 @@ function SDCHeaderBar() {
         </BrandSection>
 
         <NavLinks>
+          <NavItem href="/admin" $active={pathname === "/admin"}>
+            <HiOutlineHome size={17} />
+            Hub Admin
+          </NavItem>
+
           <NavItem
             href="/admin/sdc/edicoes"
             $active={pathname?.startsWith("/admin/sdc/edicoes") ?? false}

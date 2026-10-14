@@ -49,7 +49,7 @@ export default function AdminLoginPage() {
         throw new Error(data.message || "Usuário ou senha inválidos.");
       }
 
-      window.location.href = "/admin/time";
+      window.location.href = "/admin";
     } catch (err: any) {
       setError(err.message || "Erro de conexão com o servidor.");
     } finally {

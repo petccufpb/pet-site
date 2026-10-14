@@ -3,7 +3,7 @@
 import { Member } from "backend";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { HiPlus, HiOutlineLogout, HiPencil, HiTrash, HiUser } from "react-icons/hi";
+import { HiPlus, HiOutlineLogout, HiPencil, HiTrash, HiUser, HiOutlineHome } from "react-icons/hi";
 
 import { getDirectImageLink } from "@utils/googleDrive";
 
@@ -182,7 +182,11 @@ export default function AdminTimePage() {
           <h1>Gerenciamento do Time</h1>
           <p>Painel Administrativo do PET Computação</p>
         </TitleArea>
-        <div style={{ display: "flex", gap: "0.75rem" }}>
+        <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+          <Button onClick={() => router.push("/admin")}>
+            <HiOutlineHome size={18} />
+            <span>Hub Admin</span>
+          </Button>
           <Button onClick={handleOpenAddModal} primary>
             <HiPlus size={18} />
             <span>Novo Membro</span>
