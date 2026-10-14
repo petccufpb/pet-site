@@ -38,6 +38,6 @@ describe("CreateProject", () => {
       service.execute({
         title: "Test",
       }),
-    ).rejects.toThrowError(HttpException);
+    ).rejects.toThrow(HttpException);
   });
 });

@@ -1,19 +1,18 @@
 import { HttpException } from "@nestjs/common";
-import { Project, ProjectEdition } from "@prisma/client";
+import { ProjectEdition } from "@prisma/client";
 
 import FakeProjectsRepository from "../repositories/fakes/projects.repository";
 import ListEditions from "./ListEditions.service";
 
 describe("ListEditions", () => {
   let edition1: ProjectEdition;
-  let project: Project;
   let service: ListEditions;
 
   beforeEach(async () => {
     const fakeProjectsRepository = new FakeProjectsRepository();
     service = new ListEditions(fakeProjectsRepository);
 
-    project = await fakeProjectsRepository.createProject({
+    const project = await fakeProjectsRepository.createProject({
       title: "Test",
     });
     edition1 = await fakeProjectsRepository.createEdition({
@@ -30,7 +29,7 @@ describe("ListEditions", () => {
 
   it("should list all editions of a project", async () => {
     const editions = await service.execute({
-      projectId: project.id,
+      projectTitle: "Test",
     });
 
     expect(editions).toHaveLength(2);
@@ -59,7 +58,7 @@ describe("ListEditions", () => {
   it("should not list the editions of a non-existent project", async () => {
     await expect(
       service.execute({
-        projectId: "fake-project-id",
+        projectTitle: "non-existent-project",
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });

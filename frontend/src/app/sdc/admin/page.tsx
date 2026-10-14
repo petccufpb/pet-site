@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ProjectSpeaker } from "backend";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { HiOutlineCheckBadge } from "react-icons/hi2";
@@ -27,6 +26,13 @@ import {
   SpeakerPhoto,
 } from "./styles";
 
+interface Speaker {
+  id: string;
+  name: string;
+  about?: string | null;
+  photoUrl: string;
+}
+
 const sendFormSchema = z.object({
   edition: z.number().positive("O número da edição deve ser positivo").min(1),
   days: z.number().positive("A quantidade de dias deve ser positiva").min(10),
@@ -39,7 +45,7 @@ type SendFormData = z.infer<typeof sendFormSchema>;
 export default function AdminPage() {
   const [selectedArea, setSelectedArea] = useState(0);
   const [gameDay, setGameDay] = useState(false);
-  const [speakers, setSpeakers] = useState<ProjectSpeaker[]>([]);
+  const [speakers, setSpeakers] = useState<Speaker[]>([]);
   const [speakersVersion, setSpeakersVersion] = useState(0);
   const [isLoadingSpeakers, setIsLoadingSpeakers] = useState(false);
   const [speakerListError, setSpeakerListError] = useState(false);
@@ -47,7 +53,7 @@ export default function AdminPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<SendFormData>({
     resolver: zodResolver(sendFormSchema),
   });
@@ -61,7 +67,7 @@ export default function AdminPage() {
     setSpeakerListError(false);
 
     api
-      .get<ProjectSpeaker[]>("/projects/speakers")
+      .get<Speaker[]>("/projects/speakers")
       .then(({ data }) => {
         if (isCurrent) setSpeakers(data);
       })
