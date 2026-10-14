@@ -26,14 +26,14 @@ describe("ListNews", () => {
     });
   });
 
-  it("should list all news", () => {
-    const news = service.execute();
+  it("should list all news", async () => {
+    const news = await service.execute();
 
     expect(news).toHaveLength(2);
   });
 
-  it("should show a specific news", () => {
-    const foundNews = service.execute(news.id);
+  it("should show a specific news", async () => {
+    const foundNews = await service.execute(news.id);
 
     expect(foundNews).toHaveLength(1);
   });
