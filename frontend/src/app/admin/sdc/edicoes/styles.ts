@@ -191,6 +191,27 @@ export const SelectActionBtn = styled.button<{ $selected: boolean }>`
   }
 `;
 
+export const EditActionBtn = styled.button`
+  background: rgba(115, 229, 226, 0.1);
+  color: #73e5e2;
+  border: 1px solid rgba(115, 229, 226, 0.25);
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  &:hover {
+    background: rgba(115, 229, 226, 0.2);
+    border-color: rgba(115, 229, 226, 0.45);
+    color: #a5f3fc;
+  }
+`;
+
 export const DeleteActionBtn = styled.button`
   background: rgba(239, 68, 68, 0.1);
   color: #f87171;

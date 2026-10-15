@@ -18,6 +18,7 @@ import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import type FindEventParticipationsByEditionDTO from "@modules/projects/dtos/FindEventParticipationsByEdition.dto";
 import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParticipant.dto";
+import UpdateEditionDTO from "@modules/projects/dtos/UpdateEdition.dto";
 import UpdateEventDTO from "@modules/projects/dtos/UpdateEvent.dto";
 import UpdateParticipantDTO from "@modules/projects/dtos/UpdateParticipant.dto";
 import ProjectsRepository, {
@@ -508,6 +509,27 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     });
 
     return participant;
+  }
+
+  public async updateEdition(
+    id: string,
+    data: UpdateEditionDTO,
+  ): Promise<ProjectEdition> {
+    const edition = await this.prisma.projectEdition.update({
+      data: {
+        ...(data.name !== undefined && { name: data.name }),
+        ...(data.number !== undefined && { number: data.number }),
+        ...(data.date !== undefined && { date: data.date }),
+        ...(data.logoUrl !== undefined && { logoUrl: data.logoUrl }),
+        ...(data.minimumAttendance !== undefined && { minimumAttendance: data.minimumAttendance }),
+        ...(data.projectId !== undefined && { projectId: data.projectId }),
+      },
+      where: {
+        id,
+      },
+    });
+
+    return edition;
   }
 
   public async updateEvent(

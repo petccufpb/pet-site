@@ -15,6 +15,7 @@ import CreateAttendanceDTO from "@modules/projects/dtos/CreateAttendance.dto";
 import CreateCertificateDTO from "@modules/projects/dtos/CreateCertificate.dto";
 import CreateCertificatesDTO from "@modules/projects/dtos/CreateCertificates.dto";
 import CreateEditionDTO from "@modules/projects/dtos/CreateEdition.dto";
+import UpdateEditionDTO from "@modules/projects/dtos/UpdateEdition.dto";
 import CreateEventDTO from "@modules/projects/dtos/CreateEvent.dto";
 import UpdateEventDTO from "@modules/projects/dtos/UpdateEvent.dto";
 import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
@@ -38,6 +39,7 @@ import CreateProject from "@modules/projects/services/CreateProject.service";
 import CreateSpeaker from "@modules/projects/services/CreateSpeaker.service";
 import DeleteEdition from "@modules/projects/services/DeleteEdition.service";
 import DeleteParticipation from "@modules/projects/services/DeleteParticipation.service";
+import UpdateEdition from "@modules/projects/services/UpdateEdition.service";
 import UpdateEvent from "@modules/projects/services/UpdateEvent.service";
 import FindLatestEdition from "@modules/projects/services/FindLatestEdition.service";
 import FindParticipant from "@modules/projects/services/FindParticipant.service";
@@ -74,6 +76,7 @@ export default class ProjectsController {
     private listEvents: ListEvents,
     private listParticipants: ListParticipants,
     private listSpeakers: ListSpeakers,
+    private updateEdition: UpdateEdition,
     private updateEvent: UpdateEvent,
     private validateCertificate: ValidateCertificate,
   ) {}
@@ -170,6 +173,28 @@ export default class ProjectsController {
   @UseGuards(AdminGuard)
   async postProjectsEditions(@Body() body: CreateEditionDTO): Promise<ProjectEdition> {
     const edition = await this.createEdition.execute(body);
+
+    return edition;
+  }
+
+  @Put("editions/:id")
+  @UseGuards(AdminGuard)
+  async putProjectsEditions(
+    @Param("id") id: string,
+    @Body() body: UpdateEditionDTO,
+  ): Promise<ProjectEdition> {
+    const edition = await this.updateEdition.execute(id, body);
+
+    return edition;
+  }
+
+  @Patch("editions/:id")
+  @UseGuards(AdminGuard)
+  async patchProjectsEditions(
+    @Param("id") id: string,
+    @Body() body: UpdateEditionDTO,
+  ): Promise<ProjectEdition> {
+    const edition = await this.updateEdition.execute(id, body);
 
     return edition;
   }

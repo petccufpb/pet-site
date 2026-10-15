@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { HiX, HiOutlineExclamationCircle, HiOutlinePhotograph, HiOutlineCheck } from "react-icons/hi";
 import { SDCEdition, CreateEditionInput } from "sdc-admin";
-import { createEdition } from "../../../../../../services/projects/editionsService";
+import { createEdition, updateEdition } from "../../../../../../services/projects/editionsService";
 import { DEFAULT_SDC_PROJECT_ID } from "../../../../../../services/mocks/sdcMocks";
 
 import {
@@ -27,9 +27,10 @@ import {
 interface EditionFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: (newEdition: SDCEdition) => void;
+  onSuccess: (edition: SDCEdition) => void;
   existingEditions: SDCEdition[];
   projectId?: string;
+  editionToEdit?: SDCEdition | null;
 }
 
 export function EditionFormModal({
@@ -38,7 +39,10 @@ export function EditionFormModal({
   onSuccess,
   existingEditions,
   projectId,
+  editionToEdit,
 }: EditionFormModalProps) {
+  const isEditing = !!editionToEdit;
+
   // Próximo número sugerido
   const highestNumber = existingEditions.length > 0
     ? Math.max(...existingEditions.map((e) => Number(e.number) || 0))
@@ -58,23 +62,36 @@ export function EditionFormModal({
   // Resetar campos quando modal abre
   useEffect(() => {
     if (isOpen) {
-      const nextNum = existingEditions.length > 0
-        ? Math.max(...existingEditions.map((e) => Number(e.number) || 0)) + 1
-        : 37;
+      if (editionToEdit) {
+        setNumber(String(editionToEdit.number));
+        setName(editionToEdit.name || `Semana de Computação #${editionToEdit.number}`);
+        setDate(
+          editionToEdit.date
+            ? new Date(editionToEdit.date).toISOString().split("T")[0]
+            : ""
+        );
+        setMinimumAttendance(editionToEdit.minimumAttendance ?? 75);
+        setLogoUrl(editionToEdit.logoUrl || "");
+        setError(null);
+      } else {
+        const nextNum = existingEditions.length > 0
+          ? Math.max(...existingEditions.map((e) => Number(e.number) || 0)) + 1
+          : 37;
 
-      setNumber(String(nextNum));
-      setName(`Semana da Computação #${nextNum}`);
+        setNumber(String(nextNum));
+        setName(`Semana da Computação #${nextNum}`);
 
-      // Data padrão: 30 dias a partir de hoje
-      const defaultDate = new Date();
-      defaultDate.setDate(defaultDate.getDate() + 30);
-      setDate(defaultDate.toISOString().split("T")[0]);
+        // Data padrão: 30 dias a partir de hoje
+        const defaultDate = new Date();
+        defaultDate.setDate(defaultDate.getDate() + 30);
+        setDate(defaultDate.toISOString().split("T")[0]);
 
-      setMinimumAttendance(75);
-      setLogoUrl("");
-      setError(null);
+        setMinimumAttendance(75);
+        setLogoUrl("");
+        setError(null);
+      }
     }
-  }, [isOpen, existingEditions]);
+  }, [isOpen, editionToEdit, existingEditions]);
 
   // Fechar com tecla ESC
   useEffect(() => {
@@ -90,9 +107,11 @@ export function EditionFormModal({
 
   if (!isOpen) return null;
 
-  // Verificar se o número já existe
+  // Verificar se o número já existe (excluindo a própria edição que está sendo editada)
   const parsedNumber = Number(number);
-  const numberExists = existingEditions.some((e) => Number(e.number) === parsedNumber);
+  const numberExists = existingEditions.some(
+    (e) => Number(e.number) === parsedNumber && (!editionToEdit || e.id !== editionToEdit.id)
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -120,6 +139,7 @@ export function EditionFormModal({
     // Identificar o projectId
     const effectiveProjectId =
       projectId ||
+      editionToEdit?.projectId ||
       existingEditions.find((e) => e.projectId)?.projectId ||
       DEFAULT_SDC_PROJECT_ID;
 
@@ -136,11 +156,16 @@ export function EditionFormModal({
         projectId: effectiveProjectId,
       };
 
-      const newEdition = await createEdition(payload);
-      onSuccess(newEdition);
+      if (isEditing && editionToEdit) {
+        const updated = await updateEdition(editionToEdit.id, payload);
+        onSuccess(updated);
+      } else {
+        const newEdition = await createEdition(payload);
+        onSuccess(newEdition);
+      }
       onClose();
     } catch (err: any) {
-      console.error("Erro ao criar edição:", err);
+      console.error(isEditing ? "Erro ao editar edição:" : "Erro ao criar edição:", err);
       if (err.response?.status === 401) {
         setError(
           "Acesso não autorizado: sua sessão expirou ou você não está autenticado. Acesse /admin/login para entrar novamente."
@@ -157,7 +182,9 @@ export function EditionFormModal({
       setError(
         backendMessage ||
           err.message ||
-          "Não foi possível criar a edição. Verifique os dados e tente novamente."
+          (isEditing
+            ? "Não foi possível editar a edição. Verifique os dados e tente novamente."
+            : "Não foi possível criar a edição. Verifique os dados e tente novamente.")
       );
     } finally {
       setIsLoading(false);
@@ -179,8 +206,12 @@ export function EditionFormModal({
       <ModalContainer onClick={(e) => e.stopPropagation()}>
         <ModalHeader>
           <div>
-            <h2>Nova Edição da SDC</h2>
-            <p>Cadastre uma nova edição da Semana de Computação no sistema.</p>
+            <h2>{isEditing ? `Editar SDC #${editionToEdit?.number}` : "Nova Edição da SDC"}</h2>
+            <p>
+              {isEditing
+                ? "Atualize as informações desta edição da Semana de Computação."
+                : "Cadastre uma nova edição da Semana de Computação no sistema."}
+            </p>
           </div>
           <CloseButton onClick={() => !isLoading && onClose()} aria-label="Fechar modal">
             <HiX size={20} />
@@ -211,7 +242,7 @@ export function EditionFormModal({
                 onChange={(e) => {
                   setNumber(e.target.value);
                   const nextVal = e.target.value;
-                  if (nextVal && name.startsWith("Semana da Computação #")) {
+                  if (!isEditing && nextVal && name.startsWith("Semana da Computação #")) {
                     setName(`Semana da Computação #${nextVal}`);
                   }
                 }}
@@ -309,11 +340,11 @@ export function EditionFormModal({
             </CancelButton>
             <SubmitButton type="submit" disabled={isLoading} $loading={isLoading}>
               {isLoading ? (
-                "Criando edição..."
+                isEditing ? "Salvando alterações..." : "Criando edição..."
               ) : (
                 <>
                   <HiOutlineCheck size={18} />
-                  Criar Edição
+                  {isEditing ? "Salvar Alterações" : "Criar Edição"}
                 </>
               )}
             </SubmitButton>

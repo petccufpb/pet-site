@@ -12,6 +12,7 @@ import {
   HiOutlineRefresh,
   HiPlus,
   HiOutlineClock,
+  HiOutlinePencilAlt,
   HiOutlineTrash,
   HiCheck,
 } from "react-icons/hi";
@@ -32,6 +33,7 @@ import {
   EditionSubtitle,
   StatusBadge,
   SelectActionBtn,
+  EditActionBtn,
   DeleteActionBtn,
   EmptyState,
   LoadingContainer,
@@ -54,7 +56,23 @@ function formatDate(dateString: string): string {
 export default function SdcEdicoesPage() {
   const { editions, currentEdition, isLoading, error, selectEdition, refreshEditions } = useSDC();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [editionToEdit, setEditionToEdit] = useState<SDCEdition | null>(null);
   const [editionToDelete, setEditionToDelete] = useState<SDCEdition | null>(null);
+
+  const handleOpenCreateModal = () => {
+    setEditionToEdit(null);
+    setIsModalOpen(true);
+  };
+
+  const handleOpenEditModal = (edition: SDCEdition) => {
+    setEditionToEdit(edition);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditionToEdit(null);
+  };
 
   return (
     <Container>
@@ -72,7 +90,7 @@ export default function SdcEdicoesPage() {
             <HiOutlineRefresh size={16} />
             Recarregar
           </Button>
-          <Button primary onClick={() => setIsModalOpen(true)}>
+          <Button primary onClick={handleOpenCreateModal}>
             <HiPlus size={18} />
             Nova Edição
           </Button>
@@ -158,6 +176,15 @@ export default function SdcEdicoesPage() {
                           {isCurrent ? "Selecionada" : "Selecionar"}
                         </SelectActionBtn>
 
+                        <EditActionBtn
+                          type="button"
+                          onClick={() => handleOpenEditModal(edition)}
+                          title="Editar esta edição da SDC"
+                        >
+                          <HiOutlinePencilAlt size={15} />
+                          Editar
+                        </EditActionBtn>
+
                         <Link href="/admin/sdc/eventos" style={{ textDecoration: "none" }}>
                           <SelectActionBtn $selected={false} title="Ver cronograma de eventos desta edição">
                             <HiOutlineClock size={15} />
@@ -185,10 +212,13 @@ export default function SdcEdicoesPage() {
 
       <EditionFormModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSuccess={async (newEdition) => {
+        onClose={handleCloseModal}
+        editionToEdit={editionToEdit}
+        onSuccess={async (savedEdition) => {
           await refreshEditions();
-          selectEdition(newEdition.id);
+          if (!editionToEdit) {
+            selectEdition(savedEdition.id);
+          }
         }}
         existingEditions={editions}
         projectId={editions[0]?.projectId}

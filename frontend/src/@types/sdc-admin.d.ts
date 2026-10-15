@@ -51,6 +51,15 @@ export interface CreateEditionInput {
   projectId: string;
 }
 
+export interface UpdateEditionInput {
+  number?: number;
+  name?: string;
+  date?: string; // ISO 8601
+  minimumAttendance?: number;
+  logoUrl?: string;
+  projectId?: string;
+}
+
 export interface CreateEventInput {
   name: string;
   editionId: string;
@@ -89,6 +98,7 @@ declare module "sdc-admin" {
     SDCEvent,
     SDCEdition,
     CreateEditionInput,
+    UpdateEditionInput,
     CreateEventInput,
     UpdateEventInput,
   };

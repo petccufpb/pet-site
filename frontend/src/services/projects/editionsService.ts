@@ -45,6 +45,35 @@ export async function createEdition(data: CreateEditionInput): Promise<SDCEditio
   return response.data;
 }
 
+export async function updateEdition(id: string, data: Partial<CreateEditionInput>): Promise<SDCEdition> {
+  // No navegador (painel admin), usamos o /api/proxy para enviar o cookie HttpOnly de autenticação
+  if (typeof window !== "undefined") {
+    const response = await fetch(`/api/proxy/projects/editions/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const error: any = new Error(
+        (Array.isArray(errorData.message) ? errorData.message.join(", ") : errorData.message) ||
+          "Erro ao atualizar edição."
+      );
+      error.response = { data: errorData, status: response.status };
+      throw error;
+    }
+
+    return response.json();
+  }
+
+  const response = await api.put<SDCEdition>(`/projects/editions/${id}`, data);
+  return response.data;
+}
+
 export async function deleteEdition(id: string): Promise<void> {
   // No navegador (painel admin), usamos o /api/proxy para enviar o cookie HttpOnly de autenticação
   if (typeof window !== "undefined") {

@@ -26,14 +26,12 @@ const fadeIn = keyframes`
 export const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 7rem 2rem 5rem;
+  padding: 0;
   font-family: ${({ theme }) => theme.fonts.regular};
   animation: ${fadeIn} 0.4s ease-out;
 
   @media (max-width: 768px) {
-    padding-top: 6.5rem;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    padding: 0;
   }
 `;
 
