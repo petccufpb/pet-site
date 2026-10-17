@@ -167,17 +167,48 @@ export default function AdminPage() {
               <p>Nenhum palestrante cadastrado.</p>
             ) : (
               <SpeakerList>
-                {speakers.map(speaker => (
-                  <SpeakerItem key={speaker.id}>
-                    <SpeakerPhoto>
-                      {speaker.photoUrl ? <img src={speaker.photoUrl} alt="" /> : "Sem foto"}
-                    </SpeakerPhoto>
-                    <SpeakerInfo>
-                      <h3>{speaker.name}</h3>
-                      {speaker.about && <p>{speaker.about}</p>}
-                    </SpeakerInfo>
-                  </SpeakerItem>
-                ))}
+                {speakers.map(speaker => {
+                  let photoSrc = speaker.photoUrl;
+                  if (photoSrc && photoSrc.includes("drive.google.com/uc?id=")) {
+                    const id = photoSrc.split("id=")[1]?.split("&")[0];
+                    if (id) photoSrc = `https://lh3.googleusercontent.com/d/${id}`;
+                  } else if (photoSrc && photoSrc.includes("drive.google.com/thumbnail?id=")) {
+                    const id = photoSrc.split("id=")[1]?.split("&")[0];
+                    if (id) photoSrc = `https://lh3.googleusercontent.com/d/${id}`;
+                  } else if (photoSrc && photoSrc.includes("drive.google.com/file/d/")) {
+                    const id = photoSrc.split("/file/d/")[1]?.split("/")[0];
+                    if (id) photoSrc = `https://lh3.googleusercontent.com/d/${id}`;
+                  }
+
+                  const hasValidPhoto = Boolean(photoSrc && photoSrc.trim().length > 0);
+
+                  return (
+                    <SpeakerItem key={speaker.id}>
+                      <SpeakerPhoto>
+                        {hasValidPhoto ? (
+                          <img
+                            src={photoSrc}
+                            alt={speaker.name}
+                            referrerPolicy="no-referrer"
+                            onError={e => {
+                              const target = e.currentTarget;
+                              target.style.display = "none";
+                              if (target.parentElement) {
+                                target.parentElement.innerText = "Sem foto";
+                              }
+                            }}
+                          />
+                        ) : (
+                          "Sem foto"
+                        )}
+                      </SpeakerPhoto>
+                      <SpeakerInfo>
+                        <h3>{speaker.name}</h3>
+                        {speaker.about && <p>{speaker.about}</p>}
+                      </SpeakerInfo>
+                    </SpeakerItem>
+                  );
+                })}
               </SpeakerList>
             )}
           </section>
