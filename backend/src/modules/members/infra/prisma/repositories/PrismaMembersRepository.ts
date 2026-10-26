@@ -1,10 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { Member } from "@prisma/client";
+import { Member, Prisma } from "@prisma/client";
 
 import { PrismaService } from "@database/prisma.service";
 import MembersRepository, { CompleteMember } from "@modules/members/repositories/MembersRepository";
 
 import { CreateMemberDTO } from "../../../dtos/CreateMember.dto";
+import { UpdateMemberDTO } from "../../../dtos/UpdateMember.dto";
 
 @Injectable()
 export class PrismaMembersRepository implements MembersRepository {
@@ -33,6 +34,21 @@ export class PrismaMembersRepository implements MembersRepository {
     });
 
     return user;
+  }
+
+  async findById(id: string): Promise<CompleteMember | null> {
+    const member = await this.prisma.member.findUnique({
+      where: { id },
+      include: {
+        contactInfo: {
+          orderBy: {
+            name: "asc",
+          },
+        },
+      },
+    });
+
+    return member;
   }
 
   async findMembers(): Promise<CompleteMember[]> {
@@ -80,5 +96,28 @@ export class PrismaMembersRepository implements MembersRepository {
     });
 
     return members;
+  }
+
+  async update(id: string, { contactInfo, ...data }: UpdateMemberDTO): Promise<Member> {
+    const updateData: Prisma.MemberUpdateInput = { ...data };
+
+    if (contactInfo) {
+      updateData.contactInfo = {
+        deleteMany: {},
+        createMany: {
+          data: contactInfo,
+        },
+      };
+    }
+
+    const member = await this.prisma.member.update({
+      where: { id },
+      data: updateData,
+      include: {
+        contactInfo: true,
+      },
+    });
+
+    return member;
   }
 }

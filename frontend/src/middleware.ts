@@ -1,6 +1,37 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+const ADMIN_SESSION_COOKIE = process.env.COOKIE_NAME ?? "pet_admin_token";
+
+/**
+ * Verifica estrutura e expiração do JWT de sessão do admin sem validar a
+ * assinatura (o Edge não tem acesso ao segredo de forma segura/obrigatória).
+ * A validação criptográfica acontece no backend, via AdminGuard.
+ */
+function hasAdminSession(request: NextRequest): boolean {
+  const token = request.cookies.get(ADMIN_SESSION_COOKIE)?.value;
+
+  if (!token) return false;
+
+  const parts = token.split(".");
+
+  if (parts.length !== 3) return false;
+
+  try {
+    const base64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
+    const padded = base64.padEnd(Math.ceil(base64.length / 4) * 4, "=");
+    const payload = JSON.parse(atob(padded)) as { exp?: number };
+
+    if (typeof payload.exp === "number" && payload.exp <= Math.floor(Date.now() / 1000)) {
+      return false;
+    }
+
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export default function middleware(request: NextRequest) {
   /* Redirecionar usuários para /SDC,
     IMPORTANTE: REMOVER ESSE CÓDIGO DEPOIS
@@ -14,7 +45,23 @@ export default function middleware(request: NextRequest) {
     });
   } */
 
-  if (request.nextUrl.pathname.startsWith("/sdc/frequencia")) {
+  const { pathname } = request.nextUrl;
+
+  // Proteger todas as rotas administrativas; a tela de login fica acessível
+  if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+    if (!pathname.startsWith("/admin/login")) {
+      if (!hasAdminSession(request)) {
+        const loginUrl = new URL("/admin/login", request.url);
+        const nextPath = `${pathname}${request.nextUrl.search}`;
+
+        loginUrl.searchParams.set("next", nextPath);
+
+        return NextResponse.redirect(loginUrl);
+      }
+    }
+  }
+
+  if (pathname.startsWith("/sdc/frequencia")) {
     const res = NextResponse.next();
 
     let ip = request.ip ?? request.headers.get("x-real-ip");

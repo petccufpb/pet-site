@@ -1,6 +1,7 @@
 import { Member, Prisma } from "@prisma/client";
 
 import { CreateMemberDTO } from "../dtos/CreateMember.dto";
+import { UpdateMemberDTO } from "../dtos/UpdateMember.dto";
 
 export type CompleteMember = Prisma.MemberGetPayload<{
   include: {
@@ -11,6 +12,8 @@ export type CompleteMember = Prisma.MemberGetPayload<{
 export default abstract class MembersRepository {
   abstract create(data: CreateMemberDTO): Promise<Member>;
   abstract findByType(type: string): Promise<Member | null>;
+  abstract findById(id: string): Promise<CompleteMember | null>;
   abstract findMembers(): Promise<CompleteMember[]>;
   abstract findTutors(): Promise<CompleteMember[]>;
+  abstract update(id: string, data: UpdateMemberDTO): Promise<Member>;
 }
