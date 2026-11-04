@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styled from "styled-components";
 import { SDCProvider, useSDC } from "../../../contexts/SDCContext";
-import { HiOutlineCalendar, HiOutlineClock, HiOutlineExternalLink, HiOutlineSparkles, HiOutlineHome } from "react-icons/hi";
+import { HiOutlineCalendar, HiOutlineClock, HiOutlineMicrophone, HiOutlineExternalLink, HiOutlineSparkles, HiOutlineHome } from "react-icons/hi";
 
 const ShellContainer = styled.div`
   min-height: 100vh;
@@ -143,6 +143,14 @@ function SDCHeaderBar() {
           >
             <HiOutlineClock size={17} />
             Cronograma de Eventos
+          </NavItem>
+
+          <NavItem
+            href="/admin/sdc/palestrantes"
+            $active={pathname?.startsWith("/admin/sdc/palestrantes") ?? false}
+          >
+            <HiOutlineMicrophone size={17} />
+            Palestrantes
           </NavItem>
 
           <ExternalLink href="/sdc" target="_blank" rel="noopener noreferrer">

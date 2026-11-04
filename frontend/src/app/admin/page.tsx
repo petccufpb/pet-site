@@ -6,12 +6,10 @@ import { useRouter } from "next/navigation";
 import {
   HiOutlineCalendar,
   HiOutlineClock,
-  HiOutlineSparkles,
   HiOutlineLogout,
   HiOutlineArrowRight,
   HiOutlineUserGroup,
   HiOutlineExternalLink,
-  HiOutlineShieldCheck,
   HiOutlineMicrophone,
   HiOutlineClipboardCheck,
   HiOutlineAcademicCap,
@@ -23,13 +21,11 @@ import {
   Container,
   Header,
   UserSection,
-  UserAvatar,
   UserMeta,
   StatusDot,
   HeaderActions,
   HeaderButton,
   HeroSection,
-  HeroBadge,
   HeroTitle,
   HeroSubtitle,
   StatsGrid,
@@ -282,18 +278,12 @@ export default function AdminHubPage() {
     <Container>
       <Header>
         <UserSection>
-          <UserAvatar>
-            <HiOutlineShieldCheck size={26} />
-          </UserAvatar>
           <UserMeta>
             <h3>
               {adminUser?.username
                 ? `${greeting}, ${adminUser.username}`
                 : `${greeting}, Administrador`}
             </h3>
-            <span>
-              <StatusDot /> Sessão autenticada e protegida
-            </span>
           </UserMeta>
         </UserSection>
 
@@ -311,10 +301,6 @@ export default function AdminHubPage() {
       </Header>
 
       <HeroSection>
-        <HeroBadge>
-          <HiOutlineSparkles size={16} />
-          Central Administrativa Unificada
-        </HeroBadge>
         <HeroTitle>
           Painel de <span>Administração</span>
         </HeroTitle>
