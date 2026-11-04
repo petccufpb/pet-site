@@ -374,16 +374,16 @@ export const LogoutButton = styled(HeaderButton)`
   }
 `;
 
-export const Main = styled.main`
+export const Main = styled.main<{ $fullWidth?: boolean }>`
   flex: 1;
 
   width: 100%;
-  max-width: 76rem;
+  max-width: ${({ $fullWidth }) => ($fullWidth ? "100%" : "76rem")};
   margin: 0 auto;
-  padding: 2rem 1.75rem 3.5rem;
+  padding: ${({ $fullWidth }) => ($fullWidth ? "0" : "2rem 1.75rem 3.5rem")};
 
   @media (max-width: 900px) {
-    padding: 1.5rem 1rem 3rem;
+    padding: ${({ $fullWidth }) => ($fullWidth ? "0" : "1.5rem 1rem 3rem")};
   }
 `;
 

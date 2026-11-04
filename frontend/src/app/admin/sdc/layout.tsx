@@ -8,7 +8,7 @@ import { SDCProvider, useSDC } from "../../../contexts/SDCContext";
 import { HiOutlineCalendar, HiOutlineClock, HiOutlineMicrophone, HiOutlineExternalLink, HiOutlineSparkles, HiOutlineHome } from "react-icons/hi";
 
 const ShellContainer = styled.div`
-  min-height: 100vh;
+  min-height: 100%;
   background: ${({ theme }) => theme.colors["base-black"]};
   color: ${({ theme }) => theme.colors["base-white"]};
   font-family: ${({ theme }) => theme.fonts.regular};

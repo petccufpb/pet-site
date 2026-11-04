@@ -3,10 +3,15 @@
 import { usePathname, useRouter } from "next/navigation";
 import { PropsWithChildren, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import {
+  HiOutlineAcademicCap,
   HiOutlineArrowRightOnRectangle,
   HiOutlineArrowTopRightOnSquare,
   HiOutlineBars3,
+  HiOutlineCalendarDays,
   HiOutlineChevronLeft,
+  HiOutlineClipboardDocumentCheck,
+  HiOutlineClock,
+  HiOutlineMicrophone,
   HiOutlineSquares2X2,
   HiOutlineUser,
   HiOutlineUserGroup,
@@ -69,6 +74,36 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     href: "/admin/membros",
     icon: <HiOutlineUserGroup />,
     description: "Cadastro, edição e listagem dos integrantes da equipe.",
+  },
+  {
+    label: "Edições SDC",
+    href: "/admin/sdc/edicoes",
+    icon: <HiOutlineCalendarDays />,
+    description: "Histórico e configuração de edições da Semana da Computação.",
+  },
+  {
+    label: "Cronograma SDC",
+    href: "/admin/sdc/eventos",
+    icon: <HiOutlineClock />,
+    description: "Grade de palestras, minicursos, salas e vagas.",
+  },
+  {
+    label: "Palestrantes",
+    href: "/admin/sdc/palestrantes",
+    icon: <HiOutlineMicrophone />,
+    description: "Cadastro e listagem de palestrantes convidados.",
+  },
+  {
+    label: "Frequência",
+    href: "/admin/sdc/frequencia",
+    icon: <HiOutlineClipboardDocumentCheck />,
+    description: "Check-in operacional e registro de presenças.",
+  },
+  {
+    label: "Certificados",
+    href: "/admin/sdc/certificados",
+    icon: <HiOutlineAcademicCap />,
+    description: "Emissão e disparo em lote de certificados de participação.",
   },
 ];
 
@@ -256,7 +291,7 @@ export default function AdminLayout({ children }: PropsWithChildren) {
           </HeaderActions>
         </Header>
 
-        <Main id="admin-main">{children}</Main>
+        <Main id="admin-main" $fullWidth={pathname.startsWith("/admin/sdc")}>{children}</Main>
       </Content>
     </Container>
   );
