@@ -278,4 +278,37 @@ describe("CreateParticipation", () => {
       }),
     ).rejects.toBeInstanceOf(HttpException);
   });
+
+  it("should let the admin enroll during check-in, bypassing deadline, capacity and edition rules", async () => {
+    const started = await fakeProjectsRepository.createEvent({
+      about: "",
+      capacity: 1,
+      editionId: edition.id,
+      endTime: new Date(Date.now() + 3600000),
+      name: "Minicurso em andamento",
+      speakerId: event.speakerId,
+      startTime: new Date(Date.now() - 600000),
+      type: "minicurso",
+    });
+    await fakeProjectsRepository.createParticipation({ eventId: started.id, participantId: participant2.id });
+    await fakeProjectsRepository.createParticipation({ eventId: event.id, participantId: participant.id });
+
+    await expect(
+      service.execute({ eventId: started.id, participantId: participant.id }),
+    ).rejects.toBeInstanceOf(HttpException);
+
+    const participation = await service.execute({
+      eventId: started.id,
+      manual: true,
+      participantId: participant.id,
+    });
+
+    expect(participation).toHaveProperty("id");
+    expect(
+      await fakeProjectsRepository.findParticipation({
+        editionId: edition.id,
+        participantId: participant.id,
+      }),
+    ).toBeTruthy();
+  });
 });

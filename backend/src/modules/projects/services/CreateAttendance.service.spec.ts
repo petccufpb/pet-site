@@ -12,16 +12,13 @@ describe("CreateAttendance", () => {
   let palestra: ProjectEvent;
   let participant: ProjectParticipant;
   let randomEvent: ProjectEvent;
+  let sendMail: jest.Mock;
   let service: CreateAttendance;
 
   beforeEach(async () => {
     fakeProjectsRepository = new FakeProjectsRepository();
-    service = new CreateAttendance(
-      {
-        sendMail: async () => {},
-      } as MailProvider,
-      fakeProjectsRepository,
-    );
+    sendMail = jest.fn().mockResolvedValue(undefined);
+    service = new CreateAttendance({ sendMail } as unknown as MailProvider, fakeProjectsRepository);
 
     const { id: projectId } = await fakeProjectsRepository.createProject({ title: "Test Project" });
     const { id: editionId } = await fakeProjectsRepository.createEdition({
@@ -214,5 +211,65 @@ describe("CreateAttendance", () => {
         matricula: "20200015280",
       }),
     ).rejects.toBeInstanceOf(HttpException);
+  });
+
+  it("should send a confirmation email on self check-in", async () => {
+    await service.execute({
+      eventId: event.id,
+      participantId: participant.id,
+    });
+
+    expect(sendMail).toHaveBeenCalledWith(expect.objectContaining({ to: participant.email }));
+  });
+
+  it("should not fail the check-in if the confirmation email fails", async () => {
+    sendMail.mockRejectedValueOnce(new Error("SMTP down"));
+
+    const attendance = await service.execute({
+      eventId: event.id,
+      participantId: participant.id,
+    });
+
+    expect(attendance).toHaveProperty("id");
+    await new Promise(process.nextTick);
+  });
+
+  it("should allow manual check-ins in palestras and untyped events, without sending emails", async () => {
+    const attendance = await service.execute({
+      eventId: palestra.id,
+      manual: true,
+      participantId: participant.id,
+    });
+    const attendance2 = await service.execute({
+      eventId: randomEvent.id,
+      manual: true,
+      participantId: participant.id,
+    });
+
+    expect(attendance).toHaveProperty("id");
+    expect(attendance2).toHaveProperty("id");
+    expect(sendMail).not.toHaveBeenCalled();
+  });
+
+  it("should still require participation in minicursos for manual check-ins", async () => {
+    await expect(
+      service.execute({
+        eventId: minicurso.id,
+        manual: true,
+        participantId: participant.id,
+      }),
+    ).rejects.toMatchObject({ status: 403 });
+  });
+
+  it("should reject concurrent duplicate attendances with 409", async () => {
+    const results = await Promise.allSettled([
+      service.execute({ eventId: palestra.id, manual: true, participantId: participant.id }),
+      service.execute({ eventId: palestra.id, manual: true, participantId: participant.id }),
+    ]);
+
+    expect(results.filter(result => result.status === "fulfilled")).toHaveLength(1);
+    expect(results.find(result => result.status === "rejected")).toMatchObject({
+      reason: expect.objectContaining({ status: 409 }),
+    });
   });
 });

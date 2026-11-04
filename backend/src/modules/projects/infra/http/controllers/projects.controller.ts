@@ -24,6 +24,7 @@ import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import FindParticipantDTO from "@modules/projects/dtos/FindParticipant.dto";
 import ListCertificatesDTO from "@modules/projects/dtos/ListCertificates.dto";
+import SearchParticipantsDTO from "@modules/projects/dtos/SearchParticipants.dto";
 import ValidateCertificateDTO from "@modules/projects/dtos/ValidateCertificate.dto";
 import AdminGuard from "@modules/auth/guards/admin.guard";
 import { CompleteProjectCertificate } from "@modules/projects/repositories/projects.repository";
@@ -51,6 +52,9 @@ import ListParticipants, {
   ListParticipantsResponse,
 } from "@modules/projects/services/ListParticipants.service";
 import ListSpeakers from "@modules/projects/services/ListSpeakers.service";
+import SearchParticipants, {
+	SearchParticipantsResponse,
+} from "@modules/projects/services/SearchParticipants.service";
 import ValidateCertificate from "@modules/projects/services/ValidateCertificate.service";
 
 @Controller("projects")
@@ -78,6 +82,7 @@ export default class ProjectsController {
     private listSpeakers: ListSpeakers,
     private updateEdition: UpdateEdition,
     private updateEvent: UpdateEvent,
+    private searchParticipants: SearchParticipants,
     private validateCertificate: ValidateCertificate,
   ) {}
 
@@ -313,6 +318,15 @@ export default class ProjectsController {
     const participant = await this.createParticipant.execute(body);
 
     return participant;
+  }
+
+  @Get("participants/search")
+  async getProjectsParticipantsSearch(
+    @Query() query: SearchParticipantsDTO,
+  ): Promise<SearchParticipantsResponse> {
+    const participants = await this.searchParticipants.execute(query);
+
+    return participants;
   }
 
   @Post("participants/find")

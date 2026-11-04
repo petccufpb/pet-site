@@ -27,6 +27,7 @@ import ListEditions from "./services/ListEditions.service";
 import ListEvents from "./services/ListEvents.service";
 import ListParticipants from "./services/ListParticipants.service";
 import ListSpeakers from "./services/ListSpeakers.service";
+import SearchParticipants from "./services/SearchParticipants.service";
 import UpdateEdition from "./services/UpdateEdition.service";
 import UpdateEvent from "./services/UpdateEvent.service";
 import ValidateCertificate from "./services/ValidateCertificate.service";
@@ -116,6 +117,7 @@ function resolveMailDriver(): MailProviderKeys {
       ListEvents,
       ListParticipants,
       ListSpeakers,
+      SearchParticipants,
       UpdateEdition,
       UpdateEvent,
       ValidateCertificate,

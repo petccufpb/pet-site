@@ -13,6 +13,7 @@ export default class CreateParticipation {
     email,
     editionId,
     eventId,
+    manual,
     matricula,
     participantId,
   }: CreateParticipationDTO): Promise<ProjectParticipation> {
@@ -55,17 +56,18 @@ export default class CreateParticipation {
         throw new HttpException("Você não precisa se inscrever nesse evento", HttpStatus.OK);
       }
 
-      if (event.capacity && event.participants.length >= event.capacity + event.extraCapacity) {
+      // No check-in manual o minicurso já está acontecendo e quem decide a vaga é a organização
+      if (!manual && event.capacity && event.participants.length >= event.capacity + event.extraCapacity) {
         throw new HttpException("Infelizmente as vagas para este evento esgotaram", 400);
       }
 
-      if (isAfter(new Date(), new Date(event.startTime))) {
+      if (!manual && isAfter(new Date(), new Date(event.startTime))) {
         throw new HttpException("Esse evento já começou/terminou", 400);
       }
 
       editionId = event.editionId;
 
-      if (!event.allowMultiple) {
+      if (!manual && !event.allowMultiple) {
         const eventParticipations = await this.projectsRepository.findEventParticipationsByEdition({
           editionId,
           participantId,
@@ -80,7 +82,9 @@ export default class CreateParticipation {
         editionId: editionId,
         participantId,
       });
-      if (!editionParticipation) {
+      if (!editionParticipation && manual) {
+        await this.projectsRepository.createParticipation({ editionId, participantId });
+      } else if (!editionParticipation) {
         throw new HttpException(
           "Você deve estar inscrito na edição correspondente para participar de um evento",
           HttpStatus.FORBIDDEN,
