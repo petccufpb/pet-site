@@ -200,7 +200,11 @@ export default function SdcEdicoesPage() {
                           Editar
                         </EditActionBtn>
 
-                        <Link href="/admin/sdc/eventos" style={{ textDecoration: "none" }}>
+                        <Link
+                          href={`/admin/sdc/eventos?editionId=${edition.id}`}
+                          onClick={() => selectEdition(edition.id)}
+                          style={{ textDecoration: "none" }}
+                        >
                           <SelectActionBtn $selected={false} title="Ver cronograma de eventos desta edição">
                             <HiOutlineClock size={15} />
                             Eventos

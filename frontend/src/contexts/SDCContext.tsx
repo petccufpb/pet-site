@@ -5,6 +5,8 @@ import { SDCEdition } from "sdc-admin";
 import { fetchEditions, fetchLatestEdition } from "../services/projects/editionsService";
 import { MOCK_EDITIONS } from "../services/mocks/sdcMocks";
 
+const SDC_EDITION_STORAGE_KEY = "sdc:selectedEditionId";
+
 export interface SDCContextData {
   currentEdition: SDCEdition | null;
   editionId: string | null;
@@ -43,7 +45,8 @@ export function SDCProvider({ children, initialEditionId }: SDCProviderProps) {
 
       setEditions(availableEditions);
 
-      const targetId = preserveEditionId ?? defaultActive?.id;
+      const savedId = typeof window !== "undefined" ? localStorage.getItem(SDC_EDITION_STORAGE_KEY) : null;
+      const targetId = preserveEditionId ?? savedId ?? defaultActive?.id;
       const matched = availableEditions.find((e) => e.id === targetId);
 
       setCurrentEdition(matched ?? defaultActive);
@@ -62,6 +65,11 @@ export function SDCProvider({ children, initialEditionId }: SDCProviderProps) {
 
   const selectEdition = useCallback(
     (id: string) => {
+      if (typeof window !== "undefined") {
+        try {
+          localStorage.setItem(SDC_EDITION_STORAGE_KEY, id);
+        } catch {}
+      }
       const target = editions.find((e) => e.id === id);
       if (target) {
         setCurrentEdition(target);

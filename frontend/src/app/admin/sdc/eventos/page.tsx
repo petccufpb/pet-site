@@ -73,11 +73,15 @@ export default function SdcEventosPage() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
+      const queryEditionId = params.get("editionId");
+      if (queryEditionId && queryEditionId !== currentEdition?.id) {
+        selectEdition(queryEditionId);
+      }
       if (params.get("new") === "true" || params.get("action") === "new") {
         setIsModalOpen(true);
       }
     }
-  }, []);
+  }, [selectEdition, currentEdition?.id, editions]);
 
   const handleCloseCreateModal = () => {
     setIsModalOpen(false);
