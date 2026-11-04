@@ -10,6 +10,7 @@ export interface ImageUploadProps {
   onChange: (file: File | null) => void;
   accept?: string;
   disabled?: boolean;
+  externalPreviewUrl?: string | null;
 }
 
 export function ImageUpload({
@@ -18,21 +19,25 @@ export function ImageUpload({
   onChange,
   accept = "image/*",
   disabled = false,
+  externalPreviewUrl,
 }: ImageUploadProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!value) {
-      setPreviewUrl(null);
+    if (value) {
+      const objectUrl = URL.createObjectURL(value);
+      setPreviewUrl(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+
+    if (externalPreviewUrl) {
+      setPreviewUrl(externalPreviewUrl);
       return;
     }
 
-    const objectUrl = URL.createObjectURL(value);
-    setPreviewUrl(objectUrl);
-
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [value]);
+    setPreviewUrl(null);
+  }, [value, externalPreviewUrl]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const nextFile = event.target.files?.[0] ?? null;
@@ -48,7 +53,18 @@ export function ImageUpload({
       <label>{label}</label>
 
       <Preview hasPreview={!!previewUrl}>
-        {previewUrl ? <img src={previewUrl} alt={label} /> : <Placeholder>Selecionar imagem</Placeholder>}
+        {previewUrl ? (
+          <img
+            src={previewUrl}
+            alt={label}
+            referrerPolicy="no-referrer"
+            onError={() => {
+              setPreviewUrl(null);
+            }}
+          />
+        ) : (
+          <Placeholder>Selecionar imagem</Placeholder>
+        )}
       </Preview>
 
       <Actions>

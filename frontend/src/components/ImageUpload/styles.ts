@@ -15,19 +15,20 @@ export const Container = styled.div`
 
 export const Preview = styled.div<{ hasPreview: boolean }>`
   width: 100%;
-  min-height: 180px;
+  height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${({ hasPreview }) => (hasPreview ? "#111827" : "#1f2937")};
+  background: ${({ hasPreview }) => (hasPreview ? "#151515" : "#1f2937")};
   border: 1px dashed rgba(255, 255, 255, 0.28);
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
+  padding: 4px;
 
   img {
     width: 100%;
-    height: 180px;
-    object-fit: cover;
+    height: 100%;
+    object-fit: contain;
     display: block;
   }
 `;

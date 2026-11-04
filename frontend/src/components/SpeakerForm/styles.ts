@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -9,48 +9,60 @@ export const Container = styled.div`
 `;
 
 export const AreaContainer = styled.div`
-  padding: 1rem 0.5rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  width: 100%;
 `;
 
 export const Area = styled.div`
   width: 100%;
-  grid-template-columns: repeat(5, 1fr);
   display: grid;
-  column-gap: 1rem;
-  row-gap: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 1.5rem;
+  row-gap: 1.5rem;
+  align-items: start;
 
-  @media (max-width: 1050px) {
-    grid-template-columns: repeat(3, 1fr);
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   @media (max-width: 768px) {
-    grid-template-columns: none;
-    grid-template-rows: repeat(1fr);
+    grid-template-columns: 1fr;
   }
 `;
 
-export const InputContainer = styled.span`
-  display: inline-flex;
+export const InputContainer = styled.div`
+  display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
   width: 100%;
-  overflow: hidden;
+
+  h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0;
+    color: #e5e7eb;
+  }
 
   input {
     border: none;
     border-radius: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.65rem 1rem;
     background-color: #202020;
     color: #ffffff;
-    font-size: 1rem;
+    font-size: 0.95rem;
+    width: 100%;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: 2px solid ${({ theme }) => theme.colors["fifth-blue"]};
+    }
   }
 
   span {
     color: #f87171;
-    font-size: 0.875rem;
+    font-size: 0.85rem;
   }
 `;
 
