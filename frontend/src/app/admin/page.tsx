@@ -161,12 +161,9 @@ export default function AdminHubPage() {
   return (
     <Container>
       <HeroSection>
-        <HeroTitle>
-          Painel de <span>Administração</span>
-        </HeroTitle>
+        <HeroTitle>Painel de Administração</HeroTitle>
         <HeroSubtitle>
           Gerencie todos os aspectos do PET Computação UFPB e da Semana da Computação (SDC).
-          Selecione uma área abaixo para começar.
         </HeroSubtitle>
       </HeroSection>
 

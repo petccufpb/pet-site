@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export const LayoutContainer = styled.div`
+export const LayoutContainer = styled.div<{ $isAdmin?: boolean }>`
   flex: 1;
 
   width: 100%;
-  max-width: 70rem;
+  max-width: ${({ $isAdmin }) => ($isAdmin ? "100%" : "70rem")};
   margin-right: auto;
   margin-left: auto;
   display: grid;
@@ -12,10 +12,10 @@ export const LayoutContainer = styled.div`
 
   font-family: "Inter Variable", sans-serif;
 
-  padding-top: 7rem;
+  padding-top: ${({ $isAdmin }) => ($isAdmin ? "0" : "7rem")};
 
   @media (max-width: 70rem) {
-    padding: 0 1rem;
+    padding: ${({ $isAdmin }) => ($isAdmin ? "0" : "0 1rem")};
   }
 `;
 

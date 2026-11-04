@@ -65,7 +65,7 @@ export default function Layout({ children }: PropsWithChildren) {
             </>
           )}
 
-          <LayoutContainer id="main">
+          <LayoutContainer id="main" $isAdmin={isAdmin}>
             <GlobalStyle pathname={pathname} />
             <main>{children}</main>
 
