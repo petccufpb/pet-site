@@ -3,7 +3,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
-import { HiOutlineAcademicCap, HiOutlineCheckBadge, HiOutlineArrowPath } from "react-icons/hi2";
+import {
+  HiOutlineAcademicCap,
+  HiOutlineCheckBadge,
+  HiOutlineArrowPath,
+  HiOutlinePaperAirplane,
+  HiOutlinePlusCircle,
+  HiOutlineDocumentText,
+} from "react-icons/hi2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { z } from "zod";
@@ -11,18 +18,27 @@ import api from "@api";
 import { useSDC } from "../../../../contexts/SDCContext";
 
 import {
-  Area,
-  AreaContainer,
   Container,
   Header,
   TitleArea,
+  ActionGroup,
   EditionBadge,
-  InputContainer,
-  SendButton,
+  CardsGrid,
+  Card,
+  Form,
+  FormRow,
+  InputGroup,
   Button,
-  SubTitle,
-  Description,
+  TableSection,
+  TableHeaderBar,
   TableContainer,
+  Table,
+  TableHeader,
+  TableRow,
+  TableCell,
+  EmptyState,
+  HashTag,
+  AttendanceBadge,
   ProgressModalOverlay,
   ProgressModalContent,
   ProgressBarContainer,
@@ -187,123 +203,160 @@ export default function CertificadosAdminPage() {
         <Header>
           <TitleArea>
             <h2>
-              <HiOutlineAcademicCap />
+              <HiOutlineAcademicCap color="#73E5E2" />
               Certificados da SDC
             </h2>
             <p>
               Gestão de certificados de participação da Semana de Computação. Dispare
-              certificados em lote por e-mail ou emita de forma manual avulsa.
+              certificados em lote por e-mail corporativo ou emita de forma manual avulsa.
             </p>
           </TitleArea>
 
-          <EditionBadge>
-            Edição:{" "}
-            <strong>
-              {activeEdition
-                ? `${activeEdition.number}ª Edição ${activeEdition.name ? `(${activeEdition.name})` : ""}`
-                : "Nenhuma ativa"}
-            </strong>
-          </EditionBadge>
+          <ActionGroup>
+            <EditionBadge>
+              Edição:{" "}
+              <strong>
+                {activeEdition
+                  ? `${activeEdition.number}ª Edição ${activeEdition.name ? `(${activeEdition.name})` : ""}`
+                  : "Nenhuma ativa"}
+              </strong>
+            </EditionBadge>
+          </ActionGroup>
         </Header>
 
-        <AreaContainer>
-          {/* Seção 1: Disparo em Lote */}
-          <Area style={{ gridTemplateColumns: "1fr", rowGap: "1rem" }}>
+        <CardsGrid>
+          {/* Card 1: Disparo em Lote */}
+          <Card>
             <div>
-              <SubTitle>Disparo de Certificados em Lote</SubTitle>
-              <Description>
-                Calcula automaticamente os participantes elegíveis (frequência mínima cumprida)
-                da edição selecionada e envia os certificados via e-mail corporativo.
-              </Description>
+              <h3>
+                <HiOutlinePaperAirplane color="#73E5E2" />
+                Disparo SMTP em Lote
+              </h3>
+              <p>
+                Calcula automaticamente a elegibilidade de todos os participantes desta edição
+                com base na frequência mínima requerida e envia os certificados por e-mail.
+              </p>
             </div>
-            <SendButton onClick={handleBatchGenerate} disabled={!activeEdition || isGeneratingBatch}>
-              <span>Executar Lote de Certificados</span>
-              <HiOutlineCheckBadge size="1.2em" />
-            </SendButton>
-          </Area>
 
-          {/* Seção 2: Geração Manual */}
-          <form onSubmit={submitCert(handleManualCert, handleValidationError)}>
-            <SubTitle>Geração Manual (Bypass)</SubTitle>
-            <Description>
-              Emita um certificado individual diretamente para um inscrito cadastrado nesta edição.
-            </Description>
-            <Area>
-              <InputContainer>
-                <h3>E-mail do Inscrito</h3>
-                <input
-                  type="email"
-                  placeholder="aluno@email.com"
-                  {...regCert("email")}
-                />
-              </InputContainer>
-              <InputContainer>
-                <h3>Frequência (%)</h3>
-                <input
-                  type="number"
-                  placeholder="100"
-                  min="1"
-                  max="100"
-                  {...regCert("attendance")}
-                />
-              </InputContainer>
-            </Area>
-            <SendButton type="submit" style={{ marginTop: "1.5rem" }} disabled={!activeEdition}>
-              <span>Gerar Certificado Avulso</span>
-              <HiOutlineCheckBadge size="1.2em" />
-            </SendButton>
-          </form>
+            <Button
+              variant="success"
+              onClick={handleBatchGenerate}
+              disabled={!activeEdition || isGeneratingBatch}
+            >
+              <HiOutlineCheckBadge size={18} />
+              Executar Lote de Certificados
+            </Button>
+          </Card>
 
-          {/* Seção 3: Histórico de Certificados Emitidos */}
-          <div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-              <SubTitle style={{ margin: 0 }}>Certificados Emitidos</SubTitle>
-              <Button
-                onClick={() => loadCertificates()}
-                disabled={isLoadingCertificates || !activeEdition}
-                style={{ padding: "0.5rem 1rem", gap: "0.4rem" }}
-              >
-                <HiOutlineArrowPath size={16} />
-                <span>Atualizar</span>
+          {/* Card 2: Emissão Manual */}
+          <Card>
+            <div>
+              <h3>
+                <HiOutlinePlusCircle color="#73E5E2" />
+                Geração Manual (Bypass)
+              </h3>
+              <p>
+                Emita um certificado avulso diretamente para um participante inscrito nesta
+                edição informando o e-mail e a frequência atingida.
+              </p>
+            </div>
+
+            <Form onSubmit={submitCert(handleManualCert, handleValidationError)}>
+              <FormRow>
+                <InputGroup>
+                  <label htmlFor="cert-email">E-mail do Participante</label>
+                  <input
+                    id="cert-email"
+                    type="email"
+                    placeholder="participante@exemplo.com"
+                    {...regCert("email")}
+                  />
+                </InputGroup>
+
+                <InputGroup>
+                  <label htmlFor="cert-attendance">Frequência (%)</label>
+                  <input
+                    id="cert-attendance"
+                    type="number"
+                    placeholder="100"
+                    min="1"
+                    max="100"
+                    {...regCert("attendance")}
+                  />
+                </InputGroup>
+              </FormRow>
+
+              <Button primary type="submit" disabled={!activeEdition}>
+                <HiOutlineCheckBadge size={18} />
+                Gerar Certificado Avulso
               </Button>
-            </div>
+            </Form>
+          </Card>
+        </CardsGrid>
 
-            <TableContainer>
-              <table>
-                <thead>
+        {/* Seção da Tabela */}
+        <TableSection>
+          <TableHeaderBar>
+            <h3>
+              <HiOutlineDocumentText color="#73E5E2" />
+              Certificados Emitidos
+              {certificates.length > 0 && ` (${certificates.length})`}
+            </h3>
+
+            <Button
+              onClick={() => loadCertificates()}
+              disabled={isLoadingCertificates || !activeEdition}
+            >
+              <HiOutlineArrowPath size={16} />
+              Atualizar Lista
+            </Button>
+          </TableHeaderBar>
+
+          <TableContainer>
+            <Table>
+              <thead>
+                <tr>
+                  <TableHeader>Participante</TableHeader>
+                  <TableHeader>E-mail</TableHeader>
+                  <TableHeader>Frequência</TableHeader>
+                  <TableHeader>Hash ID</TableHeader>
+                </tr>
+              </thead>
+              <tbody>
+                {certificates.length > 0 ? (
+                  certificates.map((cert) => (
+                    <TableRow key={cert.id}>
+                      <TableCell style={{ fontWeight: 600 }}>
+                        {cert.participant?.name || "N/A"}
+                      </TableCell>
+                      <TableCell style={{ color: "rgba(255, 255, 255, 0.75)" }}>
+                        {cert.participant?.email || "N/A"}
+                      </TableCell>
+                      <TableCell>
+                        <AttendanceBadge value={cert.attendance}>
+                          {cert.attendance}%
+                        </AttendanceBadge>
+                      </TableCell>
+                      <TableCell>
+                        <HashTag>{cert.id}</HashTag>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
                   <tr>
-                    <th>Participante</th>
-                    <th>E-mail</th>
-                    <th>Frequência</th>
-                    <th>Hash ID</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {certificates.length > 0 ? (
-                    certificates.map((cert) => (
-                      <tr key={cert.id}>
-                        <td>{cert.participant?.name || "N/A"}</td>
-                        <td>{cert.participant?.email || "N/A"}</td>
-                        <td>{cert.attendance}%</td>
-                        <td style={{ fontFamily: "monospace", color: "#a9a9b2" }}>
-                          {cert.id}
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan={4} style={{ textAlign: "center", color: "#a9a9b2" }}>
+                    <TableCell colSpan={4}>
+                      <EmptyState>
                         {isLoadingCertificates
-                          ? "Carregando certificados..."
-                          : "Nenhum certificado emitido para esta edição."}
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </TableContainer>
-          </div>
-        </AreaContainer>
+                          ? "Carregando certificados da edição..."
+                          : "Nenhum certificado emitido para esta edição até o momento."}
+                      </EmptyState>
+                    </TableCell>
+                  </tr>
+                )}
+              </tbody>
+            </Table>
+          </TableContainer>
+        </TableSection>
       </Container>
     </>
   );

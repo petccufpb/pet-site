@@ -89,7 +89,7 @@ const Button = styled.button`
 export const SendButton = styled(Button)`
   gap: 0.5rem;
   font-size: medium;
-  max-width: 13rem;
+  max-width: 18rem;
   background-color: ${({ theme }) => `${theme.colors["base-green"]}75`};
   outline-color: ${({ theme }) => theme.colors["base-green"]};
 
