@@ -9,7 +9,7 @@ export const Container = styled.div`
   /* O <main> do site cresce com o conteúdo; sem esse limite a tabela empurra a página para fora da tela */
   max-width: min(72rem, calc(100vw - 2rem));
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 2.5rem 2rem 5rem;
   font-family: ${({ theme }) => theme.fonts.alt};
 `;
 
