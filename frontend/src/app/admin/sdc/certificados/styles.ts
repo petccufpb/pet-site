@@ -10,26 +10,46 @@ export const Container = styled.div`
   color: white;
 `;
 
-export const AreaSelector = styled.div`
+export const Header = styled.header`
   display: flex;
-  gap: 1.5rem;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 2rem;
-  border-bottom: 1px solid #333;
-  padding-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
 `;
 
-export const AreaOption = styled.button<{ selected?: boolean }>`
-  background: none;
-  border: none;
-  color: ${({ selected, theme }) => (selected ? theme.colors?.["base-green"] || "#04d361" : "#a9a9b2")};
-  font-size: 1.1rem;
-  font-weight: ${({ selected }) => (selected ? "bold" : "normal")};
-  cursor: pointer;
-  transition: color 0.2s;
-  padding: 0.5rem 0;
+export const TitleArea = styled.div`
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: ${({ theme }) => theme.colors["base-white"]};
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
 
-  &:hover {
-    color: white;
+  p {
+    color: #a9a9b2;
+    font-size: 0.95rem;
+    max-width: 600px;
+  }
+`;
+
+export const EditionBadge = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #18181b;
+  border: 1px solid #27272a;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  color: #a1a1aa;
+
+  strong {
+    color: ${({ theme }) => theme.colors?.["fifth-blue"] || "#38bcde"};
   }
 `;
 
@@ -46,8 +66,10 @@ export const AreaContainer = styled.div`
 `;
 
 export const SubTitle = styled.h2`
-  font-size: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
   margin-bottom: 0.5rem;
+  color: ${({ theme }) => theme.colors["base-white"]};
 `;
 
 export const Description = styled.p`
@@ -63,6 +85,10 @@ export const Area = styled.div`
   background: #121214;
   padding: 1.5rem;
   border-radius: 0.5rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const InputContainer = styled.div`
@@ -91,21 +117,6 @@ export const InputContainer = styled.div`
   }
 `;
 
-export const SelectNative = styled.select`
-  padding: 0.8rem;
-  border-radius: 0.5rem;
-  border: none;
-  background: #202024;
-  color: white;
-  font-family: inherit;
-  outline: none;
-  cursor: pointer;
-
-  &:focus {
-    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors?.["fifth-blue"] || "#38bcde"};
-  }
-`;
-
 export const Button = styled.button`
   border: none;
   font-family: inherit;
@@ -131,7 +142,7 @@ export const Button = styled.button`
 export const SendButton = styled(Button)`
   gap: 0.5rem;
   font-size: medium;
-  max-width: 15rem;
+  max-width: 16rem;
   background-color: ${({ theme }) => theme.colors?.["base-green"] ? `${theme.colors["base-green"]}75` : "#04d36175"};
   outline-color: ${({ theme }) => theme.colors?.["base-green"] || "#04d361"};
 
