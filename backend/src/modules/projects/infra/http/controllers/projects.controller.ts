@@ -122,6 +122,14 @@ export default class ProjectsController {
     return certificates;
   }
 
+  @Get("certificates/latest")
+  async getLatestCertificates(
+    @QueryRequired("project") projectTitle: string,
+  ): Promise<CompleteProjectCertificate[]> {
+    const edition = await this.findLatestEdition.execute({ projectTitle });
+    return await this.listCertificates.execute({ editionId: edition.id });
+  }
+
   @Post("certificates")
   @UseGuards(AdminGuard)
   async postProjectsCertificates(
