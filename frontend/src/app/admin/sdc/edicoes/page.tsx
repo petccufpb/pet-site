@@ -59,8 +59,20 @@ export default function SdcEdicoesPage() {
   const [editionToEdit, setEditionToEdit] = useState<SDCEdition | null>(null);
   const [editionToDelete, setEditionToDelete] = useState<SDCEdition | null>(null);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("new") === "true" || params.get("action") === "new") {
+        handleOpenCreateModal();
+      }
+    }
+  }, []);
+
   const handleOpenCreateModal = () => {
     setEditionToEdit(null);
+    if (typeof window !== "undefined" && window.location.search) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
     setIsModalOpen(true);
   };
 
@@ -72,6 +84,9 @@ export default function SdcEdicoesPage() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setEditionToEdit(null);
+    if (typeof window !== "undefined" && window.location.search) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
   };
 
   return (

@@ -213,15 +213,15 @@ export default function AdminHubPage() {
       {/* Barra de Ações Rápidas */}
       <QuickActionsBar>
         <QuickActionLabel>Ações Rápidas:</QuickActionLabel>
-        <QuickActionBtn href="/admin/sdc/eventos">
+        <QuickActionBtn href="/admin/sdc/eventos?new=true">
           <HiOutlinePlus size={15} />
           Nova Atividade
         </QuickActionBtn>
-        <QuickActionBtn href="/admin/sdc/edicoes">
+        <QuickActionBtn href="/admin/sdc/edicoes?new=true">
           <HiOutlinePlus size={15} />
           Nova Edição
         </QuickActionBtn>
-        <QuickActionBtn href="/admin/membros">
+        <QuickActionBtn href="/admin/membros?new=true">
           <HiOutlinePlus size={15} />
           Novo Integrante
         </QuickActionBtn>

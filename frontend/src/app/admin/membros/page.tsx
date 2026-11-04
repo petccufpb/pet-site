@@ -60,6 +60,22 @@ export default function AdminMembersPage() {
 
   const [modal, setModal] = useState<MemberModal>(null);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("new") === "true" || params.get("action") === "new") {
+        setModal({ mode: "create" });
+      }
+    }
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setModal(null);
+    if (typeof window !== "undefined" && window.location.search) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+  }, []);
+
   const load = useCallback(async (signal?: AbortSignal, options?: LoadOptions) => {
     if (!options?.silent) {
       setStatus("loading");
@@ -127,7 +143,7 @@ export default function AdminMembersPage() {
   }, []);
 
   const handleSaved = useCallback(() => {
-    setModal(null);
+    handleCloseModal();
     load(undefined, { silent: true });
   }, [load]);
 
@@ -295,7 +311,7 @@ export default function AdminMembersPage() {
       {modal && (
         <MemberFormModal
           member={modal.mode === "edit" ? modal.member : null}
-          onRequestClose={() => setModal(null)}
+          onRequestClose={handleCloseModal}
           onSaved={handleSaved}
         />
       )}

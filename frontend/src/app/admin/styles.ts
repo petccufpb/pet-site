@@ -202,7 +202,6 @@ export const HeroTitle = styled.h1`
 export const HeroSubtitle = styled.p`
   font-size: 1.125rem;
   color: ${({ theme }) => theme.colors["second-white"]};
-  max-width: 650px;
   line-height: 1.6;
   font-family: ${({ theme }) => theme.fonts.alt};
 `;

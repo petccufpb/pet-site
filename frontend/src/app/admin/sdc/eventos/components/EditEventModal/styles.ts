@@ -22,7 +22,6 @@ export const ModalContainer = styled.div`
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(115, 229, 226, 0.08);
   border-radius: 16px;
   width: 100%;
-  max-width: 650px;
   max-height: 90vh;
   display: flex;
   flex-direction: column;

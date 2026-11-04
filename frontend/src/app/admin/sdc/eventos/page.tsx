@@ -70,6 +70,22 @@ export default function SdcEventosPage() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("new") === "true" || params.get("action") === "new") {
+        setIsModalOpen(true);
+      }
+    }
+  }, []);
+
+  const handleCloseCreateModal = () => {
+    setIsModalOpen(false);
+    if (typeof window !== "undefined" && window.location.search) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+  };
+
   // Carregar eventos da edição e lista de palestrantes
   const loadData = useCallback(async () => {
     if (!currentEdition?.id) {
@@ -354,8 +370,9 @@ export default function SdcEventosPage() {
       {/* Modal de Cadastro */}
       <EventFormModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleCloseCreateModal}
         onSuccess={(newEvent) => {
+          handleCloseCreateModal();
           showToast(`Atividade "${newEvent.name}" agendada com sucesso!`);
           loadData();
         }}
