@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import api from "@api";
@@ -179,8 +179,6 @@ export default function AdminFrequencia() {
 
   return (
     <Container>
-      <ToastContainer position="top-right" autoClose={3000} newestOnTop theme="dark" />
-
       <Header>
         <h2>Frequência{edition && ` · SDC ${edition.number}`}</h2>
         <p>Check-in manual por evento</p>
