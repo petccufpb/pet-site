@@ -39,6 +39,7 @@ export class MembersController {
   }
 
   @Post()
+  @UseGuards(AdminAuthGuard)
   async postMembers(@Body() body: CreateMemberDTO): Promise<Member> {
     const user = await this.createMember.execute(body);
 

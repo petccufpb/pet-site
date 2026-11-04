@@ -5,6 +5,7 @@ import { APP_INTERCEPTOR } from "@nestjs/core";
 import { redisStore } from "cache-manager-redis-yet";
 import type { RedisClientOptions } from "redis";
 
+import { AuthModule } from "@modules/auth/auth.module";
 import { MembersModule } from "@modules/members/members.module";
 import NewsModule from "@modules/news/news.module";
 import ProjectsModule from "@modules/projects/projects.module";
@@ -42,7 +43,7 @@ import { MiscController } from "./controllers/misc.controller";
   ],
   controllers: [MiscController],
   providers: [
-    ...(process.env.RAILWAY_ENVIRONMENT === "development"
+    ...(process.env.RAILWAY_ENVIRONMENT === "development" || process.env.NODE_ENV === "development"
       ? []
       : [
           {

@@ -36,6 +36,9 @@ export default function Layout({ children }: PropsWithChildren) {
   const pathname = usePathname();
   const { innerWidth } = useWindow();
 
+  // O painel administrativo possui um shell próprio (ver @components/AdminLayout)
+  const isAdmin = pathname.startsWith("/admin");
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <ReactLenis
@@ -46,10 +49,10 @@ export default function Layout({ children }: PropsWithChildren) {
         }}
       >
         <ContainerForBackground>
-          {innerWidth <= 768 ? <MobileHeader /> : <Header />}
+          {!isAdmin && (innerWidth <= 768 ? <MobileHeader /> : <Header />)}
 
           {/* Apenas renderizar os peixinhos se estivermos fora da página da SDC */}
-          {pathname.split("/")[1] !== "sdc" && (
+          {!isAdmin && pathname.split("/")[1] !== "sdc" && (
             <>
               <WavesContainer>
                 <Waves />
@@ -70,7 +73,7 @@ export default function Layout({ children }: PropsWithChildren) {
             <Analytics />
           </LayoutContainer>
 
-          {innerWidth <= 768 ? <MobileFooter /> : <Footer />}
+          {!isAdmin && (innerWidth <= 768 ? <MobileFooter /> : <Footer />)}
         </ContainerForBackground>
       </ReactLenis>
     </ThemeProvider>

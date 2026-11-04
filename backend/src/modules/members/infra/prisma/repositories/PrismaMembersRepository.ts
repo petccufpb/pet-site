@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Member } from "@prisma/client";
+import { Member, Prisma } from "@prisma/client";
 
 import { PrismaService } from "@database/prisma.service";
 import MembersRepository, { CompleteMember } from "@modules/members/repositories/MembersRepository";
@@ -35,6 +35,21 @@ export class PrismaMembersRepository implements MembersRepository {
     });
 
     return user;
+  }
+
+  async findById(id: string): Promise<CompleteMember | null> {
+    const member = await this.prisma.member.findUnique({
+      where: { id },
+      include: {
+        contactInfo: {
+          orderBy: {
+            name: "asc",
+          },
+        },
+      },
+    });
+
+    return member;
   }
 
   async findMembers(): Promise<CompleteMember[]> {
@@ -86,23 +101,8 @@ export class PrismaMembersRepository implements MembersRepository {
     return members;
   }
 
-  async findById(id: string): Promise<CompleteMember | null> {
-    const member = await this.prisma.member.findUnique({
-      where: { id },
-      include: {
-        contactInfo: {
-          orderBy: {
-            name: "asc",
-          },
-        },
-      },
-    });
-
-    return member;
-  }
-
   async update(id: string, { contactInfo, ...data }: UpdateMemberDTO): Promise<Member> {
-    const updateData: any = { ...data };
+    const updateData: Prisma.MemberUpdateInput = { ...data };
 
     if (contactInfo) {
       updateData.contactInfo = {

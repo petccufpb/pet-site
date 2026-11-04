@@ -31,13 +31,64 @@ import UpdateEdition from "./services/UpdateEdition.service";
 import UpdateEvent from "./services/UpdateEvent.service";
 import ValidateCertificate from "./services/ValidateCertificate.service";
 
+const DEFAULT_MAIL_DRIVER: MailProviderKeys = "gmail";
+
+const SUPPORTED_MAIL_DRIVERS: MailProviderKeys[] = ["ethereal", "gmail", "nodemailer", "sendgrid"];
+
+/**
+ * Resolve o driver de e-mail a partir de `MAIL_DRIVER`.
+ *
+ * O `NodemailerMailProvider` (`@hyoretsu/providers`) monta o transporte do
+ * Nodemailer a partir de um mapa fixo (`gmail`, `nodemailer`, `sendgrid`)
+ * indexado por `process.env.MAIL_DRIVER`. Quando o valor está ausente ou não
+ * corresponde a nenhuma chave, o mapa devolve `undefined` e o
+ * `nodemailer.createTransport(undefined)` quebra o boot com
+ * "TypeError: Cannot set properties of undefined (setting 'mailer')".
+ *
+ * Por isso o valor é normalizado (trim/lowercase) e validado contra os drivers
+ * suportados antes de ser usado.
+ */
+function resolveMailDriver(): MailProviderKeys {
+  const driver = process.env.MAIL_DRIVER?.trim().toLowerCase() as MailProviderKeys | undefined;
+
+  if (!driver) {
+    return DEFAULT_MAIL_DRIVER;
+  }
+
+  if (!SUPPORTED_MAIL_DRIVERS.includes(driver)) {
+    console.warn(
+      `[mail] MAIL_DRIVER="${driver}" não é suportado (aceitos: ${SUPPORTED_MAIL_DRIVERS.join(
+        ", ",
+      )}). Usando "${DEFAULT_MAIL_DRIVER}".`,
+    );
+
+    return DEFAULT_MAIL_DRIVER;
+  }
+
+  return driver;
+}
+
 @Module({
   imports: [AuthModule],
   controllers: [ProjectsController],
   providers: [
     {
       provide: MailProvider,
-      useClass: mailProviders[process.env.MAIL_DRIVER as MailProviderKeys],
+      // A resolução acontece na factory (tempo de instanciação) e não no
+      // carregamento do módulo: assim o `.env` carregado pelo `ConfigModule`
+      // ainda tem precedência, já que o `ConfigModule` não sobrescreve
+      // variáveis que já existem em `process.env`.
+      useFactory: (): MailProvider => {
+        const driver = resolveMailDriver();
+
+        // O provider do `@hyoretsu/providers` lê `MAIL_DRIVER` de `process.env`
+        // para montar o transporte; manter o valor resolvido em sincronia.
+        process.env.MAIL_DRIVER = driver;
+
+        const MailProviderImplementation = mailProviders[driver];
+
+        return new MailProviderImplementation();
+      },
     },
     PrismaService,
     {

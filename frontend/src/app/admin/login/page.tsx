@@ -1,83 +1,106 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { HiOutlineLockClosed } from "react-icons/hi2";
+import { z } from "zod";
+
+import { ApiError } from "@services/adminApi";
+import { loginAdmin } from "@services/adminAuth";
 
 import {
   Container,
+  ErrorMessage,
+  FieldError,
   FormContainer,
-  InputGroup,
   Input,
+  InputGroup,
   Label,
   SubmitButton,
-  ErrorMessage,
 } from "./styles";
+
+const loginFormSchema = z.object({
+  username: z.string().trim().min(1, "Informe o usuário"),
+  password: z.string().min(1, "Informe a senha"),
+});
+
+type LoginFormData = z.infer<typeof loginFormSchema>;
+
+/** Redireciona apenas para rotas administrativas, evitando open redirect. */
+function getSafeNextPath(): string {
+  const nextPath = new URLSearchParams(window.location.search).get("next");
+
+  if (
+    !nextPath ||
+    !nextPath.startsWith("/admin") ||
+    nextPath.startsWith("//") ||
+    nextPath.startsWith("/admin/login")
+  ) {
+    return "/admin";
+  }
+
+  return nextPath;
+}
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-  const apiUrl = "/api/proxy";
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginFormSchema),
+    defaultValues: { username: "", password: "" },
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!username || !password) {
-      setError("Por favor, preencha todos os campos.");
-      return;
-    }
-
-    setLoading(true);
-    setError("");
+  const handleLogin = handleSubmit(async data => {
+    setError(null);
 
     try {
-      // Autenticação com cookie HttpOnly First-Party (100% compatível com Edge, Chrome e Safari)
-      const response = await fetch(`${apiUrl}/auth/admin/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ username, password }),
-      });
+      await loginAdmin(data.username, data.password);
 
-      if (!response.ok) {
-        const data = await response.json().catch(() => ({}));
-        throw new Error(data.message || "Usuário ou senha inválidos.");
+      const nextPath = getSafeNextPath();
+
+      // Recarrega a página para que o shell administrativo valide a nova sessão
+      if (nextPath === "/admin") {
+        window.location.assign("/admin");
+      } else {
+        router.replace(nextPath);
+        router.refresh();
       }
-
-      window.location.href = "/admin";
-    } catch (err: any) {
-      setError(err.message || "Erro de conexão com o servidor.");
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Erro de conexão com o servidor.");
     }
-  };
+  });
 
   return (
     <Container>
-      <FormContainer onSubmit={handleSubmit}>
+      <FormContainer onSubmit={handleLogin} noValidate>
         <div className="header">
-          <HiOutlineLockClosed size={48} />
+          <HiOutlineLockClosed size={48} aria-hidden="true" />
           <h1>PET Computação</h1>
-          <p>Acesso Administrativo</p>
+          <p>Acesso administrativo</p>
         </div>
 
-        {error && <ErrorMessage>{error}</ErrorMessage>}
+        {error && <ErrorMessage role="alert">{error}</ErrorMessage>}
 
         <InputGroup>
           <Label htmlFor="username">Usuário</Label>
           <Input
             id="username"
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            autoComplete="username"
+            $hasError={!!errors.username}
+            aria-invalid={!!errors.username}
             placeholder="Digite seu usuário"
-            required
+            autoFocus
+            {...register("username")}
           />
+          {errors.username && <FieldError role="alert">{errors.username.message}</FieldError>}
         </InputGroup>
 
         <InputGroup>
@@ -85,15 +108,17 @@ export default function AdminLoginPage() {
           <Input
             id="password"
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
+            $hasError={!!errors.password}
+            aria-invalid={!!errors.password}
             placeholder="Digite sua senha"
-            required
+            {...register("password")}
           />
+          {errors.password && <FieldError role="alert">{errors.password.message}</FieldError>}
         </InputGroup>
 
-        <SubmitButton type="submit" disabled={loading}>
-          {loading ? "Entrando..." : "Entrar"}
+        <SubmitButton type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Entrando..." : "Entrar"}
         </SubmitButton>
       </FormContainer>
     </Container>

@@ -269,8 +269,8 @@ export default function AdminHubPage() {
       title: "Gestão do Time PET",
       description:
         "Controle de integrantes ativos, tutores, fotos, biografias e redes sociais dos bolsistas e voluntários.",
-      href: "/admin/time",
-      routeLabel: "/admin/time",
+      href: "/admin/membros",
+      routeLabel: "/admin/membros",
       tag: "Dev 1 • Equipe",
       icon: <HiOutlineUserGroup size={28} />,
       accentColor: "#0072ED",

@@ -1,3 +1,5 @@
+"use client";
+
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -65,15 +67,16 @@ export const Label = styled.label`
   letter-spacing: 0.05em;
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<{ $hasError?: boolean }>`
   background: rgba(0, 0, 18, 0.4);
-  border: 1px solid ${({ theme }) => theme.colors["line-white"]};
+  border: 1px solid
+    ${({ $hasError, theme }) => ($hasError ? theme.colors["base-red"] : theme.colors["line-white"])};
   border-radius: 8px;
   padding: 0.85rem 1rem;
   font-size: 1rem;
   color: ${({ theme }) => theme.colors["base-white"]};
   font-family: ${({ theme }) => theme.fonts.alt};
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
   &:focus {
     outline: none;
@@ -84,6 +87,13 @@ export const Input = styled.input`
   &::placeholder {
     color: ${({ theme }) => theme.colors["base-grey"]};
   }
+`;
+
+export const FieldError = styled.span`
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: #ff8888;
+  font-family: ${({ theme }) => theme.fonts.alt};
 `;
 
 export const SubmitButton = styled.button`
@@ -112,6 +122,11 @@ export const SubmitButton = styled.button`
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors["third-blue"]};
+    outline-offset: 2px;
   }
 `;
 
