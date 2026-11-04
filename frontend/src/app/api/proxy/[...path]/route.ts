@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
+const BACKEND_URL = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333").replace(/\/$/, "");
 
 async function proxyHandler(req: NextRequest, { params }: { params: { path: string[] } }) {
   const targetPath = params.path ? params.path.join("/") : "";
@@ -52,7 +52,8 @@ async function proxyHandler(req: NextRequest, { params }: { params: { path: stri
     });
 
     for (const cookieStr of rawCookies) {
-      nextRes.headers.append("set-cookie", cookieStr);
+      const adaptedCookie = process.env.NODE_ENV !== "production" ? cookieStr.replace(/;\s*Secure/gi, "") : cookieStr;
+      nextRes.headers.append("set-cookie", adaptedCookie);
     }
 
     return nextRes;
