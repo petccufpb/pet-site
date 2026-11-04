@@ -223,19 +223,6 @@ export const Content = styled.div<{ $collapsed: boolean }>`
   flex: 1;
   min-width: 0;
   min-height: 100vh;
-
-  margin-left: 16rem;
-  transition: margin-left 250ms ease;
-
-  ${({ $collapsed }) =>
-    $collapsed &&
-    css`
-      margin-left: 5.25rem;
-    `}
-
-  @media (max-width: 900px) {
-    margin-left: 0;
-  }
 `;
 
 export const Header = styled.header`
