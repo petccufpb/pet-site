@@ -42,7 +42,6 @@ export const Header = styled.header`
   margin-bottom: 3rem;
   flex-wrap: wrap;
   gap: 1.5rem;
-  padding-bottom: 2rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 `;
 

@@ -186,3 +186,4 @@ export const LoadingState = styled.div`
   padding: 3rem 1rem;
   color: ${({ theme }) => theme.colors["third-blue"]};
 `;
+
