@@ -9,7 +9,6 @@ import { AuthModule } from "@modules/auth/auth.module";
 import { MembersModule } from "@modules/members/members.module";
 import NewsModule from "@modules/news/news.module";
 import ProjectsModule from "@modules/projects/projects.module";
-import { AuthModule } from "@modules/auth/auth.module";
 
 import { MiscController } from "./controllers/misc.controller";
 

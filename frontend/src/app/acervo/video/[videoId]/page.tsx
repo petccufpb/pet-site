@@ -24,6 +24,7 @@ const makers: Member[] = [
     photoUrl: "https://drive.google.com/uc?id=1PV8wnYibWo43fk8OFpWidZgXIdQDTOa8",
     type: null,
     isActive: true,
+    deletedAt: null,
     createdAt: new Date("2023-04-07T23:41:47.876Z"),
     updatedAt: new Date("2023-04-07T23:41:47.876Z"),
     contactInfo: [
@@ -60,6 +61,7 @@ const makers: Member[] = [
     photoUrl: "https://drive.google.com/uc?id=1lmGpV8znG1MofbowLqtALTY6u5YL2qY8",
     type: null,
     isActive: true,
+    deletedAt: null,
     createdAt: new Date("2023-09-12T20:19:39.856Z"),
     updatedAt: new Date("2023-09-12T20:19:39.856Z"),
     contactInfo: [],
@@ -71,6 +73,7 @@ const makers: Member[] = [
     photoUrl: "https://drive.google.com/uc?id=1odQ6A9QUtcYVFJPnlSbwUsMjn4EGLSKw",
     type: null,
     isActive: true,
+    deletedAt: null,
     createdAt: new Date("2023-04-08T02:41:47.876Z"),
     updatedAt: new Date("2023-04-08T02:41:47.876Z"),
     contactInfo: [
@@ -91,6 +94,7 @@ const makers: Member[] = [
     photoUrl: "https://drive.google.com/uc?id=19kSfP0KS4kEOnGRO6H3ExNshpouvHEI4",
     type: null,
     isActive: true,
+    deletedAt: null,
     createdAt: new Date("2023-09-12T20:18:47.018Z"),
     updatedAt: new Date("2023-09-12T20:18:47.018Z"),
     contactInfo: [],

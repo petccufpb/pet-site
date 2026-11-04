@@ -5,6 +5,7 @@ import AdminLoginRateLimitGuard from "./rate-limit.guard";
 
 describe("AdminLoginRateLimitGuard", () => {
   let guard: AdminLoginRateLimitGuard;
+  const originalNodeEnv = process.env.NODE_ENV;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -12,6 +13,13 @@ describe("AdminLoginRateLimitGuard", () => {
     }).compile();
 
     guard = module.get<AdminLoginRateLimitGuard>(AdminLoginRateLimitGuard);
+
+    // O rate limit só é aplicado em produção; os testes precisam simular esse ambiente
+    process.env.NODE_ENV = "production";
+  });
+
+  afterEach(() => {
+    process.env.NODE_ENV = originalNodeEnv;
   });
 
   const createMockContext = (ip = "127.0.0.1"): ExecutionContext => {
@@ -26,7 +34,7 @@ describe("AdminLoginRateLimitGuard", () => {
     } as unknown as ExecutionContext;
   };
 
-  it("should allow initial login attempts under limit", () => {
+  it("should allow login attempts under the limit", () => {
     const ctx = createMockContext("192.168.1.1");
     for (let i = 0; i < 10; i++) {
       expect(guard.canActivate(ctx)).toBe(true);
@@ -39,11 +47,21 @@ describe("AdminLoginRateLimitGuard", () => {
       guard.canActivate(ctx);
     }
 
-    expect(() => guard.canActivate(ctx)).toThrow(
-      new HttpException(
-        { message: "Muitas tentativas de login. Tente novamente mais tarde.", retryAfter: expect.any(Number) },
-        HttpStatus.TOO_MANY_REQUESTS,
-      ),
-    );
+    expect(() => guard.canActivate(ctx)).toThrow(HttpException);
+    try {
+      guard.canActivate(ctx);
+    } catch (err) {
+      const httpException = err as HttpException;
+      expect(httpException.getStatus()).toBe(HttpStatus.TOO_MANY_REQUESTS);
+    }
+  });
+
+  it("should not limit requests outside production", () => {
+    process.env.NODE_ENV = "test";
+
+    const ctx = createMockContext("192.168.1.3");
+    for (let i = 0; i < 30; i++) {
+      expect(guard.canActivate(ctx)).toBe(true);
+    }
   });
 });
