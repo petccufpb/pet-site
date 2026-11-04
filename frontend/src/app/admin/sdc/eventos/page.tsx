@@ -209,10 +209,9 @@ export default function SdcEventosPage() {
     <Container>
       <Header>
         <TitleArea>
-          <h1>
-            <HiOutlineClock color="#73E5E2" />
+          <h2>
             Cronograma de Atividades
-          </h1>
+          </h2>
           <p>
             Gestão do cronograma de palestras, minicursos e horários da Semana de Computação.
             Associe palestrantes, salas e controle a capacidade de cada atividade.

@@ -78,7 +78,7 @@ export default function SdcEdicoesPage() {
     <Container>
       <Header>
         <TitleArea>
-          <h1>Edições da SDC</h1>
+          <h2>Edições da SDC</h2>
           <p>
             Gerencie o histórico de edições da Semana de Computação e defina qual edição está ativa
             em todo o painel administrativo.

@@ -71,10 +71,9 @@ export default function AdminPalestrantesPage() {
     <Container>
       <Header>
         <TitleArea>
-          <h1>
-            <HiOutlineMicrophone />
+          <h2>
             Palestrantes Convidados
-          </h1>
+          </h2>
           <p>
             Cadastre novos palestrantes com upload de foto e consulte a lista de palestrantes registrados no sistema da SDC.
           </p>

@@ -24,7 +24,6 @@ export const Dialog = styled.form`
   padding: 2rem;
   border: 1px solid ${({ theme }) => theme.colors["second-grey"]};
   border-radius: 8px;
-  background: ${({ theme }) => theme.colors["base-black"]};
   font-family: ${({ theme }) => theme.fonts.alt};
 
   h2 {

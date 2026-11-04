@@ -316,7 +316,7 @@ export const CardContent = styled.div`
   margin-bottom: 2rem;
 
   h2 {
-    font-size: 1.45rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: ${({ theme }) => theme.colors["base-white"]};
     margin-bottom: 0.65rem;
@@ -510,7 +510,7 @@ export const StatContent = styled.div`
 `;
 
 export const StatValue = styled.div`
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: ${({ theme }) => theme.colors["base-white"]};
   line-height: 1.1;
@@ -537,7 +537,7 @@ export const SectionHeader = styled.div`
 `;
 
 export const SectionTitle = styled.h2`
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: ${({ theme }) => theme.colors["base-white"]};
   display: flex;

@@ -49,7 +49,6 @@ export const Brand = styled.div<{ $collapsed: boolean }>`
 
   padding: 0.25rem 0.5rem 1.25rem;
   margin-bottom: 0.75rem;
-  border-bottom: 1px solid ${({ theme }) => theme.colors["line-white"]};
 
   svg {
     flex-shrink: 0;
@@ -368,6 +367,12 @@ export const Main = styled.main<{ $fullWidth?: boolean }>`
   max-width: ${({ $fullWidth }) => ($fullWidth ? "100%" : "76rem")};
   margin: 0 auto;
   padding: ${({ $fullWidth }) => ($fullWidth ? "0" : "2rem 1.75rem 3.5rem")};
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: ${({ theme }) => theme.colors["base-white"]};
+  }
 
   @media (max-width: 900px) {
     padding: ${({ $fullWidth }) => ($fullWidth ? "0" : "1.5rem 1rem 3rem")};
