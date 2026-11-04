@@ -1,3 +1,5 @@
+import { getDirectImageLink } from "@utils/googleDrive";
+
 import { Border, MemberImage } from "./styles";
 
 export interface MemberColorTheme {
@@ -20,7 +22,7 @@ const MemberPhoto: React.FC<MemberPhotoParams> = ({ colorTheme, name, size, src 
   return (
     <Border colorTheme={colorTheme}>
       <MemberImage
-        src={src || "/images/no-profile-picture.svg"}
+        src={getDirectImageLink(src) || "/images/no-profile-picture.svg"}
         title={name}
         width={size}
         height={size}

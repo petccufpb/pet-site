@@ -41,7 +41,7 @@ describe("FindParticipant", () => {
 
   it("should be able to find a participant using matricula", async () => {
     const foundParticipant = await service.execute({
-      matricula: participant.matricula,
+      matricula: participant.matricula ?? undefined,
     });
 
     expect(foundParticipant).not.toBeNull();
@@ -49,7 +49,7 @@ describe("FindParticipant", () => {
 
   it("should be able to find a participant using phone number", async () => {
     const foundParticipant = await service.execute({
-      phoneNumber: participant.phoneNumber,
+      phoneNumber: participant.phoneNumber ?? undefined,
     });
 
     expect(foundParticipant).not.toBeNull();

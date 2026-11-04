@@ -5,15 +5,17 @@ import { useMemo, useState } from "react";
 import { HiArrowUpRight, HiXMark } from "react-icons/hi2";
 import { SDCScheduleData } from "sdc";
 
+import { getDirectImageLink } from "@utils/googleDrive";
+
 import {
-	Availability,
-	Day,
-	DaySelector,
-	Event,
-	EventContainer,
-	SdcScheduleContainer,
-	SpeakerPhoto,
-	Table,
+  Availability,
+  Day,
+  DaySelector,
+  Event,
+  EventContainer,
+  SdcScheduleContainer,
+  SpeakerPhoto,
+  Table,
 } from "./styles";
 
 export function MobileSchedule({ data }: { data: SDCScheduleData }) {
@@ -75,7 +77,7 @@ export function MobileSchedule({ data }: { data: SDCScheduleData }) {
               <SpeakerPhoto
                 width={45}
                 height={45}
-                src={e.speaker.photoUrl}
+                src={getDirectImageLink(e.speaker.photoUrl)}
                 alt={e.speaker.name}
               ></SpeakerPhoto>
               <Event available={true}>

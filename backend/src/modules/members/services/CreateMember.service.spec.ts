@@ -31,6 +31,6 @@ describe("CreateMember", () => {
         name: "Jane Doe",
         type: "founder",
       }),
-    ).rejects.toThrowError(HttpException);
+    ).rejects.toThrow(HttpException);
   });
 });

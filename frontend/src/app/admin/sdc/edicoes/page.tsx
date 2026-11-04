@@ -1,0 +1,237 @@
+"use client";
+
+import React, { useState } from "react";
+import Link from "next/link";
+import { SDCEdition } from "sdc-admin";
+import { useSDC } from "../../../../contexts/SDCContext";
+import { EditionFormModal } from "./components/EditionFormModal";
+import { DeleteEditionModal } from "./components/DeleteEditionModal";
+import {
+  HiOutlineCalendar,
+  HiOutlineCheckCircle,
+  HiOutlineRefresh,
+  HiPlus,
+  HiOutlineClock,
+  HiOutlinePencilAlt,
+  HiOutlineTrash,
+  HiCheck,
+} from "react-icons/hi";
+
+import {
+  Container,
+  Header,
+  TitleArea,
+  ActionGroup,
+  Button,
+  TableContainer,
+  Table,
+  TableHeader,
+  TableRow,
+  TableCell,
+  EditionNumber,
+  EditionTitle,
+  EditionSubtitle,
+  StatusBadge,
+  SelectActionBtn,
+  EditActionBtn,
+  DeleteActionBtn,
+  EmptyState,
+  LoadingContainer,
+} from "./styles";
+
+function formatDate(dateString: string): string {
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+    return new Intl.DateTimeFormat("pt-BR", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    }).format(date);
+  } catch {
+    return dateString;
+  }
+}
+
+export default function SdcEdicoesPage() {
+  const { editions, currentEdition, isLoading, error, selectEdition, refreshEditions } = useSDC();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [editionToEdit, setEditionToEdit] = useState<SDCEdition | null>(null);
+  const [editionToDelete, setEditionToDelete] = useState<SDCEdition | null>(null);
+
+  const handleOpenCreateModal = () => {
+    setEditionToEdit(null);
+    setIsModalOpen(true);
+  };
+
+  const handleOpenEditModal = (edition: SDCEdition) => {
+    setEditionToEdit(edition);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditionToEdit(null);
+  };
+
+  return (
+    <Container>
+      <Header>
+        <TitleArea>
+          <h1>Edições da SDC</h1>
+          <p>
+            Gerencie o histórico de edições da Semana de Computação e defina qual edição está ativa
+            em todo o painel administrativo.
+          </p>
+        </TitleArea>
+
+        <ActionGroup>
+          <Button variant="outline" onClick={() => refreshEditions()} disabled={isLoading}>
+            <HiOutlineRefresh size={16} />
+            Recarregar
+          </Button>
+          <Button primary onClick={handleOpenCreateModal}>
+            <HiPlus size={18} />
+            Nova Edição
+          </Button>
+        </ActionGroup>
+      </Header>
+
+      {isLoading ? (
+        <LoadingContainer>
+          <HiOutlineRefresh size={32} className="animate-spin" />
+          <p>Carregando edições da SDC...</p>
+        </LoadingContainer>
+      ) : error ? (
+        <EmptyState>
+          <h3>Erro ao carregar edições</h3>
+          <p>{error}</p>
+          <Button onClick={() => refreshEditions()}>Tentar novamente</Button>
+        </EmptyState>
+      ) : editions.length === 0 ? (
+        <EmptyState>
+          <h3>Nenhuma edição cadastrada</h3>
+          <p>Cadastre a primeira edição da SDC para começar a gerenciar o cronograma e palestras.</p>
+        </EmptyState>
+      ) : (
+        <TableContainer>
+          <Table>
+            <thead>
+              <tr>
+                <TableHeader>Edição</TableHeader>
+                <TableHeader>Nome / Tema</TableHeader>
+                <TableHeader>Data do Evento</TableHeader>
+                <TableHeader>Presença Mínima</TableHeader>
+                <TableHeader>Status</TableHeader>
+                <TableHeader style={{ textAlign: "right" }}>Ações</TableHeader>
+              </tr>
+            </thead>
+            <tbody>
+              {editions.map((edition: SDCEdition) => {
+                const isCurrent = currentEdition?.id === edition.id;
+
+                return (
+                  <TableRow key={edition.id} isSelected={isCurrent}>
+                    <TableCell>
+                      <EditionNumber>SDC #{edition.number}</EditionNumber>
+                    </TableCell>
+
+                    <TableCell>
+                      <EditionTitle>{edition.name || `Semana de Computação #${edition.number}`}</EditionTitle>
+                      <EditionSubtitle>ID: {edition.id}</EditionSubtitle>
+                    </TableCell>
+
+                    <TableCell>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                        <HiOutlineCalendar color="#73E5E2" />
+                        <span>{formatDate(edition.date)}</span>
+                      </div>
+                    </TableCell>
+
+                    <TableCell>
+                      <span>{edition.minimumAttendance ?? 100}%</span>
+                    </TableCell>
+
+                    <TableCell>
+                      <StatusBadge $active={isCurrent}>
+                        {isCurrent ? (
+                          <>
+                            <HiCheck size={14} />
+                            Ativa
+                          </>
+                        ) : (
+                          "Histórico"
+                        )}
+                      </StatusBadge>
+                    </TableCell>
+
+                    <TableCell style={{ textAlign: "right" }}>
+                      <div style={{ display: "inline-flex", gap: "0.5rem", alignItems: "center" }}>
+                        <SelectActionBtn
+                          $selected={isCurrent}
+                          onClick={() => selectEdition(edition.id)}
+                          title={isCurrent ? "Edição atualmente ativa" : "Definir como edição ativa"}
+                        >
+                          <HiOutlineCheckCircle size={15} />
+                          {isCurrent ? "Selecionada" : "Selecionar"}
+                        </SelectActionBtn>
+
+                        <EditActionBtn
+                          type="button"
+                          onClick={() => handleOpenEditModal(edition)}
+                          title="Editar esta edição da SDC"
+                        >
+                          <HiOutlinePencilAlt size={15} />
+                          Editar
+                        </EditActionBtn>
+
+                        <Link href="/admin/sdc/eventos" style={{ textDecoration: "none" }}>
+                          <SelectActionBtn $selected={false} title="Ver cronograma de eventos desta edição">
+                            <HiOutlineClock size={15} />
+                            Eventos
+                          </SelectActionBtn>
+                        </Link>
+
+                        <DeleteActionBtn
+                          type="button"
+                          onClick={() => setEditionToDelete(edition)}
+                          title="Excluir esta edição da SDC"
+                        >
+                          <HiOutlineTrash size={15} />
+                          Excluir
+                        </DeleteActionBtn>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </tbody>
+          </Table>
+        </TableContainer>
+      )}
+
+      <EditionFormModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        editionToEdit={editionToEdit}
+        onSuccess={async (savedEdition) => {
+          await refreshEditions();
+          if (!editionToEdit) {
+            selectEdition(savedEdition.id);
+          }
+        }}
+        existingEditions={editions}
+        projectId={editions[0]?.projectId}
+      />
+
+      <DeleteEditionModal
+        isOpen={!!editionToDelete}
+        onClose={() => setEditionToDelete(null)}
+        edition={editionToDelete}
+        onSuccess={async () => {
+          await refreshEditions();
+        }}
+      />
+    </Container>
+  );
+}

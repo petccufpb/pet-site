@@ -57,11 +57,11 @@ export const Route = styled.div`
 `;
 
 interface RouteLinkProps {
-  active: boolean;
+  $active: boolean;
 }
 
 export const RouteLink = styled(Link)<RouteLinkProps>`
-  font-weight: ${({ active }) => (active ? "bold" : "normal")};
+  font-weight: ${({ $active }) => ($active ? "bold" : "normal")};
   color: ${({ theme }) => theme.colors["base-white"]};
   text-align: center;
   text-decoration: none;
@@ -72,17 +72,19 @@ export const RouteLink = styled(Link)<RouteLinkProps>`
 
   ::after {
     content: "";
-    display: ${({ active }) => (active ? "block" : "none")};
+    display: ${({ $active }) => ($active ? "block" : "none")};
     position: absolute;
     bottom: -0.5rem;
     width: 0.25rem;
     height: 0.25rem;
     border-radius: 3rem;
     background: ${({ href, theme }) =>
-      href?.startsWith("/sdc") ? theme.colors["fifth-blue"] : theme.colors["base-blue"]};
+      typeof href === "string" && href.startsWith("/sdc")
+        ? theme.colors["fifth-blue"]
+        : theme.colors["base-blue"]};
   }
 
   &:hover {
-    filter: ${({ active }) => (active ? "none" : "brightness(0.8)")};
+    filter: ${({ $active }) => ($active ? "none" : "brightness(0.8)")};
   }
 `;

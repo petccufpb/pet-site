@@ -154,7 +154,14 @@ export function FrequenciaForm({
       return;
     }
 
-    if (localStorage.getItem(id)) {
+    let hasAlreadyRegistered = false;
+    try {
+      hasAlreadyRegistered = !!localStorage.getItem(id);
+    } catch (err) {
+      console.warn("Storage not accessible:", err);
+    }
+
+    if (hasAlreadyRegistered) {
       toast.dismiss(i);
       toast.error("Você já cadastrou frequência para este evento.", {
         position: "top-center",
@@ -237,7 +244,11 @@ export function FrequenciaForm({
       }
 
       toast.success("Frequência cadastrada com sucesso!");
-      localStorage.setItem(id, "true");
+      try {
+        localStorage.setItem(id, "true");
+      } catch (err) {
+        console.warn("Storage not accessible:", err);
+      }
     } else {
       const d = await res.json();
 

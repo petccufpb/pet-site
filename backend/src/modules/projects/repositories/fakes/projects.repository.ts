@@ -19,6 +19,8 @@ import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import type FindEventParticipationsByEditionDTO from "@modules/projects/dtos/FindEventParticipationsByEdition.dto";
 import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParticipant.dto";
+import UpdateEditionDTO from "@modules/projects/dtos/UpdateEdition.dto";
+import UpdateEventDTO from "@modules/projects/dtos/UpdateEvent.dto";
 import UpdateParticipantDTO from "@modules/projects/dtos/UpdateParticipant.dto";
 
 import ProjectsRepository, {
@@ -212,6 +214,15 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     );
 
     this.participations.splice(participationIndex);
+  }
+
+  public async deleteEdition(id: string): Promise<void> {
+    const eventIds = this.events.filter(e => e.editionId === id).map(e => e.id);
+    this.certificates = this.certificates.filter(c => c.editionId !== id && (!c.eventId || !eventIds.includes(c.eventId)));
+    this.attendances = this.attendances.filter(a => !a.eventId || !eventIds.includes(a.eventId));
+    this.participations = this.participations.filter(p => p.editionId !== id && (!p.eventId || !eventIds.includes(p.eventId)));
+    this.events = this.events.filter(e => e.editionId !== id);
+    this.editions = this.editions.filter(e => e.id !== id);
   }
 
   public async findAllEditions(projectId: string): Promise<CompleteProjectEdition[]> {
@@ -496,6 +507,10 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     return speaker;
   }
 
+  public async findSpeakers(): Promise<ProjectSpeaker[]> {
+    return [...this.speakers].sort((left, right) => left.name.localeCompare(right.name));
+  }
+
   public async updateParticipant(
     id: string,
     { course, email, phoneNumber }: UpdateParticipantDTO,
@@ -513,5 +528,33 @@ export default class FakeProjectsRepository implements ProjectsRepository {
     }
 
     return participant;
+  }
+
+  public async updateEdition(id: string, data: UpdateEditionDTO): Promise<ProjectEdition> {
+    const edition = this.editions.find(e => e.id === id);
+    if (!edition) {
+      throw new Error("Edition not found");
+    }
+
+    Object.assign(edition, {
+      ...data,
+      updatedAt: new Date(),
+    });
+
+    return edition;
+  }
+
+  public async updateEvent(id: string, data: UpdateEventDTO): Promise<ProjectEvent> {
+    const event = this.events.find(e => e.id === id);
+    if (!event) {
+      throw new Error("Event not found");
+    }
+
+    Object.assign(event, {
+      ...data,
+      updatedAt: new Date(),
+    });
+
+    return event;
   }
 }

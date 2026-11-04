@@ -1,5 +1,5 @@
 import { QueryRequired } from "@hyoretsu/decorators";
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Post, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Patch, Post, Put, Query, UseGuards } from "@nestjs/common";
 import {
   Project,
   ProjectAttendance,
@@ -15,7 +15,9 @@ import CreateAttendanceDTO from "@modules/projects/dtos/CreateAttendance.dto";
 import CreateCertificateDTO from "@modules/projects/dtos/CreateCertificate.dto";
 import CreateCertificatesDTO from "@modules/projects/dtos/CreateCertificates.dto";
 import CreateEditionDTO from "@modules/projects/dtos/CreateEdition.dto";
+import UpdateEditionDTO from "@modules/projects/dtos/UpdateEdition.dto";
 import CreateEventDTO from "@modules/projects/dtos/CreateEvent.dto";
+import UpdateEventDTO from "@modules/projects/dtos/UpdateEvent.dto";
 import CreateParticipantDTO from "@modules/projects/dtos/CreateParticipant.dto";
 import CreateParticipationDTO from "@modules/projects/dtos/CreateParticipation.dto";
 import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
@@ -23,6 +25,7 @@ import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import FindParticipantDTO from "@modules/projects/dtos/FindParticipant.dto";
 import ListCertificatesDTO from "@modules/projects/dtos/ListCertificates.dto";
 import ValidateCertificateDTO from "@modules/projects/dtos/ValidateCertificate.dto";
+import AdminGuard from "@modules/auth/guards/admin.guard";
 import { CompleteProjectCertificate } from "@modules/projects/repositories/projects.repository";
 import CreateAttendance from "@modules/projects/services/CreateAttendance.service";
 import CreateCertificate from "@modules/projects/services/CreateCertificate.service";
@@ -34,7 +37,10 @@ import CreateParticipant from "@modules/projects/services/CreateParticipant.serv
 import CreateParticipation from "@modules/projects/services/CreateParticipation.service";
 import CreateProject from "@modules/projects/services/CreateProject.service";
 import CreateSpeaker from "@modules/projects/services/CreateSpeaker.service";
+import DeleteEdition from "@modules/projects/services/DeleteEdition.service";
 import DeleteParticipation from "@modules/projects/services/DeleteParticipation.service";
+import UpdateEdition from "@modules/projects/services/UpdateEdition.service";
+import UpdateEvent from "@modules/projects/services/UpdateEvent.service";
 import FindLatestEdition from "@modules/projects/services/FindLatestEdition.service";
 import FindParticipant from "@modules/projects/services/FindParticipant.service";
 import ListAttendees, { ListAttendeesResponse } from "@modules/projects/services/ListAttendees.service";
@@ -44,6 +50,7 @@ import ListEvents from "@modules/projects/services/ListEvents.service";
 import ListParticipants, {
   ListParticipantsResponse,
 } from "@modules/projects/services/ListParticipants.service";
+import ListSpeakers from "@modules/projects/services/ListSpeakers.service";
 import ValidateCertificate from "@modules/projects/services/ValidateCertificate.service";
 
 @Controller("projects")
@@ -59,6 +66,7 @@ export default class ProjectsController {
     private createParticipation: CreateParticipation,
     private createProject: CreateProject,
     private createSpeaker: CreateSpeaker,
+    private deleteEdition: DeleteEdition,
     private deleteParticipation: DeleteParticipation,
     private findLatestEdition: FindLatestEdition,
     private findParticipant: FindParticipant,
@@ -67,10 +75,14 @@ export default class ProjectsController {
     private listEditions: ListEditions,
     private listEvents: ListEvents,
     private listParticipants: ListParticipants,
+    private listSpeakers: ListSpeakers,
+    private updateEdition: UpdateEdition,
+    private updateEvent: UpdateEvent,
     private validateCertificate: ValidateCertificate,
   ) {}
 
   @Post()
+  @UseGuards(AdminGuard)
   async postProjects(@Body() body: CreateProjectDTO): Promise<Project> {
     const project = await this.createProject.execute(body);
 
@@ -111,6 +123,7 @@ export default class ProjectsController {
   }
 
   @Post("certificates")
+  @UseGuards(AdminGuard)
   async postProjectsCertificates(
     @Body() { editionId, eventId }: CreateCertificatesDTO,
   ): Promise<ProjectCertificate[]> {
@@ -131,6 +144,7 @@ export default class ProjectsController {
   }
 
   @Post("certificates/create")
+  @UseGuards(AdminGuard)
   async postProjectsCertificatesCreate(@Body() body: CreateCertificateDTO): Promise<ProjectCertificate> {
     const certificates = await this.createCertificate.execute(body);
 
@@ -138,6 +152,7 @@ export default class ProjectsController {
   }
 
   @Post("certificates/validate")
+  // Public endpoint — certificate validation does not require admin auth
   async postProjectsCertificatesValidate(@Body() body: ValidateCertificateDTO): Promise<boolean> {
     const validity = await this.validateCertificate.execute(body);
 
@@ -155,10 +170,39 @@ export default class ProjectsController {
   }
 
   @Post("editions")
+  @UseGuards(AdminGuard)
   async postProjectsEditions(@Body() body: CreateEditionDTO): Promise<ProjectEdition> {
     const edition = await this.createEdition.execute(body);
 
     return edition;
+  }
+
+  @Put("editions/:id")
+  @UseGuards(AdminGuard)
+  async putProjectsEditions(
+    @Param("id") id: string,
+    @Body() body: UpdateEditionDTO,
+  ): Promise<ProjectEdition> {
+    const edition = await this.updateEdition.execute(id, body);
+
+    return edition;
+  }
+
+  @Patch("editions/:id")
+  @UseGuards(AdminGuard)
+  async patchProjectsEditions(
+    @Param("id") id: string,
+    @Body() body: UpdateEditionDTO,
+  ): Promise<ProjectEdition> {
+    const edition = await this.updateEdition.execute(id, body);
+
+    return edition;
+  }
+
+  @Delete("editions/:id")
+  @UseGuards(AdminGuard)
+  async deleteProjectsEditions(@Param("id") id: string): Promise<void> {
+    await this.deleteEdition.execute(id);
   }
 
   @Get("editions/latest")
@@ -181,8 +225,31 @@ export default class ProjectsController {
   }
 
   @Post("events")
+  @UseGuards(AdminGuard)
   async postProjectsEvents(@Body() body: CreateEventDTO): Promise<ProjectEvent> {
     const event = await this.createEvent.execute(body);
+
+    return event;
+  }
+
+  @Put("events/:id")
+  @UseGuards(AdminGuard)
+  async putProjectsEvents(
+    @Param("id") id: string,
+    @Body() body: UpdateEventDTO,
+  ): Promise<ProjectEvent> {
+    const event = await this.updateEvent.execute(id, body);
+
+    return event;
+  }
+
+  @Patch("events/:id")
+  @UseGuards(AdminGuard)
+  async patchProjectsEvents(
+    @Param("id") id: string,
+    @Body() body: UpdateEventDTO,
+  ): Promise<ProjectEvent> {
+    const event = await this.updateEvent.execute(id, body);
 
     return event;
   }
@@ -266,9 +333,15 @@ export default class ProjectsController {
   }
 
   @Post("speakers")
+  @UseGuards(AdminGuard)
   async postProjectsSpeakers(@Body() body: CreateSpeakerDTO): Promise<ProjectSpeaker> {
     const speaker = await this.createSpeaker.execute(body);
 
     return speaker;
+  }
+
+  @Get("speakers")
+  async getProjectsSpeakers(): Promise<ProjectSpeaker[]> {
+    return this.listSpeakers.execute();
   }
 }

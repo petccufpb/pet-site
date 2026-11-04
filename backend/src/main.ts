@@ -1,15 +1,14 @@
 import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import * as cookieParser from "cookie-parser";
 import * as expressBasicAuth from "express-basic-auth";
 import helmet from "helmet";
 
 import { AppModule } from "./app.module";
 
 const bootstrap = async () => {
-  const app = await NestFactory.create(AppModule, {
-    cors: true,
-  });
+  const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -24,6 +23,19 @@ const bootstrap = async () => {
   );
 
   app.use(helmet());
+  app.use(cookieParser());
+
+  // CORS: allow configured frontend origin with credentials (required for HttpOnly cookie auth)
+  const webUrl = process.env.WEB_URL;
+  if (webUrl) {
+    app.enableCors({
+      origin: webUrl,
+      credentials: true,
+    });
+  } else {
+    // Development fallback — allow all origins (no credentials restriction needed locally)
+    app.enableCors({ origin: true, credentials: true });
+  }
 
   // Todo: block API unless logged in
   // // @ts-ignore

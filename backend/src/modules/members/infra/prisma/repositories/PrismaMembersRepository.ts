@@ -5,6 +5,7 @@ import { PrismaService } from "@database/prisma.service";
 import MembersRepository, { CompleteMember } from "@modules/members/repositories/MembersRepository";
 
 import { CreateMemberDTO } from "../../../dtos/CreateMember.dto";
+import { UpdateMemberDTO } from "../../../dtos/UpdateMember.dto";
 
 @Injectable()
 export class PrismaMembersRepository implements MembersRepository {
@@ -29,6 +30,7 @@ export class PrismaMembersRepository implements MembersRepository {
     const user = await this.prisma.member.findFirst({
       where: {
         type,
+        deletedAt: null,
       },
     });
 
@@ -38,6 +40,7 @@ export class PrismaMembersRepository implements MembersRepository {
   async findMembers(): Promise<CompleteMember[]> {
     const members = await this.prisma.member.findMany({
       where: {
+        deletedAt: null,
         OR: [
           {
             type: null,
@@ -65,6 +68,7 @@ export class PrismaMembersRepository implements MembersRepository {
   async findTutors(): Promise<CompleteMember[]> {
     const members = await this.prisma.member.findMany({
       where: {
+        deletedAt: null,
         type: {
           in: ["founder", "tutor"],
         },
@@ -80,5 +84,66 @@ export class PrismaMembersRepository implements MembersRepository {
     });
 
     return members;
+  }
+
+  async findById(id: string): Promise<CompleteMember | null> {
+    const member = await this.prisma.member.findUnique({
+      where: { id },
+      include: {
+        contactInfo: {
+          orderBy: {
+            name: "asc",
+          },
+        },
+      },
+    });
+
+    return member;
+  }
+
+  async update(id: string, { contactInfo, ...data }: UpdateMemberDTO): Promise<Member> {
+    const updateData: any = { ...data };
+
+    if (contactInfo) {
+      updateData.contactInfo = {
+        deleteMany: {},
+        createMany: {
+          data: contactInfo,
+        },
+      };
+    }
+
+    const member = await this.prisma.member.update({
+      where: { id },
+      data: updateData,
+      include: {
+        contactInfo: true,
+      },
+    });
+
+    return member;
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.$transaction([
+      this.prisma.memberContact.deleteMany({
+        where: { memberId: id },
+      }),
+      this.prisma.member.delete({
+        where: { id },
+      }),
+    ]);
+  }
+
+  async findMemberById(id: string): Promise<Member | null> {
+    return this.prisma.member.findUnique({ where: { id } });
+  }
+
+  async setMemberActive(id: string, isActive: boolean): Promise<Member> {
+    return this.prisma.member.update({ where: { id }, data: { isActive } });
+  }
+
+  async softDeleteMember(id: string): Promise<Member> {
+    return this.prisma.member.update({ where: { id }, data: { deletedAt: new Date() } });
   }
 }

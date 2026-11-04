@@ -13,10 +13,14 @@ export const metadata = {
 };
 
 export default async function Time() {
-  const membersRes = await fetch(process.env.NEXT_PUBLIC_API_URL + "/team/members");
+  const membersRes = await fetch(process.env.NEXT_PUBLIC_API_URL + "/team/members", {
+    cache: "no-store",
+  });
   const members = await membersRes.json();
 
-  const tutorsRes = await fetch(process.env.NEXT_PUBLIC_API_URL + "/team/tutors");
+  const tutorsRes = await fetch(process.env.NEXT_PUBLIC_API_URL + "/team/tutors", {
+    cache: "no-store",
+  });
   const tutors = await tutorsRes.json();
 
   return (

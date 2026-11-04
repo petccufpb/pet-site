@@ -3,6 +3,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { SDCEventData, SDCScheduleData } from "sdc";
 
+import { getDirectImageLink } from "@utils/googleDrive";
+
 import Logo from "@assets/images/logo.svg?svgr";
 import Petrucio from "@assets/images/petrucio.svg?svgr";
 
@@ -48,7 +50,7 @@ export default async function Minicurso({ params }: { params: { id: string } }) 
           <Image
             width={64}
             height={64}
-            src={event.speaker.photoUrl}
+            src={getDirectImageLink(event.speaker.photoUrl)}
             alt={"Palestrante " + event.speaker.name}
           ></Image>
           <h2>{event.speaker.name}</h2>

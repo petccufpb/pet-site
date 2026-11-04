@@ -18,6 +18,8 @@ import CreateProjectDTO from "@modules/projects/dtos/CreateProject.dto";
 import CreateSpeakerDTO from "@modules/projects/dtos/CreateSpeaker.dto";
 import type FindEventParticipationsByEditionDTO from "@modules/projects/dtos/FindEventParticipationsByEdition.dto";
 import FindExistingParticipantDTO from "@modules/projects/dtos/FindExistingParticipant.dto";
+import UpdateEditionDTO from "@modules/projects/dtos/UpdateEdition.dto";
+import UpdateEventDTO from "@modules/projects/dtos/UpdateEvent.dto";
 import UpdateParticipantDTO from "@modules/projects/dtos/UpdateParticipant.dto";
 import ProjectsRepository, {
   CertificateInfo,
@@ -98,6 +100,52 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
         },
       },
     });
+  }
+
+  public async deleteEdition(id: string): Promise<void> {
+    const events = await this.prisma.projectEvent.findMany({
+      where: { editionId: id },
+      select: { id: true },
+    });
+    const eventIds = events.map(e => e.id);
+
+    await this.prisma.$transaction([
+      this.prisma.projectCertificateTemplate.deleteMany({
+        where: {
+          OR: [
+            { editionId: id },
+            { eventId: { in: eventIds } },
+          ],
+        },
+      }),
+      this.prisma.projectCertificate.deleteMany({
+        where: {
+          OR: [
+            { editionId: id },
+            { eventId: { in: eventIds } },
+          ],
+        },
+      }),
+      this.prisma.projectAttendance.deleteMany({
+        where: {
+          eventId: { in: eventIds },
+        },
+      }),
+      this.prisma.projectParticipation.deleteMany({
+        where: {
+          OR: [
+            { editionId: id },
+            { eventId: { in: eventIds } },
+          ],
+        },
+      }),
+      this.prisma.projectEvent.deleteMany({
+        where: { editionId: id },
+      }),
+      this.prisma.projectEdition.delete({
+        where: { id },
+      }),
+    ]);
   }
 
   public async findAllEditions(projectId: string): Promise<CompleteProjectEdition[]> {
@@ -437,6 +485,14 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     return speaker;
   }
 
+  public async findSpeakers(): Promise<ProjectSpeaker[]> {
+    const speakers = await this.prisma.projectSpeaker.findMany({
+      orderBy: { name: "asc" },
+    });
+
+    return speakers;
+  }
+
   public async updateParticipant(
     id: string,
     { course, email, phoneNumber }: UpdateParticipantDTO,
@@ -453,5 +509,53 @@ export default class PrismaProjectsRepository implements ProjectsRepository {
     });
 
     return participant;
+  }
+
+  public async updateEdition(
+    id: string,
+    data: UpdateEditionDTO,
+  ): Promise<ProjectEdition> {
+    const edition = await this.prisma.projectEdition.update({
+      data: {
+        ...(data.name !== undefined && { name: data.name }),
+        ...(data.number !== undefined && { number: data.number }),
+        ...(data.date !== undefined && { date: data.date }),
+        ...(data.logoUrl !== undefined && { logoUrl: data.logoUrl }),
+        ...(data.minimumAttendance !== undefined && { minimumAttendance: data.minimumAttendance }),
+        ...(data.projectId !== undefined && { projectId: data.projectId }),
+      },
+      where: {
+        id,
+      },
+    });
+
+    return edition;
+  }
+
+  public async updateEvent(
+    id: string,
+    data: UpdateEventDTO,
+  ): Promise<ProjectEvent> {
+    const event = await this.prisma.projectEvent.update({
+      data: {
+        ...(data.name && { name: data.name }),
+        ...(data.about !== undefined && { about: data.about }),
+        ...(data.capacity !== undefined && { capacity: data.capacity }),
+        ...(data.extraCapacity !== undefined && { extraCapacity: data.extraCapacity }),
+        ...(data.location !== undefined && { location: data.location }),
+        ...(data.onSite !== undefined && { onSite: data.onSite }),
+        ...(data.speakerId && { speakerId: data.speakerId }),
+        ...(data.startTime && { startTime: data.startTime }),
+        ...(data.endTime && { endTime: data.endTime }),
+        ...(data.type !== undefined && { type: data.type }),
+        ...(data.allowMultiple !== undefined && { allowMultiple: data.allowMultiple }),
+        ...(data.externalSignup !== undefined && { externalSignup: data.externalSignup }),
+      },
+      where: {
+        id,
+      },
+    });
+
+    return event;
   }
 }

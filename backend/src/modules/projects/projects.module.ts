@@ -1,6 +1,7 @@
 import { MailProvider, mailProviders, type MailProviderKeys } from "@hyoretsu/providers";
 import { Module } from "@nestjs/common";
 
+import { AuthModule } from "@modules/auth/auth.module";
 import { PrismaService } from "@database/prisma.service";
 
 import ProjectsController from "./infra/http/controllers/projects.controller";
@@ -16,6 +17,7 @@ import CreateParticipant from "./services/CreateParticipant.service";
 import CreateParticipation from "./services/CreateParticipation.service";
 import CreateProject from "./services/CreateProject.service";
 import CreateSpeaker from "./services/CreateSpeaker.service";
+import DeleteEdition from "./services/DeleteEdition.service";
 import DeleteParticipation from "./services/DeleteParticipation.service";
 import FindLatestEdition from "./services/FindLatestEdition.service";
 import FindParticipant from "./services/FindParticipant.service";
@@ -24,9 +26,13 @@ import ListCertificates from "./services/ListCertificates.service";
 import ListEditions from "./services/ListEditions.service";
 import ListEvents from "./services/ListEvents.service";
 import ListParticipants from "./services/ListParticipants.service";
+import ListSpeakers from "./services/ListSpeakers.service";
+import UpdateEdition from "./services/UpdateEdition.service";
+import UpdateEvent from "./services/UpdateEvent.service";
 import ValidateCertificate from "./services/ValidateCertificate.service";
 
 @Module({
+  imports: [AuthModule],
   controllers: [ProjectsController],
   providers: [
     {
@@ -49,6 +55,7 @@ import ValidateCertificate from "./services/ValidateCertificate.service";
       CreateParticipation,
       CreateProject,
       CreateSpeaker,
+      DeleteEdition,
       DeleteParticipation,
       FindLatestEdition,
       FindParticipant,
@@ -57,6 +64,9 @@ import ValidateCertificate from "./services/ValidateCertificate.service";
       ListEditions,
       ListEvents,
       ListParticipants,
+      ListSpeakers,
+      UpdateEdition,
+      UpdateEvent,
       ValidateCertificate,
     ],
   ],
