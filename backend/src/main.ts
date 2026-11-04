@@ -27,6 +27,7 @@ const bootstrap = async () => {
 
   app.use(helmet());
   app.use(cookieParser());
+  (app.getHttpAdapter().getInstance() as any).set?.("trust proxy", 1);
 
   // CORS: allow configured frontend origin with credentials (required for HttpOnly cookie auth)
   const webUrl = process.env.WEB_URL;

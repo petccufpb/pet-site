@@ -63,7 +63,12 @@ describe("AuthController", () => {
       const result = controller.logout(mockRes);
 
       expect(result).toEqual({ message: "Logout realizado com sucesso" });
-      expect(mockRes.clearCookie).toHaveBeenCalledWith("pet_admin_token", { path: "/" });
+      expect(mockRes.clearCookie).toHaveBeenCalledWith("pet_admin_token", {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+        path: "/",
+      });
     });
   });
 

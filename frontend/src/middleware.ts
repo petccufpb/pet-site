@@ -48,7 +48,15 @@ export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Proteger todas as rotas administrativas; a tela de login fica acessível
-  if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+  const isProtectedAdminPath =
+    pathname === "/admin" ||
+    pathname.startsWith("/admin/") ||
+    pathname === "/admin-preview" ||
+    pathname.startsWith("/admin-preview/") ||
+    pathname === "/sdc/admin" ||
+    pathname.startsWith("/sdc/admin/");
+
+  if (isProtectedAdminPath) {
     if (!pathname.startsWith("/admin/login")) {
       if (!hasAdminSession(request)) {
         const loginUrl = new URL("/admin/login", request.url);

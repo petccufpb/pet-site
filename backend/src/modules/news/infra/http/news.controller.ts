@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post, Query } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, UseGuards } from "@nestjs/common";
 import { News } from "@prisma/client";
 
+import AdminGuard from "@modules/auth/guards/admin.guard";
 import CreateNewsDTO from "@modules/news/dtos/CreateNews.dto";
 import CreateNews from "@modules/news/services/CreateNews.service";
 import ListNews from "@modules/news/services/ListNews.service";
@@ -17,6 +18,7 @@ export default class NewsController {
   }
 
   @Post()
+  @UseGuards(AdminGuard)
   async postNews(@Body() body: CreateNewsDTO): Promise<News> {
     const news = await this.createNews.execute(body);
 

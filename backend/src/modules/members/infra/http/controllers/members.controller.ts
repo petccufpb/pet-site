@@ -47,6 +47,7 @@ export class MembersController {
   }
 
   @Patch(":id/status")
+  @UseGuards(AdminAuthGuard)
   async patchMemberStatus(@Param("id") id: string, @Body() body: UpdateMemberStatusDTO): Promise<Member> {
     return this.updateMemberStatus.execute(id, body.isActive);
   }
@@ -60,6 +61,7 @@ export class MembersController {
   }
 
   @Delete(":id")
+  @UseGuards(AdminAuthGuard)
   async deleteMember(@Param("id") id: string): Promise<Member> {
     return this.softDeleteMember.execute(id);
   }

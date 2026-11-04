@@ -47,7 +47,12 @@ export default class AdminAuthService {
 
       if (usernameMatch && passwordMatch) {
         isValid = true;
-      } else if (process.env.ADMIN_PASSWORD && username === ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
+      } else if (
+        process.env.NODE_ENV !== "production" &&
+        process.env.ADMIN_PASSWORD &&
+        username === ADMIN_USERNAME &&
+        password === process.env.ADMIN_PASSWORD
+      ) {
         isValid = true;
       }
     }

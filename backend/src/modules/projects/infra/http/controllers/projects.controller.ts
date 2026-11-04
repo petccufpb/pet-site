@@ -268,6 +268,7 @@ export default class ProjectsController {
   }
 
   @Get("participants")
+  @UseGuards(AdminGuard)
   async getProjectsParticipants(
     @Query("birthYear")
     birthYear: string,
@@ -321,6 +322,7 @@ export default class ProjectsController {
   }
 
   @Get("participants/search")
+  @UseGuards(AdminGuard)
   async getProjectsParticipantsSearch(
     @Query() query: SearchParticipantsDTO,
   ): Promise<SearchParticipantsResponse> {

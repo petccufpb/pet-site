@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
 
 async function proxyHandler(req: NextRequest, { params }: { params: { path: string[] } }) {
   const targetPath = params.path ? params.path.join("/") : "";
@@ -13,6 +13,14 @@ async function proxyHandler(req: NextRequest, { params }: { params: { path: stri
       forwardHeaders.set(key, value);
     }
   });
+
+  const clientIp =
+    req.ip ||
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip");
+  if (clientIp) {
+    forwardHeaders.set("x-forwarded-for", clientIp);
+  }
 
   const body = ["GET", "HEAD"].includes(req.method) ? undefined : await req.arrayBuffer();
 

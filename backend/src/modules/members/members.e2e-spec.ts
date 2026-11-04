@@ -132,6 +132,11 @@ describe("Members", () => {
     expect(updatedMember).toHaveProperty("isActive", false);
   });
 
+  it("PATCH /team/members/:id/status should require admin authentication", async () => {
+    const response = await request("PATCH", "/team/members/some-id/status", { isActive: false }, false);
+    expect(response.statusCode).toEqual(401);
+  });
+
   it("PATCH /team/members/:id/status", async () => {
     const created = await request("POST", "/team/members", { name: "Active Member" }, true);
     const { id } = created.json();
@@ -140,6 +145,11 @@ describe("Members", () => {
 
     expect(updated.statusCode).toEqual(200);
     expect(updated.json()).toHaveProperty("isActive", false);
+  });
+
+  it("DELETE /team/members/:id should require admin authentication", async () => {
+    const response = await request("DELETE", "/team/members/some-id", undefined, false);
+    expect(response.statusCode).toEqual(401);
   });
 
   it("DELETE /team/members/:id soft deletes the member", async () => {

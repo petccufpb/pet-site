@@ -18,7 +18,9 @@ export default class AuthController {
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ): Promise<{ message: string }> {
-    const ip = (req.ip ?? req.socket?.remoteAddress ?? "unknown").replace(/^::ffff:/, "");
+    const forwardedFor = req.headers?.["x-forwarded-for"];
+    const forwardedIp = Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor?.split(",")[0]?.trim();
+    const ip = (forwardedIp || req.ip || req.socket?.remoteAddress || "unknown").replace(/^::ffff:/, "");
     const { token, cookieName, maxAge } = await this.adminAuthService.login(body.username, body.password, ip);
 
     res.cookie(cookieName, token, {
@@ -36,7 +38,12 @@ export default class AuthController {
   @HttpCode(HttpStatus.OK)
   logout(@Res({ passthrough: true }) res: Response): { message: string } {
     const cookieName = this.adminAuthService.getCookieName();
-    res.clearCookie(cookieName, { path: "/" });
+    res.clearCookie(cookieName, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+    });
     return { message: "Logout realizado com sucesso" };
   }
 
