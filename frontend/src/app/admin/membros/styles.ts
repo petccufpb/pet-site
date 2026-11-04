@@ -1,6 +1,13 @@
 "use client";
 import styled, { css } from "styled-components";
 
+export const Container = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 5rem;
+  font-family: ${({ theme }) => theme.fonts.regular};
+`;
+
 export const PageHeader = styled.div`
   display: flex;
   align-items: flex-start;

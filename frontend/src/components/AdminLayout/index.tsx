@@ -291,7 +291,7 @@ export default function AdminLayout({ children }: PropsWithChildren) {
           </HeaderActions>
         </Header>
 
-        <Main id="admin-main" $fullWidth={pathname.startsWith("/admin/sdc")}>{children}</Main>
+        <Main id="admin-main" $fullWidth={pathname.startsWith("/admin/sdc") || pathname.startsWith("/admin/membros")}>{children}</Main>
       </Content>
     </Container>
   );

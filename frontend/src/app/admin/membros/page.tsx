@@ -17,6 +17,7 @@ import { fetchMembers, fetchTutors } from "@services/members";
 import MemberCard from "./components/MemberCard";
 import MemberFormModal from "./components/MemberFormModal";
 import {
+  Container,
   FilterSelect,
   Grid,
   PageButton,
@@ -131,7 +132,7 @@ export default function AdminMembersPage() {
   }, [load]);
 
   return (
-    <>
+    <Container>
       <ToastContainer
         position="top-center"
         autoClose={4000}
@@ -298,6 +299,6 @@ export default function AdminMembersPage() {
           onSaved={handleSaved}
         />
       )}
-    </>
+    </Container>
   );
 }

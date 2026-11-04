@@ -182,7 +182,7 @@ export default function AdminFrequencia() {
       <ToastContainer position="top-right" autoClose={3000} newestOnTop theme="dark" />
 
       <Header>
-        <h1>Frequência{edition && ` · SDC ${edition.number}`}</h1>
+        <h2>Frequência{edition && ` · SDC ${edition.number}`}</h2>
         <p>Check-in manual por evento</p>
       </Header>
 
