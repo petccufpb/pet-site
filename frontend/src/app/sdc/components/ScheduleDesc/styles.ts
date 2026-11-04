@@ -38,3 +38,23 @@ export const ScheduleSubtitle = styled.div`
   opacity: 80%;
   font-size: 0.875em;
 `;
+
+export const Informative = styled.div`
+  padding: 0.5em 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1ch;
+
+  width: fit-content;
+  margin: auto;
+  margin-top: 2em;
+
+  font-size: ${({ theme }) => theme.textSizes["text-regular-s"]};
+  font-family: ${({ theme }) => theme.fonts.alt};
+  color: ${({ theme }) => theme.colors["base-blue"]};
+  font-weight: 600;
+
+  border: 2px solid ${({ theme }) => theme.colors["base-blue"]};
+  border-radius: 25px;
+`;

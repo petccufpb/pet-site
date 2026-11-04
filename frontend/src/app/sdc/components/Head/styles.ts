@@ -124,6 +124,7 @@ export const Section = styled.section`
 
 export const Description = styled.div`
   font-family: ${({ theme }) => theme.fonts.alt};
+  text-align: justify;
   color: #e1e1e6;
   width: 100%;
 `;

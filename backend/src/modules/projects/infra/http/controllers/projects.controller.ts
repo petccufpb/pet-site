@@ -1,14 +1,14 @@
 import { QueryRequired } from "@hyoretsu/decorators";
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Post, Query } from "@nestjs/common";
 import {
-	Project,
-	ProjectAttendance,
-	ProjectCertificate,
-	ProjectEdition,
-	ProjectEvent,
-	ProjectParticipant,
-	ProjectParticipation,
-	ProjectSpeaker,
+  Project,
+  ProjectAttendance,
+  ProjectCertificate,
+  ProjectEdition,
+  ProjectEvent,
+  ProjectParticipant,
+  ProjectParticipation,
+  ProjectSpeaker,
 } from "@prisma/client";
 
 import CreateAttendanceDTO from "@modules/projects/dtos/CreateAttendance.dto";
@@ -42,7 +42,7 @@ import ListCertificates from "@modules/projects/services/ListCertificates.servic
 import ListEditions from "@modules/projects/services/ListEditions.service";
 import ListEvents from "@modules/projects/services/ListEvents.service";
 import ListParticipants, {
-	ListParticipantsResponse,
+  ListParticipantsResponse,
 } from "@modules/projects/services/ListParticipants.service";
 import ValidateCertificate from "@modules/projects/services/ValidateCertificate.service";
 
@@ -212,6 +212,25 @@ export default class ProjectsController {
     });
 
     return participants;
+  }
+
+  @Get("participant/attendances")
+  async getParticipantEvents(
+    @QueryRequired("project")
+    projectTitle: string,
+    @QueryRequired("email")
+    email: string,
+  ): Promise<ProjectEvent[]> {
+    const participant = await this.findParticipant.execute({ email });
+    if (!participant) return [];
+    const edition = await this.findLatestEdition.execute({ projectTitle });
+    const completeAttendances = await this.listAttendees.execute({
+      editionId: edition.id,
+      participantId: participant.id,
+      eventId: "",
+    });
+    const eventList = completeAttendances.attendances?.map(att => att.event).filter(evnt => !!evnt) ?? [];
+    return eventList;
   }
 
   @Post("participants")

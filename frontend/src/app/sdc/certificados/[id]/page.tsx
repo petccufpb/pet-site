@@ -63,6 +63,10 @@ export default function GerarCertificados({ params: { id }, searchParams }: Gera
         url.searchParams.append("speakerId", searchParams.speakerId);
       }
 
+      // Cache-busting: Railway's edge cache is keyed by the full request URL, so a stale
+      // response can otherwise be served forever even after the underlying data changes.
+      url.searchParams.append("_t", Date.now().toString());
+
       const { data: certificateData } = await api.get(url.toString());
 
       if (!certificateData || certificateData.length === 0) {
